@@ -1,0 +1,12 @@
+<section ng-init="find()">
+    <div ng-repeat="incidence in incidences">
+        <h1><a ng-href="incidences/{{incidence._id}}">{{incidence.title}}</a></h1>
+        <p>{{incidence.content}}</p>
+        <div>
+            <span class="badge badge-success">Created {{incidence.created | date:'medium'}}</span>
+            <div class="pull-right"><span class="badge badge-success">Created by {{incidence.creator.username}}</span></div>
+        </div>
+        <hr>
+    </div>
+    <h1 ng-hide="!incidences || incidences.length">No incidences yet. <br> Why don't you <a href="/incidences/create">Create One</a>?</h1>
+</section>

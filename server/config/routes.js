@@ -19,19 +19,17 @@ module.exports = function(app) {
   app.post('/auth/session', session.login);
   app.del('/auth/session', session.logout);
 
+  // User Module and Actions Authorizations
+  app.get('/auth/modules', auth.ensureAuthenticated, auth.userAuthorization.getModules);
+  app.get('/auth/incidences', auth.ensureAuthenticated, auth.userAuthorization.getRightsOnIncidences);
 
-  // set up our security to be enforced on all requests to secure paths
-  app.all('/api/technician', auth.ensureAuthenticated, auth.ensureTech);
-  app.all('/api/admin', auth.ensureAuthenticated, auth.ensureAdmin);
-
-
- // Incidence Routes
+  // Incidence Routes
   var incidences = require('../controllers/incidences');
   app.get('/api/incidences', incidences.all);
   app.post('/api/incidences', auth.ensureAuthenticated, incidences.create);
   app.get('/api/incidences/:incidenceId', incidences.show);
-  app.put('/api/incidences/:incidenceId', auth.ensureAuthenticated, auth.incidence.hasAuthorization, incidences.update);
-  app.del('/api/incidences/:incidenceId', auth.ensureAuthenticated, auth.incidence.hasAuthorization, incidences.destroy);
+  app.put('/api/incidences/:incidenceId', auth.ensureAuthenticated, incidences.update);
+  app.del('/api/incidences/:incidenceId', auth.ensureAuthenticated, incidences.destroy);
 
   //Setting up the incidenceId param
   app.param('incidenceId', incidences.incidence);

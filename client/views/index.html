@@ -1,9 +1,9 @@
-    <!doctype html>
+<!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <base href="/"/>
@@ -11,64 +11,65 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-
-        <!-- build:css(.tmp) styles/main.css -->
-        <link rel="stylesheet" href="styles/main.css">
-        <link rel="stylesheet" href="styles/animations.css">
-
-        <!-- Module auth -->
-  		<link rel="stylesheet" href="/modules/auth/styles/auth.css">
-        <!-- Module helpdesk -->
-        <link rel="stylesheet" href="/modules/helpdesk/styles/dashboard.css">
-
-
-        <!--<link rel="stylesheet" href="styles/mainone.css">-->
-        <!-- endbuild -->
+    <link rel="stylesheet" href="/styles/vendor/bootstrap/css/bootstrap.css">
+    <!-- Module auth -->
+    <link rel="stylesheet" href="modules/sign/styles/sign.css">
+    <!-- Module desk -->
+    <link rel="stylesheet" href="modules/common/desk/styles/desk.css">
+    <link rel="stylesheet" href="/styles/warghelpdesk.css">
 </head>
-  <body ng-app="wargHelpdeskApp">
 
-    <div ng-include="" src="'partials/navbar.html'"></div>
-    <div ng-view></div>
+<!-- apply our angular app to our site -->
+<body ng-app="wargHelpdeskApp">
+
+   <navbar></navbar>
+    <!-- MAIN CONTENT -->
+    <!-- THIS IS WHERE WE WILL INJECT OUR CONTENT ============================== -->
+    <div ui-view></div>
+   <footer></footer>
 
     <script src="bower_components/angular/angular.js"></script>
 
-    <!-- build:js(app) scripts/modules.js -->
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls-0.10.0.js"></script> 
     <script src="bower_components/angular-http-auth/src/http-auth-interceptor.js"></script>
-    <!-- endbuild -->
 
-    <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/warghelpdesk.js"></script>
-    <script src="scripts/controllers/main.js"></script>
-    <script src="scripts/controllers/navbar.js"></script>
+    <script src="scripts/controllers.js"></script>
+    <script src="scripts/directives.js"></script>
 
-    <script src="scripts/directives/uniqueUsername.js"></script>
-    <script src="scripts/directives/onFocus.js"></script>
-    <script src="scripts/directives/mongooseError.js"></script>
 
     <!-- MODULES -->
+
+    <!-- COMMON  -->
     <!-- AUTHENTICATION -->
-    <script src="modules/auth/scripts/auth.js"></script> 
-    <script src="modules/auth/scripts/controllers.js"></script> 
-    <script src="modules/auth/scripts/services.js"></script> 
-    
-    <!-- HELPDESK -->
-    <script src="modules/helpdesk/scripts/helpdesk.js"></script> 
-    <script src="modules/helpdesk/scripts/controllers.js"></script> 
-    <script src="modules/helpdesk/scripts/services.js"></script> 
-    <script src="modules/helpdesk/incidences/scripts/incidences.js"></script>
-    <script src="modules/helpdesk/incidences/scripts/services.js"></script> 
-    <script src="modules/helpdesk/incidences/scripts/controllers.js"></script> 
+    <script src="modules/common/auth/auth.js"></script> 
+    <script src="modules/common/auth/services.js"></script> 
+    <!-- DESK -->
+    <script src="modules/common/desk/scripts/desk.js"></script> 
+    <script src="modules/common/desk/scripts/controllers.js"></script> 
+    <script src="modules/common/desk/scripts/directives.js"></script> 
+    <script src="modules/common/desk/scripts/services.js"></script> 
+
+
+    <!-- SIGNING -->
+    <script src="modules/sign/scripts/sign.js"></script> 
+    <script src="modules/sign/scripts/controllers.js"></script> 
+    <script src="modules/sign/scripts/directives.js"></script> 
+
+
+    <!-- INCIDENCES -->
+    <script src="modules/incidences/scripts/incidences.js"></script> 
+    <script src="modules/incidences/scripts/controllers.js"></script> 
+    <script src="modules/incidences/scripts/services.js"></script> 
+
 
     <!-- endbuild -->
 
 </body>
 </html>
-
-
-

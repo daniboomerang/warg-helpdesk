@@ -5,53 +5,45 @@
     "express": "~3.4.3",
     "passport": "~0.1.15",
     "passport-local": "~0.1.6",
+    "passport-google-oauth": "0.1.5",
     "mongoose": "~3.5.5",
     "ejs": "~0.8.4",
     "underscore": "~1.5.2",
     "connect-mongo": "~0.4.0"
   },
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-autoprefixer": "~0.4.0",
-    "grunt-concurrent": "~0.4.1",
-    "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-coffee": "~0.7.0",
-    "grunt-contrib-compass": "~0.6.0",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-copy": "~0.4.1",
-    "grunt-contrib-cssmin": "~0.7.0",
-    "grunt-contrib-htmlmin": "~0.1.3",
-    "grunt-contrib-imagemin": "~0.3.0",
-    "grunt-contrib-jshint": "~0.7.1",
-    "grunt-contrib-uglify": "~0.2.0",
-    "grunt-contrib-watch": "~0.5.2",
-    "grunt-google-cdn": "~0.2.0",
-    "grunt-ngmin": "~0.0.2",
-    "grunt-rev": "~0.1.0",
-    "grunt-svgmin": "~0.2.0",
-    "grunt-usemin": "~2.0.0",
-    "jshint-stylish": "~0.1.3",
-    "load-grunt-tasks": "~0.2.0",
-    "time-grunt": "~0.2.1",
-    "grunt-express-server": "~0.4.5",
-    "grunt-open": "~0.2.0",
-    "karma-ng-scenario": "~0.1.0",
-    "grunt-karma": "~0.6.2",
-    "karma-requirejs": "~0.2.0",
-    "karma-firefox-launcher": "~0.1.0",
-    "karma-html2js-preprocessor": "~0.1.0",
-    "karma-script-launcher": "~0.1.0",
-    "karma-chrome-launcher": "~0.1.0",
-    "karma-jasmine": "~0.1.3",
-    "karma-coffee-preprocessor": "~0.1.0",
-    "karma-phantomjs-launcher": "~0.1.0",
-    "karma": "~0.10.4",
-    "karma-ng-html2js-preprocessor": "~0.1.0"
+    "karma": "~0.10",
+    "protractor": "~0.20.1",
+    "bower": "^1.3.1",
+    "shelljs": "^0.2.6",
+    "karma-junit-reporter": "^0.2.2",
+    "express": "3.x",
+    "jasmine-node": "1.14.3",
+    "karma-html-reporter": "~0.1",
+    "request": "2.33.0",
+    "supertest": "0.12.1"
+  },
+  "scripts": {
+    "postinstall": "bower install",
+
+    "prestart": "npm install",
+    "start": "node server.js",
+
+    "start-server": "node server.js",
+
+    "pretest": "npm install",
+    "test": "jasmine-node test/unit/server --junitreport --output test/test_report/server && karma start test/karma.conf.js --reporters junit,html,dots",  
+    "test-single-run": "karma start test/karma.conf.js  --single-run",
+
+    "preupdate-webdriver": "npm install",
+    "update-webdriver": "webdriver-manager update",
+
+    "preprotractor": "npm run update-webdriver",
+    "protractor": "protractor test/protractor-conf.js",
+
+    "update-index-async": "node -e \"require('shelljs/global'); sed('-i', /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, '//@@NG_LOADER_START@@\\n' + cat('client/bower_components/angular-loader/angular-loader.min.js') + '\\n//@@NG_LOADER_END@@', 'client/index-async.html');\""
   },
   "engines": {
     "node": ">=0.8.0"
-  },
-  "scripts": {
-    "test": "grunt test"
-  }
+  } 
 }

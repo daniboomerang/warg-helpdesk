@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites>
+<testsuite name="configuration test getting synoptics information" errors="0" tests="1" failures="0" time="0.007" timestamp="2014-05-18T23:43:46">
+  <testcase classname="configuration test getting synoptics information" name="should return synoptics information not empty" time="0.002"></testcase>
+</testsuite>
+</testsuites>

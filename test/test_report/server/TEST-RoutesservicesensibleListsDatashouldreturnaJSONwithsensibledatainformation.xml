@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites>
+<testsuite name="Routes service/sensibleListsData should return a JSON with sensible data information." errors="0" tests="1" failures="0" time="0.011" timestamp="2014-05-21T15:29:40">
+  <testcase classname="Routes service/sensibleListsData should return a JSON with sensible data information." name="respond with json" time="0.011"></testcase>
+</testsuite>
+</testsuites>

@@ -1,38 +1,22 @@
 'use strict';
 
 angular.module('wargHelpdeskApp', [
-  'ngCookies',
-  'ngResource',
+  'ui.router',
   'ngSanitize',
   'ngRoute',
   'http-auth-interceptor',
   'ui.bootstrap',
-  'ngAnimate',
+  'wargHelpdeskControllers',
+  'wargHelpdeskDirectives',
+  'sign',
   'auth',
-  'helpdesk'
+  'incidences'
 ])
-.config(function ($routeProvider, $locationProvider) {
-    $routeProvider
-      .when('/', {
-        templateUrl: '/partials/main.html',
-        controller: 'MainCtrl'
-      })
-      .when('/login', {
-        templateUrl: 'modules/auth/views/login.html',
-        controller: 'LoginCtrl'
-      })
-      .when('/signup', {
-        templateUrl: 'modules/auth/views/signup.html',
-        controller: 'SignupCtrl'
-      })
-      .when('/helpdesk/:userName', {
-        templateUrl: 'modules/helpdesk/views/home.html',
-        controller: 'HelpdeskCtrl'
-      })  
-      .otherwise({
-        redirectTo: '/'
-      });
+.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+    
     $locationProvider.html5Mode(true);
+    $urlRouterProvider.when('/', '/incidences');
+    $urlRouterProvider.otherwise('/');
   })
 
   .run(function ($rootScope, $location, Auth) {
@@ -41,14 +25,15 @@ angular.module('wargHelpdeskApp', [
     $rootScope.$watch('currentUser', function(currentUser) {
       // if no currentUser and on a page that requires authorization then try to update it
       // will trigger 401s if user does not have a valid session
-      if (!currentUser && (['/', '/login', '/logout', '/signup'].indexOf($location.path()) == -1 )) {
+      if (!currentUser && (['/', '/sign/in', '/sign/up'].indexOf($location.path()) == -1 )) {
         Auth.currentUser();
       }
+      $rootScope.$broadcast('event:currentUser-changed');
     });
 
     // On catching 401 errors, redirect to the login page.
     $rootScope.$on('event:auth-loginRequired', function() {
-      $location.path('/login');
+      $location.path('/sign');
       return false;
     });
   });
