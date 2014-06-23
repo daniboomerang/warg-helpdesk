@@ -1,6 +1,6 @@
 {
-  "name": "warg-helpdesk",
-  "version": "0.0.0",
+  "name": "warghelpdesk",
+  "version": "0.0.1",
   "dependencies": {
     "angular": "~1.2.1",
     "json3": "~3.2.4",
