@@ -25,12 +25,13 @@ fs.readdirSync(modelsPath).forEach(function (file) {
 
 var pass = require('./server/config/pass');
 
-// App Configuration
-app.configure('development', function(){
-  app.use(express.static(path.join(__dirname, '.tmp')));
+// configuration ===============================================================
+
+app.configure(function() {
   app.use(express.static(path.join(__dirname, 'client')));
   app.use(express.errorHandler());
   app.set('views', __dirname + '/client/views');
+  app.use(express.logger('dev'));             // log every request to the console
 });
 
 app.configure('production', function(){
@@ -41,7 +42,6 @@ app.configure('production', function(){
 
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
-app.use(express.logger('dev'));
 
 // cookieParser should be above session
 app.use(express.cookieParser());
@@ -74,3 +74,13 @@ var port = process.env.PORT || 3000;
 app.listen(port, function () {
   console.log('Express server listening on port %d in %s mode', port, app.get('env'));
 });
+
+if (process.platform !== 'win32') {
+  //
+  // Signal handlers don't work on Windows.
+  //
+  process.on('SIGINT', function () {
+    console.log('http-server stopped.');
+    process.exit();
+  });
+}

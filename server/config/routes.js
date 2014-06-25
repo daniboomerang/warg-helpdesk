@@ -34,12 +34,6 @@ module.exports = function(app) {
   //Setting up the incidenceId param
   app.param('incidenceId', incidences.incidence);
 
-    // Angular Routes
-  app.get('/partials/*', function(req, res) {
-    var requestedView = path.join('./', req.url);
-    res.render(requestedView);
-  });
-
   app.get('/*', function(req, res) {
     if(req.user) {
       res.cookie('user', JSON.stringify(req.user.user_info));
