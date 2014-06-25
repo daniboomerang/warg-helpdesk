@@ -2,13 +2,13 @@
 			
 // Define main module Auth and injects all other modules as dependencies
 var incidences = angular.module('incidences',
-  [
+  	[
     'ui.router',
     'incidencesControllers',
     'incidencesServices',
     'authServices',
     'desk'
-  ]
+ 	]
 )
 .config(function($stateProvider, $urlRouterProvider) {
 

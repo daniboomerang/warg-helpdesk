@@ -1,20 +1,36 @@
-angular.module('desk').directive('menu', function() {
-    return {
-      restrict: 'E',
-      templateUrl: '/modules/common/desk/views/menu.html'
-    };
-  })
+var deskDirectives = angular.module('deskDirectives', []);
 
-angular.module('desk').directive('content', function() {
-    return {
-      restrict: 'E',
-      templateUrl: '/modules/common/desk/views/content.html'
-    };
-  })
+deskDirectives.directive('menusimple', function() {
+  return {
+    restrict: 'E',
+    templateUrl: '/modules/common/desk/views/menu-simple.html'
+  };
+})
 
-angular.module('desk').directive('desk', function() {
-    return {
-      restrict: 'E',
-      templateUrl: '/modules/common/desk/views/desk.html'
-    };
-  })
+deskDirectives.directive('desksimple', function() {
+  return {
+    restrict: 'E',
+    templateUrl: '/modules/common/desk/views/desk-simple.html'
+  };
+})
+
+deskDirectives.directive('menuaccordion', function() {
+  return {
+    restrict: 'E',
+    templateUrl: '/modules/common/desk/views/menu-accordion.html'
+  };
+})
+
+deskDirectives.directive('deskaccordion', function() {
+  return {
+    restrict: 'E',
+    templateUrl: '/modules/common/desk/views/desk-accordion.html'
+  };
+})
+
+deskDirectives.directive('content', function() {
+  return {
+    restrict: 'E',
+    templateUrl: '/modules/common/desk/views/content.html'
+  };
+})

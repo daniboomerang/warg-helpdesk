@@ -4,6 +4,7 @@
 var helpdesk = angular.module('desk',
   [
   	'deskControllers',
-  	'deskServices'
+  	'deskServices',
+  	'deskDirectives'
   ]
 );

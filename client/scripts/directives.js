@@ -2,30 +2,30 @@ var wargHelpdeskDirectives = angular.module('wargHelpdeskDirectives', [])
 
 
 wargHelpdeskDirectives.directive('footer', function() {
-    return {
-      restrict: 'E',
-      templateUrl: '/views/partials/footer.html'
-    };
-  })
+  return {
+    restrict: 'E',
+    templateUrl: '/views/partials/footer.html'
+  };
+});
 
 wargHelpdeskDirectives.directive('navbar', function() {
-    return {
-      restrict: 'E',
-      templateUrl: '/views/partials/navbar.html'
-    };
-  })
+  return {
+    restrict: 'E',
+    templateUrl: '/views/partials/navbar.html'
+  };
+});
 
 wargHelpdeskDirectives.directive('mongooseError', function () {
-    return {
-      restrict: 'A',
-      require: 'ngModel',
-      link: function(scope, element, attrs, ngModel) {
-        element.on('keydown', function() {
-          return ngModel.$setValidity('mongoose', true);
-        });
-      }
-    };
-  });
+  return {
+    restrict: 'A',
+    require: 'ngModel',
+    link: function(scope, element, attrs, ngModel) {
+      element.on('keydown', function() {
+        return ngModel.$setValidity('mongoose', true);
+      });
+    }
+  };
+});
 
 
 wargHelpdeskDirectives
