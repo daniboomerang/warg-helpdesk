@@ -22,11 +22,11 @@
 <!-- apply our angular app to our site -->
 <body ng-app="wargHelpdeskApp">
 
-   <navbar></navbar>
+    <navbar></navbar>
     <!-- MAIN CONTENT -->
     <!-- THIS IS WHERE WE WILL INJECT OUR CONTENT ============================== -->
-    <div ui-view></div>
-   <footer></footer>
+    <div ui-view style="min-height:100%;position:relative;"></div>
+    <footer></footer>
 
     <script src="bower_components/angular/angular.js"></script>
 
@@ -43,7 +43,6 @@
     <script src="scripts/controllers.js"></script>
     <script src="scripts/directives.js"></script>
 
-
     <!-- MODULES -->
 
     <!-- COMMON  -->
@@ -56,20 +55,15 @@
     <script src="modules/common/desk/scripts/directives.js"></script> 
     <script src="modules/common/desk/scripts/services.js"></script> 
 
-
     <!-- SIGNING -->
     <script src="modules/sign/scripts/sign.js"></script> 
     <script src="modules/sign/scripts/controllers.js"></script> 
     <script src="modules/sign/scripts/directives.js"></script> 
 
-
     <!-- INCIDENCES -->
     <script src="modules/incidences/scripts/incidences.js"></script> 
     <script src="modules/incidences/scripts/controllers.js"></script> 
     <script src="modules/incidences/scripts/services.js"></script> 
-
-
-    <!-- endbuild -->
 
 </body>
 </html>
