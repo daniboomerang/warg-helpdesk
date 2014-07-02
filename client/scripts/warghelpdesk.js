@@ -4,18 +4,20 @@ angular.module('wargHelpdeskApp', [
   'ui.router',
   'ngSanitize',
   'ngRoute',
+  'ngAnimate',
   'http-auth-interceptor',
   'ui.bootstrap',
+  'ngGrid',
   'wargHelpdeskControllers',
   'wargHelpdeskDirectives',
-  'sign',
   'auth',
-  'incidences'
+  'sign',
+  'helpdesk'
 ])
 .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     
     $locationProvider.html5Mode(true);
-    $urlRouterProvider.when('/', '/incidences');
+    $urlRouterProvider.when('/', '/helpdesk');
     $urlRouterProvider.otherwise('/');
   })
 

@@ -8,13 +8,22 @@
             </li>
         </ul>
     </div>
-      <div class="nav navbar-nav pull-right">
+     <div class="nav navbar-nav pull-right">
         <ul class="nav navbar-nav user-settings-icon" ng-show="currentUser">
             <div ng-controller="userSettingsCtrl">
                 <button popover-placement="bottom" popover-template="{{ templateUrl }}" popover-title="{{currentUser.username}}" class="btn btn-circle shadow-border-sm"><img src="/images/guest-24-black.png"/></button>
             </div>
         </ul>
     </div>
+    <!--<div class="nav navbar-nav navbar-right" ng-show="currentUser">
+        <ul class="nav navbar-nav user-settings-container">
+            <div ng-controller="userSettingsCtrl">
+                <span><img src="/images/home-32.png"/></span>
+                <span ng-bind-html="notificationState"></span>
+                <button popover-placement="bottom" popover-template="{{ templateUrl }}" popover-title="{{currentUser.username}}" class="btn btn-circle shadow-border-sm"><img src="/images/guest-24-black.png"/></button>
+            </div>
+        </ul>
+    </div>-->
     <!--/.navbar-collapse -->
 </div>
 <!--/.navbar -->

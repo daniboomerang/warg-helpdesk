@@ -1,0 +1,50 @@
+/* Sidebar navigation */
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+.nav-sidebar > li > a {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+  color: #fff;
+  background-color: #428bca;
+}
+
+.active-right-border {
+    border-right:4px solid #BCE8FF;
+}
+
+.module-icon-16{
+  height: 16px; width: 16px; margin-right:10px;
+}
+
+.module-icon-24{
+  height: 24px; width: 24px; margin-right:10px;
+}
+
+.action-link-header{
+}
+
+
+.arrow-right {
+  width: 0; 
+  height: 0; 
+  border-top: 60px solid transparent;
+  border-bottom: 60px solid transparent;
+  
+  border-left: 60px solid black;
+}
+
+/* Overwriting Bottstrap */
+.panel-heading {
+
+}
+.panel-group .panel {
+margin-bottom: 15px;
+}
+/*************************/

@@ -1,0 +1,17 @@
+<div class="container-overview" ng-init="findOne()">
+
+ 	<div class="header">
+        <ul class="nav nav-pills pull-right">
+          <span ng-click="view()"> <img src="/modules/incidences/images/eye-48.png" alt="View Details"></span></li>
+        </ul>
+        <h3 class="text-muted">{{incidence.title}}</h3>
+    </div>
+     
+
+    <div class="jumbotron" style="margin-top: 30px">
+        <pre>
+        {{incidence.content}}
+        </pre>
+    </div>
+
+</div> <!-- /container -->

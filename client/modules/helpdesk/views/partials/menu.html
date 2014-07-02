@@ -1,0 +1,25 @@
+<div class="col-sm-3 col-md-2 sidebar">
+
+  <accordion close-others="oneAtATime">
+
+    <accordion-group>
+      <accordion-heading is-open="status.open">
+      {{currentUser.username}}
+      </accordion-heading>
+      <a ng-click="logout()"><img src="/modules/helpdesk/images/logout-24.png" alt="logout">&nbsp;&nbsp;Sign out</a>&nbsp;&nbsp;
+    </accordion-group>
+
+    <accordion-group ng-repeat="module in menu" is-open="isActiveModule(module.module)" ng-class="" ng-style="{{module.border}}">
+      <accordion-heading>
+      
+      <div ng-click="status[module.module] = !status[module.module]">
+        <span class="pull-left module-icon-24" ng-style="{{module.style}}"></span><div style="padding-top:4px;"><span>{{module.module}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': !status[module.module], 'glyphicon-chevron-right': status[module.module]}"></i></div>
+      </div>  
+      </accordion-heading>
+      <ul class="nav nav-pills nav-stacked">
+        <li ng-class="{active: status.activeState == action.state, active2: status.activeState == action.state}" ng-repeat="action in module.actions"><a ui-sref="{{action.state}}" ng-click="status.activeState = action.state"><span class="pull-left module-icon-16"><img ng-src="{{action.style}}"/></span>&nbsp;{{action.title}}</a>
+        </li>
+      </ul>
+    </accordion-group>
+  </accordion>
+</div>

@@ -3,40 +3,22 @@
 var wargHelpdeskControllers = angular.module('wargHelpdeskControllers', [])
 
 wargHelpdeskControllers.controller('NavbarCtrl', function ($scope, $rootScope, Auth, UserRights, $location) {
-
-    init();
      
-    $scope.logout = function() {
-      Auth.logout(function(err) {
-        if(!err) {
-          $location.path('/login');
-        }
-      });
-    };
-
-    function init(){
-      // Retrieving available modules for currentUser
-      if ($rootScope.currentUser){
-        UserRights.getModules().then(function(modules) {
-          $scope.modules = modules;
-        }, function(reason) {
-          console.log("Error + " + reason);
-        });
-      }  
-      else
-        $scope.modules = [];
-    };
-
-    $scope.account = function() {
-     
-    };
-
-    $rootScope.$on('event:currentUser-changed', function(event) {
-      init();
+  $scope.logout = function() {
+    Auth.logout(function(err) {
+      if(!err) {
+        $location.path('/login');
+      }
     });
+  };
 
-  });
+});
 
 wargHelpdeskControllers.controller('userSettingsCtrl', function ($scope, $rootScope) {
   $scope.templateUrl = '/views/partials/user-settings.html';
+  $scope.state = "<img src='/images/warning-40-red.png'/>";
+  $scope.notificationState = $scope.state;
+
+  //$scope.notificationState.normal = "<img src='/images/warning-40-black.png'/>";
+
 });

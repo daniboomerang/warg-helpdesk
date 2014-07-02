@@ -6,50 +6,47 @@ var incidences = angular.module('incidences',
     'ui.router',
     'incidencesControllers',
     'incidencesServices',
-    'authServices',
-    'desk'
+    'authServices'
  	]
 )
 .config(function($stateProvider, $urlRouterProvider) {
 
-	$urlRouterProvider.when('/incidences', '/incidences/dashboard');
+	$urlRouterProvider.when('/incidences', '/helpdesk/incidences/list');
 	$stateProvider
 	    
 	    // SIGN STATES AND NESTED VIEWS ========================================
-	    .state('incidences', {
+	    .state('helpdesk.incidences', {
 	    	abstract: true,
 	        url: '/incidences',
 	        templateUrl: '/modules/incidences/views/incidences.html',
-	        controller: 'IncidencesCtrl',
-	        resolve:{
-	        	UserRights: "UserRights",
-	        	userRights:  function($http, UserRights){
-            		// $http returns a promise for the url data
-            		/*return $http({method: 'GET', url: '/auth/incidences'}).then( function(userRights) {
-                   		return userRights;
-               		});*/
-	    			return UserRights.getRightsOnIncidences();
-         		}
-	        }
+	        controller: 'IncidencesCtrl'
 	    })
-		    .state('incidences.dashboard', {
-		        url: '/dashboard',
-		        templateUrl: '/modules/incidences/views/partials/dashboard.html'
-		    })
-
-		    .state('incidences.create', {
+		    .state('helpdesk.incidences.create', {
 		        url: '/create',
 		        templateUrl: '/modules/incidences/views/partials/create.html'
 		    })
 
-		    .state('incidences.list', {
-		        url: '/list',
-		        templateUrl: '/modules/incidences/views/partials/list.html'
+		    .state('helpdesk.incidences.view', {
+		        url: '/view/:incidenceId',
+		        templateUrl: '/modules/incidences/views/partials/view.html'
 		    })
-			    .state('incidences.list.all', {
-			        url: '/list/all',
-			        templateUrl: '/modules/incidences/views/partials/list.html'
+
+		    .state('helpdesk.incidences.list', {
+		        url: '/list',
+		        templateUrl: '/modules/incidences/views/partials/list.html',
+		        controller: 'ListCtrl'
+		    })
+
+		    	.state('helpdesk.incidences.list.overview', {
+			        url: '/overview/:incidenceId',
+			        views: {
+		            	'overview': {
+							templateUrl: '/modules/incidences/views/partials/overview.html',
+			            	controller: 'OverviewCtrl'
+			            }    
+		            }    
 			    })
+
 	    
 })
 .run(function ($rootScope, Auth) {Auth.currentUser();});

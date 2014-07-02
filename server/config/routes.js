@@ -17,11 +17,10 @@ module.exports = function(app) {
   var session = require('../controllers/session');
   app.get('/auth/session', auth.ensureAuthenticated, session.session);
   app.post('/auth/session', session.login);
-  app.del('/auth/session', session.logout);
+  app.delete('/auth/session', session.logout);
 
   // User Module and Actions Authorizations
-  app.get('/auth/modules', auth.ensureAuthenticated, auth.userAuthorization.getModules);
-  app.get('/auth/incidences', auth.ensureAuthenticated, auth.userAuthorization.getRightsOnIncidences);
+  app.get('/auth/rights', auth.ensureAuthenticated, auth.userAuthorization.getRights);
 
   // Incidence Routes
   var incidences = require('../controllers/incidences');
@@ -29,7 +28,7 @@ module.exports = function(app) {
   app.post('/api/incidences', auth.ensureAuthenticated, incidences.create);
   app.get('/api/incidences/:incidenceId', incidences.show);
   app.put('/api/incidences/:incidenceId', auth.ensureAuthenticated, incidences.update);
-  app.del('/api/incidences/:incidenceId', auth.ensureAuthenticated, incidences.destroy);
+  app.delete('/api/incidences/:incidenceId', auth.ensureAuthenticated, incidences.destroy);
 
   //Setting up the incidenceId param
   app.param('incidenceId', incidences.incidence);

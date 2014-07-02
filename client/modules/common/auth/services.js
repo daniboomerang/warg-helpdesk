@@ -97,20 +97,9 @@ authServices.factory('User', function ($resource) {
 
 authServices.factory('UserRights', function ($http, $q){
   return {
-    getModules : function() {
-      var deferred = $q.defer(); 
-      $http.get('/auth/modules').success(function(data) {
-        var modules = data.modules;
-        deferred.resolve(modules);
-      }).error(function() {
-        deferred.reject();
-      });
-      return deferred.promise;  
-    },
-
-    getRightsOnIncidences : function() {
+    getRights : function() {
       var deferred = $q.defer();
-      $http.get('/auth/incidences').success(function(data) {
+      $http.get('/auth/rights').success(function(data) {
         var actions = data.actions
         deferred.resolve(data);
       }).error(function() {

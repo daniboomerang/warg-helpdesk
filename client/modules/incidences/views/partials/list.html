@@ -1,12 +1,18 @@
-<section ng-init="find()">
-    <div ng-repeat="incidence in incidences">
-        <h1><a ng-href="incidences/{{incidence._id}}">{{incidence.title}}</a></h1>
-        <p>{{incidence.content}}</p>
-        <div>
-            <span class="badge badge-success">Created {{incidence.created | date:'medium'}}</span>
-            <div class="pull-right"><span class="badge badge-success">Created by {{incidence.creator.username}}</span></div>
-        </div>
-        <hr>
-    </div>
-    <h1 ng-hide="!incidences || incidences.length">No incidences yet. <br> Why don't you <a href="/incidences/create">Create One</a>?</h1>
+<section  ng-init="find()">
+<div class="row">
+	<div class="panel panel-info">
+		<div class="panel-heading clearfix">
+	      <h3 class="panel-title pull-left" style="padding-top: 10px;">Incidences</h3>
+	      <div class="btn-group pull-right">
+	        <i class="btn btn-default btn-sm" ng-click="showFilterBar = !showFilterBar"> <img src="/modules/incidences/images/filter-16.png" style="max-width:100%;" alt="Filter Incidences"></i>
+	      </div>
+	    </div>
+		<div class="panel-body">
+				<input ng-show="showFilterBar" type="text" class="form-control" style="max-width: 400px"placeholder="Filter incidences" ng-model="filterOptions.filterText" />
+			
+			<div class="gridStyle border-incidences" ng-grid="gridOptions"></div>
+			<div ui-view="overview" class="span9 slide"></div>
+		</div>	
+	</div>
+</div>
 </section>
