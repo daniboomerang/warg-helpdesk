@@ -1,0 +1,72 @@
+
+
+<div class="container-view" ng-init="findOne()">
+
+<div id="view-nav-container">        
+		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		  <div class="container" style="padding:10px; padding-left: 250px;">
+		    <div class="row">
+          <span ng-click="goToState(rate)" class="icon-navbar-container"> <img src="/modules/incidences/images/icons/rating-32.png" alt="View Details"></span>
+          <span ng-click="goToState(effort)" class="icon-navbar-container"> <img src="/modules/incidences/images/icons/effort-32.png" alt="View Details"></span>
+          <span ng-click="goToState(close)" class="icon-navbar-container"> <img src="/modules/incidences/images/icons/close-topic-32.png" alt="View Details"></span>
+          <span ng-click="goToState(reply)" class="icon-navbar-container"> <img src="/modules/incidences/images/icons/reply-32.png" alt="View Details"></span>
+        </div>
+		  </div>
+		</nav>
+
+</div>
+
+ 	<div class="header">
+        <ul class="nav nav-pills pull-right">
+          <span ng-click="view()"> <img src="/modules/incidences/images/icons/eye-48.png" alt="View Details"></span></li>
+        </ul>
+        <h3 class="text-muted">{{incidence.title}}</h3>
+    </div>
+     
+
+    <div class="jumbotron" style="margin-top: 30px">
+        <pre>
+        {{incidence.content}}
+        </pre>
+    </div>
+
+    <accordion close-others="false">
+    <accordion-group ng-repeat="post in incidence.history" is-open="$index == incidence.history.length -1" ng-class="">
+      <accordion-heading>
+      {{post.postMetadata}}
+      </accordion-heading>
+          {{post.postContent}}
+    </accordion-group>
+  </accordion>
+
+
+  <div ng-controller="ModalCtrl">
+      <script type="text/ng-template" id="myModalContent.html">
+          <div class="modal-header">
+              <h3 class="modal-title">Im a modal!</h3>
+          </div>
+          <div class="modal-body">
+              <ul>
+                  <li ng-repeat="item in items">
+                      <a ng-click="selected.item = item">{{ item }}</a>
+                  </li>
+              </ul>
+              Selected: <b>{{ selected.item }}</b>
+          </div>
+          <div class="modal-footer">
+              <button class="btn btn-primary" ng-click="ok()">OK</button>
+              <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+          </div>
+      </script>
+
+      <button class="btn btn-default" ng-click="open()">Open me!</button>
+      <button class="btn btn-default" ng-click="open('lg')">Large modal</button>
+      <button class="btn btn-default" ng-click="open('sm')">Small modal</button>
+      <div ng-show="selected">Selection from a modal: {{ selected }}</div>
+  </div>
+
+<div ui-view="rate" class="span9 slide"></div>
+<div ui-view="effort" class="span9 slide"></div>
+<div ui-view="assign" class="span9 slide"></div>
+
+</div> <!-- /container -->

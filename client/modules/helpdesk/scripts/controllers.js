@@ -20,7 +20,7 @@ helpdeskControllers.controller('HelpdeskCtrl', function ($q, $scope, $rootScope,
 				var currentModule = $scope.menu[i].module.toLowerCase();
 				$scope.status[currentModule] = true;
   			}
-	  		$scope.status.activeState = "helpdesk.incidences.list";
+	  		$scope.status.activeState = "helpdesk.incidences.open.list";
 		});
 	};
 

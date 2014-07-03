@@ -38,6 +38,13 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, Incidences,
     });
   };
 
+  $scope.updateProperty = function(property) {
+    var incidence = $scope.incidence;
+    incidence.$update(function() {
+      $location.path('incidences/' + incidence._id + '/' + property);
+    });
+  };
+
   $scope.find = function() {
     Incidences.query(function(incidences) {
       $scope.incidences = incidences;
@@ -49,6 +56,66 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, Incidences,
       incidenceId: $state.params.incidenceId
     }, function(incidence) {
       $scope.incidence = incidence;
+
+
+/* @@@ Hardcoded history => This must come from the server */
+
+      $scope.incidence.history = [
+    {
+      postMetadata: [
+        {
+          date: "updatedDate",
+          by: "tech1"
+        }
+      ],
+      postContent: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui."
+    },
+    {
+      postMetadata: [
+        {
+          date: "updatedDate",
+          by: "user1"
+        }
+      ],
+      postContent: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui."
+    },
+    {
+      postMetadata: [
+        {
+          date: "updatedDate",
+          by: "tech1"
+        }
+      ],
+      postContent: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui."
+    },
+    {
+      postMetadata: [
+        {
+          date: "updatedDate",
+          by: "tech1"
+        }
+      ],
+      postContent: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui."
+    },
+    {
+      postMetadata: [
+        {
+          date: "updatedDate",
+          by: "user1"
+        }
+      ],
+      postContent: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui."
+    },
+    {
+      postMetadata: [
+        {
+          date: "updatedDate",
+          by: "tech1"
+        }
+      ],
+      postContent: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui."
+    }
+  ];
     });
   };
 
@@ -60,7 +127,7 @@ incidencesControllers.controller('ListCtrl', function ($scope, $stateParams, $st
 
 
   $scope.onClickRow = function(row) {
-    $state.go('helpdesk.incidences.list.overview', { incidenceId: row._id });
+    $state.go('helpdesk.incidences.open.list.overview', { incidenceId: row._id });
   };
 
 
@@ -101,9 +168,141 @@ incidencesControllers.controller('ListCtrl', function ($scope, $stateParams, $st
 
 incidencesControllers.controller('OverviewCtrl', function ($scope, $routeParams, $state) {
 
-  $scope.view = function () {
-    $state.go('helpdesk.incidences.view', $state.params);
+  $scope.open = function () {
+    $state.go('helpdesk.incidences.open.incidence', $state.params);
   };  
 
 });
+
+incidencesControllers.controller('IncidenceCtrl', function ($scope, $routeParams, $state, incidenceAuth) {
+
+  initAuth()
+
+  $scope.goToState = function (state) {
+    $state.goToState('helpdesk.incidences.open.incidence' + state, $state.params);
+  }; 
+
+  function initAuth(){
+    $scope.incidenceAuth = {};
+    $scope.incidenceAuth.rate = incidenceAuth.isAllowedToReportRate($scope.incidence);
+    $scope.incidenceAuth.effort = incidenceAuth.isAllowedToReportEffort($scope.incidence);
+    $scope.incidenceAuth.assign = incidenceAuth.isAllowedToAssign($scope.incidence);
+  }
+
+});
+
+
+incidencesControllers.controller('RateCtrl', function ($scope, $routeParams, $state) {
+
+  $scope.rate = 7;
+  $scope.max = 10;
+  $scope.isReadonly = false;
+
+  $scope.hoveringOver = function(value) {
+    $scope.overStar = value;
+    $scope.percent = 100 * (value / $scope.max);
+  };
+
+  $scope.ratingStates = [
+    {stateOn: 'glyphicon-ok-sign', stateOff: 'glyphicon-ok-circle'},
+    {stateOn: 'glyphicon-star', stateOff: 'glyphicon-star-empty'},
+    {stateOn: 'glyphicon-heart', stateOff: 'glyphicon-ban-circle'},
+    {stateOn: 'glyphicon-heart'},
+    {stateOff: 'glyphicon-off'}
+  ];
+
+});
+
+incidencesControllers.controller('EffortCtrl', function ($scope, $routeParams, $state) {
+
+$scope.max = 200;
+
+  $scope.random = function() {
+    var value = Math.floor((Math.random() * 100) + 1);
+    var type;
+
+    if (value < 25) {
+      type = 'success';
+    } else if (value < 50) {
+      type = 'info';
+    } else if (value < 75) {
+      type = 'warning';
+    } else {
+      type = 'danger';
+    }
+
+    $scope.showWarning = (type === 'danger' || type === 'warning');
+
+    $scope.dynamic = value;
+    $scope.type = type;
+  };
+  $scope.random();
+
+  $scope.randomStacked = function() {
+    $scope.stacked = [];
+    var types = ['success', 'info', 'warning', 'danger'];
+
+    for (var i = 0, n = Math.floor((Math.random() * 4) + 1); i < n; i++) {
+        var index = Math.floor((Math.random() * 4));
+        $scope.stacked.push({
+          value: Math.floor((Math.random() * 30) + 1),
+          type: types[index]
+        });
+    }
+  };
+  $scope.randomStacked();
+
+});
+
+
+incidencesControllers.controller('AssignCtrl', function ($scope, $routeParams, $state) {
+
+  $scope.technicians = ['tech1','tech1','tech1','tech1','tech1','tech1','tech1','tech1'];
+
+});
+
+
+var ModalCtrl = function ($scope, $modal, $log) {
+
+  $scope.items = ['item1', 'item2', 'item3'];
+
+  $scope.open = function (size) {
+
+    var modalInstance = $modal.open({
+      templateUrl: 'myModalContent.html',
+      controller: ModalInstanceCtrl,
+      size: size,
+      resolve: {
+        items: function () {
+          return $scope.items;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (selectedItem) {
+      $scope.selected = selectedItem;
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
+};
+
+// Please note that $modalInstance represents a modal window (instance) dependency.
+// It is not the same as the $modal service used above.
+
+var ModalInstanceCtrl = function ($scope, $modalInstance, items) {
+
+  $scope.items = items;
+  $scope.selected = {
+    item: $scope.items[0]
+  };
+
+  $scope.ok = function () {
+    $modalInstance.close($scope.selected.item);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+};
 

@@ -21,25 +21,25 @@ exports.userAuthorization = {
 
     function getRightsOnIncidences (role) {  
       if (role === "user"){
-        return ['create', 'view', 'edit', 'rate', 'list'];
+        return ['create', 'open', 'rate', 'list'];
       }
         else if (role === "tech"){
-        return ['asign', 'accept', 'view', 'edit', 'close', 'list'];
+        return ['create', 'rate', 'assign', 'open', 'close', 'list'];
       }  
       else if (role === "admin"){
-        return ['create', 'view', 'edit', 'rate', 'list'];
+        return ['create', 'assign', 'open', 'rate', 'list'];
       }  
     }
 
     function getRightsOnInventory (role) {  
       if (role === "admin"){
-        return ['create', 'view', 'edit', 'list'];
+        return ['create', 'open', 'list', 'delete'];
       }  
     }
 
     function getRightsOnReporting (role) {  
       if (role === "admin"){
-        return ['expenses', 'effort'];
+        return ['expenses', 'effort', 'statistics'];
       }  
     }
 
@@ -59,7 +59,7 @@ exports.userAuthorization = {
     }
 
     var role = req.user.role;
-    if(role != null){
+    if((role != null) && (req.isAuthenticated())){
       var userRights = [];
       var rights = [];        
       var modules = getModules(role); 
