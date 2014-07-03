@@ -6,7 +6,7 @@
       <accordion-heading is-open="status.open">
       {{currentUser.username}}
       </accordion-heading>
-      <a ng-click="logout()"><img src="/modules/helpdesk/images/logout-24.png" alt="logout">&nbsp;&nbsp;Sign out</a>&nbsp;&nbsp;
+      <a ng-click="logout()"><img src="/modules/helpdesk/images/icons/logout-24.png" alt="logout">&nbsp;&nbsp;Sign out</a>&nbsp;&nbsp;
     </accordion-group>
 
     <accordion-group ng-repeat="module in menu" is-open="isActiveModule(module.module)" ng-class="" ng-style="{{module.border}}">

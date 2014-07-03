@@ -75,7 +75,7 @@ helpdeskServices.service('helpdeskConfigService', function ($q, UserRights, menu
 				else if (rightsOnIncidences[i] == 'create')
 					actions.push({title: 'Create', state: 'helpdesk.incidences.create', style: moduleMenuStyle.create});
 				else if (rightsOnIncidences[i] == 'rate')
-					actions.push({title: 'Rating', state: 'helpdesk.incidences.create', style: moduleMenuStyle.rating});
+					actions.push({title: 'Rating', state: 'helpdesk.incidences.rate', style: moduleMenuStyle.rating});
 			}		
 		}
         var menu = {module: 'Incidences', actions: actions, style: moduleMenuStyle.module};
