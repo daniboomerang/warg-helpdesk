@@ -1,8 +1,11 @@
-.gridStyle {
-	margin-top: 15px;
-	width: 100%;
-	height: 500px;
+
+/* Custom page header */
+.header-incidence {
+  border-bottom: 1px solid #e5e5e5;
+  margin-top: 50px;
 }
+
+/****** LIST *******/
 
 .border-incidences{
 	border-radius: 4px 4px 4px 0px;
@@ -11,42 +14,37 @@
 	border: 1px solid #62b5f5;
 }
 
-/* Custom page header */
-.header {
-  border-bottom: 1px solid #e5e5e5;
-}
-/* Make the masthead heading the same height as the navigation */
-.header h3 {
-  padding-bottom: 19px;
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 40px;
+.severity-high{
+	background-color: red;
 }
 
-
-
-/****** VIEW *******/
-
-.container.view{
-	margin-top: 20px;
-	padding: 10px;
-	padding-top:70px;
-
+.list-container{
+	position:relative;top:0;left:0;right:0;bottom:0
 }
-#view-nav-container {
+
+/****** INCIDENCE *******/
+
+.jumbotron{
+	margin-top: 20px
+}
+
+.container-incidence{
+	padding: 10px;	
+}
+
+#incidence-nav-container {
 	position: fixed;left: 0;right: 0; top:0; width: auto;
 }
 
 .icon-navbar-container{
-	padding: 10px;
-	margin-right: 20px;
+	padding: 5px;
+	margin-left: 10px;
 }
 
-
 /***** OVERVIEW ******/
+
 .container-overview{
 	margin-top: 20px;
 	padding: 10px;
 }
-
 

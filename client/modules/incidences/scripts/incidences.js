@@ -6,6 +6,7 @@ var incidences = angular.module('incidences',
     'ui.router',
     'incidencesControllers',
     'incidencesServices',
+    'incidencesDirectives',
     'authServices'
  	]
 )

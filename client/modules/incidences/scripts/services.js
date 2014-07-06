@@ -23,17 +23,21 @@ var assignedTo = '';
 return {
 
 	isAllowedToReportRate: function(incidence){
-		return ((status == 'close') &&
+		return true;/*((status == 'close') &&
 			    (assignedTo != $rootScope.currentUser) &&
 			    (assignedTo != null) && (assignedTo != '') &&
-			    (incidence.creator == $rootScope.currentUser)); 
+			    (incidence.creator == $rootScope.currentUser)); */
 	},
 	isAllowedToReportEffort: function(incidence){
-		return (assignedTo == $rootScope.currentUser); 
+		return true;/*(assignedTo == $rootScope.currentUser); */
 	},
 	isAllowedToAssign: function(incidence){
-		return ((status == 'open') &&
-				($rootScope.currentUser.role != 'user')); 
+		return true;/*((status == 'open') &&
+				($rootScope.currentUser.role != 'user')); */
+	},
+	isAllowedToClose: function(incidence){
+		return true;/*((status == 'assigned') &&
+				(assigned == $rootScope.currentUser)); */
 	}
 }
 

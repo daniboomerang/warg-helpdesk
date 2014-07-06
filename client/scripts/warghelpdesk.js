@@ -7,7 +7,8 @@ angular.module('wargHelpdeskApp', [
   'ngAnimate',
   'http-auth-interceptor',
   'ui.bootstrap',
-  'ngGrid',
+  'trNgGrid',
+  /*'ngGrid',*/
   'wargHelpdeskControllers',
   'wargHelpdeskDirectives',
   'auth',

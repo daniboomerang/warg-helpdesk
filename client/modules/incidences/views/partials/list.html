@@ -3,14 +3,44 @@
 	<div class="panel panel-info">
 		<div class="panel-heading clearfix">
 	      <h3 class="panel-title pull-left" style="padding-top: 10px;">Incidences</h3>
-	      <div class="btn-group pull-right">
-	        <i class="btn btn-default btn-sm" ng-click="showFilterBar = !showFilterBar"> <img src="/modules/incidences/images/icons/filter-16.png" style="max-width:100%;" alt="Filter Incidences"></i>
-	      </div>
 	    </div>
-		<div class="panel-body">
-				<input ng-show="showFilterBar" type="text" class="form-control" style="max-width: 400px"placeholder="Filter incidences" ng-model="filterOptions.filterText" />
-			
-			<div class="gridStyle border-incidences" ng-grid="gridOptions"></div>
+		<div class="panel-body">	
+			<div class="row-fluid">	
+			  	<div class="span12 list-container">
+			    <table tr-ng-grid="" items="incidences" selected-items="selectedIncidences" selection-mode="SingleRow">
+				    <thead>
+				        <tr>
+				            <th field-name="severity" display-format="uppercase" cell-width="5em">Severity</th>  
+				            <th field-name="priority" display-format="uppercase" cell-width="5em">Priority</th>
+				            <th field-name="title">Title</th>
+				            <th field-name="creator.username" cell-width="7em">Owner</th>
+				            <th field-name="created" cell-width="8em">Created</th>
+				            <th field-name="updated" cell-width="8em">Updated</th>
+				            <th field-name="status" cell-width="5em">Status</th>
+				            <th field-name="assigned" cell-width="5em">Assigned</th>
+				        </tr>
+				    </thead>
+		            <tbody>
+		                <tr>
+		                    <!--Create the row template, remember the field-name attribute to match the columns defined in the header-->
+		                    <td field-name="created">{{gridItem.created | date:'medium'}}</td>
+		                    <td field-name="updated">{{gridItem.updated[gridItem.updated.length - 1]| date:'medium'}}</td>
+
+		                </tr>
+		            </tbody>
+		            <tfoot>
+		                <tr>
+		                    <td colspan="10">	
+		                        <form class="form-inline tr-ng-grid-footer" grid="">
+		                            <div class="pull-left" tr-ng-grid-global-filter=""></div>
+		                            <div class="pull-right" tr-ng-grid-pager=""></div>
+		                        </form>
+		                    </td>
+		                </tr>
+		            </tfoot>
+		        </table>
+			  	</div>
+			</div>  	
 			<div ui-view="overview" class="span9 slide"></div>
 		</div>	
 	</div>

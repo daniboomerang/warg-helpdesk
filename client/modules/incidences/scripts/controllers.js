@@ -58,111 +58,58 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, Incidences,
       $scope.incidence = incidence;
 
 
+      $scope.incidence.assigned = null;
 /* @@@ Hardcoded history => This must come from the server */
-
+    var date = Date.now();
       $scope.incidence.history = [
-    {
-      postMetadata: [
         {
-          date: "updatedDate",
-          by: "tech1"
-        }
-      ],
-      postContent: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui."
-    },
-    {
-      postMetadata: [
+          post: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.",
+          date: date,
+          author: "tech1"
+        },
+         {
+          post: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.",
+          date: date,
+          author: "tech1"
+        },
+         {
+          post: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.",
+          date: date,
+          author: "tech1"
+        },
+         {
+          post: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.",
+          date: date,
+          author: "tech1"
+        },
         {
-          date: "updatedDate",
-          by: "user1"
+          post: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.",
+          date: date,
+          author: "tech1"
         }
-      ],
-      postContent: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui."
-    },
-    {
-      postMetadata: [
-        {
-          date: "updatedDate",
-          by: "tech1"
-        }
-      ],
-      postContent: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui."
-    },
-    {
-      postMetadata: [
-        {
-          date: "updatedDate",
-          by: "tech1"
-        }
-      ],
-      postContent: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui."
-    },
-    {
-      postMetadata: [
-        {
-          date: "updatedDate",
-          by: "user1"
-        }
-      ],
-      postContent: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui."
-    },
-    {
-      postMetadata: [
-        {
-          date: "updatedDate",
-          by: "tech1"
-        }
-      ],
-      postContent: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui."
-    }
-  ];
+      ];
+      $scope.incidence.rate = -1; 
+      $scope.incidence.effort = -1;
     });
   };
 
 });
 
-incidencesControllers.controller('ListCtrl', function ($scope, $stateParams, $state) {
+incidencesControllers.controller('ListCtrl', function ($scope, $stateParams, $state, $rootScope) {
 
-  init();
+  $scope.selectedIncidences = [];
+  $scope.$watch('selectedIncidences', function() {
+    if ($scope.selectedIncidences.length > 0){
+      if ($scope.selectedIncidences.length > 1)
+        $scope.selectedIncidences.splice( 0, 1 );
+      $scope.onSelectedIncidence($scope.selectedIncidences[$scope.selectedIncidences.length - 1]);
+    } 
+  },
+  true);
 
-
-  $scope.onClickRow = function(row) {
-    $state.go('helpdesk.incidences.open.list.overview', { incidenceId: row._id });
+  $scope.onSelectedIncidence = function(incidence) {
+    $state.go('helpdesk.incidences.open.list.overview', { incidenceId: incidence._id });
   };
-
-
-
-  function init(){
-
-    $scope.filterOptions = { filterText: '', useExternalFilter: false };
-
-    $scope.gridOptions = {
-      data: 'incidences',
-      enableRowSelection: true,
-      multiSelect: false, 
-      columnDefs: 'colDefs',
-      //rowTemplate: '<div ng-click="onClickRow(row.entity)" ng-style="{ \'cursor\': row.cursor }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell {{col.cellClass}}"><div class="ngVerticalBar" ng-style="{height: rowHeight}" ng-class="{ ngVerticalBarVisible: !$last }">&nbsp;</div><div ng-cell></div></div>',
-      rowTemplate: '<div ng-click="onClickRow(row.entity)" style="height: 100%" ng-class="{green: row.getProperty(\'severity\') == \'\'}"><div ng-style="{ \'cursor\': row.cursor }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell ">' +
-                             '<div class="ngVerticalBar" ng-style="{height: rowHeight}" ng-class="{ ngVerticalBarVisible: !$last }"> </div>' +
-                             '<div ng-cell></div>' +
-                       '</div></div>',
-      cellTemplate: '<div style="height: 20px"></div>',
-      filterOptions: $scope.filterOptions
-    };
-
-    $scope.colDefs = [
-      {field  : "severity", displayName: 'Severity'},
-      {field  : "priority", displayName: 'Priority'},
-      {field  : "title", displayName: 'Title'},
-      {field  : "creator.username", displayName: 'Owner'},
-      {field  : "updated", displayName: 'Updated'},
-      {field  : "created", displayName: 'Created'},
-      {field  : "status", displayName: 'Status'},
-      {field  : "assigned", displayName: 'Assigned'},
-    ];
-
-    $scope.showFilterBar = false;
-  }
 
 });
 
@@ -184,15 +131,99 @@ incidencesControllers.controller('IncidenceCtrl', function ($scope, $routeParams
 
   function initAuth(){
     $scope.incidenceAuth = {};
+
     $scope.incidenceAuth.rate = incidenceAuth.isAllowedToReportRate($scope.incidence);
     $scope.incidenceAuth.effort = incidenceAuth.isAllowedToReportEffort($scope.incidence);
     $scope.incidenceAuth.assign = incidenceAuth.isAllowedToAssign($scope.incidence);
+    $scope.incidenceAuth.close = incidenceAuth.isAllowedToClose($scope.incidence);
+    
+    $scope.edit = {};
+
+    $scope.edit.rate = false;
+    $scope.edit.effort = false;
+    $scope.edit.assign = false;
+  }
+
+  $scope.toogleRateMode = function(){
+    $scope.edit.rate = !$scope.edit.rate;
+  }
+
+  $scope.toogleEffortMode = function(){
+    $scope.edit.effort = !$scope.edit.effort;
+  }
+
+  $scope.toogleAssignMode = function(){
+    $scope.edit.assign = !$scope.edit.assign;
   }
 
 });
 
+incidencesControllers.controller('RateCtrl', function ($scope) {
 
-incidencesControllers.controller('RateCtrl', function ($scope, $routeParams, $state) {
+  $scope.rating = {};
+  $scope.rating.max = 5;
+  $scope.rating.rate = 1;
+  $scope.$watch('incidence', function() {
+    $scope.rating.percent = (100 * $scope.incidence.rate) / $scope.rating.max;
+  },
+  true);
+  
+  $scope.hoveringOver = function(value,object) {
+    $scope.rating.overStar = value;
+    $scope.rating.percent =  (100 * value) / $scope.rating.max;
+  };
+
+  $scope.saveRating = function() {
+    $scope.incidence.rate = $scope.rating.rate;
+    $scope.edit.rate = false;
+  };
+});
+
+
+incidencesControllers.controller('EffortCtrl', function ($scope, $routeParams, $state) {
+  $scope.mytime = new Date();
+  $scope.mytime.setHours( 0 );
+  $scope.mytime.setMinutes( 0 );
+  $scope.hstep = 1;
+  $scope.mstep = 15;
+  $scope.changed = function () {
+    console.log('Time changed to: ' + $scope.mytime);
+  };
+
+});
+
+
+incidencesControllers.controller('AssignCtrl', function ($scope, $routeParams, $state) {
+  $scope.technicians = ["tech1", "tech2", "tech3", "tech4", "tech5"];
+});
+
+incidencesControllers.controller('ModalCtrl', function ($scope, $modal, $log) {
+
+  $scope.openRate = function () {
+
+    var modalInstance = $modal.open({
+      templateUrl: '/modules/incidences/views/partials/rate.html',
+      controller: ModalInstanceCtrl,
+      size: 'lg',
+      resolve: {
+        incidence: function () {
+          return $scope.incidence;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (rate) {
+      $scope.rate = rate;
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
+});
+
+// Please note that $modalInstance represents a modal window (instance) dependency.
+// It is not the same as the $modal service used above.
+
+incidencesControllers.controller('ModalInstanceCtrl', function ($scope, $modalInstance, incidence) {
 
   $scope.rate = 7;
   $scope.max = 10;
@@ -211,98 +242,23 @@ incidencesControllers.controller('RateCtrl', function ($scope, $routeParams, $st
     {stateOff: 'glyphicon-off'}
   ];
 
-});
-
-incidencesControllers.controller('EffortCtrl', function ($scope, $routeParams, $state) {
-
-$scope.max = 200;
-
-  $scope.random = function() {
-    var value = Math.floor((Math.random() * 100) + 1);
-    var type;
-
-    if (value < 25) {
-      type = 'success';
-    } else if (value < 50) {
-      type = 'info';
-    } else if (value < 75) {
-      type = 'warning';
-    } else {
-      type = 'danger';
-    }
-
-    $scope.showWarning = (type === 'danger' || type === 'warning');
-
-    $scope.dynamic = value;
-    $scope.type = type;
-  };
-  $scope.random();
-
-  $scope.randomStacked = function() {
-    $scope.stacked = [];
-    var types = ['success', 'info', 'warning', 'danger'];
-
-    for (var i = 0, n = Math.floor((Math.random() * 4) + 1); i < n; i++) {
-        var index = Math.floor((Math.random() * 4));
-        $scope.stacked.push({
-          value: Math.floor((Math.random() * 30) + 1),
-          type: types[index]
-        });
-    }
-  };
-  $scope.randomStacked();
-
-});
-
-
-incidencesControllers.controller('AssignCtrl', function ($scope, $routeParams, $state) {
-
-  $scope.technicians = ['tech1','tech1','tech1','tech1','tech1','tech1','tech1','tech1'];
-
-});
-
-
-var ModalCtrl = function ($scope, $modal, $log) {
-
-  $scope.items = ['item1', 'item2', 'item3'];
-
-  $scope.open = function (size) {
-
-    var modalInstance = $modal.open({
-      templateUrl: 'myModalContent.html',
-      controller: ModalInstanceCtrl,
-      size: size,
-      resolve: {
-        items: function () {
-          return $scope.items;
-        }
-      }
-    });
-
-    modalInstance.result.then(function (selectedItem) {
-      $scope.selected = selectedItem;
-    }, function () {
-      $log.info('Modal dismissed at: ' + new Date());
-    });
-  };
-};
-
-// Please note that $modalInstance represents a modal window (instance) dependency.
-// It is not the same as the $modal service used above.
-
-var ModalInstanceCtrl = function ($scope, $modalInstance, items) {
-
-  $scope.items = items;
-  $scope.selected = {
-    item: $scope.items[0]
-  };
-
   $scope.ok = function () {
-    $modalInstance.close($scope.selected.item);
+    $modalInstance.close($scope.rate);
   };
 
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
   };
+});
+
+
+
+// Please note that $modalInstance represents a modal window (instance) dependency.
+// It is not the same as the $modal service used above.
+
+var CreateCtrl = function ($scope, $modalInstance, items) {
+
 };
+
+
 

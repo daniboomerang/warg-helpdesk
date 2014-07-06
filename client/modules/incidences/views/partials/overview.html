@@ -1,17 +1,16 @@
 <section ng-init="findOne()">
 <div class="container-overview">
 
- 	<div class="header">
+    <div class="header">
         <ul class="nav nav-pills pull-right">
-          <span ng-click="open()"> <img src="/modules/incidences/images/icons/eye-48.png" alt="View Details"></span></li>
+            <li ng-click="open()"><span><img src="/modules/incidences/images/icons/eye-48.png" alt="Open Incidence"></span></li>
         </ul>
-        <h3 class="text-muted">{{incidence.title}}</h3>
+        <h4 class="text-muted">{{incidence.title}}</h4>
     </div>
-     
 
     <div class="jumbotron" style="margin-top: 30px">
         <pre>
-        {{incidence.content}}
+        {{incidence.description}}
         </pre>
     </div>
 

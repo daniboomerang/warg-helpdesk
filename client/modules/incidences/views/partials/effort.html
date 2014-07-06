@@ -1,27 +1,31 @@
-<section>
-
-<div>
-
-    <h3>Static</h3>
-    <div class="row">
-        <div class="col-sm-4"><progressbar value="55"></progressbar></div>
-        <div class="col-sm-4"><progressbar class="progress-striped" value="22" type="warning">22%</progressbar></div>
-        <div class="col-sm-4"><progressbar class="progress-striped active" max="200" value="166" type="danger"><i>166 / 200</i></progressbar></div>
-    </div>
-
-    <hr />
-    <h3>Dynamic <button class="btn btn-sm btn-primary" type="button" ng-click="random()">Randomize</button></h3>
-    <progressbar max="max" value="dynamic"><span style="color:black; white-space:nowrap;">{{dynamic}} / {{max}}</span></progressbar>
-    
-    <small><em>No animation</em></small>
-    <progressbar animate="false" value="dynamic" type="success"><b>{{dynamic}}%</b></progressbar>
-
-    <small><em>Object (changes type based on value)</em></small>
-    <progressbar class="progress-striped active" value="dynamic" type="{{type}}">{{type}} <i ng-show="showWarning">!!! Watch out !!!</i></progressbar>
-    
-    <hr />
-    <h3>Stacked <button class="btn btn-sm btn-primary" type="button" ng-click="randomStacked()">Randomize</button></h3>
-    <progress><bar ng-repeat="bar in stacked track by $index" value="bar.value" type="{{bar.type}}"><span ng-hide="bar.value < 5">{{bar.value}}%</span></bar></progress>
-
+<div ng-controller="EffortCtrl">
+	<div class="box-edit-effort" ng-show="edit.effort">
+		<div class="row">
+         	<div class="pull-left"> 
+         	<div class="controls input-group time-input">
+                 <input type="number" ng-model="hours" class="form-control" placeholder="hours" class="form-control"><div class="input-group-addon bg-success">h</div>
+                 <input type="number" ng-model="minutes" class="form-control" placeholder="minutes" class="form-control"><div class="input-group-addon">m</div>
+            </div>		
+	        
+         	</div>
+			<div class="pull-right save-button">  					
+				<div ng-click="saveAssign()" class="btn btn-default"> <img src="/modules/incidences/images/icons/save-24.png" alt="Save time reporting"></div>
+            </div>
+        </div>    
+	</div>    
+	<div class="box-show-effort" ng-show="!edit.effort">
+		<div ng-show="incidence.effort == -1">
+			<div> <img src="/modules/incidences/images/icons/stopwatch-gray-48.png" alt="Time"></div>
+			<font size="1" class="text-muted">No time reported</font>
+		</div>
+		<div ng-show="incidence.effort > -1">
+            <div class="row">
+             	<div class="pull-left"> <img src="/modules/incidences/images/icons/stopwatch-blue-48.png" alt="Incidence Assigned">
+             	</div>
+  				<div class="pull-right">  					
+  					{{incidence.assigned.username}}
+	            </div>    
+            </div>    
+        </div> 
+	</div> 
 </div>
-</section>

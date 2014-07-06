@@ -8,13 +8,6 @@ wargHelpdeskDirectives.directive('footer', function() {
   };
 });
 
-wargHelpdeskDirectives.directive('navbar', function() {
-  return {
-    restrict: 'E',
-    templateUrl: '/views/partials/navbar.html'
-  };
-});
-
 wargHelpdeskDirectives.directive('mongooseError', function () {
   return {
     restrict: 'A',

@@ -5,40 +5,8 @@ body, html {
   background: transparent;
 }
 
-/**********/
-/* NAVBAR */
-/**********/
-
-.logo{
-  margin-top: -10px;
-}
-
-.navbar-custom{
-    -webkit-box-shadow: 2px 2px 3px -2px rgba(0,0,0,0.75);
-  -moz-box-shadow: 2px 2px 3px -2px rgba(0,0,0,0.75);
-    box-shadow: 2px 2px 3px -2px rgba(0,0,0,0.75);
-}
-
-/* User Settings */
-
-.popover {
-  right: 20px;
-}
-.popover.bottom .arrow {  
-  margin-left: 14px;  
-  top: -11px;  
-}  
-
-.user-settings-icon{
-  margin-top: 9px;
-  margin-right: 53px;
-  padding: 2px;
-}
-
-.user-settings-container{
-  padding: 5px;
-  padding-left: 7px;
-  max-width: 120px;
+#app{
+  min-height:96%;position:relative;
 }
 
 /* /////// */
@@ -100,5 +68,15 @@ body, html {
   line-height: 1.33;
   border-radius: 35px;
 }
+.full-width{
+  width: 100%;
+}
+.absolute{
+  position: absolute;
+}
+.relative{
+  position: relative;
+}
+
 
 /* /////// */

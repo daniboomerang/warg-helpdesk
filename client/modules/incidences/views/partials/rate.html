@@ -1,16 +1,41 @@
-<section>
-<div>
-    <h4>Default</h4>
-    <rating ng-model="rate" max="max" readonly="isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating>
-    <span class="label" ng-class="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}" ng-show="overStar && !isReadonly">{{percent}}%</span>
-
-    <pre style="margin:15px 0;">Rate: <b>{{rate}}</b> - Readonly is: <i>{{isReadonly}}</i> - Hovering over: <b>{{overStar || "none"}}</b></pre>
-
-    <button class="btn btn-sm btn-danger" ng-click="rate = 0" ng-disabled="isReadonly">Clear</button>
-    <button class="btn btn-sm btn-default" ng-click="isReadonly = ! isReadonly">Toggle Readonly</button>
-    <hr />
-
-    <h4>Custom icons</h4>
-    <div ng-init="x = 5"><rating ng-model="x" max="15" state-on="'glyphicon-ok-sign'" state-off="'glyphicon-ok-circle'"></rating> <b>(<i>Rate:</i> {{x}})</b></div>
-    <div ng-init="y = 2"><rating ng-model="y" rating-states="ratingStates"></rating> <b>(<i>Rate:</i> {{y}})</b></div>
-</section>
+<div ng-controller="RateCtrl">
+	<div class="box-edit-rate" ng-show="edit.rate">
+		<div class="row">
+         	<div class="pull-left stars"> 		
+	         		<div class="row">
+						<rating ng-model="rating.rate" value="rating.rate" max="rating.max" readonly="false" state-on="'glyphicon-rate glyphicon-star'" state-off="'glyphicon-rate glyphicon-star-empty'" on-hover="hoveringOver(value)" on-leave="rating.overStar = null"></rating>
+					</div>
+					<!--state-on="rating.starOn" state-off="rating.starOff" -->
+					<div class="row" ng-show="rating.overStar" style="margin-top:5px;">
+						<span class="label" style="font-size:20px;" ng-class="{'label-warning': rating.percent<30, 'label-info': rating.percent>=30 && rating.percent<70, 'label-success': rating.percent>=70}">{{rating.percent}}%</span>
+					</div>
+					<div class="row" ng-show="!rating.overStar" style="margin-top:5px;">
+						<span class="label" style="font-size:20px;" ng-class="{'label-warning': rating.percent<30, 'label-info': rating.percent>=30 && rating.percent<70, 'label-success': rating.percent>=70}" >{{(100 * rating.rate) / rating.max}}%</span>
+					</div>
+         	</div>
+			<div class="pull-right save-button">	
+				<div ng-click="saveRating()" class="btn btn-default"> <img src="/modules/incidences/images/icons/save-24.png" alt="Save Rating"></div>
+            </div>
+        </div>    
+	</div>    
+	<div class="box-show-rate" ng-show="!edit.rate">
+		<div ng-show="incidence.rate == -1">
+				<div> <img src="/modules/incidences/images/icons/rating-gray-48.png" alt="Rating"></div>
+				<font size="1" class="text-muted">No ratings reported</font>
+		</div>
+		<div ng-show="incidence.rate > -1">
+            <div class="row">
+             	<div class="pull-left" style="margin-right: 15px;"> <img src="/modules/incidences/images/icons/rating-yellow-48.png" alt="Rating">
+             	</div>
+  				<div class="pull-right">  					
+  					<div class="row">
+	                	<rating value="incidence.rate" max="rating.max" readonly="true"></rating>
+	                </div>
+	                <div>
+	                	<font size="5">{{(100 * incidence.rate) / rating.max}}%</font>
+	                </div>
+	            </div>    
+            </div>    
+        </div> 
+	</div> 
+</div>

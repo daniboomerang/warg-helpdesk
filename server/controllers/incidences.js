@@ -37,7 +37,7 @@ exports.create = function(req, res) {
 exports.update = function(req, res) {
   var incidence = req.incidence;
   incidence.title = req.body.title;
-  incidence.content = req.body.content;
+  incidence.description = req.body.content;
   incidence.save(function(err) {
     if (err) {
       res.json(500, err);

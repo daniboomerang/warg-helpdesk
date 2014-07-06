@@ -16,6 +16,7 @@
 
     <!-- CSS VENDOR -->
     <link rel="stylesheet" href="bower_components/ng-grid/ng-grid.css" />
+    <link rel="stylesheet" href="modules/vendor/trNgGrid/trNgGrid.min.css" />
     <!-- Bootstrap -->
     <link rel="stylesheet" href="styles/vendor/bootstrap/css/bootstrap.css">
 
@@ -31,6 +32,7 @@
     <link rel="stylesheet" href="modules/home/styles/home.css">
     <!-- Module incidences -->
     <link rel="stylesheet" href="modules/incidences/styles/incidences.css">
+    <link rel="stylesheet" href="modules/incidences/styles/incidence-details.css">
     
 </head>
 
@@ -40,7 +42,7 @@
     <!--<navbar></navbar>-->
     <!-- MAIN CONTENT -->
     <!-- THIS IS WHERE WE WILL INJECT OUR CONTENT ============================== -->
-    <div ui-view style="min-height:96%;position:relative;"></div>
+    <div id="app" ui-view></div>
     <footer></footer>
 
     <script src="bower_components/angular/angular.js"></script>
@@ -85,6 +87,10 @@
         <script src="modules/incidences/scripts/incidences.js"></script> 
         <script src="modules/incidences/scripts/controllers.js"></script> 
         <script src="modules/incidences/scripts/services.js"></script> 
+        <script src="modules/incidences/scripts/directives.js"></script> 
+
+        <!-- VENDOR -->
+        <script src="modules/vendor/trNgGrid/trNgGrid.min.js"></script> 
 
 </body>
 </html>

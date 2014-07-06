@@ -9,21 +9,57 @@ var IncidenceSchema = new Schema({
     index: true,
     required: true
   },
-  content: {
+  description: {
     type: String,
     default: '',
     trim: true
+  },
+  severity: {
+    type: String,
+    required: true
+  },
+  priority: {
+    type: String,
+    required: true
+  },
+  created: Date,
+  creator: {
+    type: Schema.ObjectId,
+    ref: 'User'
+  },
+  updated: [Date],
+  status: {
+    type: String,
+    default: 'Open'
+  },  
+  assigned: {
+    type: Schema.ObjectId,
+    ref: 'User'
+  },
+  history: {
+    type: [{
+      post: String,
+      author: {
+        type: Schema.ObjectId,
+        ref: 'User'
+      },
+      date: Date  
+    }],
+    default: [],
+    trim: true
+  }, 
+  rate: {
+    type: Number,
+    default: -1
+  }, 
+  effort: {
+    type: Number,
+    default: -1
   },
   slug: {
     type: String,
     lowercase: true,
     trim: true
-  },
-  created: Date,
-  updated: [Date],
-  creator: {
-    type: Schema.ObjectId,
-    ref: 'User'
   }
 });
 
@@ -36,7 +72,6 @@ IncidenceSchema.pre('save', function(next, done){
     this.created = Date.now();
 
   this.updated.push(Date.now());
-
   next();
 });
 
