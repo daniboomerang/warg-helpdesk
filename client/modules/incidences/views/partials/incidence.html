@@ -16,16 +16,15 @@
                 </div>
             </div>
             <div class="pull-right">
-                <div class="row">
+                <div class="row" style="margin-top:10px; margin-bottom:10px;">
                     <span class="text-muted">Incidence Id: {{incidence._id}}</span>
-                    <span ng-click="save()" class="btn btn-default icon-navbar-container"> <img src="/modules/incidences/images/icons/save-24.png" alt="View Details"></span>
                 </div>
                 <div class="row">    
                     <span ng-show="incidenceAuth.close" ng-click="goToState(close)" class="icon-navbar-container btn btn-default"> <img src="/modules/incidences/images/icons/close-24.png" alt="View Details"></span>
                     <span ng-show="incidenceAuth.rate" ng-click="toogleRateMode()" class="icon-navbar-container btn btn-default" ng-class="{active: edit.rate}"><img src="/modules/incidences/images/icons/rating-24.png" alt="View Details"></span>   
                     <span ng-show="incidenceAuth.assign" ng-click="toogleAssignMode()" class="icon-navbar-container btn btn-default" ng-class="{active: edit.assign}"> <img src="/modules/incidences/images/icons/worker-24.png" alt="View Details"></span>
                     <span ng-show="incidenceAuth.effort" ng-click="toogleEffortMode()" class="icon-navbar-container btn btn-default" ng-class="{active: edit.effort}"> <img src="/modules/incidences/images/icons/stopwatch-24.png" alt="View Details"></span>             
-                    <span ng-click="replyArea=true" class="icon-navbar-container btn btn-default"><img src="/modules/incidences/images/icons/reply-24.png" alt="View Details"></span> 
+                    <span ng-click="toTheReply()" class="icon-navbar-container btn btn-default"><img src="/modules/incidences/images/icons/reply-24.png" alt="View Details"></span> 
                 </div>
             </div>     
         </div>
@@ -56,9 +55,13 @@
   </accordion-group>
 </accordion>
 
-<div class="reply-incdence" ng-show="replyArea">
-    <div class="pull-right save-button">    
-        <div ng-click="saveReply()" class="btn btn-default"> <img src="/modules/incidences/images/icons/save-16.png" alt="Save Rating"></div>
+<div id="incidence-reply">
+    <div class="pull-right" style="margin-bottom: 10px;">    
+        <div ng-click="toTheTop()"><img src="/modules/incidences/images/icons/arrow-top-24.png" alt="
+        Close Incidence Overview"></div>
+    </div>
+    <div class="pull-right" style="margin-bottom: 10px;">    
+        <div ng-click="sendReply()"> <img src="/modules/incidences/images/icons/reply-24-blue.png" alt="Save Rating"></div>
     </div>
     <div class="form-group">
         <div class="controls">

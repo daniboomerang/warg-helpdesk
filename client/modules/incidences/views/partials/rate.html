@@ -1,5 +1,5 @@
 <div ng-controller="RateCtrl">
-	<div class="box-edit-rate" ng-show="edit.rate">
+	<div ng-show="edit.rate">
 		<div class="row">
          	<div class="pull-left stars"> 		
 	         		<div class="row" ng-click="rating.showOkButton = true">
@@ -17,7 +17,7 @@
 			
         </div>    
 	</div>    
-	<div class="box-show-rate" ng-show="!edit.rate">
+	<div ng-show="!edit.rate">
 		<div ng-show="incidence.rate == -1">
 				<div> <img src="/modules/incidences/images/icons/rating-gray-48.png" alt="Rating"></div>
 				<font size="1" class="text-muted">No ratings reported</font>

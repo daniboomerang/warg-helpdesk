@@ -77,6 +77,21 @@ exports.updateRate = function(req, res) {
   });
 };
 
+/**
+ * Update incidence effort
+ */
+exports.updateEffort = function(req, res) {
+  var incidence = req.incidence;
+  incidence.effort = req.body.effort;
+  incidence.save(function(err) {
+    if (err) {
+      res.json(500, err);
+    } else {
+      res.json(incidence);
+    }
+  });
+};
+
 
 /**
  * Delete a incidence

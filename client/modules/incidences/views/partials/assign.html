@@ -1,5 +1,5 @@
 <div ng-controller="AssignCtrl">
-	<div class="box-edit-assign" ng-show="edit.assign">		
+	<div ng-show="edit.assign">		
         <div ng-show="assign.allowUpdate" class="row" style="margin-bottom: 5px;">
         	<div class="pull-left text-muted">
         		{{assign.currentAssignation}}
@@ -30,7 +30,7 @@
          	</div>
         </div>
 	</div>    
-	<div class="box-show-assign" ng-show="!edit.assign">
+	<div ng-show="!edit.assign">
 		<div ng-show="incidence.assigned == null || incidence.assigned == ''">
 				<div> <img src="/modules/incidences/images/icons/worker-gray-48.png" alt="Rating"></div>
 				<font size="1" class="text-muted">No technician assigned</font>

@@ -27,6 +27,9 @@ body, html {
   -moz-box-shadow: 0px 3px 16px -2px rgba(20,20,20,1);
   box-shadow: 0px 3px 16px -2px rgba(20,20,20,1);
   background-image:url('/modules/helpdesk/images/svgs/greenAndYellow.svg');
+    background-image:url('/modules/helpdesk/images/svgs/greenCircles.svg');
+    background-image:url('/modules/helpdesk/images/svgs/greenAndBlue.svg');
+
 }
 .footer p {font-size: 11px;}
 .footer a {color: #d2f4ec;}

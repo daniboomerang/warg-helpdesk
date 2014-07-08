@@ -50,6 +50,7 @@ var IncidenceSchema = new Schema({
     default: -1
   }, 
   effort: {
+    //number of minutes
     type: Number,
     default: -1
   },

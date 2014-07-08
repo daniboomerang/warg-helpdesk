@@ -1,8 +1,8 @@
   'use strict';
 
-var incidencesControllers = angular.module('incidencesControllers', ['incidencesServices'])
+var incidencesControllers = angular.module('incidencesControllers', ['incidencesServices', 'duScroll'])
 
-incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, $routeParams, $state, Incidences, IncidenceRate, IncidenceAssign) {
+incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, $anchorScroll, $routeParams, $state, Incidences, IncidenceRate, IncidenceAssign, IncidenceEffort) {
 
   //////////
   /* CRUD */
@@ -50,7 +50,7 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
     });
   };
 
-    $scope.updateRate = function(rate) {
+  $scope.updateRate = function(rate) {
     var incidence = new IncidenceRate({
       _id: $scope.incidence._id,
       rate: rate
@@ -60,6 +60,19 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
     },
     function (error){
       console.log("Server error trying to rate the incidence " + incidence._id);
+    });  
+  };
+
+  $scope.updateEffort = function(effort) {
+    var incidence = new IncidenceEffort({
+      _id: $scope.incidence._id,
+      effort: effort
+    });
+    incidence.$updateEffort(function() {
+      $scope.incidence.effort = effort;
+    },
+    function (error){
+      console.log("Server error trying to report effort for the incidence " + incidence._id);
     });
   };
 
@@ -103,13 +116,12 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
           author: "tech1"
         }
       ];
-      $scope.incidence.effort = -1;
     });
   };
 
 });
 
-incidencesControllers.controller('ListCtrl', function ($scope, $stateParams, $state, $rootScope) {
+incidencesControllers.controller('ListCtrl', function ($scope, $stateParams, $state, $rootScope, $document) {
 
   $scope.selectedIncidences = [];
   $scope.$watch('selectedIncidences', function() {
@@ -122,28 +134,35 @@ incidencesControllers.controller('ListCtrl', function ($scope, $stateParams, $st
   true);
 
   $scope.onSelectedIncidence = function(incidence) {
+    var sectionOverview = angular.element(document.getElementById('overview'));
     $state.go('helpdesk.incidences.open.list.overview', { incidenceId: incidence._id });
+    $document.scrollTo(sectionOverview, 0, 1000);
   };
 
 });
 
-incidencesControllers.controller('OverviewCtrl', function ($scope, $routeParams, $state) {
+incidencesControllers.controller('OverviewCtrl', function ($scope, $routeParams, $state, $document) {
 
   $scope.open = function () {
     $state.go('helpdesk.incidences.open.incidence', $state.params);
   };  
 
+  $scope.toTheTop = function() {
+    var top = angular.element(document.getElementById('incidences-list'));
+    $document.scrollTo(top, 0, 1000);
+  };
+
 });
 
-incidencesControllers.controller('IncidenceCtrl', function ($scope, $routeParams, $state, incidenceAuth) {
+incidencesControllers.controller('IncidenceCtrl', function ($scope, $routeParams, $state, incidenceAuth, $document) {
 
-  initAuth()
+  init()
 
   $scope.goToState = function (state) {
     $state.goToState('helpdesk.incidences.open.incidence' + state, $state.params);
   }; 
 
-  function initAuth(){
+  function init(){
     $scope.incidenceAuth = {};
 
     $scope.incidenceAuth.rate = incidenceAuth.isAllowedToReportRate($scope.incidence);
@@ -170,6 +189,15 @@ incidencesControllers.controller('IncidenceCtrl', function ($scope, $routeParams
     $scope.edit.assign = !$scope.edit.assign;
   }
 
+  $scope.toTheTop = function() {
+    $document.scrollTo(top, 0, 1000);
+  };
+
+  $scope.toTheReply = function() {
+    var reply = angular.element(document.getElementById('incidence-reply'));
+    $document.scrollTo(reply, 0, 1000);
+  };
+
 });
 
 incidencesControllers.controller('RateCtrl', function ($scope) {
@@ -194,15 +222,22 @@ incidencesControllers.controller('RateCtrl', function ($scope) {
 
 
 incidencesControllers.controller('EffortCtrl', function ($scope) {
-  $scope.mytime = new Date();
-  $scope.mytime.setHours( 0 );
-  $scope.mytime.setMinutes( 0 );
-  $scope.hstep = 1;
-  $scope.mstep = 15;
-  $scope.changed = function () {
-    console.log('Time changed to: ' + $scope.mytime);
-  };
 
+  $scope.effort = {};
+  $scope.effort.hours = 0;
+  $scope.effort.minutes = 0
+  $scope.effort.allowToPool = false;
+  $scope.effortChanged = function () {
+    if (($scope.effort.hours > 0) || (($scope.effort.hours == 0) && ($scope.effort.minutes > 0)))
+      $scope.effort.allowToPool = true;
+    else
+      $scope.effort.allowToPool = false;
+  };
+  $scope.poolEffort = function () {
+    $scope.updateEffort($scope.effort.hours * 60 + $scope.effort.minutes);
+    $scope.effort.allowToPool = false;
+    $scope.edit.effort = false;
+  };
 });
 
 
@@ -307,8 +342,6 @@ incidencesControllers.controller('ModalInstanceCtrl', function ($scope, $modalIn
     $modalInstance.dismiss('cancel');
   };
 });
-
-
 
 // Please note that $modalInstance represents a modal window (instance) dependency.
 // It is not the same as the $modal service used above.
