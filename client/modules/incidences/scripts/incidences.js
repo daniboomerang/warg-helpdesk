@@ -57,34 +57,5 @@ var incidences = angular.module('incidences',
 		        templateUrl: '/modules/incidences/views/partials/incidence.html',
 		        controller: 'IncidenceCtrl'
 		    })
-				.state('helpdesk.incidences.open.incidence.rate', {
-			        url: '/rate',
-			        views: {
-		            	'rate': {
-							templateUrl: '/modules/incidences/views/partials/rate.html',
-			            	controller: 'RateCtrl'
-			            }    
-		            }    
-			    })
-
-			    .state('helpdesk.incidences.open.incidence.effort', {
-			        url: '/effort',
-			        views: {
-		            	'effort': {
-							templateUrl: '/modules/incidences/views/partials/effort.html',
-			            	controller: 'EffortCtrl'
-			            }    
-		            }    
-			    })
-
-				.state('helpdesk.incidences.open.incidence.assign', {
-			        url: '/assign',
-			        views: {
-		            	'assign': {
-							templateUrl: '/modules/incidences/views/partials/assign.html',
-			            	controller: 'AssignCtrl'
-			            }    
-		            }    
-			    })			    					    
 })
 .run(function ($rootScope, Auth) {Auth.currentUser();});

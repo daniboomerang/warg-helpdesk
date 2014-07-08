@@ -48,6 +48,37 @@ exports.update = function(req, res) {
 };
 
 /**
+ * Update incidence assignation
+ */
+exports.updateAssigned = function(req, res) {
+  var incidence = req.incidence;
+  incidence.assigned = req.body.assigned;
+  incidence.save(function(err) {
+    if (err) {
+      res.json(500, err);
+    } else {
+      res.json(incidence);
+    }
+  });
+};
+
+/**
+ * Update incidence rating
+ */
+exports.updateRate = function(req, res) {
+  var incidence = req.incidence;
+  incidence.rate = req.body.rate;
+  incidence.save(function(err) {
+    if (err) {
+      res.json(500, err);
+    } else {
+      res.json(incidence);
+    }
+  });
+};
+
+
+/**
  * Delete a incidence
  */
 exports.destroy = function(req, res) {

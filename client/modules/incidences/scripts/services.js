@@ -12,6 +12,29 @@ incidencesServices.factory('Incidences', function ($resource) {
     });
   });
 
+
+incidencesServices.factory('IncidenceAssign', function ($resource) {
+    return $resource('api/incidences/:incidenceId/assign', {
+      incidenceId: '@_id',
+
+    }, {
+      updateAssign: {
+        method: 'PUT'
+      }
+    });
+  });
+
+incidencesServices.factory('IncidenceRate', function ($resource) {
+    return $resource('api/incidences/:incidenceId/rate', {
+      incidenceId: '@_id',
+
+    }, {
+      updateRate: {
+        method: 'PUT'
+      }
+    });
+  });
+
 incidencesServices.factory('incidenceAuth', function ($rootScope) {
 
 /* @@@ Hardcoded status => This must come from the server and be incidence.status */

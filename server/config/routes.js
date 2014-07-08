@@ -28,7 +28,8 @@ module.exports = function(app) {
   app.post('/api/incidences', auth.ensureAuthenticated, incidences.create);
   app.get('/api/incidences/:incidenceId', incidences.show);
   app.put('/api/incidences/:incidenceId', auth.ensureAuthenticated, incidences.update);
-  app.put('/api/incidences/:incidenceId/:property', auth.ensureAuthenticated, incidences.update);
+  app.put('/api/incidences/:incidenceId/assign', auth.ensureAuthenticated, incidences.updateAssigned);
+  app.put('/api/incidences/:incidenceId/rate', auth.ensureAuthenticated, incidences.updateRate);
   app.delete('/api/incidences/:incidenceId', auth.ensureAuthenticated, incidences.destroy);
 
   //Setting up the incidenceId param

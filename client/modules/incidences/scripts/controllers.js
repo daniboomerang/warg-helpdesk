@@ -1,8 +1,8 @@
-'use strict';
+  'use strict';
 
 var incidencesControllers = angular.module('incidencesControllers', ['incidencesServices'])
 
-incidencesControllers.controller('IncidencesCtrl', function ($scope, Incidences, $location, $routeParams, $state) {
+incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, $routeParams, $state, Incidences, IncidenceRate, IncidenceAssign) {
 
   //////////
   /* CRUD */
@@ -14,7 +14,7 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, Incidences,
       content: this.content
     });
     incidence.$save(function(response) {
-      $location.path("incidences/" + response._id);
+      $location.path("helpesk/incidences/open/" + response._id);
     });
 
     this.title = "";
@@ -29,19 +29,37 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, Incidences,
         $scope.incidences.splice(i, 1);
       }
     }
-  };
+  }; 
 
   $scope.update = function() {
     var incidence = $scope.incidence;
     incidence.$update(function() {
-      $location.path('incidences/' + incidence._id);
     });
   };
 
-  $scope.updateProperty = function(property) {
-    var incidence = $scope.incidence;
-    incidence.$update(function() {
-      $location.path('incidences/' + incidence._id + '/' + property);
+  $scope.updateAssigned = function(assignation) {
+    var incidence = new IncidenceAssign({
+      _id: $scope.incidence._id,
+      assigned: assignation
+    });
+    incidence.$updateAssign(function() {
+      $scope.incidence.assigned = assignation;
+    },
+    function (error){
+      console.log("Server error trying to assign a technician for incidence " + incidence._id);
+    });
+  };
+
+    $scope.updateRate = function(rate) {
+    var incidence = new IncidenceRate({
+      _id: $scope.incidence._id,
+      rate: rate
+    });
+    incidence.$updateRate(function() {
+      $scope.incidence.rate = rate;
+    },
+    function (error){
+      console.log("Server error trying to rate the incidence " + incidence._id);
     });
   };
 
@@ -56,9 +74,6 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, Incidences,
       incidenceId: $state.params.incidenceId
     }, function(incidence) {
       $scope.incidence = incidence;
-
-
-      $scope.incidence.assigned = null;
 /* @@@ Hardcoded history => This must come from the server */
     var date = Date.now();
       $scope.incidence.history = [
@@ -88,7 +103,6 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, Incidences,
           author: "tech1"
         }
       ];
-      $scope.incidence.rate = -1; 
       $scope.incidence.effort = -1;
     });
   };
@@ -163,24 +177,23 @@ incidencesControllers.controller('RateCtrl', function ($scope) {
   $scope.rating = {};
   $scope.rating.max = 5;
   $scope.rating.rate = 1;
-  $scope.$watch('incidence', function() {
-    $scope.rating.percent = (100 * $scope.incidence.rate) / $scope.rating.max;
-  },
-  true);
+  $scope.rating.showOkButton = false;
   
   $scope.hoveringOver = function(value,object) {
+    $scope.rating.percent = (100 * $scope.incidence.rate) / $scope.rating.max;
     $scope.rating.overStar = value;
     $scope.rating.percent =  (100 * value) / $scope.rating.max;
   };
 
-  $scope.saveRating = function() {
-    $scope.incidence.rate = $scope.rating.rate;
+  $scope.poolRating = function(){     
+    $scope.updateRate($scope.rating.rate);
     $scope.edit.rate = false;
-  };
+    $scope.rating.showOkButton = false;
+  }
 });
 
 
-incidencesControllers.controller('EffortCtrl', function ($scope, $routeParams, $state) {
+incidencesControllers.controller('EffortCtrl', function ($scope) {
   $scope.mytime = new Date();
   $scope.mytime.setHours( 0 );
   $scope.mytime.setMinutes( 0 );
@@ -193,8 +206,52 @@ incidencesControllers.controller('EffortCtrl', function ($scope, $routeParams, $
 });
 
 
-incidencesControllers.controller('AssignCtrl', function ($scope, $routeParams, $state) {
+incidencesControllers.controller('AssignCtrl', function ($scope, IncidenceAssign) {
+  
   $scope.technicians = ["tech1", "tech2", "tech3", "tech4", "tech5"];
+
+  init();
+  
+  $scope.assignTo = function(technician){
+    $scope.assign.allowUpdate = true;
+    $scope.assign.currentAssignation = technician;
+    $scope.assign.techniciansList = filterTechnicianFromList(technician, $scope.technicians);
+  }
+
+  $scope.poolAssignation = function(){     
+      $scope.assign.allowUpdate = false;
+      $scope.updateAssigned($scope.assign.currentAssignation);
+      $scope.edit.assign = false;
+  }
+
+  function filterTechnicianFromList(technician, list){
+
+    /* Lets filter and delete from the possble selections,
+       the one already assigned to the incidence (if so) */
+    function remove(array, elem, all) {
+      for (var i=array.length-1; i>=0; i--) {
+        if (array[i] === elem) {
+            array.splice(i, 1);
+            if(!all)
+              break;
+        }
+      }
+      return array;
+    };
+
+    var techniciansCopy = list.slice();
+    if (technician != null)
+      remove(techniciansCopy, technician);
+    return techniciansCopy;
+  }
+
+  function init(){
+
+    $scope.assign = {};
+    $scope.assign.techniciansList = $scope.technicians;
+    $scope.assign.allowUpdate = false;
+  }
+
 });
 
 incidencesControllers.controller('ModalCtrl', function ($scope, $modal, $log) {

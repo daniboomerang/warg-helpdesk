@@ -2,20 +2,19 @@
 	<div class="box-edit-rate" ng-show="edit.rate">
 		<div class="row">
          	<div class="pull-left stars"> 		
-	         		<div class="row">
-						<rating ng-model="rating.rate" value="rating.rate" max="rating.max" readonly="false" state-on="'glyphicon-rate glyphicon-star'" state-off="'glyphicon-rate glyphicon-star-empty'" on-hover="hoveringOver(value)" on-leave="rating.overStar = null"></rating>
+	         		<div class="row" ng-click="rating.showOkButton = true">
+						<rating ng-model="rating.rate" value="rating.rate" max="rating.max" readonly="false" state-on="'glyphicon-rate glyphicon-star'" state-off="'glyphicon-rate glyphicon-star-empty'" on-hover="hoveringOver(value)" on-leave="rating.overStar = null" ></rating>
 					</div>
 					<!--state-on="rating.starOn" state-off="rating.starOff" -->
 					<div class="row" ng-show="rating.overStar" style="margin-top:5px;">
-						<span class="label" style="font-size:20px;" ng-class="{'label-warning': rating.percent<30, 'label-info': rating.percent>=30 && rating.percent<70, 'label-success': rating.percent>=70}">{{rating.percent}}%</span>
+						<span class="label pull-left" style="font-size:20px;" ng-class="{'label-warning': rating.percent<30, 'label-info': rating.percent>=30 && rating.percent<70, 'label-success': rating.percent>=70}">{{rating.percent}}%</span>
 					</div>
 					<div class="row" ng-show="!rating.overStar" style="margin-top:5px;">
-						<span class="label" style="font-size:20px;" ng-class="{'label-warning': rating.percent<30, 'label-info': rating.percent>=30 && rating.percent<70, 'label-success': rating.percent>=70}" >{{(100 * rating.rate) / rating.max}}%</span>
+						<span class="label pull-left" style="font-size:20px;" ng-class="{'label-warning': rating.percent<30, 'label-info': rating.percent>=30 && rating.percent<70, 'label-success': rating.percent>=70}" >{{(100 * rating.rate) / rating.max}}%</span>
+						<div ng-show="rating.showOkButton" ng-class="pull-right" ng-click="poolRating()"> <img src="/modules/incidences/images/icons/ok-16.png" alt="Pool Rating"></div>
 					</div>
          	</div>
-			<div class="pull-right save-button">	
-				<div ng-click="saveRating()" class="btn btn-default"> <img src="/modules/incidences/images/icons/save-24.png" alt="Save Rating"></div>
-            </div>
+			
         </div>    
 	</div>    
 	<div class="box-show-rate" ng-show="!edit.rate">
