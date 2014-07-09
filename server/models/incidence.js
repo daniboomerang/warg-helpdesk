@@ -29,10 +29,17 @@ var IncidenceSchema = new Schema({
   },
   updated: [Date],
   status: {
+    // Possble statuses : Open, On going, Closed, Reopened
     type: String,
     default: 'Open'
   },  
-  assigned: String,
+  substatus: { 
+    // Possble substatuses : Open-OnGoing, Open-Blocked,
+    // Closed-Solved, Closed-Duplicated, Closed-Invalid
+    type: String,
+    default: ''
+  },  
+  assigned: String, //Username currently working on it
   history: {
     type: [{
       post: String,

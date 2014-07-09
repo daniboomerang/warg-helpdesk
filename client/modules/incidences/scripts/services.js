@@ -46,6 +46,17 @@ incidencesServices.factory('IncidenceEffort', function ($resource) {
     });
   });
 
+incidencesServices.factory('IncidenceClose', function ($resource) {
+    return $resource('api/incidences/:incidenceId/close', {
+      incidenceId: '@_id',
+
+    }, {
+      closeIncidence: {
+        method: 'PUT'
+      }
+    });
+  });
+
 incidencesServices.factory('incidenceAuth', function ($rootScope) {
 
 /* @@@ Hardcoded status => This must come from the server and be incidence.status */

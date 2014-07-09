@@ -2,7 +2,7 @@
 
 var incidencesControllers = angular.module('incidencesControllers', ['incidencesServices', 'duScroll'])
 
-incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, $anchorScroll, $routeParams, $state, Incidences, IncidenceRate, IncidenceAssign, IncidenceEffort) {
+incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, $anchorScroll, $routeParams, $state, Incidences, IncidenceRate, IncidenceAssign, IncidenceEffort, IncidenceClose) {
 
   //////////
   /* CRUD */
@@ -42,8 +42,8 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
       _id: $scope.incidence._id,
       assigned: assignation
     });
-    incidence.$updateAssign(function() {
-      $scope.incidence.assigned = assignation;
+    incidence.$updateAssign(function(response) {
+      $scope.incidence.assigned = response.assigned;
     },
     function (error){
       console.log("Server error trying to assign a technician for incidence " + incidence._id);
@@ -55,8 +55,8 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
       _id: $scope.incidence._id,
       rate: rate
     });
-    incidence.$updateRate(function() {
-      $scope.incidence.rate = rate;
+    incidence.$updateRate(function(response) {
+      $scope.incidence.rate = response.rate;
     },
     function (error){
       console.log("Server error trying to rate the incidence " + incidence._id);
@@ -68,13 +68,28 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
       _id: $scope.incidence._id,
       effort: effort
     });
-    incidence.$updateEffort(function() {
-      $scope.incidence.effort = effort;
+    incidence.$updateEffort(function(response) {
+      $scope.incidence.effort = response.effort;
     },
     function (error){
       console.log("Server error trying to report effort for the incidence " + incidence._id);
     });
   };
+
+  $scope.close = function(reason) {
+    var incidence = new IncidenceClose({
+      _id: $scope.incidence._id,
+      substatus: reason
+    });
+    incidence.$closeIncidence(function(response) {
+      $scope.incidence.status = response.status;
+      $scope.incidence.substatus = response.substatus;
+    },
+    function (error){
+      console.log("Server error trying to close the incidence " + incidence._id);
+    });
+  };
+
 
   $scope.find = function() {
     Incidences.query(function(incidences) {
@@ -121,7 +136,7 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
 
 });
 
-incidencesControllers.controller('ListCtrl', function ($scope, $stateParams, $state, $rootScope, $document) {
+incidencesControllers.controller('ListCtrl', function ($scope, $state, $document) {
 
   $scope.selectedIncidences = [];
   $scope.$watch('selectedIncidences', function() {
@@ -175,6 +190,8 @@ incidencesControllers.controller('IncidenceCtrl', function ($scope, $routeParams
     $scope.edit.rate = false;
     $scope.edit.effort = false;
     $scope.edit.assign = false;
+    $document.scrollTo(top, 0, 1000);
+
   }
 
   $scope.toogleRateMode = function(){
@@ -241,7 +258,7 @@ incidencesControllers.controller('EffortCtrl', function ($scope) {
 });
 
 
-incidencesControllers.controller('AssignCtrl', function ($scope, IncidenceAssign) {
+incidencesControllers.controller('AssignCtrl', function ($scope) {
   
   $scope.technicians = ["tech1", "tech2", "tech3", "tech4", "tech5"];
 
@@ -289,12 +306,19 @@ incidencesControllers.controller('AssignCtrl', function ($scope, IncidenceAssign
 
 });
 
-incidencesControllers.controller('ModalCtrl', function ($scope, $modal, $log) {
+// Please note that $modalInstance represents a modal window (instance) dependency.
+// It is not the same as the $modal service used above.
 
-  $scope.openRate = function () {
+var CreateCtrl = function ($scope, $modalInstance, items) {
 
-    var modalInstance = $modal.open({
-      templateUrl: '/modules/incidences/views/partials/rate.html',
+};
+
+incidencesControllers.controller('CloseCtrl', function ($scope, $modal, $log) {
+
+  $scope.closeIncidence = function () {
+
+    var closeModalInstance = $modal.open({
+      templateUrl: '/modules/incidences/views/partials/close.html',
       controller: ModalInstanceCtrl,
       size: 'lg',
       resolve: {
@@ -304,51 +328,35 @@ incidencesControllers.controller('ModalCtrl', function ($scope, $modal, $log) {
       }
     });
 
-    modalInstance.result.then(function (rate) {
-      $scope.rate = rate;
+    closeModalInstance.result.then(function (reason, effort) {
+      $scope.incidence.substatus = reason;
+      $scope.incidence.effort = effort;
     }, function () {
-      $log.info('Modal dismissed at: ' + new Date());
+      $log.info('Close incidence dismissed at: ' + new Date());
     });
   };
-});
 
-// Please note that $modalInstance represents a modal window (instance) dependency.
-// It is not the same as the $modal service used above.
+  // Please note that $modalInstance represents a modal window (instance) dependency.
+  // It is not the same as the $modal service used above.
+  var ModalInstanceCtrl = function ($scope, $modalInstance, incidence) {
 
-incidencesControllers.controller('ModalInstanceCtrl', function ($scope, $modalInstance, incidence) {
+    $scope.close = {};
+    $scope.close.incidence = incidence;
+    $scope.close.reasons = ['Solved', 'Duplicated', 'Invalid'];
+    $scope.close.currentEffort = incidence.effort; // 1hour
+    $scope.close.selectedReason;
 
-  $scope.rate = 7;
-  $scope.max = 10;
-  $scope.isReadonly = false;
 
-  $scope.hoveringOver = function(value) {
-    $scope.overStar = value;
-    $scope.percent = 100 * (value / $scope.max);
-  };
+    $scope.ok = function () {
+      $modalInstance.close($scope.close.reason, $scope.close.updatedEffort);
+    };
 
-  $scope.ratingStates = [
-    {stateOn: 'glyphicon-ok-sign', stateOff: 'glyphicon-ok-circle'},
-    {stateOn: 'glyphicon-star', stateOff: 'glyphicon-star-empty'},
-    {stateOn: 'glyphicon-heart', stateOff: 'glyphicon-ban-circle'},
-    {stateOn: 'glyphicon-heart'},
-    {stateOff: 'glyphicon-off'}
-  ];
-
-  $scope.ok = function () {
-    $modalInstance.close($scope.rate);
-  };
-
-  $scope.cancel = function () {
-    $modalInstance.dismiss('cancel');
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
   };
 });
 
-// Please note that $modalInstance represents a modal window (instance) dependency.
-// It is not the same as the $modal service used above.
-
-var CreateCtrl = function ($scope, $modalInstance, items) {
-
-};
 
 
 

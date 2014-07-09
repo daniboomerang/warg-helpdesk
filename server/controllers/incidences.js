@@ -94,6 +94,22 @@ exports.updateEffort = function(req, res) {
 
 
 /**
+ * Close incidence
+ */
+exports.close = function(req, res) {
+  var incidence = req.incidence;
+  incidence.substatus = req.body.substatus;
+  incidence.status = 'Closed';
+  incidence.save(function(err) {
+    if (err) {
+      res.json(500, err);
+    } else {
+      res.json(incidence);
+    }
+  });
+};
+
+/**
  * Delete a incidence
  */
 exports.destroy = function(req, res) {
