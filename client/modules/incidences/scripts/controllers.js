@@ -136,6 +136,27 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
 
 });
 
+
+incidencesControllers.controller('AlertCtrl', function ($scope) {
+
+  $scope.selectedIncidences = [];
+  $scope.$watch('selectedIncidences', function() {
+    if ($scope.selectedIncidences.length > 0){
+      if ($scope.selectedIncidences.length > 1)
+        $scope.selectedIncidences.splice( 0, 1 );
+      $scope.onSelectedIncidence($scope.selectedIncidences[$scope.selectedIncidences.length - 1]);
+    } 
+  },
+  true);
+
+  $scope.onSelectedIncidence = function(incidence) {
+    var sectionOverview = angular.element(document.getElementById('overview'));
+    $state.go('helpdesk.incidences.open.list.overview', { incidenceId: incidence._id });
+    $document.scrollTo(sectionOverview, 0, 1000);
+  };
+
+});  
+
 incidencesControllers.controller('ListCtrl', function ($scope, $state, $document) {
 
   $scope.selectedIncidences = [];
@@ -245,13 +266,22 @@ incidencesControllers.controller('EffortCtrl', function ($scope) {
   $scope.effort.minutes = 0
   $scope.effort.allowToPool = false;
   $scope.effortChanged = function () {
+    if ($scope.effort.minutes > 60)
+      $scope.effort.minutes = 0;
+    if ($scope.effort.hours < 0)
+      $scope.effort.hours = 99;
+    if ($scope.effort.minutes < 0)
+      $scope.effort.minutes = 60;
     if (($scope.effort.hours > 0) || (($scope.effort.hours == 0) && ($scope.effort.minutes > 0)))
       $scope.effort.allowToPool = true;
     else
       $scope.effort.allowToPool = false;
   };
   $scope.poolEffort = function () {
-    $scope.updateEffort($scope.effort.hours * 60 + $scope.effort.minutes);
+    $scope.effort.time = new Date();
+    $scope.effort.time.setHours($scope.effort.hours);
+    $scope.effort.time.setMinutes( $scope.effort.minutes);
+    $scope.updateEffort( $scope.effort.time);
     $scope.effort.allowToPool = false;
     $scope.edit.effort = false;
   };
