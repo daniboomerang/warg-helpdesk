@@ -2,7 +2,7 @@
 
 var helpdeskControllers = angular.module('helpdeskControllers', ['helpdeskServices'])
 
-helpdeskControllers.controller('HelpdeskCtrl', function ($q, $scope, $rootScope, helpdeskConfigService, $location, Auth) {
+helpdeskControllers.controller('HelpdeskCtrl', function ($q, $scope, $state, $rootScope, helpdeskConfigService, $location, Auth) {
 
   	initDesk();
 
@@ -40,16 +40,20 @@ helpdeskControllers.controller('HelpdeskCtrl', function ($q, $scope, $rootScope,
     	return $scope.status[module.toLowerCase()];
 	};
 
-	$rootScope.$on('event:currentUser-changed', function(event) {
-		initDesk();
-	});
-
 	$scope.logout = function() {
     Auth.logout(function(err) {
       if(!err) {
         $location.path('/login');
       }
-    });
-  };
+    })};
+
+	$scope.searchId = function(actionState, id){
+		$scope.status.activeState = actionState;
+		$state.go('helpdesk.incidences.open.incidence', { incidenceId: id });
+  	};
+
+  	$rootScope.$on('event:currentUser-changed', function(event) {
+		initDesk();
+	});
 
 });

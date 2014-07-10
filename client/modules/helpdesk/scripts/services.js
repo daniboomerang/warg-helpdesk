@@ -20,7 +20,7 @@ helpdeskServices.service('deskMenuStyleService', function(){
 		   	if (module == 'Incidences'){
 		   		moduleStyle.module = {'background-image': 'url(/modules/helpdesk/images/icons/zoom-24.png)'};
 		   		moduleStyle.create = '/modules/helpdesk/images/icons/create-16.png';
-		   		moduleStyle.openId = '/modules/helpdesk/images/icons/barcode-16.png';
+		   		moduleStyle.openId = '/modules/helpdesk/images/icons/zoom-16.png';
 		   		moduleStyle.openList = '/modules/helpdesk/images/icons/list-16.png';
 		   		moduleStyle.rating = '/modules/helpdesk/images/icons/rating-16.png';
 		   	}	
@@ -69,7 +69,7 @@ helpdeskServices.service('helpdeskConfigService', function ($q, UserRights, menu
      	for (var i=0; i<rightsOnIncidences.length; i++){
      		if (rightsOnIncidences.indexOf(rightsOnIncidences[i]) > -1){
 				if (rightsOnIncidences[i] == 'open'){
-					actions.push({title: 'Id Search', state: 'helpdesk.incidences.open.incidence', style: moduleMenuStyle.openId});
+					actions.push({title: 'Id Search', state: 'helpdesk.incidences.open', style: moduleMenuStyle.openId});
 					actions.push({title: 'Open', state: 'helpdesk.incidences.open.list', style: moduleMenuStyle.openList});
 				}	
 				else if (rightsOnIncidences[i] == 'create')

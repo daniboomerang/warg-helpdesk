@@ -17,7 +17,20 @@
       </div>  
       </accordion-heading>
       <ul class="nav nav-pills nav-stacked">
-        <li ng-class="{active: status.activeState == action.state, active2: status.activeState == action.state}" ng-repeat="action in module.actions"><a ui-sref="{{action.state}}" ng-click="status.activeState = action.state"><span class="pull-left module-icon-16"><img ng-src="{{action.style}}"/></span>&nbsp;{{action.title}}</a>
+        <li ng-class="{active: status.activeState == action.state, active2: status.activeState == action.state}" ng-repeat="action in module.actions">
+
+          <!-- Very Ugly: Setting OpenId for module Incidences, on second position and with an specific html -->
+          <div class="search-id" ng-show='(action.title == "Id Search")'>
+            <input type="text" ng-model="id" class="form-control search-id-input pull-left" placeholder="Search id" required="" class="form-control">
+            </input>
+            <a class="pull-right module-icon-16 search-id-icon search-id-arrow" ng-click="searchId(action.state, id)">
+            <span><img src="/modules/helpdesk/images/icons/arrow-16.png" alt="Open Incidence"></span></a>
+          </div>
+          <!-- --> 
+
+          <a ng-show='(action.title != "Id Search")' ui-sref="{{action.state}}" ng-click="status.activeState = action.state">
+          <span class="pull-left module-icon-16"><img ng-src="{{action.style}}"/></span>
+          &nbsp;{{action.title}}</a>
         </li>
       </ul>
     </accordion-group>
