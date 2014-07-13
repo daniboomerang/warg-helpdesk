@@ -64,3 +64,21 @@ exports.exists = function (req, res, next) {
     }
   });
 }
+
+/**
+ *  Set role USER in the request
+ *  returns {next}
+ */
+exports.setRoleUser = function (req, res, next) {
+  req.body.role = "user";
+  return next();
+}
+
+/**
+ *  Set role TECH in the request
+ *  returns {next}
+ */
+exports.setRoleTech = function (req, res, next) {
+  req.body.role = "tech";
+  return next();
+}

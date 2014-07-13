@@ -1,19 +1,24 @@
 'use strict';
 
 angular.module('wargHelpdeskApp', [
+  // NG 
   'ui.router',
   'ngSanitize',
   'ngRoute',
   'ngAnimate',
   'http-auth-interceptor',
   'ui.bootstrap',
+  'ngMessages',
+  // VENDOR
   'trNgGrid',
-  /*'ngGrid',*/
+  // WARG HELPDESK
   'wargHelpdeskControllers',
   'wargHelpdeskDirectives',
+  // MODULES
   'auth',
   'sign',
-  'helpdesk'
+  'helpdesk',
+  'administration'
 ])
 .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     

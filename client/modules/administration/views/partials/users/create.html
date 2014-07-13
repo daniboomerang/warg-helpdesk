@@ -1,0 +1,16 @@
+<form name="userForm">
+  <div class="field">
+    <label for="emailAddress">Enter your email address:</label>
+    <input type="email"
+           name="emailAddress"
+           ng-model="data.email"
+           ng-minlength="5"
+           ng-maxlength="30"
+           mongoose-error
+           required/>
+    <div ng-messages="userForm.emailAddress.$error" id="views/partials/error-messages.html">
+      <div ng-message="mongoose-error">The email address is already in use...</div>
+    </div>
+  </div>
+  <input type="submit"/>
+</form>

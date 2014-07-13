@@ -8,7 +8,7 @@ var mongoose = require('mongoose'),
  */
 exports.incidence = function(req, res, next, id) {
   Incidence.load(id, function(err, incidence) {
-    if (err) return next(err);
+    if (err) return res.json(500, err);
     if (!incidence) return next(new Error('Failed to load incidence ' + id));
     req.incidence = incidence;
     next();

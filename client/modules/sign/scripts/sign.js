@@ -22,13 +22,13 @@ sign.config(function($stateProvider, $urlRouterProvider) {
 	    
 	    .state('sign.in', {
 	        url: '/in',
-	        templateUrl: '/modules/sign/views/sign-in.html',
+	        templateUrl: '/modules/sign/views/partials/sign-in.html',
 	        controller: 'SigninCtrl'
 	    })
 	    
 	    .state('sign.up', {
 	        url: '/up',
-	        templateUrl: '/modules/sign/views/sign-up.html',
+	        templateUrl: '/modules/sign/views/partials/sign-up.html',
 	        controller: 'SignupCtrl'
 	    })
 });

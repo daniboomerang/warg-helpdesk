@@ -6,9 +6,12 @@ var path = require('path'),
 module.exports = function(app) {
   // User Routes
   var users = require('../controllers/users');
-  app.post('/auth/users', users.create);
+  app.post('/auth/users', users.setRoleUser, users.create);
   app.get('/auth/users/:userId', users.show);
 
+  // Users Aminidtration
+  app.post('/adminstration/users', auth.ensureAuthenticatedAsAdmin, users.setRoleTech, users.create);
+  
   // Check if username is available
   // todo: probably should be a query on users
   app.get('/auth/check_username/:username', users.exists);

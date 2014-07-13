@@ -30,15 +30,14 @@ signControllers.controller('SigninCtrl', function ($scope, Auth, $location) {
 
 signControllers.controller('SignupCtrl', function ($scope, Auth, $location) {
   
-  $scope.checkboxSelected = true;
-    // Can use parseInt(x, 10) on $scope.checkboxSelection or index.toString() if you want to remove the single quotes you see in isCheckboxSelected('1').
+    $scope.error = {};
+    $scope.user = {};
   
     $scope.register = function(form) {
       Auth.createUser({
           email: $scope.user.email,
           username: $scope.user.username,
           password: $scope.user.password,
-          role: $scope.user.role
         },
         function(err) {
           $scope.errors = {};
@@ -55,3 +54,10 @@ signControllers.controller('SignupCtrl', function ($scope, Auth, $location) {
       );
     };
   });
+
+
+signControllers.controller('userFormCtrl', function($scope){
+  $scope.changed = function(filed){
+    return filed.$dirty;
+  };
+});

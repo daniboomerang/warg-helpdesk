@@ -20,27 +20,28 @@ wargHelpdeskDirectives.directive('mongooseError', function () {
   };
 });
 
-
-wargHelpdeskDirectives
-  .constant('focusConfig', {
-    focusClass: 'focused'
-  })
-
-  .directive('onFocus', function (focusConfig) {
+wargHelpdeskDirectives.directive('uniqueUsername', function ($http) {
     return {
       restrict: 'A',
       require: 'ngModel',
-      link: function(scope, element, attrs, ngModel) {
-        ngModel.$focused = false;
-        element
-          .bind('focus', function(evt) {
-            element.addClass(focusConfig.focusClass);
-            scope.$apply(function() {ngModel.$focused = true;});
-          })
-          .bind('blur', function(evt) {
-            element.removeClass(focusConfig.focusClass);
-            scope.$apply(function() {ngModel.$focused = false;});
+      link: function (scope, element, attrs, ngModel) {
+        function validate(value) {
+          if(!value) {
+            ngModel.$setValidity('unique', true);
+            return;
+          }
+          $http.get('/auth/check_username/' + value).success(function(user) {
+            if(!user.exists) {
+              ngModel.$setValidity('unique', true);
+            } else {
+              ngModel.$setValidity('unique', false);
+            }
           });
+        }
+
+        scope.$watch( function() {
+          return ngModel.$viewValue;
+        }, validate);
       }
-    }
+    };
   });

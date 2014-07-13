@@ -9,6 +9,14 @@ exports.ensureAuthenticated = function ensureAuthenticated(req, res, next) {
 }
 
 /**
+ *  Route middleware to ensure user is authenticated as Admin.
+ */
+exports.ensureAuthenticatedAsAdmin = function ensureAuthenticatedAsAdmin(req, res, next) {
+  if ((req.isAuthenticated()) && (req.user.role == 'admin')){ return next(); }
+  res.send(401);
+}
+
+/**
  * User authorizations routing middleware
  */
 exports.userAuthorization = {

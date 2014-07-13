@@ -12,11 +12,10 @@
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     
-    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!--<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>-->
 
     <!-- CSS VENDOR -->
-    <link rel="stylesheet" href="bower_components/ng-grid/ng-grid.css" />
-    <link rel="stylesheet" href="modules/vendor/trNgGrid/trNgGrid.min.css" />
+    <link rel="stylesheet" href="modules/vendor/trNgGrid/trNgGrid.min.css">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="styles/vendor/bootstrap/css/bootstrap.css">
 
@@ -45,8 +44,9 @@
     <div id="app" ui-view></div>
     <footer></footer>
 
-    <script src="bower_components/angular/angular.js"></script>
-
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src='http://code.angularjs.org/snapshot/angular.js'></script><script src='http://code.angularjs.org/snapshot/angular-messages.js'></script>
+    <!--<script src="bower_components/angular/angular.js"></script>-->
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
@@ -56,6 +56,7 @@
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls-0.10.0.js"></script> 
     <script src="bower_components/angular-http-auth/src/http-auth-interceptor.js"></script>
     <script src="bower_components/angular-scroll/angular-scroll.js"></script>
+    <!--<script src="bower_components/angular-messages/angular-messages.js"></script>-->
 
     <script src="scripts/warghelpdesk.js"></script>
     <script src="scripts/controllers.js"></script>
@@ -88,6 +89,12 @@
         <script src="modules/incidences/scripts/controllers.js"></script> 
         <script src="modules/incidences/scripts/services.js"></script> 
         <script src="modules/incidences/scripts/directives.js"></script> 
+
+        <!-- ADMINISTRATION -->
+        <script src="modules/administration/scripts/administration.js"></script> 
+        <script src="modules/administration/scripts/controllers.js"></script> 
+        <script src="modules/administration/scripts/services.js"></script> 
+        <script src="modules/administration/scripts/directives.js"></script> 
 
         <!-- VENDOR -->
         <script src="modules/vendor/trNgGrid/trNgGrid.min.js"></script> 
