@@ -23,7 +23,7 @@
     "shelljs": "^0.2.6",
     "karma-junit-reporter": "^0.2.2",
     "express": "4.6.1",
-    "jasmine-reporters": "0.4.1",
+    "jasmine-reporters": "~0.4",
     "jasmine-node": "1.14.2",
     "karma-html-reporter": "~0.1",
     "request": "2.33.0",
