@@ -1,0 +1,175 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
+#HTMLReporter { font-size: 11px; font-family: Monaco, "Lucida Console", monospace; line-height: 14px; color: #333333; }
+#HTMLReporter a { text-decoration: none; }
+#HTMLReporter a:hover { text-decoration: underline; }
+#HTMLReporter p, #HTMLReporter h1, #HTMLReporter h2, #HTMLReporter h3, #HTMLReporter h4, #HTMLReporter h5, #HTMLReporter h6 { margin: 0; line-height: 14px; }
+#HTMLReporter .banner, #HTMLReporter .symbolSummary, #HTMLReporter .summary, #HTMLReporter .resultMessage, #HTMLReporter .specDetail .description, #HTMLReporter .alert .bar, #HTMLReporter .stackTrace { padding-left: 9px; padding-right: 9px; }
+#HTMLReporter #jasmine_content { position: fixed; right: 100%; }
+#HTMLReporter .version { color: #aaaaaa; }
+#HTMLReporter .banner { margin-top: 14px; }
+#HTMLReporter .duration { color: #aaaaaa; float: right; }
+#HTMLReporter .exceptions { color: #fff; float: right; margin-top: 5px; margin-right: 5px; }
+#HTMLReporter .bar { line-height: 28px; font-size: 14px; display: block; color: #eee; }
+#HTMLReporter .runningAlert { background-color: #666666; }
+#HTMLReporter .skippedAlert { background-color: #aaaaaa; }
+#HTMLReporter .skippedAlert:first-child { background-color: #333333; }
+#HTMLReporter .skippedAlert:hover { text-decoration: none; color: white; text-decoration: underline; }
+#HTMLReporter .passingAlert { background-color: #a6b779; }
+#HTMLReporter .passingAlert:first-child { background-color: #5e7d00; }
+#HTMLReporter .failingAlert { background-color: #cf867e; }
+#HTMLReporter .failingAlert:first-child { background-color: #b03911; }
+#HTMLReporter .results { margin-top: 14px; }
+#HTMLReporter #details { display: none; }
+#HTMLReporter .resultsMenu, #HTMLReporter .resultsMenu a { background-color: #fff; color: #333333; }
+#HTMLReporter.showDetails .summaryMenuItem { font-weight: normal; text-decoration: inherit; }
+#HTMLReporter.showDetails .summaryMenuItem:hover { text-decoration: underline; }
+#HTMLReporter.showDetails .detailsMenuItem { font-weight: bold; text-decoration: underline; }
+#HTMLReporter.showDetails .summary { display: none; }
+#HTMLReporter.showDetails #details { display: block; }
+#HTMLReporter .summaryMenuItem { font-weight: bold; text-decoration: underline; }
+#HTMLReporter .summary { margin-top: 14px; }
+#HTMLReporter .summary .suite .suite, #HTMLReporter .summary .specSummary { margin-left: 14px; }
+#HTMLReporter .summary .specSummary.passed span { color: #5e7d00; }
+#HTMLReporter .summary .specSummary.failed span { color: #b03911; }
+#HTMLReporter .description + .suite { margin-top: 0; }
+#HTMLReporter .suite { margin-top: 14px; }
+#HTMLReporter .suite a { color: #333333; }
+#HTMLReporter #details .specDetail { margin-bottom: 28px; }
+#HTMLReporter #details .specDetail .description { display: block; color: white; background-color: #b03911; }
+#HTMLReporter .resultMessage { padding-top: 14px; color: #333333; }
+#HTMLReporter .resultMessage span.result { display: block; }
+#HTMLReporter .stackTrace { margin: 5px 0 0 0; max-height: 224px; overflow: auto; line-height: 18px; color: #666666; border: 1px solid #ddd; background: white; white-space: pre; }
+</style>
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+ <script>
+  $(function(){
+    $("a.summaryMenuItem").on("click", function(){
+      $("body").removeClass("showDetails").addClass("showSummary");
+    });
+    $("a.detailsMenuItem").on("click", function(){
+      $("body").addClass("showDetails").removeClass("showSummary");
+    });
+
+  });
+ </script>
+</head>
+
+<body id="HTMLReporter" class="html-reporter showDetails">
+<h1>Chrome 35.0.1916 (Mac OS X 10.9.3)</h1>
+
+<div class="alert">
+
+
+<span class="failingAlert bar">Failed 1 specs</span>
+<span class="resultsMenu bar">
+<a class="summaryMenuItem" href="#">6 specs<a>|<a class="detailsMenuItem" href="#">1 failing</a>
+</span>
+
+
+
+</div>
+<div class="results">
+  <div class="summary">
+
+
+  
+    <div class="suite passed">
+      <span class="description">Controller: SigninCtrl</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should set scope.errors[field] on mongoose errors</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Controller: SignupCtrl</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should set scope.errors[field] on mongoose errors</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite failed">
+      <span class="description">Directive: mongooseError</span>
+    
+      <div class="specSummary failed">
+      <span class="description">should set error to false on keypress</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Service: Auth</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should login and set global user</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should logout and remove global user</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should create a new user and set global user</span>
+      </div>
+    
+    </div>
+  
+</div>
+
+<div id="details">
+  
+  
+  <div class="specDetail failed">
+    <span class="description">Directive: mongooseError should set error to false on keypress</span>
+    <div class="stackTrace">
+      <div class="resultMessage">Error: [$injector:modulerr] Failed to instantiate module signDirectives due to:
+Error: [$injector:nomod] Module 'signDirectives' is not available! You either misspelled the module name or forgot to load it. If registering a module ensure that you specify the dependencies as the second argument.
+http://errors.angularjs.org/1.3.0-build.2911+sha.c61626f/$injector/nomod?p0=signDirectives
+    at http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:78:12
+    at http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:1745:17
+    at ensure (http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:1669:38)
+    at module (http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:1743:14)
+    at http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:3974:22
+    at forEach (http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:327:18)
+    at loadModules (http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:3958:5)
+    at Object.createInjector [as injector] (http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:3898:11)
+    at workFn (http://localhost:9876/base/client/bower_components/angular-mocks/angular-mocks.js?1402698387000:2144:52)
+http://errors.angularjs.org/1.3.0-build.2911+sha.c61626f/$injector/modulerr?p0=signDirectives&amp;p1=Error%3A%20%5B%24injector%3Anomod%5D%20Module%20'signDirectives'%20is%20not%20available!%20You%20either%20misspelled%20the%20module%20name%20or%20forgot%20to%20load%20it.%20If%20registering%20a%20module%20ensure%20that%20you%20specify%20the%20dependencies%20as%20the%20second%20argument.%0Ahttp%3A%2F%2Ferrors.angularjs.org%2F1.3.0-build.2911%2Bsha.c61626f%2F%24injector%2Fnomod%3Fp0%3DsignDirectives%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A78%3A12%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A1745%3A17%0A%20%20%20%20at%20ensure%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A1669%3A38)%0A%20%20%20%20at%20module%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A1743%3A14)%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A3974%3A22%0A%20%20%20%20at%20forEach%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A327%3A18)%0A%20%20%20%20at%20loadModules%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A3958%3A5)%0A%20%20%20%20at%20Object.createInjector%20%5Bas%20injector%5D%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A3898%3A11)%0A%20%20%20%20at%20workFn%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular-mocks%2Fangular-mocks.js%3F1402698387000%3A2144%3A52)%0A%20%20%20%20at%20jasmine.Block.execute%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3F1374365571000%3A1145%3A17)
+    at http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:78:12
+    at http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:3997:15
+    at forEach (http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:327:18)
+    at loadModules (http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:3958:5)
+    at Object.createInjector [as injector] (http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:3898:11)
+    at workFn (http://localhost:9876/base/client/bower_components/angular-mocks/angular-mocks.js?1402698387000:2144:52),Error: [$injector:modulerr] Failed to instantiate module signDirectives due to:
+Error: [$injector:nomod] Module 'signDirectives' is not available! You either misspelled the module name or forgot to load it. If registering a module ensure that you specify the dependencies as the second argument.
+http://errors.angularjs.org/1.3.0-build.2911+sha.c61626f/$injector/nomod?p0=signDirectives
+    at http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:78:12
+    at http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:1745:17
+    at ensure (http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:1669:38)
+    at module (http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:1743:14)
+    at http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:3974:22
+    at forEach (http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:327:18)
+    at loadModules (http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:3958:5)
+    at Object.createInjector [as injector] (http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:3898:11)
+    at workFn (http://localhost:9876/base/client/bower_components/angular-mocks/angular-mocks.js?1402698387000:2144:52)
+http://errors.angularjs.org/1.3.0-build.2911+sha.c61626f/$injector/modulerr?p0=signDirectives&amp;p1=Error%3A%20%5B%24injector%3Anomod%5D%20Module%20'signDirectives'%20is%20not%20available!%20You%20either%20misspelled%20the%20module%20name%20or%20forgot%20to%20load%20it.%20If%20registering%20a%20module%20ensure%20that%20you%20specify%20the%20dependencies%20as%20the%20second%20argument.%0Ahttp%3A%2F%2Ferrors.angularjs.org%2F1.3.0-build.2911%2Bsha.c61626f%2F%24injector%2Fnomod%3Fp0%3DsignDirectives%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A78%3A12%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A1745%3A17%0A%20%20%20%20at%20ensure%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A1669%3A38)%0A%20%20%20%20at%20module%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A1743%3A14)%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A3974%3A22%0A%20%20%20%20at%20forEach%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A327%3A18)%0A%20%20%20%20at%20loadModules%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A3958%3A5)%0A%20%20%20%20at%20Object.createInjector%20%5Bas%20injector%5D%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A3898%3A11)%0A%20%20%20%20at%20workFn%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular-mocks%2Fangular-mocks.js%3F1402698387000%3A2144%3A52)%0A%20%20%20%20at%20jasmine.Block.execute%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3F1374365571000%3A1145%3A17)
+    at http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:78:12
+    at http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:3997:15
+    at forEach (http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:327:18)
+    at loadModules (http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:3958:5)
+    at Object.createInjector [as injector] (http://localhost:9876/base/client/bower_components/angular/angular.js?1405027295000:3898:11)
+    at workFn (http://localhost:9876/base/client/bower_components/angular-mocks/angular-mocks.js?1402698387000:2144:52)</div>
+    </div>
+  </div>
+  
+  
+</div>
+</body>
+</html>

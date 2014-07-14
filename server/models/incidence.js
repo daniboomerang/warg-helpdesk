@@ -10,17 +10,15 @@ var IncidenceSchema = new Schema({
     required: true
   },
   description: {
-    type: String,
-    default: '',
-    trim: true
+    type: String
   },
   severity: {
-    type: String,
-    required: true
+    type: String
+    //required: true
   },
   priority: {
-    type: String,
-    required: true
+    type: String
+    //required: true
   },
   created: Date,
   creator: {

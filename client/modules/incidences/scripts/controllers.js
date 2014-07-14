@@ -2,7 +2,7 @@
 
 var incidencesControllers = angular.module('incidencesControllers', ['incidencesServices', 'duScroll'])
 
-incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, $anchorScroll, $routeParams, $state, Incidences, IncidenceRate, IncidenceAssign, IncidenceEffort, IncidenceClose) {
+incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, $anchorScroll, $routeParams, $state, Incidences, IncidenceRate, IncidenceAssign, IncidenceEffort, IncidenceClose, IncidenceComment) {
 
   //////////
   /* CRUD */
@@ -11,14 +11,14 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
   $scope.create = function() {
     var incidence = new Incidences({
       title: this.title,
-      content: this.content
+      description: this.description
     });
     incidence.$save(function(response) {
       $location.path("helpesk/incidences/open/" + response._id);
     });
 
     this.title = "";
-    this.content = "";
+    this.description = "";
   };
 
   $scope.remove = function(incidence) {
@@ -34,6 +34,23 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
   $scope.update = function() {
     var incidence = $scope.incidence;
     incidence.$update(function() {
+    },
+    function (error){
+      console.log("Server error trying to update the incidence " + incidence._id);
+    });
+  };
+
+
+  $scope.postComment = function(comment) {
+    var incidence = new IncidenceComment({
+      _id: $scope.incidence._id,
+      comment: comment
+    });
+    incidence.$postComment(function(response) {
+      $scope.incidence.history = response.history;
+    },
+    function (error){
+      console.log("Server error trying to post a comment for incidence " + incidence._id);
     });
   };
 
@@ -223,6 +240,10 @@ incidencesControllers.controller('IncidenceCtrl', function ($scope, $routeParams
     $document.scrollTo(reply, 0, 1000);
   };
 
+  $scope.sendComment = function(comment) {
+    $scope.postComment(comment);
+  };
+
 });
 
 incidencesControllers.controller('RateCtrl', function ($scope) {
@@ -319,13 +340,6 @@ incidencesControllers.controller('AssignCtrl', function ($scope) {
   }
 
 });
-
-// Please note that $modalInstance represents a modal window (instance) dependency.
-// It is not the same as the $modal service used above.
-
-var CreateCtrl = function ($scope, $modalInstance, items) {
-
-};
 
 incidencesControllers.controller('CloseCtrl', function ($scope, $modal, $log) {
 

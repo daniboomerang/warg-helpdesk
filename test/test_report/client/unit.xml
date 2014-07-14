@@ -1,15 +1,56 @@
 <?xml version="1.0"?>
 <testsuites>
-  <testsuite name="Chrome 35.0.1916 (Mac OS X 10.9.2)" package="unit" timestamp="2014-06-25T22:43:03" id="0" hostname="Daniels-MacBook-Pro.local" tests="6" errors="0" failures="0" time="0.113">
+  <testsuite name="Chrome 35.0.1916 (Mac OS X 10.9.3)" package="unit" timestamp="2014-07-14T11:18:28" id="0" hostname="Daniels-MacBook-Pro.local" tests="6" errors="0" failures="1" time="0.142">
     <properties>
-      <property name="browser.fullName" value="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36"/>
+      <property name="browser.fullName" value="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36"/>
     </properties>
-    <testcase name="should set scope.errors[field] on mongoose errors" time="0.056" classname="unit Chrome 35.0.1916 (Mac OS X 10.9.2).Controller: SigninCtrl"/>
-    <testcase name="should set scope.errors[field] on mongoose errors" time="0.011" classname="unit Chrome 35.0.1916 (Mac OS X 10.9.2).Controller: SignupCtrl"/>
-    <testcase name="should set error to false on keypress" time="0.023" classname="unit Chrome 35.0.1916 (Mac OS X 10.9.2).Directive: mongooseError"/>
-    <testcase name="should login and set global user" time="0.006" classname="unit Chrome 35.0.1916 (Mac OS X 10.9.2).Service: Auth"/>
-    <testcase name="should logout and remove global user" time="0.005" classname="unit Chrome 35.0.1916 (Mac OS X 10.9.2).Service: Auth"/>
-    <testcase name="should create a new user and set global user" time="0.012" classname="unit Chrome 35.0.1916 (Mac OS X 10.9.2).Service: Auth"/>
+    <testcase name="should set scope.errors[field] on mongoose errors" time="0.074" classname="unit Chrome 35.0.1916 (Mac OS X 10.9.3).Controller: SigninCtrl"/>
+    <testcase name="should set scope.errors[field] on mongoose errors" time="0.012" classname="unit Chrome 35.0.1916 (Mac OS X 10.9.3).Controller: SignupCtrl"/>
+    <testcase name="should set error to false on keypress" time="0.02" classname="unit Chrome 35.0.1916 (Mac OS X 10.9.3).Directive: mongooseError">
+      <failure type="">Error: [$injector:modulerr] Failed to instantiate module signDirectives due to:
+Error: [$injector:nomod] Module &apos;signDirectives&apos; is not available! You either misspelled the module name or forgot to load it. If registering a module ensure that you specify the dependencies as the second argument.
+http://errors.angularjs.org/1.3.0-build.2911+sha.c61626f/$injector/nomod?p0=signDirectives
+    at /Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:78:12
+    at /Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:1745:17
+    at ensure (/Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:1669:38)
+    at module (/Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:1743:14)
+    at /Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:3974:22
+    at forEach (/Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:327:18)
+    at loadModules (/Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:3958:5)
+    at Object.createInjector [as injector] (/Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:3898:11)
+    at workFn (/Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular-mocks/angular-mocks.js:2144:52)
+http://errors.angularjs.org/1.3.0-build.2911+sha.c61626f/$injector/modulerr?p0=signDirectives&amp;p1=Error%3A%20%5B%24injector%3Anomod%5D%20Module%20&apos;signDirectives&apos;%20is%20not%20available!%20You%20either%20misspelled%20the%20module%20name%20or%20forgot%20to%20load%20it.%20If%20registering%20a%20module%20ensure%20that%20you%20specify%20the%20dependencies%20as%20the%20second%20argument.%0Ahttp%3A%2F%2Ferrors.angularjs.org%2F1.3.0-build.2911%2Bsha.c61626f%2F%24injector%2Fnomod%3Fp0%3DsignDirectives%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A78%3A12%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A1745%3A17%0A%20%20%20%20at%20ensure%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A1669%3A38)%0A%20%20%20%20at%20module%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A1743%3A14)%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A3974%3A22%0A%20%20%20%20at%20forEach%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A327%3A18)%0A%20%20%20%20at%20loadModules%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A3958%3A5)%0A%20%20%20%20at%20Object.createInjector%20%5Bas%20injector%5D%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A3898%3A11)%0A%20%20%20%20at%20workFn%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular-mocks%2Fangular-mocks.js%3F1402698387000%3A2144%3A52)%0A%20%20%20%20at%20jasmine.Block.execute%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3F1374365571000%3A1145%3A17)
+    at /Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:78:12
+    at /Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:3997:15
+    at forEach (/Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:327:18)
+    at loadModules (/Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:3958:5)
+    at Object.createInjector [as injector] (/Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:3898:11)
+    at workFn (/Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular-mocks/angular-mocks.js:2144:52)
+</failure>
+      <failure type="">Error: [$injector:modulerr] Failed to instantiate module signDirectives due to:
+Error: [$injector:nomod] Module &apos;signDirectives&apos; is not available! You either misspelled the module name or forgot to load it. If registering a module ensure that you specify the dependencies as the second argument.
+http://errors.angularjs.org/1.3.0-build.2911+sha.c61626f/$injector/nomod?p0=signDirectives
+    at /Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:78:12
+    at /Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:1745:17
+    at ensure (/Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:1669:38)
+    at module (/Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:1743:14)
+    at /Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:3974:22
+    at forEach (/Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:327:18)
+    at loadModules (/Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:3958:5)
+    at Object.createInjector [as injector] (/Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:3898:11)
+    at workFn (/Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular-mocks/angular-mocks.js:2144:52)
+http://errors.angularjs.org/1.3.0-build.2911+sha.c61626f/$injector/modulerr?p0=signDirectives&amp;p1=Error%3A%20%5B%24injector%3Anomod%5D%20Module%20&apos;signDirectives&apos;%20is%20not%20available!%20You%20either%20misspelled%20the%20module%20name%20or%20forgot%20to%20load%20it.%20If%20registering%20a%20module%20ensure%20that%20you%20specify%20the%20dependencies%20as%20the%20second%20argument.%0Ahttp%3A%2F%2Ferrors.angularjs.org%2F1.3.0-build.2911%2Bsha.c61626f%2F%24injector%2Fnomod%3Fp0%3DsignDirectives%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A78%3A12%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A1745%3A17%0A%20%20%20%20at%20ensure%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A1669%3A38)%0A%20%20%20%20at%20module%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A1743%3A14)%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A3974%3A22%0A%20%20%20%20at%20forEach%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A327%3A18)%0A%20%20%20%20at%20loadModules%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A3958%3A5)%0A%20%20%20%20at%20Object.createInjector%20%5Bas%20injector%5D%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular%2Fangular.js%3F1405027295000%3A3898%3A11)%0A%20%20%20%20at%20workFn%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fclient%2Fbower_components%2Fangular-mocks%2Fangular-mocks.js%3F1402698387000%3A2144%3A52)%0A%20%20%20%20at%20jasmine.Block.execute%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3F1374365571000%3A1145%3A17)
+    at /Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:78:12
+    at /Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:3997:15
+    at forEach (/Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:327:18)
+    at loadModules (/Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:3958:5)
+    at Object.createInjector [as injector] (/Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular/angular.js:3898:11)
+    at workFn (/Users/daniboomerang/Work/Apps/Projects/Warg Solutions/operationII/client/bower_components/angular-mocks/angular-mocks.js:2144:52)
+</failure>
+    </testcase>
+    <testcase name="should login and set global user" time="0.017" classname="unit Chrome 35.0.1916 (Mac OS X 10.9.3).Service: Auth"/>
+    <testcase name="should logout and remove global user" time="0.01" classname="unit Chrome 35.0.1916 (Mac OS X 10.9.3).Service: Auth"/>
+    <testcase name="should create a new user and set global user" time="0.009" classname="unit Chrome 35.0.1916 (Mac OS X 10.9.3).Service: Auth"/>
     <system-out><![CDATA[
 ]]></system-out>
     <system-err/>

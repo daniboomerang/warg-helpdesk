@@ -33,6 +33,7 @@ module.exports = function(app) {
 
   // Updating an incidence
   app.put('/api/incidences/:incidenceId', auth.ensureAuthenticated, incidences.update);
+  app.put('/api/incidences/:incidenceId/postComment', auth.ensureAuthenticated, incidences.postComment);
   app.put('/api/incidences/:incidenceId/rate', auth.ensureAuthenticated, incidences.updateRate);
   app.put('/api/incidences/:incidenceId/assign', auth.ensureAuthenticated, incidences.updateAssigned);
   app.put('/api/incidences/:incidenceId/effort', auth.ensureAuthenticated, incidences.updateEffort);
