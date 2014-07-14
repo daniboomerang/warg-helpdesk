@@ -19,9 +19,9 @@ module.exports = function(config){
       'client/modules/common/auth/services.js',
       'client/modules/sign/scripts/controllers.js',
       'client/modules/sign/scripts/directives.js',
+      'test/unit/client/directives.js',
       'test/unit/client/helpers/browserTrigger.js',
       'test/unit/client/modules/sign/controllers.js',
-      'test/unit/client/modules/sign/directives.js',
       'test/unit/client/modules/common/auth/services.js'    
     ],
 

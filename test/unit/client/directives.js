@@ -4,7 +4,6 @@ describe('Directive: mongooseError', function () {
 
   // load the directive's module
   beforeEach(module('wargHelpdeskDirectives'));
-  beforeEach(module('signDirectives'));
 
   var element, container,
     scope, $httpBackend;
