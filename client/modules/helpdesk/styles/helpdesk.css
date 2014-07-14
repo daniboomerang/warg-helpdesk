@@ -22,8 +22,11 @@
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
     background-color: white;
-    background-image:url('/modules/helpdesk/images/svgs/greenCircles.svg');
+    /*background-image:url('/modules/helpdesk/images/svgs/greenCircles.svg');
     background-image:url('/modules/helpdesk/images/svgs/greenAndPink.svg');
+    background-image:url('/modules/helpdesk/images/svgs/grayAndBlue.svg');
+    background-image:url('/modules/helpdesk/images/svgs/whiteAndBlue.svg');*/
+    background-color: black;
     /*background-image:url('/modules/helpdesk/images/svgs/greenAndYellow.svg');
     background-image:url('/modules/helpdesk/images/svgs/greenAndBlue.svg');*/
     background-color: black;

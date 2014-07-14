@@ -12,6 +12,17 @@ incidencesServices.factory('Incidences', function ($resource) {
     });
   });
 
+incidencesServices.factory('IncidenceComment', function ($resource) {
+    return $resource('api/incidences/:incidenceId/postComment', {
+      incidenceId: '@_id',
+
+    }, {
+      postComment: {
+        method: 'PUT'
+      }
+    });
+  });
+
 
 incidencesServices.factory('IncidenceAssign', function ($resource) {
     return $resource('api/incidences/:incidenceId/assign', {
@@ -58,12 +69,6 @@ incidencesServices.factory('IncidenceClose', function ($resource) {
   });
 
 incidencesServices.factory('incidenceAuth', function ($rootScope) {
-
-/* @@@ Hardcoded status => This must come from the server and be incidence.status */
-var status = 'open';
-/* @@@ Hardcoded assignedTo => This must come from the server and be incidence.assignedTo */
-var assignedTo = '';
-
 
 return {
 

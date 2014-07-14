@@ -21,6 +21,9 @@ exports.incidence = function(req, res, next, id) {
 exports.create = function(req, res) {
   var incidence = new Incidence(req.body);
   incidence.creator = req.user;
+  incidence.title = req.body.title;
+  incidence.description = req.body.description;
+
 
   incidence.save(function(err) {
     if (err) {
@@ -37,7 +40,23 @@ exports.create = function(req, res) {
 exports.update = function(req, res) {
   var incidence = req.incidence;
   incidence.title = req.body.title;
-  incidence.description = req.body.content;
+  incidence.description = req.body.description;
+  incidence.save(function(err) {
+    if (err) {
+      res.json(500, err);
+    } else {
+      res.json(incidence);
+    }
+  });
+};
+
+/**
+ * Post a comment incidence 
+ */
+exports.postComment = function(req, res) {  
+  var incidence = req.incidence;
+  var post = {post: req.body.comment, author: req.user, date: Date.now()};
+  incidence.history.push(post);
   incidence.save(function(err) {
     if (err) {
       res.json(500, err);

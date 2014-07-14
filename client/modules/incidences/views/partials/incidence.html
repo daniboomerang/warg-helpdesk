@@ -59,17 +59,18 @@
 </accordion>
 
 <div id="incidence-reply">
-    <div class="pull-right" style="margin-bottom: 10px;">    
-        <div ng-click="toTheTop()"><img src="/modules/incidences/images/icons/arrow-top-24.png" alt="
-        Close Incidence Overview"></div>
-    </div>
-    <div class="pull-right" style="margin-bottom: 10px;">    
-        <div ng-click="sendReply()"> <img src="/modules/incidences/images/icons/reply-24-blue.png" alt="Save Rating"></div>
-    </div>
-    <div class="form-group">
-        <div class="controls">
-            <textarea ng-model="reply" class="form-control" rows="10" placeholder=""></textarea>
+    <form class="form" name="form" ng-submit="register(form)" ng-controller="userFormCtrl" style="margin-bottom: 30px">
+        <div class="pull-right" style="margin-bottom: 10px;">    
+            <div ng-click="toTheTop()" class="btn btn-default"><img src="/modules/incidences/images/icons/arrow-top-24.png" alt=" Go To Top Page"></div>
         </div>
-    </div>
+        <div class="pull-left" style="margin-bottom: 10px;">    
+            <div ng-click="sendComment(reply)" class="btn btn-default"> <img src="/modules/incidences/images/icons/reply-24-blue.png" alt="Post Comment"></div>
+        </div>
+        <div class="form-group">
+            <div class="controls">
+                <input type="textarea" ng-model="reply" class="form-control" rows="10" placeholder="">
+            </div>
+        </div>
+    </form>    
 </div>  
 
