@@ -25,6 +25,9 @@ module.exports = function(config){
       'test/unit/client/modules/common/auth/services.js'    
     ],
 
+    // web server port
+    port: 8080,
+
     autoWatch : false,
 
     frameworks: ['jasmine'],
