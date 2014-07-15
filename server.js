@@ -51,6 +51,14 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 
 // express/mongo session storage
+console.log("##########################################");
+console.log("##########################################");
+console.log("##########################################");
+console.log(config);
+console.log(process.env);
+console.log("##########################################");
+console.log("##########################################");
+console.log("##########################################");
 app.use(express.session({
   secret: 'MEAN',
   store: new mongoStore({
