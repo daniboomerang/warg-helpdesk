@@ -49,18 +49,9 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 
 // express/mongo session storage
-console.log("##########################################");
-console.log("##########################################");
-console.log("##########################################");
-console.log(config);
-console.log(process.env);
-console.log("##########################################");
-console.log("##########################################");
-console.log("##########################################");
 app.use(express.session({
   secret: 'MEAN',
   store: new mongoStore({
-    // url: config.db,
     url: config.mongo.db,
     collection: 'sessions'
   })
@@ -78,11 +69,6 @@ require('./server/config/routes')(app);
 
 // Start server
 var port = process.env.PORT || 3000;
-
-//@@
-console.log("process.env.NODE_ENV in server.js: ", process.env.NODE_ENV);
-console.log("process.env.PORT in Server.js: ", process.env.PORT);
-
 
 app.listen(port, function () {
   console.log('Express server listening on port %d in %s mode', port, app.get('env'));

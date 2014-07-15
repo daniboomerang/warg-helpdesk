@@ -2,7 +2,6 @@
 
 var mongoose = require('mongoose'),
     config = require('../config/config');
-console.log(config);
 exports.mongoose = mongoose;
 
 var mongoOptions = { db: { safe: true } };
