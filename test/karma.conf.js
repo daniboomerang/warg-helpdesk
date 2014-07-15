@@ -25,7 +25,7 @@ module.exports = function(config){
       'test/unit/client/modules/common/auth/services.js'    
     ],
 
-    autoWatch : true,
+    autoWatch : false,
 
     frameworks: ['jasmine'],
 
