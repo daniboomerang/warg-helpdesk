@@ -34,26 +34,27 @@ module.exports = function(config){
 
     browsers : ['Chrome'],
 
-    plugins : [
-            'karma-chrome-launcher',
-            'karma-firefox-launcher',
-            'karma-jasmine',
-            'karma-junit-reporter',
-            'karma-html-reporter'
-            ],
+    // plugins : [
+    //         'karma-chrome-launcher',
+    //         'karma-firefox-launcher',
+    //         'karma-jasmine',
+    //         'karma-junit-reporter',
+    //         'karma-html-reporter'
+    //         ],
     
-    reporters: ['progress', 'junit', 'html'],
+    // reporters: ['progress', 'junit', 'html'],
+    reporters: ['progress'],
 
-    junitReporter : {
-      outputFile: 'test/test_report/client/unit.xml',
-      suite: 'unit'
-    },
+    // junitReporter : {
+    //   outputFile: 'test/test_report/client/unit.xml',
+    //   suite: 'unit'
+    // },
 
-    // the default configuration
-    htmlReporter: {
-      outputDir: 'test/test_report/client',
-      templatePath: __dirname+'/jasmine_template.html'
-    },
+    // // the default configuration
+    // htmlReporter: {
+    //   outputDir: 'test/test_report/client',
+    //   templatePath: __dirname+'/jasmine_template.html'
+    // },
 
     singleRun: true
 
