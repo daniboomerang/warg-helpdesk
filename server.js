@@ -35,9 +35,7 @@ app.configure(function() {
 });
 
 app.configure('production', function(){
-  app.use(express.favicon(path.join(__dirname, 'public', 'favicon.ico')));
-  app.use(express.static(path.join(__dirname, 'public')));
-  app.set('views', __dirname + '/views');
+  app.use(express.logger('production'));             // log every request to the console
 });
 
 app.engine('html', require('ejs').renderFile);
