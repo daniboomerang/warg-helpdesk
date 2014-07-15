@@ -54,7 +54,8 @@ app.use(express.methodOverride());
 app.use(express.session({
   secret: 'MEAN',
   store: new mongoStore({
-    url: config.db,
+    // url: config.db,
+    url: config.mongo.db,
     collection: 'sessions'
   })
 }));

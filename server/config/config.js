@@ -1,6 +1,5 @@
-module.exports = {
-	port: process.env.PORT || 3000,
-    db: process.env.MONGOLAB_URI ||
-    process.env.MONGOHQ_URL ||
-    'mongodb://localhost/test'
-}
+var env = process.env.NODE_ENV || 'dev'
+  , cfg = require('./config.' + env);
+ 
+module.exports = cfg;
+
