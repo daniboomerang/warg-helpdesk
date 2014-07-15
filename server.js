@@ -80,6 +80,12 @@ require('./server/config/routes')(app);
 
 // Start server
 var port = process.env.PORT || 3000;
+
+//@@
+console.log("process.env.NODE_ENV in server.js: ", process.env.NODE_ENV);
+console.log("process.env.PORT in Server.js: ", process.env.PORT);
+
+
 app.listen(port, function () {
   console.log('Express server listening on port %d in %s mode', port, app.get('env'));
 });
