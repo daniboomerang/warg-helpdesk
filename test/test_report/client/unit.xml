@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <testsuites>
-  <testsuite name="Chrome 35.0.1916 (Mac OS X 10.8.5)" package="unit" timestamp="2014-07-15T07:52:22" id="0" hostname="Victors-MacBook-Air.local" tests="6" errors="0" failures="0" time="0.11">
+  <testsuite name="Chrome 35.0.1916 (Mac OS X 10.8.5)" package="unit" timestamp="2014-07-15T07:57:50" id="0" hostname="Victors-MacBook-Air.local" tests="6" errors="0" failures="0" time="0.114">
     <properties>
       <property name="browser.fullName" value="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36"/>
     </properties>
-    <testcase name="should set error to false on keypress" time="0.063" classname="unit Chrome 35.0.1916 (Mac OS X 10.8.5).Directive: mongooseError"/>
-    <testcase name="should set scope.errors[field] on mongoose errors" time="0.023" classname="unit Chrome 35.0.1916 (Mac OS X 10.8.5).Controller: SigninCtrl"/>
+    <testcase name="should set error to false on keypress" time="0.073" classname="unit Chrome 35.0.1916 (Mac OS X 10.8.5).Directive: mongooseError"/>
+    <testcase name="should set scope.errors[field] on mongoose errors" time="0.017" classname="unit Chrome 35.0.1916 (Mac OS X 10.8.5).Controller: SigninCtrl"/>
     <testcase name="should set scope.errors[field] on mongoose errors" time="0.006" classname="unit Chrome 35.0.1916 (Mac OS X 10.8.5).Controller: SignupCtrl"/>
-    <testcase name="should login and set global user" time="0.008" classname="unit Chrome 35.0.1916 (Mac OS X 10.8.5).Service: Auth"/>
-    <testcase name="should logout and remove global user" time="0.005" classname="unit Chrome 35.0.1916 (Mac OS X 10.8.5).Service: Auth"/>
-    <testcase name="should create a new user and set global user" time="0.005" classname="unit Chrome 35.0.1916 (Mac OS X 10.8.5).Service: Auth"/>
+    <testcase name="should login and set global user" time="0.006" classname="unit Chrome 35.0.1916 (Mac OS X 10.8.5).Service: Auth"/>
+    <testcase name="should logout and remove global user" time="0.004" classname="unit Chrome 35.0.1916 (Mac OS X 10.8.5).Service: Auth"/>
+    <testcase name="should create a new user and set global user" time="0.008" classname="unit Chrome 35.0.1916 (Mac OS X 10.8.5).Service: Auth"/>
     <system-out><![CDATA[
 ]]></system-out>
     <system-err/>
