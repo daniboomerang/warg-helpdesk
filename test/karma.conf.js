@@ -4,7 +4,7 @@ module.exports = function(config){
     basePath : '../',
 
     files : [
-      'client/bower_components/jquery/jquery.js',
+      'client/bower_components/jquery/dist/jquery.js',
       'client/bower_components/angular/angular.js',
       'client/bower_components/angular-resource/angular-resource.js',
             'client/bower_components/angular-mocks/angular-mocks.js',
@@ -50,7 +50,9 @@ module.exports = function(config){
     htmlReporter: {
       outputDir: 'test/test_report/client',
       templatePath: __dirname+'/jasmine_template.html'
-    }
+    },
+
+    singleRun: true
 
   });
 };
