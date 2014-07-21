@@ -1,7 +1,7 @@
 'use strict';
 
 var path = require('path'),
-    auth = require('../config/auth');
+    auth = require('../domain/auth-domain');
 
 module.exports = function(app) {
   // User Routes

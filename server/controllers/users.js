@@ -5,6 +5,9 @@ var mongoose = require('mongoose'),
   passport = require('passport'),
   ObjectId = mongoose.Types.ObjectId;
 
+var usersDomain = require('../domain/users-domain');
+
+
 /**
  * Create user
  * requires: {username, password, email, role}
@@ -50,19 +53,20 @@ exports.show = function (req, res, next) {
  *  Username exists
  *  returns {exists}
  */
+ 
 exports.exists = function (req, res, next) {
-  var username = req.params.username;
-  User.findOne({ username : username }, function (err, user) {
-    if (err) {
-      return next(new Error('Failed to load User ' + username));
-    }
 
-    if(user) {
+  usersDomain.findByUsername(req.params.username).then (function (result){
+    if (result.Status == 'user.found'){
       res.json({exists: true});
-    } else {
+    }  
+    else if (result.Status == 'user.not.found'){
       res.json({exists: false});
     }
-  });
+    else if (result.Status == 'db.exception'){
+      return next(new Error('DB Exception: Failed to load User ' + username));
+    }
+  }); 
 }
 
 /**

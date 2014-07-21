@@ -7,8 +7,7 @@ var express = require('express'),
     path = require('path'),
     fs = require('fs'),
     mongoStore = require('connect-mongo')(express),
-    config = require('./server/config/config'),
-    mailListener = require('./server/config/wh-mail-listener');
+    config = require('./server/config/config');
 
 var app = express();
 
@@ -68,8 +67,11 @@ app.use(app.router);
 //Bootstrap routes
 require('./server/config/routes')(app);
 
-// Starting mail listener
-mailListener.start();
+// Setting up Mail Listener
+var mailProcessor = require('./server/domain/mail-domain');
+var mailListener = require('./server/config/wh-mail-listener')(config.mailing);
+mailListener.onMailReceived(mailProcessor.process);
+mailListener.start;
 
 // Start server
 var port = process.env.PORT || 3000;
