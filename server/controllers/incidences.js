@@ -21,9 +21,6 @@ exports.incidence = function(req, res, next, id) {
 exports.create = function(req, res) {
   var incidence = new Incidence(req.body);
   incidence.creator = req.user;
-  incidence.title = req.body.title;
-  incidence.description = req.body.description;
-
 
   incidence.save(function(err) {
     if (err) {

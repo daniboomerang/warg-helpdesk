@@ -55,7 +55,6 @@ exports.show = function (req, res, next) {
  */
  
 exports.exists = function (req, res, next) {
-
   usersDomain.findByUsername(req.params.username).then (function (result){
     if (result.Status == 'user.found'){
       res.json({exists: true});
@@ -66,7 +65,7 @@ exports.exists = function (req, res, next) {
     else if (result.Status == 'db.exception'){
       return next(new Error('DB Exception: Failed to load User ' + username));
     }
-  }); 
+  });   
 }
 
 /**

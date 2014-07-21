@@ -68,9 +68,9 @@ app.use(app.router);
 require('./server/config/routes')(app);
 
 // Setting up Mail Listener
-var mailProcessor = require('./server/domain/mail-domain');
+var mailDomain = require('./server/domain/mail-domain');
 var mailListener = require('./server/config/wh-mail-listener')(config.mailing);
-mailListener.onMailReceived(mailProcessor.process);
+mailListener.onMailReceived(mailDomain.process);
 mailListener.start;
 
 // Start server

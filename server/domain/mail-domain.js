@@ -1,6 +1,7 @@
 'use strict';
 
 var usersDomain = require('./users-domain'),
+	incidencesDomain = require('./incidences-domain'),
  	Q = require('q');
 
 var RESULT_SUCCESS = "SUCCESS";
@@ -18,8 +19,14 @@ exports.process = function (sender, receiver, subject, content) {
 	findSenderAsUser(sender).then(function (findResult){
 		console.log("Process Mail: ", findResult.Status);
 		if ((findResult.Status == 'sender.found') && (isAllowedToCreateIncidence(findResult.user))){
-			createIncidence(findResult.user, subject, content).then(function (createResult){		
-				deferred.resolve(createResult);
+			createIncidence(subject, content, findResult.user).then(function (createResult){
+				console.log("Process Mail: ", createResult.Status);
+				if (createResult.Status == 'incidence.created'){
+					deferred.resolve({Status: RESULT_SUCCESS});
+				}
+				else if (createResult.Status == 'incidence.not.created'){
+					deferred.resolve({Status: RESULT_ERROR});
+				}	
 			});
 		}
 		else {
@@ -50,16 +57,16 @@ var findSenderAsUser = function(sender){
 };
 
 var isAllowedToCreateIncidence = function(user){
-	var allowed = false;
+	var allowed = true;
 	if (!allowed){
-	console.log("User not allowed to create incidences");	
-	} 
+		console.log("User not allowed to create incidences");	
+	}
+	else{
+		console.log("User allowed to create incidences");	
+	}
 	return allowed;
 };
 
-var createIncidence = function(user, subject, content){
-	var result = {}
-	result.Status = RESULT_ERROR;
-	return result;
-	//return incidencesDomain.createIncidence(user, subject, content);
+var createIncidence = function(subject, content, user){
+	return incidencesDomain.createIncidence(subject, content, user);
 };
