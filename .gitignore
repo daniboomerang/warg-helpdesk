@@ -7,3 +7,4 @@ heroku
 .idea
 /views
 .DS_Store
+.env

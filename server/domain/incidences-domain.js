@@ -19,9 +19,9 @@ exports.createIncidence = function(title, description, user) {
 
   incidence.save(function(err) {
     if (err) {
-      deferred.resolve({Status: 'incidence.not.created', incidence: null});
+      deferred.resolve({status: 'incidence.not.created', incidence: null});
     } else {
-      deferred.resolve({Status: 'incidence.created', incidence: incidence});
+      deferred.resolve({status: 'incidence.created', incidence: incidence});
     }
   });
 

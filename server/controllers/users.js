@@ -56,13 +56,13 @@ exports.show = function (req, res, next) {
  
 exports.exists = function (req, res, next) {
   usersDomain.findByUsername(req.params.username).then (function (result){
-    if (result.Status == 'user.found'){
+    if (result.status == 'user.found'){
       res.json({exists: true});
     }  
-    else if (result.Status == 'user.not.found'){
+    else if (result.status == 'user.not.found'){
       res.json({exists: false});
     }
-    else if (result.Status == 'db.exception'){
+    else if (result.status == 'db.exception'){
       return next(new Error('DB Exception: Failed to load User ' + username));
     }
   });   

@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose'),
   User = mongoose.model('User'),
+  ObjectId = mongoose.Types.ObjectId,
   Q = require('q');
 
 /**
@@ -12,14 +13,14 @@ var mongoose = require('mongoose'),
 exports.findByEmail = function (userMail) {
   var deferred = Q.defer();
   var result = {};
-  User.findOne({ email : userMail }, function (err, user) {
+  User.findOne({ email: userMail }, function (err, user) {
     if (err) {
-      result = {Status: 'db.exception', error: err};
+      result = {status: 'db.exception', error: err};
     }
     if(user) {
-      result = {Status: 'user.found', user: user};
+      result = {status: 'user.found', user: user};
     } else {
-      result = {Status: 'user.not.found', user: null};
+      result = {status: 'user.not.found', user: null};
     }
     deferred.resolve(result);
   });
@@ -34,14 +35,36 @@ exports.findByEmail = function (userMail) {
 exports.findByUsername = function (username) {
   var deferred = Q.defer();
   var result = {};
-  User.findOne({ username : username }, function (err, user) {
+  User.findOne({ username: username }, function (err, user) {
     if (err) {
-      result = {Status: 'db.exception', error: err};
+      result = {status: 'db.exception', error: err};
     }
     if(user) {
-      result = {Status: 'user.found', user: user};
+      result = {status: 'user.found', user: user};
     } else {
-      result = {Status: 'user.not.found', user: null};
+      result = {status: 'user.not.found', user: null};
+    }
+    deferred.resolve(result);
+  });
+  return deferred.promise;
+}
+
+/**
+ *  Show profile
+ *  returns {username, profile}
+ */
+
+exports.show = function (userId) {
+  var deferred = Q.defer();
+  var result = {};
+  User.findById(ObjectId(userId), function (err, user) {
+    if (err) {
+      result = {status: 'db.exception', error: err};
+    }
+    if(user) {
+      result = {status: 'user.shown', user: user};
+    } else {
+      result = {status: 'user.not.shown', user: null};
     }
     deferred.resolve(result);
   });

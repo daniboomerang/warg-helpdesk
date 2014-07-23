@@ -1,15 +1,24 @@
 var config = module.exports = {};
- 
+
 config.env = 'dev';
  
 //mongo database
 config.mongo = {};
 config.mongo.db = 'mongodb://localhost/warg_helpdesk_dev';
 
+// Mailing
+// Mail-Sender => Sendgrid
+config.mailSending = {
+  sendgrid_username: process.env.SENDGRID_USERNAME,
+  sendgrid_password: process.env.SENDGRID_PASSWORD,
+  support_Helpdesk:  process.env.SUPPORT_HELPDESK,
+  noreply_Helpdesk:  process.env.NOREPLY_HELPDESK
+};
+
 // Mail-Listener
-config.mailing = {
-  username: "estevez.dani@gmail.com",
-  password: "win2000d",
+config.mailListening = {
+  username: process.env.GMAIL_USERNAME,
+  password: process.env.GMAIL_PASSWORD,
   host: "imap.gmail.com",
   port: 993, // imap port
   tls: true,

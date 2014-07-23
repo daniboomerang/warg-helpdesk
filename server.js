@@ -1,4 +1,8 @@
 'use strict';
+/* Load .env */
+var dotenv = require('dotenv');
+dotenv.load();
+/*************/
 
 // Module dependencies.
 var express = require('express'),
@@ -67,10 +71,14 @@ app.use(app.router);
 //Bootstrap routes
 require('./server/config/routes')(app);
 
-// Setting up Mail Listener
+// Mailing
+// Setting up Mail Sender (SENDGRID)
+var mailSender = require('./server/config/mail-sender')(config.mailSending);
 var mailDomain = require('./server/domain/mail-domain');
-var mailListener = require('./server/config/wh-mail-listener')(config.mailing);
-mailListener.onMailReceived(mailDomain.process);
+mailDomain.setMailSender(mailSender);
+// Setting up Mail Listener
+var mailListener = require('./server/config/mail-listener')(config.mailListening);
+mailListener.onMailReceived(mailDomain.processIncoming);
 mailListener.start;
 
 // Start server
