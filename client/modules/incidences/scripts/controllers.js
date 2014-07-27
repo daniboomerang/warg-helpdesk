@@ -124,7 +124,7 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
       $scope.incidence.effortMinutes = incidence.effort % 60;
       /* @@@ Hardcoded history => This must come from the server */
       var date = Date.now();
-      $scope.incidence.history = [
+      /*$scope.incidence.history = [
         {
           post: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.",
           date: date,
@@ -150,7 +150,7 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
           date: date,
           author: "tech1"
         }
-      ];
+      ];*/
     },
      function (error){
       console.log("Server error trying to open the incidence " + $state.params.incidenceId);

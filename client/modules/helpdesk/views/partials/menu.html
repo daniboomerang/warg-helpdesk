@@ -2,17 +2,20 @@
 
   <accordion close-others="oneAtATime">
 
+  <div class="frame-module">
     <accordion-group>
       <accordion-heading is-open="status.open">
       {{currentUser.username}}
       </accordion-heading>
       <a ng-click="logout()"><img src="/modules/helpdesk/images/icons/logout-24.png" alt="logout">&nbsp;&nbsp;Sign out</a>&nbsp;&nbsp;
     </accordion-group>
+    </div>
 
-    <accordion-group ng-repeat="module in menu" is-open="isActiveModule(module.module)" ng-class="" ng-style="{{module.border}}">
+    <div ng-class="{'arrow-box-module enlarged-active-module': status.activeModule == module.module}" ng-repeat="module in menu" class="frame-module">
+    <accordion-group is-open="isActiveModule(module.module)">
       <accordion-heading>
       
-      <div ng-click="status[module.module] = !status[module.module]">
+      <div ng-click="status[module.module] = !status[module.module];">
         <span class="pull-left module-icon-24" ng-style="{{module.style}}"></span><div style="padding-top:4px;"><span>{{module.module}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': !status[module.module], 'glyphicon-chevron-right': status[module.module]}"></i></div>
       </div>  
       </accordion-heading>
@@ -28,11 +31,12 @@
           </div>
           <!-- --> 
 
-          <a ng-show='(action.title != "Id Search")' ui-sref="{{action.state}}" ng-click="status.activeState = action.state">
+          <a ng-show='(action.title != "Id Search")' ui-sref="{{action.state}}" ng-click="status.activeState = action.state; status.activeModule = module.module;">
           <span class="pull-left module-icon-16"><img ng-src="{{action.style}}"/></span>
           &nbsp;{{action.title}}</a>
         </li>
       </ul>
     </accordion-group>
+    </div>
   </accordion>
 </div>

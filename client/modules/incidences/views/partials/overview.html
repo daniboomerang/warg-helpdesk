@@ -1,19 +1,19 @@
 <section ng-init="findOne()">
 <div class="container-overview">
 
-    <div class="header">
+    <div class="row header" style="padding:20px;">
         <ul class="nav nav-pills pull-right">
-            <li ng-click="open()"><span><img src="/modules/incidences/images/icons/eye-24.png" alt="Open Incidence"></span></li>
-             <li ng-click="toTheTop()"><span><img src="/modules/incidences/images/icons/arrow-top-24.png" alt="Close Incidence Overview"></span></li>
+            <li  ng-click="open()"><span class="btn btn-default"><img src="/modules/incidences/images/icons/eye-32.png" alt="Open Incidence"></span></li>
+             <li ng-click="toTheTop()"><span class="btn btn-default"><img src="/modules/incidences/images/icons/arrow-top-32.png" alt="Close Incidence Overview"></span></li>
         </ul>
         <h4 class="text-muted">{{incidence.title}}</h4>
     </div>
 
-    <div class="jumbotron" style="margin-top: 30px">
+    <!--<div class="jumbotron" style="margin-top: 30px">-->
         <pre>
         {{incidence.description}}
         </pre>
-    </div>
+    <!--</div>-->
 
 </div> <!-- /container -->
 </section>

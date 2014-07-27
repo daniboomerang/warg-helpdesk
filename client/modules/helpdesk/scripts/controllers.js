@@ -20,24 +20,9 @@ helpdeskControllers.controller('HelpdeskCtrl', function ($q, $scope, $state, $ro
 				var currentModule = $scope.menu[i].module.toLowerCase();
 				$scope.status[currentModule] = true;
   			}
+  			$scope.status.activeModule = 'Incidences';
 	  		$scope.status.activeState = "helpdesk.incidences.open.list";
 		});
-	};
-
-	$scope.setActiveState = function(href){
-		$scope.status.activeState = href;
-	};
-
-	$scope.setActiveModule = function(module){	
-		$scope.status.activeModule = module;
-	};
-
-	$scope.isActiveState = function(href) {
-    	return href === $scope.status.activeState;
-	};
-
-	$scope.isActiveModule = function(module) {
-    	return $scope.status[module.toLowerCase()];
 	};
 
 	$scope.logout = function() {
@@ -47,8 +32,13 @@ helpdeskControllers.controller('HelpdeskCtrl', function ($q, $scope, $state, $ro
       }
     })};
 
-	$scope.searchId = function(actionState, id){
+    $scope.isActiveModule = function(module){
+    	return $scope.status[module.toLowerCase()];
+    }
+
+	$scope.searchId = function(actionState, id, module){
 		$scope.status.activeState = actionState;
+		$scope.status.activeModule = module;
 		$state.go('helpdesk.incidences.open.incidence', { incidenceId: id });
   	};
 
