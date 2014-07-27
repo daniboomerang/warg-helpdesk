@@ -18,6 +18,7 @@ angular.module('wargHelpdeskApp', [
   'auth',
   'sign',
   'helpdesk',
+  'reporting',
   'administration'
 ])
 .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
