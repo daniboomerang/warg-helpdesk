@@ -10,7 +10,7 @@ helpdeskServices.service('deskMenuStyleService', function(){
 		getStyle : function(module){	
 			var moduleStyle = [];
 			if (module == 'Home'){
-		   		moduleStyle.module = {'background-image': 'url(/modules/helpdesk/images/icons/administrator-24.png)'};
+		   		moduleStyle.module = {'background-image': 'url(/modules/helpdesk/images/icons/home-24.png)'};
 		   		moduleStyle.border = {'-webkit-box-shadow': '0px 0px 7px 3px rgba(8,139,148,1)',
 									 '-moz-box-shadow': '0px 0px 7px 3px rgba(8,139,148,1)',
 									 'box-shadow': '0px 0px 7px 3px rgba(8,139,148,1)'};

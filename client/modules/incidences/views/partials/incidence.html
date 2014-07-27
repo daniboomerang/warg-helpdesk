@@ -48,9 +48,9 @@
 <accordion close-others="false">
   <accordion-group ng-repeat="post in incidence.history" is-open="$index == incidence.history.length -1" ng-class="">
     <accordion-heading>
-     <span class="badge badge-info">Posted {{post.date | date:'medium'}}</span>
+     <span class="badge alert-info" style="padding:8px;">Posted {{post.date | date:'medium'}}</span>
      <div class="pull-right">
-        <span class="badge badge-success">Posted by: {{post.author}}</span>
+        <span class="badge alert-info" style="padding:8px;">Posted by: {{post.author}}</span>
         <!--<span ng-show="$index == incidence.history.length -1" ng-click="goToState(reply)" class="icon-navbar-container"> <img src="/modules/incidences/images/icons/reply-24.png" alt="View Details"></span>-->
      </div>
     </accordion-heading>

@@ -2,41 +2,43 @@
 
   <accordion close-others="oneAtATime">
 
-  <div class="frame-module">
-    <accordion-group>
-      <accordion-heading is-open="status.open">
-      {{currentUser.username}}
-      </accordion-heading>
-      <a ng-click="logout()"><img src="/modules/helpdesk/images/icons/logout-24.png" alt="logout">&nbsp;&nbsp;Sign out</a>&nbsp;&nbsp;
-    </accordion-group>
+    <div class="frame-module">
+      <accordion-group>
+        <accordion-heading is-open="status.open">
+          <div>
+          <span class="pull-left module-icon-24"><img src="/modules/helpdesk/images/icons/administrator-24.png" alt="user"></span><div style="padding-top:4px;"><span>{{currentUser.username}}</span></div>
+          </div> 
+        </accordion-heading>
+        <ul class="nav nav-pills nav-stacked"><li><a ng-click="logout()"><img src="/modules/helpdesk/images/icons/logout-24.png" alt="logout">&nbsp;&nbsp;Sign out</a></li></ul>
+      </accordion-group>
     </div>
 
     <div ng-class="{'arrow-box-module enlarged-active-module': status.activeModule == module.module}" ng-repeat="module in menu" class="frame-module">
-    <accordion-group is-open="isActiveModule(module.module)">
-      <accordion-heading>
-      
-      <div ng-click="status[module.module] = !status[module.module];">
-        <span class="pull-left module-icon-24" ng-style="{{module.style}}"></span><div style="padding-top:4px;"><span>{{module.module}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': !status[module.module], 'glyphicon-chevron-right': status[module.module]}"></i></div>
-      </div>  
-      </accordion-heading>
-      <ul class="nav nav-pills nav-stacked">
-        <li ng-class="{active: status.activeState == action.state, active2: status.activeState == action.state}" ng-repeat="action in module.actions">
+      <accordion-group is-open="isActiveModule(module.module)">
+        <accordion-heading>
+        
+        <div ng-click="status[module.module] = !status[module.module];">
+          <span class="pull-left module-icon-24" ng-style="{{module.style}}"></span><div style="padding-top:4px;"><span>{{module.module}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': !status[module.module], 'glyphicon-chevron-right': status[module.module]}"></i></div>
+        </div>  
+        </accordion-heading>
+        <ul class="nav nav-pills nav-stacked">
+          <li ng-class="{active: status.activeState == action.state, active2: status.activeState == action.state}" ng-repeat="action in module.actions">
 
-          <!-- Very Ugly: Setting OpenId for module Incidences, on second position and with an specific html -->
-          <div class="search-id" ng-show='(action.title == "Id Search")'>
-            <input type="text" ng-model="id" class="form-control search-id-input pull-left" placeholder="Search id" required="" class="form-control">
-            </input>
-            <a class="pull-right module-icon-16 search-id-icon search-id-arrow" ng-click="searchId(action.state, id)">
-            <span><img src="/modules/helpdesk/images/icons/arrow-16.png" alt="Open Incidence"></span></a>
-          </div>
-          <!-- --> 
+            <!-- Very Ugly: Setting OpenId for module Incidences, on second position and with an specific html -->
+            <div class="search-id" ng-show='(action.title == "Id Search")'>
+              <input type="text" ng-model="id" class="form-control search-id-input pull-left" placeholder="Search id" required="" class="form-control">
+              </input>
+              <a class="pull-right module-icon-16 search-id-icon search-id-arrow" ng-click="searchId(action.state, id, module.module)">
+              <span><img src="/modules/helpdesk/images/icons/arrow-16.png" alt="Open Incidence"></span></a>
+            </div>
+            <!-- --> 
 
-          <a ng-show='(action.title != "Id Search")' ui-sref="{{action.state}}" ng-click="status.activeState = action.state; status.activeModule = module.module;">
-          <span class="pull-left module-icon-16"><img ng-src="{{action.style}}"/></span>
-          &nbsp;{{action.title}}</a>
-        </li>
-      </ul>
-    </accordion-group>
+            <a ng-show='(action.title != "Id Search")' ui-sref="{{action.state}}" ng-click="status.activeState = action.state; status.activeModule = module.module;">
+            <span class="pull-left module-icon-16"><img ng-src="{{action.style}}"/></span>
+            &nbsp;{{action.title}}</a>
+          </li>
+        </ul>
+      </accordion-group>
     </div>
   </accordion>
 </div>
