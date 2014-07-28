@@ -48,22 +48,21 @@ exports.processIncoming = function (sender, receiver, subject, content) {
 				try {
 					if (createResult.status == 'incidence.created'){
 
-					var incidence = createResult.incidence;
+						var incidence = createResult.incidence;
 
-					// Sending Acknowledge eMail
+						// Sending Acknowledge eMail
 
-					var replySubject = incidence._id + ' - ' + subject;
-					var replyText = mailAcknowledgeTemplate(user_info.username, incidence._id);
-					var replyMailResult = sendMailService.sendMail(sender, null, replySubject, replyText, null, null, null, null);
-					if (replyMailResult.status == RESULT_ERROR){
-						resolveDeferred({status: 'acknowledge.not.sent'});
-					}
-					else if (replyMailResult.status == RESULT_SUCCESS){
-						resolveDeferred({status: 'acknowledge.sent'});
-					}
-
-					/**************************/
-
+						var replySubject = incidence._id + ' - ' + subject;
+						var replyText = mailAcknowledgeTemplate(user_info.username, incidence._id);
+						sendMailService.sendMail(sender, null, replySubject, replyText, null, null, null, null).then(function (replyMailResult){
+							if (replyMailResult.status == RESULT_ERROR){
+								resolveDeferred({status: 'acknowledge.not.sent'});
+							}
+							else if (replyMailResult.status == RESULT_SUCCESS){
+								resolveDeferred({status: 'acknowledge.sent'});
+							}
+							/**************************/
+						});
 					}
 					else if (createResult.status == 'incidence.not.created'){
 						resolveDeferred({status: 'incidence.creation.error'});

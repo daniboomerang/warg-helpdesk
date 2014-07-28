@@ -1,5 +1,7 @@
 var RESULT_SUCCESS = "SUCCESS";
 var RESULT_ERROR = "ERROR";
+var Q = require('q');
+
 
 module.exports = function(configuration){
 
@@ -9,6 +11,8 @@ module.exports = function(configuration){
 
     sendMail: function (to, from, subject, text, html, substitution, headersList, file){
       
+      var deferred = Q.defer();
+
       var email = new sendgrid.Email();
 
       // Setting up email parameters
@@ -27,9 +31,11 @@ module.exports = function(configuration){
       // sending email
 
       sendgrid.send(email, function(err, json) {
-        if (err) { return {status: RESULT_ERROR};}
-        return {status: RESULT_SUCCESS};
+        if (err) {deferred.resolve({status: RESULT_ERROR});}
+        else {deferred.resolve({status: RESULT_SUCCESS})};
       });
+
+      return deferred.promise;
     }
   }
 };
