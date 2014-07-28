@@ -10,7 +10,8 @@ module.exports = function(configuration){
   return {
 
     sendMail: function (to, from, subject, text, html, substitution, headersList, file){
-      
+console.log("usrnamesendgrid: ", configuration.sendgrid_username, "sendgridpass: ",configuration.sendgrid_password);
+
       var deferred = Q.defer();
 
       var email = new sendgrid.Email();
@@ -34,10 +35,7 @@ console.log("console log mailSender: ", from, to, subject);
 
       sendgrid.send(email, function(err, json) {
 console.log("sendgrid callback: ", err, json);
-console.log("sendgrid_username: ", process.env.SENDGRID_USERNAME," sendgrid_password: " process.env.SENDGRID_PASSWORD,
-  " support_Helpdesk: ",  process.env.SUPPORT_HELPDESK,
-  " noreply_Helpdesk: ",  process.env.NOREPLY_HELPDESK);
-
+console.log("usrnamesendgrid: ", configuration.sendgrid_username, "sendgridpass: ",configuration.sendgrid_password);
         if (err) {deferred.resolve({status: RESULT_ERROR});}
         else {deferred.resolve({status: RESULT_SUCCESS})};
       });
