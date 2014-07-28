@@ -28,9 +28,12 @@ module.exports = function(configuration){
       }
       if (file) email.addFile(file);
 
+console.log("console log mailSender: ", from, to, subject);
+
       // sending email
 
       sendgrid.send(email, function(err, json) {
+console.log("sendgrid callback: ", err, json);
         if (err) {deferred.resolve({status: RESULT_ERROR});}
         else {deferred.resolve({status: RESULT_SUCCESS})};
       });
