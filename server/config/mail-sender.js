@@ -34,6 +34,10 @@ console.log("console log mailSender: ", from, to, subject);
 
       sendgrid.send(email, function(err, json) {
 console.log("sendgrid callback: ", err, json);
+console.log("sendgrid_username: ", process.env.SENDGRID_USERNAME," sendgrid_password: " process.env.SENDGRID_PASSWORD,
+  " support_Helpdesk: ",  process.env.SUPPORT_HELPDESK,
+  " noreply_Helpdesk: ",  process.env.NOREPLY_HELPDESK);
+
         if (err) {deferred.resolve({status: RESULT_ERROR});}
         else {deferred.resolve({status: RESULT_SUCCESS})};
       });
