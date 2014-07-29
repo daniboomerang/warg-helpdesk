@@ -86,6 +86,7 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
       effort: effort
     });
     incidence.$updateEffort(function(response) {
+      $scope.incidence.effort = response.effort;
       $scope.incidence.effortHours = Math.floor(response.effort / 60);
       $scope.incidence.effortMinutes = response.effort % 60;
     },
@@ -122,35 +123,6 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
       $scope.incidence = incidence;
       $scope.incidence.effortHours = Math.floor(incidence.effort / 60);
       $scope.incidence.effortMinutes = incidence.effort % 60;
-      /* @@@ Hardcoded history => This must come from the server */
-      var date = Date.now();
-      /*$scope.incidence.history = [
-        {
-          post: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.",
-          date: date,
-          author: "tech1"
-        },
-         {
-          post: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.",
-          date: date,
-          author: "tech1"
-        },
-         {
-          post: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.",
-          date: date,
-          author: "tech1"
-        },
-         {
-          post: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.",
-          date: date,
-          author: "tech1"
-        },
-        {
-          post: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.",
-          date: date,
-          author: "tech1"
-        }
-      ];*/
     },
      function (error){
       console.log("Server error trying to open the incidence " + $state.params.incidenceId);
