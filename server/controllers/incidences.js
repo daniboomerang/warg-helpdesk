@@ -1,7 +1,13 @@
 'use strict';
 
+var RESULT_SUCCESS = "SUCCESS";
+var RESULT_ERROR = "ERROR"; 
+
 var mongoose = require('mongoose'),
   Incidence = mongoose.model('Incidence');
+
+var incidencesDomain = require('../domain/incidences-domain');
+
 
 /**
  * Find incidence by id
@@ -148,14 +154,15 @@ exports.show = function(req, res) {
 };
 
 /**
- * List of incidences
+ * List of incidences for a user
  */
-exports.all = function(req, res) {
-  Incidence.find().sort('-created').populate('creator', 'username').exec(function(err, incidences) {
-    if (err) {
-      res.json(500, err);
-    } else {
-      res.json(incidences);
+exports.list = function(req, res) {
+  incidencesDomain.listIncidences(req.user).then (function (resultList){
+    if (resultList.status == RESULT_ERROR){
+      res.json(500, resultList.error);
+    }  
+    else if (resultList.status == RESULT_SUCCESS){
+      res.json(resultList.list);
     }
   });
 };

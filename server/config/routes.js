@@ -29,7 +29,7 @@ module.exports = function(app) {
 
   // Incidence Routes
   var incidences = require('../controllers/incidences');
-  app.get('/api/incidences', incidences.all);
+  app.get('/api/incidences', auth.ensureAuthenticated, incidences.list);
   app.post('/api/incidences', auth.ensureAuthenticated, incidences.create);
   app.get('/api/incidences/:incidenceId', incidences.show);
 

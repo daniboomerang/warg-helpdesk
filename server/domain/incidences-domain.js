@@ -1,5 +1,9 @@
 'use strict';
 
+var RESULT_SUCCESS = "SUCCESS";
+var RESULT_ERROR = "ERROR"; 
+var ROLE_USER = "user";
+
 var mongoose = require('mongoose'),
   Incidence = mongoose.model('Incidence'),
   Q = require('q');
@@ -25,5 +29,37 @@ exports.createIncidence = function(title, description, user) {
     }
   });
 
+  return deferred.promise;
+};
+
+/**
+ *  Return the list of incidences of a user
+ *  Returns a PROMISE with the result 
+ */
+exports.listIncidences = function(user) {
+
+  var deferred = Q.defer();
+
+  // Role determines which incidences can be listed
+
+  // Role: user -> only those he owns
+  if (user.role == ROLE_USER){
+    Incidence.find({creator: user}).sort('-created').populate('creator', 'username').exec(function(err, incidences) {
+     if (err) {
+      deferred.resolve({status: RESULT_ERROR, error: err});
+    } else {   
+      deferred.resolve({status: RESULT_SUCCESS, list: incidences});
+    }
+    });
+  }
+  else{ //user.role = admin || tech
+    Incidence.find().sort('-created').populate('creator', 'username').exec(function(err, incidences) {
+    if (err) {
+      deferred.resolve({status: RESULT_ERROR, error: err});
+    } else {   
+      deferred.resolve({status: RESULT_SUCCESS, list: incidences});
+    }
+    });
+  }
   return deferred.promise;
 };

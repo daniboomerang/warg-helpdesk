@@ -70,3 +70,25 @@ exports.show = function (userId) {
   });
   return deferred.promise;
 }
+
+/**
+ *  Role of a username
+ *  returns a PROMISE with the result
+ */
+
+exports.role = function (username) {
+  var deferred = Q.defer();
+  var result = {};
+  User.findOne({ username: username }, function (err, user) {
+    if (err) {
+      result = {status: 'db.exception', error: err};
+    }
+    if(user) {
+      result = {status: 'role.found', role: user.role};
+    } else {
+      result = {status: 'user.not.found', role: null};
+    }
+    deferred.resolve(result);
+  });
+  return deferred.promise;
+}
