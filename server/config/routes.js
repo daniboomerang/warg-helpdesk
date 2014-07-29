@@ -1,7 +1,9 @@
 'use strict';
 
 var path = require('path'),
-    auth = require('../domain/auth-domain');
+    auth = require('../controllers/auth'),
+    rights = require('../controllers/rights');
+
 
 module.exports = function(app) {
   // User Routes
@@ -22,8 +24,8 @@ module.exports = function(app) {
   app.post('/auth/session', session.login);
   app.delete('/auth/session', session.logout);
 
-  // User Module and Actions Authorizations
-  app.get('/auth/rights', auth.ensureAuthenticated, auth.userAuthorization.getRights);
+  // User Module and Actions Rights
+  app.get('/auth/rights', auth.ensureAuthenticated, rights.rights);
 
   // Incidence Routes
   var incidences = require('../controllers/incidences');
