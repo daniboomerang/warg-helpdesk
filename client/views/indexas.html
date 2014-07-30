@@ -1,0 +1,116 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <base href="/"/>
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    
+    <!--<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>-->
+
+    <!-- CSS VENDOR -->
+    <link rel="stylesheet" href="modules/vendor/trNgGrid/trNgGrid.min.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="styles/vendor/bootstrap/css/bootstrap.css">
+
+    <!-- CSS WARGHELPDESK -->
+    <link rel="stylesheet" href="styles/warghelpdesk.css">
+    <link rel="stylesheet" href="styles/animate.css">
+    <!-- Module auth -->
+    <link rel="stylesheet" href="modules/sign/styles/sign.css">
+    <!-- Module helpdesk -->
+    <link rel="stylesheet" href="modules/helpdesk/styles/helpdesk.css">
+    <link rel="stylesheet" href="modules/helpdesk/styles/menu.css">
+    <!-- Module home -->
+    <link rel="stylesheet" href="modules/home/styles/home.css">
+    <!-- Module incidences -->
+    <link rel="stylesheet" href="modules/incidences/styles/incidences.css">
+    <link rel="stylesheet" href="modules/incidences/styles/incidence-details.css">
+    <!-- Module reporting -->
+    <link rel="stylesheet" href="modules/reporting/styles/reporting.css">
+    <!-- Module administration -->
+    <link rel="stylesheet" href="modules/administration/styles/administration.css">
+
+    
+    
+</head>
+
+<!-- apply our angular app to our site -->
+<body ng-app="wargHelpdeskApp">
+
+    <!--<navbar></navbar>-->
+    <!-- MAIN CONTENT -->
+    <!-- THIS IS WHERE WE WILL INJECT OUR CONTENT ============================== -->
+    <div id="app" ui-view></div>
+    <footer></footer>
+
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <!--<script src='http://code.angularjs.org/snapshot/angular.js'></script><script src='http://code.angularjs.org/snapshot/angular-messages.js'></script>-->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls-0.10.0.js"></script> 
+    <script src="bower_components/angular-http-auth/src/http-auth-interceptor.js"></script>
+    <script src="bower_components/angular-scroll/angular-scroll.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/d3/d3.min.js"></script> 
+    <script src="bower_components/angular-charts/dist/angular-charts.min.js"></script>
+
+    <script src="scripts/warghelpdesk.js"></script>
+    <script src="scripts/controllers.js"></script>
+    <script src="scripts/directives.js"></script>
+
+    <!-- MODULES -->
+
+        <!-- COMMON  -->
+        <!-- AUTHENTICATION -->
+        <script src="modules/common/auth/auth.js"></script> 
+        <script src="modules/common/auth/services.js"></script> 
+        
+        <!-- HELPDESK -->
+        <script src="modules/helpdesk/scripts/helpdesk.js"></script> 
+        <script src="modules/helpdesk/scripts/controllers.js"></script> 
+        <script src="modules/helpdesk/scripts/directives.js"></script> 
+        <script src="modules/helpdesk/scripts/services.js"></script> 
+
+        <!-- HOME -->
+        <script src="modules/home/scripts/home.js"></script> 
+        <script src="modules/home/scripts/controllers.js"></script> 
+
+        <!-- SIGNING -->
+        <script src="modules/sign/scripts/sign.js"></script> 
+        <script src="modules/sign/scripts/controllers.js"></script> 
+        <script src="modules/sign/scripts/directives.js"></script> 
+
+        <!-- INCIDENCES -->
+        <script src="modules/incidences/scripts/incidences.js"></script> 
+        <script src="modules/incidences/scripts/controllers.js"></script> 
+        <script src="modules/incidences/scripts/services.js"></script> 
+        <script src="modules/incidences/scripts/directives.js"></script> 
+
+        <!-- REPORTING -->
+        <script src="modules/reporting/scripts/reporting.js"></script> 
+        <script src="modules/reporting/scripts/controllers.js"></script> 
+        <script src="modules/reporting/scripts/directives.js"></script> 
+
+        <!-- ADMINISTRATION -->
+        <script src="modules/administration/scripts/administration.js"></script> 
+        <script src="modules/administration/scripts/controllers.js"></script> 
+        <script src="modules/administration/scripts/services.js"></script> 
+        <script src="modules/administration/scripts/directives.js"></script> 
+
+        <!-- VENDOR -->
+        <script src="modules/vendor/trNgGrid/trNgGrid.min.js"></script> 
+
+</body>
+</html>

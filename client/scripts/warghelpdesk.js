@@ -9,6 +9,7 @@ angular.module('wargHelpdeskApp', [
   'http-auth-interceptor',
   'ui.bootstrap',
   'ngMessages',
+  'ui.select',
   // VENDOR
   'trNgGrid',
   // WARG HELPDESK

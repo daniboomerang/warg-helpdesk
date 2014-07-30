@@ -8,17 +8,16 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
   /* CRUD */
   //////////
 
-  $scope.create = function() {
+  $scope.create = function(title, description, severity, priority) {
     var incidence = new Incidences({
-      title: this.title,
-      description: this.description
+      title: title,
+      description: description,
+      severity: severity,
+      priority: priority
     });
     incidence.$save(function(response) {
       $location.path("helpesk/incidences/open/" + response._id);
     });
-
-    this.title = "";
-    this.description = "";
   };
 
   $scope.remove = function(incidence) {
@@ -132,6 +131,26 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
 
 });
 
+incidencesControllers.controller('CreateCtrl', function($scope){
+
+  $scope.changed = function(filed){
+    return filed.$dirty;
+  };
+
+  $scope.severity = {};
+  $scope.priority = {};
+  $scope.severity.selected = {type: 'Medium'};
+  $scope.priority.selected = {type: 'Medium'};
+  $scope.urgencyTypes = [
+    { type: 'Serious'},
+    { type: 'High'},
+    { type: 'Medium'},
+    { type: 'Low'}
+  ];
+
+  $scope.create
+});
+ 
 
 incidencesControllers.controller('ListCtrl', function ($scope, $state, $document) {
 
@@ -356,7 +375,5 @@ incidencesControllers.controller('CloseCtrl', function ($scope, $modal, $log) {
     };
   };
 });
-
-
 
 
