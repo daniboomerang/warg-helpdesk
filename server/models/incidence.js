@@ -41,10 +41,7 @@ var IncidenceSchema = new Schema({
   history: {
     type: [{
       post: String,
-      author: {
-        type: Schema.ObjectId,
-        ref: 'User'
-      },
+      author: String,
       date: Date  
     }],
     default: [],

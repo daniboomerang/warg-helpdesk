@@ -56,7 +56,7 @@ exports.update = function(req, res) {
  */
 exports.postComment = function(req, res) {  
   var incidence = req.incidence;
-  var post = {post: req.body.comment, author: req.user, date: Date.now()};
+  var post = {post: req.body.comment, author: req.user.user_info.username, date: Date.now()};
   incidence.history.push(post);
   incidence.save(function(err) {
     if (err) {
@@ -71,15 +71,14 @@ exports.postComment = function(req, res) {
  * Update incidence assignation
  */
 exports.updateAssigned = function(req, res) {
-  var incidence = req.incidence;
-  incidence.assigned = req.body.assigned;
-  incidence.save(function(err) {
-    if (err) {
-      res.json(500, err);
-    } else {
-      res.json(incidence);
+  incidencesDomain.updateAssigned(req.incidence, req.body.assigned).then (function (result){
+    if (result.status == 'incidence.updated'){
+      res.json(result.incidence);
+    }  
+    else if (result.status == 'incidence.not.updated'){
+      res.json(500, result.err);
     }
-  });
+  });   
 };
 
 /**

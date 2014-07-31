@@ -39,12 +39,6 @@
 	padding: 5px;
 }
 
-/* Custom page header */
-.header-incidence {
-	border-bottom: 1px solid #e5e5e5;
-	margin-top: 50px;
-}
-
 /****** LIST *******/
 
 .border-incidences{
@@ -67,12 +61,19 @@
 
 /****** INCIDENCE *******/
 
+
+#frame-incidence-title {
+	border-bottom: 1px solid #e5e5e5;
+	margin-bottom: 20px;
+}
+
 .jumbotron{
 	margin-top: 20px
 }
 
 .container-incidence{
-	padding: 10px;	
+	padding: 10px;
+	padding-top: 70px;
 }
 
 #incidence-nav-container {

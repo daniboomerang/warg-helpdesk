@@ -3,6 +3,7 @@
 var RESULT_SUCCESS = "SUCCESS";
 var RESULT_ERROR = "ERROR"; 
 var ROLE_USER = "user";
+var STATUS_ONGOING = "On Going";
 
 var mongoose = require('mongoose'),
   Incidence = mongoose.model('Incidence'),
@@ -62,5 +63,26 @@ exports.listIncidences = function(user) {
     }
     });
   }
+  return deferred.promise;
+};
+
+/**
+ *  Updates an incidence assignation
+ *  Returns a PROMISE with the result 
+ */
+exports.updateAssigned = function(incidence, assigned) {
+
+  var deferred = Q.defer();
+
+  incidence.assigned = assigned;
+  incidence.status = STATUS_ONGOING;
+  incidence.save(function(err) {
+    if (err) {
+      deferred.resolve({status: 'incidence.not.updated', error: err});
+    } else {
+      deferred.resolve({status: 'incidence.updated', incidence: incidence});
+    }
+  });
+
   return deferred.promise;
 };

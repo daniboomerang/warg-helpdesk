@@ -1,12 +1,7 @@
 <section ng-init="find()">
-<div id="incidences-list" class="row">
-	<div class="panel panel-info">
-		<div class="panel-heading clearfix">
-	      <h3 class="panel-title pull-left" style="padding-top: 10px;">Incidences</h3>
-	    </div>
-		<div class="panel-body">	
-			<div class="row-fluid">	
-			  	<div class="span12 list-container">
+	<div id="incidences-list" class="row">
+		<div class="row-fluid">	
+		  	<div class="span12 list-container">
 			    <table tr-ng-grid="" items="incidences" selected-items="selectedIncidences" selection-mode="SingleRow">
 				    <thead>
 				        <tr>
@@ -16,24 +11,26 @@
 				            <th field-name="creator.username" cell-width="7em">Owner</th>
 				            <th field-name="created" cell-width="8em">Created</th>
 				            <th field-name="updated" cell-width="8em">Updated</th>
-				            <th field-name="status" cell-width="5em">Status</th>
+				            <th field-name="status" cell-width="8em">Status</th>
 				            <th field-name="assigned" cell-width="5em">Assigned</th>
 				        </tr>
 				    </thead>
 		            <tbody>
 		                <tr>
 		                	<td field-name="severity"><span class="frame-list-cell" ng-class="{serious: gridItem.severity == 'Serious', high: gridItem.severity == 'High'}">{{gridItem.severity}}</span></td>
-  							<td field-name="priority"><span class="frame-list-cell" ng-class="{serious: gridItem.priority == 'Serious', high: gridItem.priority == 'High'}">{{gridItem.priority}}</span></td>
+								<td field-name="priority"><span class="frame-list-cell" ng-class="{serious: gridItem.priority == 'Serious', high: gridItem.priority == 'High'}">{{gridItem.priority}}</span></td>
 		                    <!--Create the row template, remember the field-name attribute to match the columns defined in the header-->
 		                    
+							<td field-name="title">{{gridItem.title.slice(0,50)}}</td>
+
 		                    <!-- Dates: If date is today we show the time, if it wasn´t today we show the date -->
 		                    	<td field-name="created">
 		                    		<span ng-if="(gridItem.created | date:'shortDate') == (today | date:'shortDate')">
 		                    		{{gridItem.created | date:'shortTime'}}
 		                    		</span>
 		                    		<span ng-if="(gridItem.created | date:'shortDate') != (today | date:'shortDate')">
- 									{{gridItem.created | date:'shortDate'}}
- 									</span>
+										{{gridItem.created | date:'shortDate'}}
+										</span>
 								</td>
 
 								<td field-name="updated">
@@ -41,8 +38,8 @@
 		                    		{{gridItem.updated[gridItem.updated.length - 1] | date:'shortTime'}}
 		                    		</span>
 		                    		<span ng-if="(gridItem.updated[gridItem.updated.length - 1] | date:'shortDate') != (today | date:'shortDate')">
- 									{{gridItem.updated[gridItem.updated.length - 1] | date:'shortDate'}}
- 									</span>
+										{{gridItem.updated[gridItem.updated.length - 1] | date:'shortDate'}}
+										</span>
 								</td>								
 		                    <!-- -->
 
@@ -60,10 +57,8 @@
 		                </tr>
 		            </tfoot>
 		        </table>
-			  	</div>
-			</div>  	
-			<div id="overview" ui-view="overview" class="span9 animate-fade"></div>
-		</div>	
+		  	</div>
+		</div>  	
+		<div id="overview" ui-view="overview" class="span9"></div>
 	</div>
-</div>
 </section>

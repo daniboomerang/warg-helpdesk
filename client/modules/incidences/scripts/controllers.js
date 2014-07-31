@@ -237,6 +237,10 @@ incidencesControllers.controller('IncidenceCtrl', function ($scope, $routeParams
     $scope.postComment(comment);
   };
 
+  $scope.changed = function(filed){
+    return filed.$dirty;
+  };
+
 });
 
 incidencesControllers.controller('RateCtrl', function ($scope) {
