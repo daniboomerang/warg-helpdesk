@@ -25,16 +25,14 @@ exports.incidence = function(req, res, next, id) {
  * Create a incidence
  */
 exports.create = function(req, res) {
-  var incidence = new Incidence(req.body);
-  incidence.creator = req.user;
-
-  incidence.save(function(err) {
-    if (err) {
-      res.json(500, err);
-    } else {
-      res.json(incidence);
+ incidencesDomain.createIncidence(req.body.title, req.body.description, req.user, req.body.severity, req.body.priority).then (function (result){
+    if (result.status == 'incidence.created'){
+      res.json(result.incidence);
+    }  
+    else if (result.status == 'incidence.not.created'){
+      res.json(500, result.err);
     }
-  });
+  });   
 };
 
 /**

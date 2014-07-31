@@ -12,18 +12,19 @@ var mongoose = require('mongoose'),
  * Create a incidence
  *  Returns a PROMISE with the result 
  */
-exports.createIncidence = function(title, description, user) {
+exports.createIncidence = function(title, description, user, severity, priority) {
 
   var deferred = Q.defer();
 
-  var incidence = new Incidence({title: title, description: description});
+  if (severity==null){severity = "Medium";}
+  if (priority==null){priority = "Medium";}
+
+  var incidence = new Incidence({title: title, description: description, severity: severity, priority: priority});
   incidence.creator =  user;
-  incidence.severity = "Medium";
-  incidence.priority = "Medium";
 
   incidence.save(function(err) {
     if (err) {
-      deferred.resolve({status: 'incidence.not.created', incidence: null});
+      deferred.resolve({status: 'incidence.not.created', error: err});
     } else {
       deferred.resolve({status: 'incidence.created', incidence: incidence});
     }

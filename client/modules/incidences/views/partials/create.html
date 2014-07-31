@@ -16,13 +16,13 @@
                 mongoose-error
                 required
                 ng-minlength="10"
-                ng-maxlength="100"/>
+                ng-maxlength="150"/>
                 <div class="input-group-addon bg-success">{{ title.length }}</div>
           </div>
 
           <div ng-if="changed(form.title)" ng-messages="form.title.$error" ng-messages-include="modules/incidences/views/partials/error-messages.html">
-            <div class="arrow_box" ng-message="minlength">Minimum title lenght required 10 characteres.</div>
-            <div class="arrow_box" ng-message="maxlength">The title is too long...</div>
+            <div class="arrow_box" ng-message="minlength">Sorry, minimum title lenght required 10 characters.</div>
+            <div class="arrow_box" ng-message="maxlength">Sorry, maximum title lenght is 150 characters. </div>
           </div>
                 
           <div style="margin-bottom: 15px" class="input-group">
@@ -33,15 +33,15 @@
                 ng-model="description"
                 mongoose-error
                 required
-                ng-minlength="25"
-                ng-maxlength="200"/></textarea> 
+                ng-minlength="30"
+                ng-maxlength="1500"/></textarea> 
                
                 <div class="input-group-addon bg-success">{{ description.length }}</div>
           </div> 
 
           <div ng-if="changed(form.description)" ng-messages="form.description.$error" style="margin-bottom: 10px" ng-messages-include="modules/incidences/views/partials/error-messages.html">
-            <div class="arrow_box" ng-message="minlength">Minimum description lenght required is 25 characteres </div>
-            <div class="arrow_box" ng-message="maxlength">The description is too long...</div>
+            <div class="arrow_box" ng-message="minlength">Sorry, minimum description lenght required is 30 characters.</div>
+            <div class="arrow_box" ng-message="maxlength">Sorry, maximum description lenght required is 1500 characters.</div>
           </div>
 
           <h5>Severity</h5>

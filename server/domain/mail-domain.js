@@ -110,7 +110,7 @@ var isAllowedToCreateIncidence = function(user){
 };
 
 var createIncidence = function(subject, content, user){
-	return incidencesDomain.createIncidence(subject, content, user);
+	return incidencesDomain.createIncidence(subject, content, user, null, null);
 };
 
 var mailAcknowledgeTemplate = function (username, incidenceId){
