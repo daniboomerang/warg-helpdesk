@@ -154,6 +154,8 @@ incidencesControllers.controller('CreateCtrl', function($scope){
 
 incidencesControllers.controller('ListCtrl', function ($scope, $state, $document) {
 
+  $scope.today = Date.now();
+
   $scope.selectedIncidences = [];
   $scope.$watch('selectedIncidences', function() {
     if ($scope.selectedIncidences.length > 0){

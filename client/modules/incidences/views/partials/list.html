@@ -10,8 +10,8 @@
 			    <table tr-ng-grid="" items="incidences" selected-items="selectedIncidences" selection-mode="SingleRow">
 				    <thead>
 				        <tr>
-				            <th field-name="severity" display-format="uppercase" cell-width="5em">Severity</th>  
-				            <th field-name="priority" display-format="uppercase" cell-width="5em">Priority</th>
+				            <th field-name="severity" cell-width="5em">Severity</th>  
+				            <th field-name="priority" cell-width="5em">Priority</th>
 				            <th field-name="title">Title</th>
 				            <th field-name="creator.username" cell-width="7em">Owner</th>
 				            <th field-name="created" cell-width="8em">Created</th>
@@ -22,10 +22,31 @@
 				    </thead>
 		            <tbody>
 		                <tr>
+		                	<td field-name="severity"><span class="frame-list-cell" ng-class="{serious: gridItem.severity == 'Serious', high: gridItem.severity == 'High'}">{{gridItem.severity}}</span></td>
+  							<td field-name="priority"><span class="frame-list-cell" ng-class="{serious: gridItem.priority == 'Serious', high: gridItem.priority == 'High'}">{{gridItem.priority}}</span></td>
 		                    <!--Create the row template, remember the field-name attribute to match the columns defined in the header-->
-		                    <td field-name="created">{{gridItem.created | date:'medium'}}</td>
-		                    <td field-name="updated">{{gridItem.updated[gridItem.updated.length - 1]| date:'medium'}}</td>
+		                    
+		                    <!-- Dates: If date is today we show the time, if it wasn´t today we show the date -->
+		                    	<td field-name="created">
+		                    		<span ng-if="(gridItem.created | date:'shortDate') == (today | date:'shortDate')">
+		                    		{{gridItem.created | date:'shortTime'}}
+		                    		</span>
+		                    		<span ng-if="(gridItem.created | date:'shortDate') != (today | date:'shortDate')">
+ 									{{gridItem.created | date:'shortDate'}}
+ 									</span>
+								</td>
 
+								<td field-name="updated">
+		                    		<span ng-if="(gridItem.updated[gridItem.updated.length - 1] | date:'shortDate') == (today | date:'shortDate')">
+		                    		{{gridItem.updated[gridItem.updated.length - 1] | date:'shortTime'}}
+		                    		</span>
+		                    		<span ng-if="(gridItem.updated[gridItem.updated.length - 1] | date:'shortDate') != (today | date:'shortDate')">
+ 									{{gridItem.updated[gridItem.updated.length - 1] | date:'shortDate'}}
+ 									</span>
+								</td>								
+		                    <!-- -->
+
+		                    <td field-name="status"><span class="frame-list-cell" ng-class="{open: gridItem.status == 'Open', ongoing: gridItem.status == 'On Going', closed: gridItem.status == 'Closed'}">{{gridItem.status}}</span></td>
 		                </tr>
 		            </tbody>
 		            <tfoot>
