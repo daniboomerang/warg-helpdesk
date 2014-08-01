@@ -148,7 +148,16 @@ incidencesControllers.controller('CreateCtrl', function($scope){
     { type: 'Low'}
   ];
 
-  $scope.create
+  $scope.descriptionLength = function () {
+      if ($scope.form.description.$viewValue == undefined){return 0};
+      return $scope.form.description.$viewValue.length;     
+  };
+
+  $scope.titleLength = function () {
+      if ($scope.form.title.$viewValue == undefined){return 0};
+      return $scope.form.title.$viewValue.length;     
+  };
+
 });
  
 
@@ -235,10 +244,17 @@ incidencesControllers.controller('IncidenceCtrl', function ($scope, $routeParams
 
   $scope.sendComment = function(comment) {
     $scope.postComment(comment);
+    $scope.form.$setPristine();
+    $scope.comment = '';
   };
 
   $scope.changed = function(filed){
     return filed.$dirty;
+  };
+
+  $scope.commentLength = function () {
+      if ($scope.form.comment.$viewValue == undefined){return 0};
+      return $scope.form.comment.$viewValue.length;     
   };
 
 });

@@ -17,7 +17,7 @@
                 required
                 ng-minlength="10"
                 ng-maxlength="150"/>
-                <div class="input-group-addon bg-success">{{ title.length }}</div>
+                <div class="input-group-addon bg-success">{{ titleLength() }}</div>
           </div>
 
           <div ng-if="changed(form.title)" ng-messages="form.title.$error">
@@ -36,9 +36,8 @@
                 mongoose-error
                 required
                 ng-minlength="30"
-                ng-maxlength="1500"/></textarea> 
-               
-                <div class="input-group-addon bg-success">{{ description.length }}</div>
+                ng-maxlength="1500"/></textarea>          
+                <div class="input-group-addon bg-success">{{ descriptionLength() }}</div>
           </div> 
 
           <div ng-if="changed(form.description)" ng-messages="form.description.$error" style="margin-bottom: 10px">
@@ -64,7 +63,7 @@
           <div style="margin-top:20px; margin-bottom:20px; text-align:center;" class="form-group">
               <!-- Button -->
               <div class="col-sm-12 controls">
-                <input class="btn btn-success" value="Submit" type="submit" ngClick="Submit">
+                <input ng-disabled="form.$invalid" class="btn btn-default" value="Create" type="submit" ngClick="Submit">
               </div>
           </div>
         </form>

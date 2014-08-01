@@ -42,6 +42,7 @@ body, html {
 
 
 .frame-error-arrowup {
+  text-align: center;
   position: relative;
   background: #990000;
   border-radius: 6px 6px 6px 6px;
@@ -79,6 +80,7 @@ body, html {
 }
 
 .frame-error-arrowdown {
+  text-align: center;
   position: relative;
   background: #990000;
   border-radius: 6px 6px 6px 6px;
