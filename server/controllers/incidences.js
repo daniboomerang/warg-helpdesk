@@ -54,7 +54,7 @@ exports.update = function(req, res) {
 /**
  * Post a comment incidence 
  */
-exports.postComment = function(req, res) {  
+exports.postComment = function(req, res, next) {  
   var incidence = req.incidence;
   var post = {post: req.body.comment, author: req.user.user_info.username, date: Date.now()};
   incidence.history.push(post);
@@ -63,6 +63,7 @@ exports.postComment = function(req, res) {
       res.json(500, err);
     } else {
       res.json(incidence);
+      next();
     }
   });
 };

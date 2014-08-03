@@ -72,13 +72,11 @@ app.use(app.router);
 require('./server/config/routes')(app);
 
 // Mailing
-// Setting up Mail Sender (SENDGRID)
-var mailSender = require('./server/config/mail-sender')(config.mailSending);
-var mailDomain = require('./server/domain/mail-domain');
-mailDomain.setMailSender(mailSender);
+// Global
+global.mailSender = require('./server/config/mail-sender')(config.mailSending); // Mail Sender set up with (SENDGRID)
 // Setting up Mail Listener
 var mailListener = require('./server/config/mail-listener')(config.mailListening);
-mailListener.onMailReceived(mailDomain.processIncoming);
+mailListener.onMailReceived(require('./server/domain/mail-domain')(global.mailSender).processIncoming);
 mailListener.start;
 
 // Start server

@@ -27,6 +27,10 @@ module.exports = function(app) {
   // User Module and Actions Rights
   app.get('/auth/rights', auth.ensureAuthenticated, rights.rights);
 
+  // Notifications Test
+  var notifications = require('../controllers/notifications');
+  app.get('/api/notifications/:userId', auth.ensureAuthenticated, notifications.list);
+
   // Incidence Routes
   var incidences = require('../controllers/incidences');
   app.get('/api/incidences', auth.ensureAuthenticated, incidences.list);
@@ -35,7 +39,7 @@ module.exports = function(app) {
 
   // Updating an incidence
   app.put('/api/incidences/:incidenceId', auth.ensureAuthenticated, incidences.update);
-  app.put('/api/incidences/:incidenceId/postComment', auth.ensureAuthenticated, incidences.postComment);
+  app.put('/api/incidences/:incidenceId/postComment', auth.ensureAuthenticated, incidences.postComment, notifications.comment);
   app.put('/api/incidences/:incidenceId/rate', auth.ensureAuthenticated, incidences.updateRate);
   app.put('/api/incidences/:incidenceId/assign', auth.ensureAuthenticated, incidences.updateAssigned);
   app.put('/api/incidences/:incidenceId/effort', auth.ensureAuthenticated, incidences.updateEffort);
