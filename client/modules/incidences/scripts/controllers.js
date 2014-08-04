@@ -306,16 +306,14 @@ incidencesControllers.controller('EffortCtrl', function ($scope) {
 });
 
 
-incidencesControllers.controller('AssignCtrl', function ($scope) {
-  
-  $scope.technicians = ["tech1", "tech2", "tech3", "tech4", "tech5"];
+incidencesControllers.controller('AssignCtrl', function ($scope, techniciansService) {
 
   init();
   
   $scope.assignTo = function(technician){
     $scope.assign.allowUpdate = true;
     $scope.assign.currentAssignation = technician;
-    $scope.assign.techniciansList = filterTechnicianFromList(technician, $scope.technicians);
+    $scope.assign.techniciansList = filterTechnicianFromList(technician, $scope.assign.techniciansList);
   }
 
   $scope.poolAssignation = function(){     
@@ -323,6 +321,14 @@ incidencesControllers.controller('AssignCtrl', function ($scope) {
       $scope.updateAssigned($scope.assign.currentAssignation);
       $scope.edit.assign = false;
   }
+
+  function retrieveTechnicians(deferred) {
+    return $http.get('/api/techs').success(function(techniciansList) {
+        return deferred.resolve();
+      }).error(function(err) {
+        return deferred.reject('Failed to load synoptics information.');
+      });
+  }; 
 
   function filterTechnicianFromList(technician, list){
 
@@ -346,10 +352,13 @@ incidencesControllers.controller('AssignCtrl', function ($scope) {
   }
 
   function init(){
-
     $scope.assign = {};
-    $scope.assign.techniciansList = $scope.technicians;
     $scope.assign.allowUpdate = false;
+    $scope.assign.techniciansList = [];
+    techniciansService.getList().then(function (techniciansList){
+      $scope.assign.techniciansList = techniciansList;
+    });
+    
   }
 
 });

@@ -10,13 +10,12 @@ module.exports = function(app) {
   var users = require('../controllers/users');
   app.post('/auth/users', users.setRoleUser, users.create);
   app.get('/auth/users/:userId', users.show);
-
-  // Users Aminidtration
-  app.post('/adminstration/users', auth.ensureAuthenticatedAsAdmin, users.setRoleTech, users.create);
   
   // Check if username is available
   // todo: probably should be a query on users
   app.get('/auth/check_username/:username', users.exists);
+  // User Module and Actions Rights
+  app.get('/auth/rights', auth.ensureAuthenticated, rights.rights);
 
   // Session Routes
   var session = require('../controllers/session');
@@ -24,10 +23,10 @@ module.exports = function(app) {
   app.post('/auth/session', session.login);
   app.delete('/auth/session', session.logout);
 
-  // User Module and Actions Rights
-  app.get('/auth/rights', auth.ensureAuthenticated, rights.rights);
+   // Service for getting the technicians of the system
+  app.get('/api/techs', auth.ensureAuthenticated, users.technicians);
 
-  // Notifications Test
+  // Notifications
   var notifications = require('../controllers/notifications');
   app.get('/api/notifications/:userId', auth.ensureAuthenticated, notifications.list);
 
@@ -49,6 +48,9 @@ module.exports = function(app) {
 
   //Setting up the incidenceId param
   app.param('incidenceId', incidences.incidence);
+
+  // Users Aministration
+  app.post('/adminstration/users', auth.ensureAuthenticatedAsAdmin, users.setRoleTech, users.create);
 
   app.get('/*', function(req, res) {
     if(req.user) {

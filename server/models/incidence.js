@@ -37,7 +37,10 @@ var IncidenceSchema = new Schema({
     type: String,
     default: ''
   },  
-  assigned: String, //Username currently working on it
+  assigned: {
+    type: Schema.ObjectId,
+    ref: 'User'
+  },
   history: {
     type: [{
       post: String,

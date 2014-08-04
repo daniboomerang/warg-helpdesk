@@ -2,7 +2,7 @@
 	<div ng-show="edit.assign">		
         <div ng-show="assign.allowUpdate" class="row" style="margin-bottom: 5px;">
         	<div class="pull-left text-muted">
-        		{{assign.currentAssignation}}
+        		{{assign.currentAssignation.username}}
         	</div>
         	<div class="pull-right">  					
 				<div ng-click="poolAssignation()" class="">
@@ -11,23 +11,12 @@
             </div>
         </div>
         <div class="row">
-         	<div class="dropdown-technicians"> 		
-	         	 <!-- Split button -->
-			    <div class="btn-group" dropdown>
-			      <button type="button" class="btn btn-default">Assign</button>
-			      <button type="button" class="btn btn-default dropdown-toggle">
-			        <span class="caret"></span>
-			        <span class="sr-only">Choose a technician</span>
-			      </button>
-			      <ul class="dropdown-menu" role="menu">
-			      	<li ng-repeat="technician in assign.techniciansList">
-			      		<a class="assign-dropdown-row" ng-click="assignTo(technician)">{{technician}}</a>
-			      	</li>
-			        <li class="divider"></li>
-			        <li>Me: {{currentUser.username}}</li>
-			      </ul>
-			    </div>
-         	</div>
+          <ui-select ng-model="technician.selected" theme="selectize" style="width: auto; min-width: 100px; max-width: 180px;">
+            <ui-select-match placeholder="Select a technician"> <span class="severity-priority-select">{{$select.selected.username}}</ui-select-match></span>
+            <ui-select-choices repeat="technician in assign.techniciansList">
+              <div ng-bind-html="technician.username" class="severity-priority-select" ng-click="assignTo(technician)">{{technician.username}}></div>
+            </ui-select-choices>
+          </ui-select>
         </div>
 	</div>    
 	<div ng-show="!edit.assign">
@@ -37,7 +26,7 @@
 		</div>
 		<div ng-show="incidence.assigned != null && incidence.assigned != ''">
            <div> <img src="/modules/incidences/images/icons/worker-blue-48.png" alt="Rating"></div>
-				<font size="1" class="text-muted">{{incidence.assigned}}</font>
+				<font size="1" class="text-muted">{{incidence.assigned.username}}</font>
         </div> 
 	</div> 
 </div>

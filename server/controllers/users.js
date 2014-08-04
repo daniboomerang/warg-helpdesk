@@ -49,6 +49,24 @@ exports.show = function (req, res, next) {
   });
 };
 
+
+/**
+ *  List of technicians
+ *  returns [technicianProfiles]
+ */
+exports.technicians = function (req, res, next) {
+  User.find({role: 'tech'}, function (err, technicians) {
+    if (err) {
+      return next(new Error('Failed to the list of Technicians'));
+    }
+    if (technicians) {
+      res.send(technicians);
+    } else {
+      res.send(404, 'TECHNICIANS_NOT_FOUND');
+    }
+  });
+};
+
 /**
  *  Username exists
  *  returns {exists}
