@@ -41,6 +41,31 @@ body, html {
 /**************/
 
 
+input.ng-pristine, textarea.ng-pristine { border-radius: 1px 1px 1px 1px;
+  border-radius: 1px 1px 1px 1px;
+  -moz-border-radius: 1px 1px 1px 1px;
+  -webkit-border-radius: 1px 1px 1px 1px;
+  border: 1px solid NavajoWhite;}
+input.ng-dirty.ng-valid, textarea.ng-dirty.ng-valid{
+  border-radius: 1px 1px 1px 1px;
+  -moz-border-radius: 1px 1px 1px 1px;
+  -webkit-border-radius: 1px 1px 1px 1px;
+  border: 1px solid #9AF0A6;}
+input.ng-dirty.ng-invalid, textarea.ng-dirty.ng-invalid{ border:1px solid #FC6F71; }
+input.ng-dirty.ng-valid ~ span.ok, textarea.ng-dirty.ng-valid ~ span.ok{ 
+  border-radius: 1px 1px 1px 1px;
+  -moz-border-radius: 1px 1px 1px 1px;
+  -webkit-border-radius: 1px 1px 1px 1px;
+  border: 1px solid #9AF0A6; display:inline; }
+input.ng-dirty.ng-invalid ~ span.ko, textarea.ng-dirty.ng-invalid ~ span.ko{ color:#FC6F71; display:inline; } 
+
+.frame-form{
+  padding: 30px;
+}
+.form-line-frame{
+  padding-bottom: 25px;
+}
+
 .frame-error-arrowup {
   text-align: center;
   position: relative;
@@ -51,7 +76,7 @@ body, html {
   border: 1px solid #c2e1f5;
   padding: 7px;
   color: white;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   z-index: 0;
 }
 
@@ -89,7 +114,6 @@ body, html {
   border: 1px solid #c2e1f5;
   padding: 7px;
   color: white;
-  margin-bottom: 10px;
   z-index: 0;
 }
 

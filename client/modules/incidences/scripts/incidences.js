@@ -12,9 +12,10 @@ var incidences = angular.module('incidences',
 )
 .config(function($stateProvider, $urlRouterProvider) {
 
-	$urlRouterProvider.when('/incidences', '/helpdesk/incidences/open/list');
+	$urlRouterProvider.when('/incidences', '/incidences/open');
 	$urlRouterProvider.when('/incidences/open', '/helpdesk/incidences/open/list');
 	$urlRouterProvider.otherwise('/incidences');
+
 	$stateProvider
 	    
 	    // SIGN STATES AND NESTED VIEWS ========================================

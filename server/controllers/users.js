@@ -1,5 +1,8 @@
 'use strict';
 
+var RESULT_SUCCESS = "SUCCESS";
+var RESULT_ERROR = "ERROR";
+
 var mongoose = require('mongoose'),
   User = mongoose.model('User'),
   passport = require('passport'),
@@ -22,11 +25,7 @@ exports.create = function (req, res, next) {
     if (err) {
       return res.json(400, err);
     }
-
-    req.logIn(newUser, function(err) {
-      if (err) return next(err);
-      return res.json(newUser.user_info);
-    });
+    return res.json(newUser.user_info);
   });
 };
 
@@ -87,19 +86,15 @@ exports.exists = function (req, res, next) {
 }
 
 /**
- *  Set role USER in the request
- *  returns {next}
+ * List of incidences for a user
  */
-exports.setRoleUser = function (req, res, next) {
-  req.body.role = "user";
-  return next();
-}
-
-/**
- *  Set role TECH in the request
- *  returns {next}
- */
-exports.setRoleTech = function (req, res, next) {
-  req.body.role = "tech";
-  return next();
-}
+exports.list = function(req, res) {
+  usersDomain.listUsers(req.user).then (function (resultList){
+    if (resultList.status == RESULT_ERROR){
+      res.json(500, resultList.error);
+    }  
+    else if (resultList.status == RESULT_SUCCESS){
+      res.json(resultList.list);
+    }
+  });
+};

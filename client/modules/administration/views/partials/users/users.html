@@ -1,5 +1,31 @@
-
-<div class="panel-body">  
-     
-</div>  
-<div ui-view="createUser" class="span9 animate-fade"></div>
+<div id="frame-users">
+	<div id="users-admin-nav-container">        
+		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+			  <div class="container" style="padding:5px; padding-left: 12%;">
+		         <div class="row">
+		            <div class="pull-left incidence-details">		
+		              	<span class="icon-navbar-container btn btn-default">
+		              		<a ui-sref="helpdesk.admin.users.create.user"><img src="/modules/administration/images/icons/plus-24.png" alt="Create User"/></a>
+		            	</span>                       
+		                <span class="icon-navbar-container btn btn-default">
+		              		<a ui-sref="helpdesk.admin.users.create.list"><img src="/modules/administration/images/icons/add-list-24.png" alt="Create User"/></a>
+		            	</span>
+		            	<span class="icon-navbar-container btn btn-default">
+		              		<a ui-sref="helpdesk.admin.users.create.user"><img src="/modules/administration/images/icons/plus-24.png" alt="Create User"/></a>
+		            	</span>                       
+		                <span class="icon-navbar-container btn btn-default">
+		              		<a ui-sref="helpdesk.admin.users.create.list"><img src="/modules/administration/images/icons/add-list-24.png" alt="Create User"/></a>
+		            	</span>
+		            	<span class="icon-navbar-container btn btn-default">
+		              		<a ui-sref="helpdesk.admin.users.create.user"><img src="/modules/administration/images/icons/plus-24.png" alt="Create User"/></a>
+		            	</span>                       
+		                <span class="icon-navbar-container btn btn-default">
+		              		<a ui-sref="helpdesk.admin.users.create.list"><img src="/modules/administration/images/icons/add-list-24.png" alt="Create User"/></a>
+		            	</span> 
+		            </div>
+		        </div>
+		      </div>
+		</nav>
+	</div>
+	<div ui-view class="frame-users-content"></div>
+</div>

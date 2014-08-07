@@ -21,7 +21,8 @@ var UserSchema = new Schema({
   name: String,
   admin: Boolean,
   guest: Boolean,
-  provider: String
+  provider: String,
+  membership: Date
 });
 
 /**
@@ -55,7 +56,7 @@ var validatePresenceOf = function (value) {
 UserSchema.path('email').validate(function (email) {
   var emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
   return emailRegex.test(email);
-}, 'The specified email is invalid.');
+}, 'The email format is invalid.');
 
 UserSchema.path('email').validate(function(value, respond) {
   mongoose.models["User"].findOne({email: value}, function(err, user) {
@@ -63,7 +64,7 @@ UserSchema.path('email').validate(function(value, respond) {
     if(user) return respond(false);
     respond(true);
   });
-}, 'The specified email address is already in use.');
+}, 'The email address is already in use.');
 
 UserSchema.path('username').validate(function(value, respond) {
   mongoose.models["User"].findOne({username: value}, function(err, user) {
@@ -71,7 +72,7 @@ UserSchema.path('username').validate(function(value, respond) {
     if(user) return respond(false);
     respond(true);
   });
-}, 'The specified username is already in use.');
+}, 'The username is already in use.');
 
 /**
  * Pre-save hook
@@ -86,6 +87,7 @@ UserSchema.pre('save', function(next) {
     next(new Error('Invalid password'));
   }
   else {
+    this.membership = Date.now();
     next();
   }
 });

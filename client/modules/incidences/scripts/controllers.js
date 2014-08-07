@@ -137,6 +137,10 @@ incidencesControllers.controller('CreateCtrl', function($scope){
     return filed.$dirty;
   };
 
+  $scope.createIncidence = function(form){
+    $scope.create(form.title.$viewValue, form.description.$viewValue, $scope.severity.selected.type, $scope.priority.selected.type);
+  };
+
   $scope.severity = {};
   $scope.priority = {};
   $scope.severity.selected = {type: 'Medium'};
@@ -148,14 +152,14 @@ incidencesControllers.controller('CreateCtrl', function($scope){
     { type: 'Low'}
   ];
 
-  $scope.descriptionLength = function () {
-      if ($scope.form.description.$viewValue == undefined){return 0};
-      return $scope.form.description.$viewValue.length;     
+  $scope.descriptionLength = function (form) {
+      if (form.description.$viewValue == undefined){return 0};
+      return form.description.$viewValue.length;     
   };
 
-  $scope.titleLength = function () {
-      if ($scope.form.title.$viewValue == undefined){return 0};
-      return $scope.form.title.$viewValue.length;     
+  $scope.titleLength = function (form) {
+      if (form.title.$viewValue == undefined){return 0};
+      return form.title.$viewValue.length;     
   };
 
 });
@@ -407,4 +411,8 @@ incidencesControllers.controller('CloseCtrl', function ($scope, $modal, $log) {
   };
 });
 
-
+incidencesControllers.controller('CreateIncidenceFormCtrl', function($scope){
+  $scope.changed = function(filed){
+    return filed.$dirty;
+  };
+});

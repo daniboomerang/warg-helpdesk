@@ -1,5 +1,8 @@
 'use strict';
 
+var RESULT_SUCCESS = "SUCCESS";
+var RESULT_ERROR = "ERROR";
+
 var mongoose = require('mongoose'),
   User = mongoose.model('User'),
   ObjectId = mongoose.Types.ObjectId,
@@ -90,5 +93,24 @@ exports.role = function (username) {
     }
     deferred.resolve(result);
   });
+  return deferred.promise;
+}
+
+/**
+ *  Return the list of incidences of a user
+ *  Returns a PROMISE with the result 
+ */
+exports.listUsers = function() {
+
+  var deferred = Q.defer();
+
+  User.find().sort('-created').exec(function(err, users) {
+    if (err) {
+      deferred.resolve({status: RESULT_ERROR, error: err});
+    } else {   
+      deferred.resolve({status: RESULT_SUCCESS, list: users});
+    }
+  });
+
   return deferred.promise;
 }

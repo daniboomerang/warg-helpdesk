@@ -1,11 +1,11 @@
-<div class="container" style="width: 100%;">
+<div class="container col-md-10 col-md-offset-1">
     <div class="panel panel-info incidences-form-container">
       <div class="panel-heading">
-        <div class="panel-title">New incidence</div>
+        <div class="panel-title" style="text-align: center;">Create new incidence form</div>
       </div>  
       <div class="panel-body" style="padding-top:40px">
-        <form class="form" name="form" ng-submit="create(title, description, severity.selected.type, priority.selected.type)" style="margin-bottom: 30px">
-          <div style="margin-bottom: 15px;" class="input-group">
+        <form class="form" name="form" ng-submit="createIncidence(form)" ng-controller="CreateIncidenceFormCtrl">
+          <div class="input-group form-line-frame">
               <input
                 type="text"
                 name="title"
@@ -17,7 +17,7 @@
                 required
                 ng-minlength="10"
                 ng-maxlength="150"/>
-                <div class="input-group-addon bg-success">{{ titleLength() }}</div>
+                <div class="input-group-addon bg-success">{{ titleLength(form) }}</div>
           </div>
 
           <div ng-if="changed(form.title)" ng-messages="form.title.$error">
@@ -26,7 +26,7 @@
             <div class="frame-error-arrowup" ng-message="maxlength">Sorry, maximum title lenght is 150 characters. </div>
           </div>
                 
-          <div style="margin-bottom: 15px" class="input-group">
+          <div class="input-group form-line-frame">
               <textarea style="resize:vertical; min-height: 200px;"
                 type="text"
                 name="description"
@@ -37,7 +37,7 @@
                 required
                 ng-minlength="30"
                 ng-maxlength="1500"/></textarea>          
-                <div class="input-group-addon bg-success">{{ descriptionLength() }}</div>
+                <div class="input-group-addon bg-success">{{ descriptionLength(form) }}</div>
           </div> 
 
           <div ng-if="changed(form.description)" ng-messages="form.description.$error" style="margin-bottom: 10px">
@@ -47,24 +47,22 @@
           </div>
 
           <h5>Severity</h5>
-             <ui-select ng-model="severity.selected" theme="selectize" style="width: 120px;">
-              <ui-select-match placeholder="{{severity.type}}"> <span class="severity-priority-select" ng-class="{serious: $select.selected.type == 'Serious', high: $select.selected.type == 'High'};">{{$select.selected.type}}</ui-select-match></span>
-              <ui-select-choices repeat="severity in urgencyTypes">
-                <div ng-bind-html="severity.type" class="severity-priority-select" ng-class="{serious: severity.type == 'Serious', high: severity.type == 'High'};"></div>
-              </ui-select-choices>
-            </ui-select>
+           <ui-select ng-model="severity.selected" theme="selectize" style="width: 120px;">
+            <ui-select-match placeholder="{{severity.type}}"> <span class="severity-priority-select" ng-class="{serious: $select.selected.type == 'Serious', high: $select.selected.type == 'High'};">{{$select.selected.type}}</ui-select-match></span>
+            <ui-select-choices repeat="severity in urgencyTypes">
+              <div ng-bind-html="severity.type" class="severity-priority-select" ng-class="{serious: severity.type == 'Serious', high: severity.type == 'High'};"></div>
+            </ui-select-choices>
+          </ui-select>
           <h5>Priority</h5>
-            <ui-select ng-model="priority.selected" theme="selectize" style="width: 120px;">
-              <ui-select-match placeholder="{{priority.type}}"> <span class="severity-priority-select" ng-class="{serious: $select.selected.type == 'Serious', high: $select.selected.type == 'High'};">{{$select.selected.type}}</ui-select-match></span>
-              <ui-select-choices repeat="priority in urgencyTypes">
-                <div ng-bind-html="priority.type" class="severity-priority-select" ng-class="{serious: priority.type == 'Serious', high: priority.type == 'High'};"></div>
-              </ui-select-choices>
-            </ui-select>
-          <div style="margin-top:20px; margin-bottom:20px; text-align:center;" class="form-group">
-              <!-- Button -->
-              <div class="col-sm-12 controls">
-                <input ng-disabled="form.$invalid" class="btn btn-default" value="Create" type="submit" ngClick="Submit">
-              </div>
+          <ui-select ng-model="priority.selected" theme="selectize" style="width: 120px;">
+            <ui-select-match placeholder="{{priority.type}}"> <span class="severity-priority-select" ng-class="{serious: $select.selected.type == 'Serious', high: $select.selected.type == 'High'};">{{$select.selected.type}}</ui-select-match></span>
+            <ui-select-choices repeat="priority in urgencyTypes">
+              <div ng-bind-html="priority.type" class="severity-priority-select" ng-class="{serious: priority.type == 'Serious', high: priority.type == 'High'};"></div>
+            </ui-select-choices>
+          </ui-select>
+
+          <div style="text-align:center;">
+            <input ng-disabled="form.$invalid" class="btn btn-success" value="Create Incidence" type="submit" ngClick="Submit">
           </div>
         </form>
       </div>

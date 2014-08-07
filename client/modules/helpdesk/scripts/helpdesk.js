@@ -15,6 +15,12 @@ var helpdesk = angular.module('helpdesk',
 .config(function($stateProvider, $urlRouterProvider) {
 
 	$urlRouterProvider.when('/helpdesk', '/incidences');
+	$urlRouterProvider.when('/helpdesk/incidences', '/incidences');
+	$urlRouterProvider.when('/helpdesk/admin', '/admin');
+	$urlRouterProvider.when('/helpdesk/admin/users', '/admin/users');
+	$urlRouterProvider.when('/helpdesk/reporting', '/reporting');
+	$urlRouterProvider.otherwise('/helpdesk');
+
 	$stateProvider
 	    
 	    // SIGN STATES AND NESTED VIEWS ========================================

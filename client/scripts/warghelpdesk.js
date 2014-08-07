@@ -23,7 +23,7 @@ angular.module('wargHelpdeskApp', [
   'administration'
 ])
 .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
-    
+  
     $locationProvider.html5Mode(true);
     $urlRouterProvider.when('/', '/helpdesk');
     $urlRouterProvider.otherwise('/');
@@ -35,7 +35,7 @@ angular.module('wargHelpdeskApp', [
     $rootScope.$watch('currentUser', function(currentUser) {
       // if no currentUser and on a page that requires authorization then try to update it
       // will trigger 401s if user does not have a valid session
-      if (!currentUser && (['/', '/sign/in', '/sign/up'].indexOf($location.path()) == -1 )) {
+      if (!currentUser && (['/', '/sign/in'].indexOf($location.path()) == -1 )) {
         Auth.currentUser();
       }
       $rootScope.$broadcast('event:currentUser-changed');

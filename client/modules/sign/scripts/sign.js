@@ -14,21 +14,15 @@ sign.config(function($stateProvider, $urlRouterProvider) {
 	$stateProvider
 	    
 	    // SIGN STATES AND NESTED VIEWS ========================================
+	    
 	    .state('sign', {
 	    	abstract: true,
 	        url: '/sign',
 	        templateUrl: '/modules/sign/views/sign.html'
-	    })
-	    
-	    .state('sign.in', {
-	        url: '/in',
-	        templateUrl: '/modules/sign/views/partials/sign-in.html',
-	        controller: 'SigninCtrl'
-	    })
-	    
-	    .state('sign.up', {
-	        url: '/up',
-	        templateUrl: '/modules/sign/views/partials/sign-up.html',
-	        controller: 'SignupCtrl'
-	    })
+	    })  
+		    .state('sign.in', {
+		        url: '/in',
+		        templateUrl: '/modules/sign/views/partials/sign-in.html',
+		        controller: 'SigninCtrl'
+		    })
 });

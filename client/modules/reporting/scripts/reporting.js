@@ -1,4 +1,4 @@
-'use strict';
+	'use strict';
 			
 // Define main module Sign and injects all other modules as dependencies
 var reporting = angular.module('reporting',
@@ -9,8 +9,7 @@ var reporting = angular.module('reporting',
     'ui.router']);
 
 reporting.config(function($stateProvider, $urlRouterProvider) {
-	$urlRouterProvider.when('helpdesk/reporting', 'helpdesk/reporting/statistics');
-	$urlRouterProvider.otherwise('/reporting');
+	$urlRouterProvider.when('/reporting', 'helpdesk/reporting/statistics');
 
 	$stateProvider
 	    

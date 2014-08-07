@@ -8,7 +8,7 @@ var path = require('path'),
 module.exports = function(app) {
   // User Routes
   var users = require('../controllers/users');
-  app.post('/auth/users', users.setRoleUser, users.create);
+  app.post('/auth/users', auth.ensureAuthenticatedAsAdmin, users.create);
   app.get('/auth/users/:userId', users.show);
   
   // Check if username is available
@@ -50,7 +50,7 @@ module.exports = function(app) {
   app.param('incidenceId', incidences.incidence);
 
   // Users Aministration
-  app.post('/adminstration/users', auth.ensureAuthenticatedAsAdmin, users.setRoleTech, users.create);
+  app.get('/api/administration/users', auth.ensureAuthenticatedAsAdmin, users.list);
 
   app.get('/*', function(req, res) {
     if(req.user) {
