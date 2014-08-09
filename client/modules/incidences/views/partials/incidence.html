@@ -61,15 +61,14 @@
         <div class="row" style="margin-bottom: 10px;">
             <div class="col-md-1">
                 <input class="btn btn-default" value="Submit" type="image" ngClick="Submit" src="/modules/incidences/images/icons/reply-24-blue.png" ng-disabled="form.$invalid">
-                <!--<div class="btn btn-default" value="Submit" type="submit" ngClick="Submit"> <img src="/modules/incidences/images/icons/reply-24-blue.png" alt="Post Comment"></div>-->
             </div>
-            <span class="col-md-10">
+            <div class="col-md-10">
                 <div ng-if="changed(form.comment)" ng-messages="form.comment.$error" style="width: auto;">
                     <div class="frame-error-arrowdown" ng-message="required">Sorry, comment can´t be blank</div>
                     <div class="frame-error-arrowdown" ng-message="minlength">The minimum comment lenght required is 70 characters.</div>
                     <div class="frame-error-arrowdown" ng-message="maxlength">The maximum comment lenght required is 3500 characters.</div>
                 </div>
-            </span>
+            </div>
             <div class="col-md-1">    
                 <div ng-click="toTheTop()" class="btn btn-default"><img src="/modules/incidences/images/icons/arrow-top-24.png" alt=" Go To Top Page"></div>
             </div>
@@ -89,6 +88,10 @@
                 <div class="input-group-addon bg-success">{{ commentLength() }}</div>
             </div>
         </div>
-    </form>    
+    </form> 
+
+
+{{$scope.techniciansList}}
+
 </div>  
 

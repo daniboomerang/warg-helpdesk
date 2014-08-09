@@ -209,6 +209,7 @@ incidencesControllers.controller('IncidenceCtrl', function ($scope, $routeParams
   }; 
 
   function init(){
+
     $scope.incidenceAuth = {};
 
     $scope.incidenceAuth.rate = incidenceAuth.isAllowedToReportRate($scope.incidence);
@@ -317,7 +318,6 @@ incidencesControllers.controller('AssignCtrl', function ($scope, techniciansServ
   $scope.assignTo = function(technician){
     $scope.assign.allowUpdate = true;
     $scope.assign.currentAssignation = technician;
-    $scope.assign.techniciansList = filterTechnicianFromList(technician, $scope.assign.techniciansList);
   }
 
   $scope.poolAssignation = function(){     
@@ -326,43 +326,11 @@ incidencesControllers.controller('AssignCtrl', function ($scope, techniciansServ
       $scope.edit.assign = false;
   }
 
-  function retrieveTechnicians(deferred) {
-    return $http.get('/api/techs').success(function(techniciansList) {
-        return deferred.resolve();
-      }).error(function(err) {
-        return deferred.reject('Failed to load synoptics information.');
-      });
-  }; 
-
-  function filterTechnicianFromList(technician, list){
-
-    /* Lets filter and delete from the possble selections,
-       the one already assigned to the incidence (if so) */
-    function remove(array, elem, all) {
-      for (var i=array.length-1; i>=0; i--) {
-        if (array[i] === elem) {
-            array.splice(i, 1);
-            if(!all)
-              break;
-        }
-      }
-      return array;
-    };
-
-    var techniciansCopy = list.slice();
-    if (technician != null)
-      remove(techniciansCopy, technician);
-    return techniciansCopy;
-  }
-
   function init(){
     $scope.assign = {};
     $scope.assign.allowUpdate = false;
-    $scope.assign.techniciansList = [];
-    techniciansService.getList().then(function (techniciansList){
-      $scope.assign.techniciansList = techniciansList;
-    });
-    
+    $scope.assign.techniciansList = techniciansService.getTechList();
+    $scope.assign.techniciansListDropdown = $scope.assign.techniciansList;
   }
 
 });

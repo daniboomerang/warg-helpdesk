@@ -57,7 +57,13 @@ var incidences = angular.module('incidences',
 		    .state('helpdesk.incidences.open.incidence', {
 		        url: '/:incidenceId',
 		        templateUrl: '/modules/incidences/views/partials/incidence.html',
-		        controller: 'IncidenceCtrl'
+		        controller: 'IncidenceCtrl',
+		        resolve:{
+					techniciansService: "techniciansService",
+					techniciansList: function(techniciansService){
+						techniciansService.initTechList();
+					}
+				}
 		    })
 })
 .run(function ($rootScope, Auth) {Auth.currentUser();});

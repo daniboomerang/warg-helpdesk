@@ -97,7 +97,7 @@ exports.role = function (username) {
 }
 
 /**
- *  Return the list of incidences of a user
+ *  Return the list users
  *  Returns a PROMISE with the result 
  */
 exports.listUsers = function() {

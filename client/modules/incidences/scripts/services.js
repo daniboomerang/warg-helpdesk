@@ -93,15 +93,19 @@ incidencesServices.factory('incidenceAuth', function ($rootScope) {
 });
 
 incidencesServices.factory('techniciansService', function ($http, $q){
+
+  var techsList = [];
+
   return {
-    getList : function() {
-      var deferred = $q.defer();
+    initTechList : function() {
       $http.get('/api/techs').success(function(list) {
-        deferred.resolve(list);
+        techsList = list;
       }).error(function() {
-        deferred.reject();
+        console.log("Error retrieving technicians list")
       });
-      return deferred.promise;
+    },
+    getTechList: function() {
+      return techsList;
     }
   };
 });

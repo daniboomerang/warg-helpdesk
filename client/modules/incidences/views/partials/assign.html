@@ -1,23 +1,16 @@
 <div ng-controller="AssignCtrl">
 	<div ng-show="edit.assign">		
-        <div ng-show="assign.allowUpdate" class="row" style="margin-bottom: 5px;">
-        	<div class="pull-left text-muted">
-        		{{assign.currentAssignation.username}}
-        	</div>
-        	<div class="pull-right">  					
-				<div ng-click="poolAssignation()" class="">
-					<span><img src="/modules/incidences/images/icons/ok-16.png" alt="Save Assignation"></span>
-				</div>
-            </div>
+    <div class="row">
+      <ui-select ng-model="technician.selected" theme="selectize" class="assign-select-dropdown pull-left">
+        <ui-select-match placeholder="Assign tech"> <span class="severity-priority-select">{{$select.selected.username}}</ui-select-match></span>
+        <ui-select-choices repeat="technician in assign.techniciansListDropdown">
+          <div ng-bind-html="technician.username" class="severity-priority-select" ng-click="assignTo(technician)">{{technician.username}}></div>
+        </ui-select-choices>
+      </ui-select>
+        <div ng-show="assign.allowUpdate" ng-click="poolAssignation()" class="pull-right" style="margin-left: 15px">
+          <div class="btn btn-default"><img src="/modules/incidences/images/icons/ok-24.png" alt="Save Assignation"></div>
         </div>
-        <div class="row">
-          <ui-select ng-model="technician.selected" theme="selectize" style="width: auto; min-width: 100px; max-width: 180px;">
-            <ui-select-match placeholder="Select a technician"> <span class="severity-priority-select">{{$select.selected.username}}</ui-select-match></span>
-            <ui-select-choices repeat="technician in assign.techniciansList">
-              <div ng-bind-html="technician.username" class="severity-priority-select" ng-click="assignTo(technician)">{{technician.username}}></div>
-            </ui-select-choices>
-          </ui-select>
-        </div>
+    </div>
 	</div>    
 	<div ng-show="!edit.assign">
 		<div ng-show="incidence.assigned == null || incidence.assigned == ''">
@@ -25,8 +18,8 @@
 				<font size="1" class="text-muted">No technician assigned</font>
 		</div>
 		<div ng-show="incidence.assigned != null && incidence.assigned != ''">
-           <div> <img src="/modules/incidences/images/icons/worker-blue-48.png" alt="Rating"></div>
-				<font size="1" class="text-muted">{{incidence.assigned.username}}</font>
-        </div> 
+      <div> <img src="/modules/incidences/images/icons/worker-blue-48.png" alt="Rating"></div>
+			<font size="1" class="text-muted">{{incidence.assigned}}</font>
+    </div> 
 	</div> 
 </div>

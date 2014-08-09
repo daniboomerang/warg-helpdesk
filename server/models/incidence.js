@@ -13,12 +13,12 @@ var IncidenceSchema = new Schema({
     type: String
   },
   severity: {
-    type: String
-    //required: true
+    type: String,
+    required: true
   },
   priority: {
-    type: String
-    //required: true
+    type: String,
+    required: true
   },
   created: Date,
   creator: {
@@ -37,10 +37,7 @@ var IncidenceSchema = new Schema({
     type: String,
     default: ''
   },  
-  assigned: {
-    type: Schema.ObjectId,
-    ref: 'User'
-  },
+  assigned: String, //UserId of the technician in charge
   history: {
     type: [{
       post: String,

@@ -7,6 +7,7 @@ var STATUS_ONGOING = "On Going";
 
 var mongoose = require('mongoose'),
   Incidence = mongoose.model('Incidence'),
+  ObjectId = mongoose.Types.ObjectId,
   Q = require('q');
 
 /**
@@ -74,7 +75,7 @@ exports.updateAssigned = function(incidence, assigned) {
 
   var deferred = Q.defer();
 
-  incidence.assigned = assigned;
+  incidence.assigned = assigned.username;
   incidence.status = STATUS_ONGOING;
   incidence.save(function(err) {
     if (err) {

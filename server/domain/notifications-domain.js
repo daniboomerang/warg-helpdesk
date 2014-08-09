@@ -10,7 +10,6 @@ var mongoose = require('mongoose'),
   Notification = mongoose.model('Notification'),
   mailDomain = require('../domain/mail-domain')(global.mailSender),
   usersDomain = require('../domain/users-domain'),
-  ObjectId = mongoose.Types.ObjectId,
   Q = require('q');
   
 //var mailDomain = require('../config/mail-domain')((require('../config/mail-sender')(require('../config/config').mailSending));
