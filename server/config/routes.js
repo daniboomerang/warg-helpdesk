@@ -28,7 +28,7 @@ module.exports = function(app) {
 
   // Notifications
   var notifications = require('../controllers/notifications');
-  app.get('/api/notifications/:userId', auth.ensureAuthenticated, notifications.list);
+  app.get('/api/notifications', auth.ensureAuthenticated, notifications.list);
 
   // Incidence Routes
   var incidences = require('../controllers/incidences');

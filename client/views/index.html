@@ -2,8 +2,10 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <base href="/"/>
@@ -12,8 +14,6 @@
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     
-    <!--<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>-->
-
     <!-- CSS VENDOR -->
     <link rel="stylesheet" href="modules/vendor/trNgGrid/trNgGrid.min.css">
     <!-- Bootstrap -->
@@ -30,6 +30,7 @@
     <!-- Module helpdesk -->
     <link rel="stylesheet" href="modules/helpdesk/styles/helpdesk.css">
     <link rel="stylesheet" href="modules/helpdesk/styles/menu.css">
+    <link rel="stylesheet" href="modules/helpdesk/styles/navbar.css">
     <!-- Module home -->
     <link rel="stylesheet" href="modules/home/styles/home.css">
     <!-- Module incidences -->
@@ -41,21 +42,17 @@
     <link rel="stylesheet" href="modules/administration/styles/administration.css">
     <link rel="stylesheet" href="modules/administration/styles/users.css">
 
-    
-    
 </head>
 
 <!-- apply our angular app to our site -->
 <body ng-app="wargHelpdeskApp">
 
-    <!--<navbar></navbar>-->
     <!-- MAIN CONTENT -->
     <!-- THIS IS WHERE WE WILL INJECT OUR CONTENT ============================== -->
     <div id="app" ui-view></div>
     <footer></footer>
 
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <!--<script src='http://code.angularjs.org/snapshot/angular.js'></script><script src='http://code.angularjs.org/snapshot/angular-messages.js'></script>-->
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
@@ -71,6 +68,9 @@
     <script src="bower_components/angular-charts/dist/angular-charts.min.js"></script>
     <script src="bower_components/select2/select2.js"></script>
     <script src="bower_components/angular-ui-select/dist/select.min.js"></script>
+
+
+    <! -- WARGHELPDESK -->
 
     <script src="scripts/warghelpdesk.js"></script>
     <script src="scripts/controllers.js"></script>

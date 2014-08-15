@@ -8,6 +8,7 @@ wargHelpdeskDirectives.directive('footer', function() {
   };
 });
 
+
 wargHelpdeskDirectives.directive('mongooseError', function () {
   return {
     restrict: 'A',

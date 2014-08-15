@@ -161,9 +161,22 @@ helpdeskServices.service('helpdeskConfigService', function ($q, UserRights, menu
 		    });
 		    return deferred.promise;
 		},
-
 		getMenu : function(){
 			return menu;
 		}
 	}
+});
+
+helpdeskServices.factory('notificationService', function ($http, $q){
+	return {
+		getNotifications : function() {
+			var deferred = $q.defer(); 
+		  		$http.get('/api/notifications').success(function(notifications) {
+		    		return deferred.resolve(notifications);
+		  		}).error(function() {
+		    		console.log("Error retrieving the user notifications")
+		  		});
+		  	return deferred.promise;
+		}
+	};
 });

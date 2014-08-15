@@ -1,8 +1,7 @@
 <div class="col-sm-3 col-md-2 sidebar">
-
   <accordion close-others="oneAtATime">
 
-    <div class="frame-module">
+    <!--<div class="frame-module">
       <accordion-group>
         <accordion-heading is-open="status.open">
           <div>
@@ -11,7 +10,7 @@
         </accordion-heading>
         <ul class="nav nav-pills nav-stacked"><li><a ng-click="logout()"><img src="/modules/helpdesk/images/icons/logout-24.png" alt="logout">&nbsp;&nbsp;Sign out</a></li></ul>
       </accordion-group>
-    </div>
+    </div>-->
 
     <div ng-class="{'arrow-box-module enlarged-active-module': status.activeModule == module.module}" ng-repeat="module in menu" class="frame-module">
       <accordion-group is-open="isActiveModule(module.module)">

@@ -1,0 +1,116 @@
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Warg Helpdesk</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" >
+      <ul class="nav navbar-nav navbar-right" ng-show="currentUser">
+        <li class="dropdown">
+          <a ng-click="markNewNotsAsDisplayed()" class="dropdown-toggle" data-toggle="dropdown">
+            <span ng-show="newNotifications().length > 0" popover-placement="bottom" popover="{{ newNotifications().length }} new notification (s)" popover-trigger="mouseenter">{{newNotifications().length}}&nbsp;</span>
+            <span ng-class="{'sounding-bell' : newNotifications().length > 0}"><img ng-if="newNotifications().length > 0" src="/modules/helpdesk/images/icons/notification-red-24.png" alt="notification"><img ng-if="newNotifications().length == 0" src="/modules/helpdesk/images/icons/notification-blue-24.png" alt="notification">
+          </a>
+          <ul class="dropdown-menu" ng-if="userNotifications.length > 0">
+            <li ng-repeat="notification in userNotifications" class="frame-dropdown-link" ng-class="{'shading-notification': notification.status != 'Seen'}">
+              <a ng-click="markNotAsSeen(notification)">
+                <span>{{notification.text}}</span>&nbsp;&nbsp;
+                <span><img src="/modules/helpdesk/images/icons/planner-16.png"></span>&nbsp;&nbsp;
+                <span>{{notification.created | date:'shortDate'}}</span>&nbsp;&nbsp;
+                <span ng-if="notification.status != 'Seen'"><img src="/modules/helpdesk/images/icons/circle-dashed-8.png" popover-placement="top" popover="Mark as seen" popover-trigger="mouseenter" ng-click="markNotAsSeen(notification)"></span>
+                <span ng-if="notification.status == 'Seen'"><img src="/modules/helpdesk/images/icons/circle-8.png" popover-placement="top" popover="Seen" popover-trigger="mouseenter"></span>
+              </a>
+            </li>
+          </ul>
+          <ul class="dropdown-menu" ng-if="userNotifications.length == 0">
+            <li class="frame-dropdown-link"> You don´t have notifications. </li>
+          </ul>
+        </li>
+        
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" popover-placement="bottom" popover="{{currentUser.username}}" popover-trigger="mouseenter"><img src="/modules/helpdesk/images/icons/guest-24-black.png" alt="logout"><b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li class="frame-dropdown-link"><a ng-click="logout()"><img src="/modules/helpdesk/images/icons/settings-24.png" alt="logout">&nbsp;&nbsp;User Settings</a></li>
+            <li class="frame-dropdown-link"><a ng-click="logout()"><img src="/modules/helpdesk/images/icons/logout-24.png" alt="logout">&nbsp;&nbsp;Sign out</a></li>
+            <li class="frame-dropdown-link"><a>{{currentUser.username}}</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+<!--<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand">&nbsp;&nbsp;&nbsp;&nbsp;Warg Helpdesk</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right" ng-show="currentUser">
+        <div class="frame-user-settings">
+          
+          <div ng-show="userNotifications.length > 0" class="pull-left">
+            <div class="row">
+              <a class="btn btn-sm pull-left" popover-placement="bottom" popover="You have {{userNotifications.length}} Notifications" popover-trigger="mouseenter" ><img src="/modules/helpdesk/images/icons/notification1.svg" alt="notification"></a>
+            </div>  
+          </div>
+          <div class="pull-right">
+            &nbsp;&nbsp;
+            <div class="btn-group dropdown">
+              <button type="button" class="btn btn-default"><img src="/modules/helpdesk/images/icons/user-16.png" alt="user">&nbsp;&nbsp;{{currentUser.username}}</button>
+              <button type="button" class="btn btn-default dropdown-toggle">
+                <span class="caret"></span>
+                <span class="sr-only">{{currentUser.username}}</span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li class="frame-dropdown-link"><a ng-click="logout()"><img src="/modules/helpdesk/images/icons/settings-24.png" alt="logout">&nbsp;&nbsp;User Settings</a></li>
+                <li class="frame-dropdown-link"><a ng-click="logout()"><img src="/modules/helpdesk/images/icons/logout-24.png" alt="logout">&nbsp;&nbsp;Sign out</a></li>
+              </ul>
+            </div>
+            &nbsp;&nbsp;
+            &nbsp;&nbsp;
+          </div>  
+        
+        </div>
+      </ul>
+    </div>
+  </div>
+</div>-->
+
+<!--<div class="navbar-custom navbar navbar-inverse navbar-fixed-top" ng-controller="NavbarCtrl">
+    <div class="navbar-header"><a class="navbar-brand logo" name="top"><img src="/images/helpdesk-icon-40.png"/></a>
+    </div>
+     <div class="nav navbar-nav pull-right">
+        <ul class="nav navbar-nav" ng-show="currentUser">
+            <div ng-controller="UserSettingsCtrl">
+                {{currentUser}}
+            </div>
+        </ul>
+    </div>-->
+    <!--<div class="nav navbar-nav navbar-right" ng-show="currentUser">
+        <ul class="nav navbar-nav user-settings-container">
+            <div ng-controller="userSettingsCtrl">
+                <span><img src="/images/home-32.png"/></span>
+                <span ng-bind-html="notificationState"></span>
+                <button popover-placement="bottom" popover-template="{{ templateUrl }}" popover-title="{{currentUser.username}}" class="btn btn-circle shadow-border-sm"><img src="/images/guest-24-black.png"/></button>
+            </div>
+        </ul>
+    </div>-->
+    <!--/.navbar-collapse -->
+<!--</div>-->
+<!--/.navbar -->

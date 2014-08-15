@@ -24,7 +24,6 @@
 	background-color: #FA6854;
 }
 
-
 /***** FORM *****/
 
 .incidences-form-container{
@@ -33,7 +32,6 @@
 	box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.66);
 	max-width: 800px;
 	padding-bottom: 20px;
-
 }
 
 .severity-priority-select{
@@ -65,8 +63,8 @@
 
 /****** INCIDENCE *******/
 
-
 #frame-incidence-title {
+	padding-top: 25px;
 	border-bottom: 1px solid #e5e5e5;
 	margin-bottom: 20px;
 }
@@ -75,13 +73,15 @@
 	margin-top: 20px
 }
 
-.container-incidence{
-	padding: 10px;
-	padding-top: 70px;
-}
+.container-incidence{}
 
 #incidence-nav-container {
-	position: fixed;left: 0;right: 0; top:0;
+	padding-left: 50px;
+	padding-right: 50px;
+	width: 100%;
+	-webkit-box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.66);
+	-moz-box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.66);
+	box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.66);
 }
 
 .icon-navbar-container{

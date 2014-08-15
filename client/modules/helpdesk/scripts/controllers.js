@@ -1,8 +1,12 @@
 'use strict';
 
+var STATUS_NEW = "New";
+var STATUS_DISPLAYED = "Displayed";
+var STATUS_SEEN = "Seen";
+
 var helpdeskControllers = angular.module('helpdeskControllers', ['helpdeskServices'])
 
-helpdeskControllers.controller('HelpdeskCtrl', function ($q, $scope, $state, $rootScope, helpdeskConfigService, $location, Auth) {
+helpdeskControllers.controller('HelpdeskCtrl', function ($scope, $state, $rootScope, $location, helpdeskConfigService, Auth, notificationService) {
 
   	initDesk();
 
@@ -10,6 +14,11 @@ helpdeskControllers.controller('HelpdeskCtrl', function ($q, $scope, $state, $ro
 	$scope.status = {};
 
 	function initDesk() {
+
+    $scope.userNotifications = [];
+    notificationService.getNotifications().then( function (notifications){
+      $scope.userNotifications = notifications;
+    });
 
 		helpdeskConfigService.setupDesk().then(function(){
 		  	$scope.menu = helpdeskConfigService.getMenu();
@@ -25,16 +34,9 @@ helpdeskControllers.controller('HelpdeskCtrl', function ($q, $scope, $state, $ro
 		});
 	};
 
-	$scope.logout = function() {
-    Auth.logout(function(err) {
-      if(!err) {
-        $location.path('/login');
-      }
-    })};
-
-    $scope.isActiveModule = function(module){
-    	return $scope.status[module.toLowerCase()];
-    }
+  $scope.isActiveModule = function(module){
+  	return $scope.status[module.toLowerCase()];
+  }
 
 	$scope.searchId = function(actionState, id, module){
 		$scope.status.activeState = actionState;
@@ -45,5 +47,35 @@ helpdeskControllers.controller('HelpdeskCtrl', function ($q, $scope, $state, $ro
   	$rootScope.$on('event:currentUser-changed', function(event) {
 		initDesk();
 	});
+
+  $scope.logout = function() {
+    Auth.logout(function(err) {
+      if(!err) {
+        $location.path('/login');
+      }
+    });
+  };
+
+  $scope.markNotAsSeen = function(notification) {
+    notification.status = STATUS_SEEN;
+  };
+
+  $scope.newNotifications = function() {
+    var newNotifications = [];
+    for (var i=0; i<$scope.userNotifications.length; i++){
+      if ($scope.userNotifications[i].status == STATUS_NEW){
+        newNotifications.push($scope.userNotifications[i]);
+      }
+    }
+    return newNotifications;
+  };
+
+  $scope.markNewNotsAsDisplayed = function() {
+    for (var i=0; i<$scope.userNotifications.length; i++){
+      if ($scope.userNotifications[i].status == STATUS_NEW){
+        $scope.userNotifications[i].status = STATUS_DISPLAYED;
+      }  
+    }
+  };
 
 });

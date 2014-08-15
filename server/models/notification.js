@@ -15,14 +15,12 @@ var NotificationSchema = new Schema({
 	  required: true
   },
   created: {
-  	type: Date,
-	  required: true
+  	type: Date
   },	
   status: {
     // Possible statuses : Unseen, Seen
     type: String,
-    default: 'Unseen',
-    required: true
+    default: 'New'
   }
 });
 

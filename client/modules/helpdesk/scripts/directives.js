@@ -14,6 +14,12 @@ helpdeskDirectives.directive('content', function() {
   };
 })
 
+helpdeskDirectives.directive('navbar', function() {
+  return {
+    restrict: 'E',
+    templateUrl: '/modules/helpdesk/views/partials/navbar.html'
+  };
+});
 
 helpdeskDirectives.directive('helpdesk', function() {
   return {

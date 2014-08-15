@@ -20,11 +20,11 @@ var mongoose = require('mongoose'),
  *  Notifies a user
  *  Returns a PROMISE with the result 
  */
-function notify (notificationInfo, mailInfo) {
+var notify = function (addresseeRole, notificationInfo, mailInfo) {
 
   function notifyViaEmail(addressee, subject, content) {
     var deferred = Q.defer();
-    mailDomain.sendMail(user).then( function (result){
+    mailDomain.sendMail(addressee, null, subject, content).then( function (result){
       if (result.status == "mail.not.sent"){
         deferred.resolve({status: 'email.notification.not.sent'});
       }
@@ -36,10 +36,10 @@ function notify (notificationInfo, mailInfo) {
   };
 
 
-  function createNotification(user, notification) {
+  function createNotification(userId, notificationText) {
 
     var deferred = Q.defer();
-    var notification = new Notification({text: notification, addressee: user});
+    var notification = new Notification({text: notificationText, addressee: userId});
 
     notification.save(function(err) {
       if (err) {
@@ -54,14 +54,14 @@ function notify (notificationInfo, mailInfo) {
 
 
 
-  if (user.role == ROLE_USER){
-    notifyViaEmail(mailInfo.email, mailInfo.subject, mailInfo.content).then( function ( result){
+  if (addresseeRole == ROLE_USER){
+    notifyViaEmail(mailInfo.addressee, mailInfo.subject, mailInfo.content).then( function ( result){
       if (result.status == 'notification.not.sent'){
         console.log("There has been an error trying to notify a user via email.");
       }
     });
   }
-  createNotification(notificationInfo.user, notificationInfo.notification).then( function (result){
+  createNotification(notificationInfo.addressee, notificationInfo.notification).then( function (result){
     if (result.status == 'notification.not.sent'){
       console.log("There has been an error trying to create a user notification");
     }
@@ -74,42 +74,61 @@ function notify (notificationInfo, mailInfo) {
 exports.comment = function(incidence, commentOwnerId, comment) {
   var incidenceId = incidence._id;
   var incidenceTitle = incidence.title;
-  var incidenceOwnerId = incidence.creator;
-  var incidenceAssignedId = incidence.assigned;
+  var incidenceOwnerId = incidence.creator._id;
+  
+  var userProfilesPromise = Q.all([ usersDomain.show(commentOwnerId), usersDomain.show(incidenceOwnerId), usersDomain.findByUsername(incidence.assigned)])
+  userProfilesPromise.then(function(results){
+    var commentOwnerResult = results[0];
+    var incidenceOwnerResult = results[1];
+    var incidenceAssignedResult = results[2];
 
-  var userProfilesPromise = Q.all([ usersDomain.show(commentOwnerId), usersDomain.show(incidenceOwnerId), usersDomain.show(incidenceAssignedId) ])
-  userProfilesPromise.then(function(showResults){
-    var commentOwnerProfileResult = showResults[0];
-    var incidenceOwnerProfileResult = showResults[1];
-    var incidenceAssignedProfileResult = showResults[2];
+    if  (commentOwnerResult.status == 'user.shown' &&
+         incidenceOwnerResult.status == 'user.shown'){
 
-    if  (commentOwnerProfileResult.status == 'user.shown' &&
-         incidenceOwnerProfileResult.status == 'user.shown'&& 
-         incidenceAssignedProfileResult.status == 'user.shown'){
+      var incidenceOwnerRole = incidenceOwnerResult.user.role;
+      var incidenceOwnerMail = incidenceOwnerResult.user.email;
+
+      var commentOwnerUsername = commentOwnerResult.user.username;
 
       var notificationMessage = function(userType, username){
-        if (user == OWNER) return  username + " has commented an incidence opended by you.";
+        if (userType == OWNER) return  username + " has commented an incidence opended by you.";
         else return  username + " has commented an incidence assigned to you.";
       }
 
       var mailSubject = 'New Comment on ' + incidenceId + ' - ' + incidenceTitle;
 
-      if ((commentOwnerId == incidenceOwnerId) && (incidenceAssignedId != null)){
-        notify({addressee: incidenceAssignedIdProfileResult.user, notification: notificationMessage(TECH, incidenceAssignedProfileResult.user.username)}, {addressee: incidenceAssignedIdProfileResult.user.email, subject: mailSubject, content: comment});
+      // Notify Incidence Owner User?
+      if (!commentOwnerId.equals(incidenceOwnerId)){
+        notify(incidenceOwnerRole, {addressee: incidenceOwnerId, notification: notificationMessage(OWNER, commentOwnerUsername)}, {addressee: incidenceOwnerMail, subject: mailSubject, content: comment});
+      }
+
+      // Notify Incidence Assigned User?
+      if (incidenceAssignedResult.status == 'user.found'){
+        var incidenceAssignedId = incidenceAssignedResult.user._id;
+        if (!(commentOwnerId.equals(incidenceAssignedId))){
+          var incidenceAssignedMail = incidenceAssignedResult.user.email;
+          var incidenceAssignedRole = incidenceAssignedResult.user.role;
+          notify(incidenceAssignedRole, {addressee: incidenceAssignedId, notification: notificationMessage(TECH, commentOwnerUsername)}, {addressee: incidenceAssignedMail, subject: mailSubject, content: comment});
+        }  
+      }
+
+      /*
+      if commentOwnerId.equals(incidenceOwnerId){
+        notify(incidenceAssignedRole, {addressee: incidenceAssignedId, notification: notificationMessage(TECH, incidenceAssignedUsername)}, {addressee: incidenceAssignedMail, subject: mailSubject, content: comment});
       }  
       else { // commentOwner != incidenceOwner
-        var thirdPartyUser = ((commentOwnerId != incidenceOwnerId) && (commentOwnerId != incidenceAssignedId));
+        var thirdPartyUser = !(commentOwnerId.equals(incidenceOwnerId)) && !(commentOwnerId.equals(incidenceAssignedId));
         if (thirdPartyUser){
-          notify({addressee: incidenceOwnerProfileResult.user, notification: notificationMessage(OWNER, incidenceOwnerProfileResult.user.username)}, {addressee: incidenceOwnerProfileResult.user.email, subject: mailSubject, content: comment});
-          notify({addressee: incidenceAssignedIdProfileResult.user, notification: notificationMessage(TECH, incidenceAssignedProfileResult.user.username)}, {addressee: incidenceAssignedIdProfileResult.user.email, subject: mailSubject, content: comment});
+          notify(incidenceOwnerRole, {addressee: incidenceOwnerId, notification: notificationMessage(OWNER, commentOwnerUsername)}, {addressee: incidenceOwnerMail, subject: mailSubject, content: comment});
+          notify(incidenceAssignedRole, {addressee: incidenceAssignedId, notification: notificationMessage(TECH, commentOwnerUsername)}, {addressee: incidenceAssignedMail, subject: mailSubject, content: comment});
         }
-        else if (commentOwnerId == incidenceAssignedId){
-          notify({addressee: incidenceOwnerProfileResult.user, notification: notificationMessage(OWNER, incidenceOwnerProfileResult.user.username)}, {addressee: incidenceOwnerProfileResult.user.email, subject: mailSubject, content: comment});
+        else if (commentOwnerId.equals(incidenceAssignedId)){
+          notify(incidenceOwnerRole, {addressee: incidenceOwnerId, notification: notificationMessage(OWNER, commentOwnerUsername)}, {addressee: incidenceOwnerMail, subject: mailSubject, content: comment});
         }
         else{
-           notify({addressee: incidenceAssignedIdProfileResult.user, notification: notificationMessage(TECH, incidenceAssignedProfileResult.user.username)}, {addressee: incidenceAssignedIdProfileResult.user.email, subject: mailSubject, content: comment});
+          notify(incidenceAssignedRole, {addressee: incidenceAssignedId, notification: notificationMessage(TECH, commentOwnerUsername)}, {addressee: incidenceAssignedMail, subject: mailSubject, content: comment});
         }
-      }
+      }*/
     }  
     else{ console.error("There has been an error trying to retrive users profiles at comment notification."); }  
   });
@@ -123,7 +142,7 @@ exports.listNotifications = function(user) {
 
   var deferred = Q.defer();
 
-  Notification.find({addresse: user}).sort('-created').populate('addresse').exec(function(err, notifications) {
+  Notification.find({addressee: user}).sort('-created').exec(function(err, notifications) {
      if (err) {
       deferred.resolve({status: RESULT_ERROR, error: err});
     } else {   

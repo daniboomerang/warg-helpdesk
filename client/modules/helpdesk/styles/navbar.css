@@ -1,0 +1,17 @@
+.shading-notification {
+  background-color: #EFF5FF;
+}
+
+.frame-logo{
+  background-color: red;
+margin-bottom: 10px;
+padding-bottom: 10px;}
+
+.frame-user-settings{
+  margin: 7px;
+  margin-right: 12px;
+}
+.frame-dropdown-link{
+  padding: 8px;
+  border-bottom: 1px solid #e5e5e5;
+}

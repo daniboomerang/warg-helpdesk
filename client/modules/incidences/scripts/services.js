@@ -92,7 +92,7 @@ incidencesServices.factory('incidenceAuth', function ($rootScope) {
   }
 });
 
-incidencesServices.factory('techniciansService', function ($http, $q){
+incidencesServices.factory('techniciansService', function ($http){
 
   var techsList = [];
 

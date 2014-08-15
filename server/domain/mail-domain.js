@@ -111,9 +111,9 @@ module.exports = function(mailSenderService){
       return deferred.promise;
     },  
     
-    sendMail: function (sender, receiver, subject, content) {    
+    sendMail: function (receiver, sender, subject, content) {    
       var deferred = Q.defer();
-      mailSender.sendMail(sender, null, subject, content, null, null, null, null).then(function (replyMailResult){
+      mailSender.sendMail(receiver, sender, subject, content, null, null, null, null).then(function (replyMailResult){
         if (replyMailResult.status == RESULT_ERROR){
           resolveDeferred({status: 'mail.not.sent'});
         }

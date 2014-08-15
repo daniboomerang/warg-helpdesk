@@ -1,9 +1,7 @@
 <div class="container-incidence" ng-init="findOne()">
 
-<div id="incidence-nav-container">        
-	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-	  <div class="container" style="padding:5px; padding-left: 12%;">
-         <div class="row">
+    <div id="incidence-nav-container">          
+        <div class="row">
             <div class="pull-left incidence-details">
                 <div class="pull-left box-incidence-datails">
                     <rate></rate>
@@ -31,11 +29,9 @@
                 </div>
             </div>     
         </div>
-	</nav>
-</div>
+    </div>
 
-<div id="frame-incidence-title" class="text-muted" style="word-wrap: break-word;"><h4>{{incidence.title}}</h4></div>
-
+    <div id="frame-incidence-title" class="text-muted" style="word-wrap: break-word;"><h4>{{incidence.title}}</h4></div>
 
 <!--<div class="jumbotron">-->
     <pre>
@@ -43,55 +39,51 @@
     </pre>
 <!--</div>-->
 
-<accordion close-others="false">
-  <accordion-group ng-repeat="post in incidence.history" is-open="$index == incidence.history.length -1" ng-class="">
-    <accordion-heading>
-     <span class="badge alert-info" style="padding:8px;">Posted {{post.date | date:'medium'}}</span>
-     <div class="pull-right">
-        <span class="badge alert-info" style="padding:8px;">Posted by: {{post.author}}</span>
-        <!--<span ng-show="$index == incidence.history.length -1" ng-click="goToState(reply)" class="icon-navbar-container"> <img src="/modules/incidences/images/icons/reply-24.png" alt="View Details"></span>-->
-     </div>
-    </accordion-heading>
-    {{post.post}}
-  </accordion-group>
-</accordion>
+    <accordion close-others="false">
+      <accordion-group ng-repeat="post in incidence.history" is-open="$index == incidence.history.length -1" ng-class="">
+        <accordion-heading>
+         <span class="badge alert-info" style="padding:8px;">Posted {{post.date | date:'medium'}}</span>
+         <div class="pull-right">
+            <span class="badge alert-info" style="padding:8px;">Posted by: {{post.author}}</span>
+         </div>
+        </accordion-heading>
+        {{post.post}}
+      </accordion-group>
+    </accordion>
 
-<div id="incidence-reply">
-    <form class="form" name="form" ng-submit="sendComment(comment)" style="margin-bottom: 30px">
-        <div class="row" style="margin-bottom: 10px;">
-            <div class="col-md-1">
-                <input class="btn btn-default" value="Submit" type="image" ngClick="Submit" src="/modules/incidences/images/icons/reply-24-blue.png" ng-disabled="form.$invalid">
-            </div>
-            <div class="col-md-10">
-                <div ng-if="changed(form.comment)" ng-messages="form.comment.$error" style="width: auto;">
-                    <div class="frame-error-arrowdown" ng-message="required">Sorry, comment can´t be blank</div>
-                    <div class="frame-error-arrowdown" ng-message="minlength">The minimum comment lenght required is 70 characters.</div>
-                    <div class="frame-error-arrowdown" ng-message="maxlength">The maximum comment lenght required is 3500 characters.</div>
+    <div id="incidence-reply">
+        <form class="form" name="form" ng-submit="sendComment(comment)" style="margin-bottom: 30px">
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col-md-1">
+                    <input class="btn btn-default" value="Submit" type="image" ngClick="Submit" src="/modules/incidences/images/icons/reply-24-blue.png" ng-disabled="form.$invalid">
+                </div>
+                <div class="col-md-10">
+                    <div ng-if="changed(form.comment)" ng-messages="form.comment.$error" style="width: auto;">
+                        <div class="frame-error-arrowdown" ng-message="required">Sorry, comment can´t be blank</div>
+                        <div class="frame-error-arrowdown" ng-message="minlength">The minimum comment lenght required is 70 characters.</div>
+                        <div class="frame-error-arrowdown" ng-message="maxlength">The maximum comment lenght required is 3500 characters.</div>
+                    </div>
+                </div>
+                <div class="col-md-1">    
+                    <div ng-click="toTheTop()" class="btn btn-default"><img src="/modules/incidences/images/icons/arrow-top-24.png" alt=" Go To Top Page"></div>
+                </div>
+            </div>  
+            <div class="form-group">
+                <div class="input-group">
+                    <textarea style="resize:vertical; min-height: 200px;"
+                         type="text"
+                        name="comment"
+                        class="form-control"
+                        placeholder="Post comment"
+                        ng-model="comment"
+                        required
+                        ng-minlength="70"
+                        ng-maxlength="3500"/>
+                    </textarea>
+                    <div class="input-group-addon bg-success">{{ commentLength() }}</div>
                 </div>
             </div>
-            <div class="col-md-1">    
-                <div ng-click="toTheTop()" class="btn btn-default"><img src="/modules/incidences/images/icons/arrow-top-24.png" alt=" Go To Top Page"></div>
-            </div>
-        </div>  
-          <div class="form-group">
-            <div class="input-group">
-                <textarea style="resize:vertical; min-height: 200px;"
-                     type="text"
-                    name="comment"
-                    class="form-control"
-                    placeholder="Post comment"
-                    ng-model="comment"
-                    required
-                    ng-minlength="70"
-                    ng-maxlength="3500"/>
-                </textarea>
-                <div class="input-group-addon bg-success">{{ commentLength() }}</div>
-            </div>
-        </div>
-    </form> 
-
-
-{{$scope.techniciansList}}
-
-</div>  
+        </form> 
+    </div>
+</div>      
 

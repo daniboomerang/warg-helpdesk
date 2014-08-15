@@ -9,7 +9,7 @@ var notificationsDomain = require('../domain/notifications-domain');
  * List of notifications of a user
  */
 exports.list = function(req, res) {
-  notificationsDomain.listNotifications(req.user).then (function (resultList){
+  notificationsDomain.listNotifications(req.user._id).then (function (resultList){
     if (resultList.status == RESULT_ERROR){
       res.json(500, resultList.error);
     }  
