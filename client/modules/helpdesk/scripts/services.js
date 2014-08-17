@@ -1,6 +1,6 @@
 /*  helpdesk Services */
 
-var helpdeskServices = angular.module('helpdeskServices', ['authServices'])
+var helpdeskServices = angular.module('helpdeskServices', [])
 
 helpdeskServices.value('menu', []);
 
@@ -8,32 +8,20 @@ helpdeskServices.service('deskMenuStyleService', function(){
 	
 	return {
 		getStyle : function(module){	
-			var moduleStyle = [];
-			if (module == 'Home'){
-		   		moduleStyle.module = {'background-image': 'url(/modules/helpdesk/images/icons/home-24.png)'};
-		   		moduleStyle.border = {'-webkit-box-shadow': '0px 0px 7px 3px rgba(8,139,148,1)',
-									 '-moz-box-shadow': '0px 0px 7px 3px rgba(8,139,148,1)',
-									 'box-shadow': '0px 0px 7px 3px rgba(8,139,148,1)'};
-		   		moduleStyle.dashboard = '/modules/helpdesk/images/icons/dashboard-16.png';
-		   		moduleStyle.profile = '/modules/helpdesk/images/icons/edit-user-16.png';
-			}			
+			var moduleStyle = [];	
 		   	if (module == 'Incidences'){
-		   		moduleStyle.module = {'background-image': 'url(/modules/helpdesk/images/icons/zoom-24.png)'};
+		   		moduleStyle.module = {'background-image': 'url(/modules/helpdesk/images/icons/incidence-24.png)'};
 		   		moduleStyle.create = '/modules/helpdesk/images/icons/create-16.png';
 		   		moduleStyle.openId = '/modules/helpdesk/images/icons/zoom-16.png';
 		   		moduleStyle.openList = '/modules/helpdesk/images/icons/list-16.png';
-		   		moduleStyle.rating = '/modules/helpdesk/images/icons/rating-16.png';
+		   		moduleStyle.statistics = '/modules/helpdesk/images/icons/statistics-16.png';
+
 		   	}	
-		   	if (module == 'Reporting'){
-		   		moduleStyle.module = {'background-image': 'url(/modules/helpdesk/images/icons/combo-24.png)'};
-				moduleStyle.effort = '/modules/helpdesk/images/icons/workers-16.png';
-				moduleStyle.expenses = '/modules/helpdesk/images/icons/coins-16.png';
-				moduleStyle.statistics = '/modules/helpdesk/images/icons/pie-16.png';
-		   	}
 		   	if (module == 'Inventory'){
 		   		moduleStyle.module = {'background-image': 'url(/modules/helpdesk/images/icons/book-24.png)'};
-				moduleStyle.list = '/modules/helpdesk/images/icons/list-16.png';
-				moduleStyle.create = '/modules/helpdesk/images/icons/create-16.png';
+				moduleStyle.open = '/modules/helpdesk/images/icons/inventory-16.png';
+				moduleStyle.expenses = '/modules/helpdesk/images/icons/coins-16.png';
+				
 		   	}
 		   	if (module == 'Admin'){
 		   		moduleStyle.module = {'background-image': 'url(/modules/helpdesk/images/icons/settings-24.png)'};
@@ -45,82 +33,50 @@ helpdeskServices.service('deskMenuStyleService', function(){
 	}
 });
 
-helpdeskServices.service('helpdeskConfigService', function ($q, UserRights, menu, deskMenuStyleService, $rootScope){
+helpdeskServices.service('helpdeskConfigService', function ($q, $http, menu, deskMenuStyleService, $rootScope){
 
-     function getHomeMenu(rightsOnHome) {
-		var actions = [];
-     	var moduleMenuStyle = deskMenuStyleService.getStyle('Home');
-
-     	for (var i=0; i<rightsOnHome.length; i++){
-     		if (rightsOnHome.indexOf(rightsOnHome[i]) > -1){
-				if (rightsOnHome[i] == 'dashboard')
-					actions.push({title: 'Board', state: 'helpdesk.home.dashboard', style: moduleMenuStyle.dashboard});
-				else if (rightsOnHome[i] == 'profile')
-					actions.push({title: 'Profile', state: 'helpdesk.home.profile', style: moduleMenuStyle.profile});
-			}		
-		}
-        var menu = {module: 'Home', actions: actions, style: moduleMenuStyle.module, border: moduleMenuStyle.border};
-        return menu;
-     }
-
-	function getIncidencesMenu(rightsOnIncidences) {
+	function getIncidencesMenu(actionsOnIncidences) {
      	var actions = [];
      	var moduleMenuStyle = deskMenuStyleService.getStyle('Incidences');
-     	for (var i=0; i<rightsOnIncidences.length; i++){
-     		if (rightsOnIncidences.indexOf(rightsOnIncidences[i]) > -1){
-				if (rightsOnIncidences[i] == 'open'){
+     	for (var i=0; i<actionsOnIncidences.length; i++){
+     		if (actionsOnIncidences.indexOf(actionsOnIncidences[i]) > -1){
+				if (actionsOnIncidences[i] == 'open'){
 					actions.push({title: 'Id Search', state: 'helpdesk.incidences.open', style: moduleMenuStyle.openId});
-					actions.push({title: 'Open', state: 'helpdesk.incidences.open.list', style: moduleMenuStyle.openList});
+					actions.push({title: 'List', state: 'helpdesk.incidences.open.list', style: moduleMenuStyle.openList});
 				}	
-				else if (rightsOnIncidences[i] == 'create')
+				else if (actionsOnIncidences[i] == 'create')
 					actions.push({title: 'Create', state: 'helpdesk.incidences.create', style: moduleMenuStyle.create});
-				else if (rightsOnIncidences[i] == 'rate')
-					actions.push({title: 'Rating', state: 'helpdesk.incidences.rate', style: moduleMenuStyle.rating});
+				else if (actionsOnIncidences[i] == 'reporting')
+					actions.push({title: 'Statistics', state: 'helpdesk.incidences.statistics', style: moduleMenuStyle.statistics});
 			}		
 		}
         var menu = {module: 'Incidences', actions: actions, style: moduleMenuStyle.module};
         return menu;
      }
-	function getReportingMenu(rightsOnReporting) {
-     	var actions = [];
-     	var moduleMenuStyle = deskMenuStyleService.getStyle('Reporting');
-     	for (var i=0; i<rightsOnReporting.length; i++){
-     		if (rightsOnReporting.indexOf(rightsOnReporting[i]) > -1){
-				if (rightsOnReporting[i] == 'effort')
-					actions.push({title: 'Effort', state: 'helpdesk.reporting.effort', style: moduleMenuStyle.effort});
-				else if (rightsOnReporting[i] == 'expenses')
-					actions.push({title: 'Expenses', state: 'helpdesk.reporting.expenses', style: moduleMenuStyle.expenses});
-				else if (rightsOnReporting[i] == 'statistics')
-					actions.push({title: 'Statistics', state: 'helpdesk.reporting.statistics', style: moduleMenuStyle.statistics});
-			}		
-		}
-        var menu = {module: 'Reporting', actions: actions, style: moduleMenuStyle.module};
-        return menu;
-     }
 
-	function getInventoryMenu(rightsOnInventory) {
+	function getInventoryMenu(actionsOnInventory) {
      	var actions = [];
      	var moduleMenuStyle = deskMenuStyleService.getStyle('Inventory');
-     	for (var i=0; i<rightsOnInventory.length; i++){
-     		if (rightsOnInventory.indexOf(rightsOnInventory[i]) > -1){
-				if (rightsOnInventory[i] == 'list')
-					actions.push({title: 'Open', state: 'helpdesk.inventory.open.list', style: moduleMenuStyle.list});
-				else if (rightsOnInventory[i] == 'create')
-					actions.push({title: 'Create', state: 'helpdesk.inventory.create', style: moduleMenuStyle.create});
+     	for (var i=0; i<actionsOnInventory.length; i++){
+     		if (actionsOnInventory.indexOf(actionsOnInventory[i]) > -1){
+				if (actionsOnInventory[i] == 'open')
+					actions.push({title: 'Open', state: 'helpdesk.inventory.open', style: moduleMenuStyle.open});
+				else if (actionsOnInventory[i] == 'reporting')
+					actions.push({title: 'Expenses', state: 'helpdesk.inventory.expenses', style: moduleMenuStyle.expenses});
 			}		
 		}
         var menu = {module: 'Inventory', actions: actions, style: moduleMenuStyle.module};
         return menu;
      }
 
-     function getAdminMenu(rightsOnAdvancedSettings) {
+     function getAdminMenu(actionsOnAdvancedSettings) {
      	var actions = [];
      	var moduleMenuStyle = deskMenuStyleService.getStyle('Admin');
-     	for (var i=0; i<rightsOnAdvancedSettings.length; i++){
-     		if (rightsOnAdvancedSettings.indexOf(rightsOnAdvancedSettings[i]) > -1){
-				if (rightsOnAdvancedSettings[i] == 'users')
+     	for (var i=0; i<actionsOnAdvancedSettings.length; i++){
+     		if (actionsOnAdvancedSettings.indexOf(actionsOnAdvancedSettings[i]) > -1){
+				if (actionsOnAdvancedSettings[i] == 'users')
 					actions.push({title: 'Users', state: 'helpdesk.admin.users', style: moduleMenuStyle.users});
-				else if (rightsOnAdvancedSettings[i] == 'schools')
+				else if (actionsOnAdvancedSettings[i] == 'schools')
 					actions.push({title: 'Schools', state: 'helpdesk.admin.schools', style: moduleMenuStyle.schools});
 			}		
 		}
@@ -128,23 +84,17 @@ helpdeskServices.service('helpdeskConfigService', function ($q, UserRights, menu
         return menu;
      }
 
-    function setupMenu(rights) {
+    function setupMenu(modules) {
     	var menu = [];
-     	for (var i=0; i<rights.length; i++){
-     		if (rights[i].module == 'Home'){
-     			menu.push(getHomeMenu(rights[i].rights));
+     	for (var i=0; i<modules.length; i++){
+     		if (modules[i].module == 'Incidences'){
+     			menu.push(getIncidencesMenu(modules[i].actions));
      		}
-     		if (rights[i].module == 'Incidences'){
-     			menu.push(getIncidencesMenu(rights[i].rights));
+     		else if(modules[i].module == 'Inventory'){
+     			menu.push(getInventoryMenu(modules[i].actions));
      		}
-     		else if(rights[i].module == 'Inventory'){
-     			menu.push(getInventoryMenu(rights[i].rights));
-     		}
-     		else if (rights[i].module == 'Reporting'){
-     			menu.push(getReportingMenu(rights[i].rights));
-     		}
-     		else if (rights[i].module == 'Admin'){
-     			menu.push(getAdminMenu(rights[i].rights));
+     		else if (modules[i].module == 'Admin'){
+     			menu.push(getAdminMenu(modules[i].actions));
      		}
 		}
 		return menu;
@@ -152,10 +102,22 @@ helpdeskServices.service('helpdeskConfigService', function ($q, UserRights, menu
 
 	return{
 		setupDesk : function(){	
+
+			function userModules() {
+			      var deferred = $q.defer();
+			      $http.get('/api/modules').success(function(data) {
+			        var actions = data.actions
+			        deferred.resolve(data);
+			      }).error(function() {
+			        deferred.reject();
+			      });
+			      return deferred.promise;
+			};
+
 		    var deferred = $q.defer(); 		
-		    UserRights.getRights().then(function(rights) {
+		    userModules().then(function(modules) {
 		    	// Now that we have all the modules and right over the modules for the current user we can create our Menu
-		    	menu = setupMenu(rights);
+		    	menu = setupMenu(modules);
 		    	// Finally, when the menu is created we trigger the .then of the promise
 		    	deferred.resolve();
 		    });

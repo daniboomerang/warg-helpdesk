@@ -9,21 +9,18 @@
 @media (min-width: 768px) {
   .sidebar {
     position: fixed;
-    top: 64px;
-    bottom: 44px;
+    top: 0;
+    bottom: 0;
     left: 0;
     display: block;
     padding-bottom: 10px;
-    padding-top: 10px;
+    padding-top: 63px;
     padding-right: 10px;
     padding-left: 10px;
-    overflow-x: hidden;
-    overflow-y: auto; 
-    border-right: 0px solid #eee;
-    -webkit-box-shadow: 1px 0px 1px 0px rgba(194,225,245,1);
-    -moz-box-shadow: 1px 0px 1px 0px rgba(194,225,245,1);
-    box-shadow: 1px 0px 1px 0px rgba(194,225,245,1);
-    background-color: white;
+    /*overflow-x: hidden;
+    overflow-y: auto; */
+    border: solid 1px #E0E0E0;
+    background-color: #F0F0F0 ;
   }
 }
 

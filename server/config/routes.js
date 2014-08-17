@@ -1,9 +1,7 @@
 'use strict';
 
 var path = require('path'),
-    auth = require('../controllers/auth'),
-    rights = require('../controllers/rights');
-
+    auth = require('../controllers/auth');
 
 module.exports = function(app) {
   // User Routes
@@ -14,9 +12,7 @@ module.exports = function(app) {
   // Check if username is available
   // todo: probably should be a query on users
   app.get('/auth/check_username/:username', users.exists);
-  // User Module and Actions Rights
-  app.get('/auth/rights', auth.ensureAuthenticated, rights.rights);
-
+ 
   // Session Routes
   var session = require('../controllers/session');
   app.get('/auth/session', auth.ensureAuthenticated, session.session);
@@ -25,6 +21,9 @@ module.exports = function(app) {
 
    // Service for getting the technicians of the system
   app.get('/api/techs', auth.ensureAuthenticated, users.technicians);
+   // Service for getting the modules of a user
+  var modules = require('../controllers/modules');
+  app.get('/api/modules', auth.ensureAuthenticated, modules.modules);
 
   // Notifications
   var notifications = require('../controllers/notifications');

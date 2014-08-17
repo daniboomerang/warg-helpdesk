@@ -94,19 +94,4 @@ authServices.factory('User', function ($resource) {
       });
   });
 
-authServices.factory('UserRights', function ($http, $q){
-  return {
-    getRights : function() {
-      var deferred = $q.defer();
-      $http.get('/auth/rights').success(function(data) {
-        var actions = data.actions
-        deferred.resolve(data);
-      }).error(function() {
-        deferred.reject();
-      });
-      return deferred.promise;
-    }
-  };
-});
-
 

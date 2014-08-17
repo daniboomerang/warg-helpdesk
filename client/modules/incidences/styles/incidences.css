@@ -26,6 +26,10 @@
 
 /***** FORM *****/
 
+.frame-create{
+	margin-top: 20px;
+}
+
 .incidences-form-container{
 	-webkit-box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.66);
 	-moz-box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.66);
@@ -79,9 +83,9 @@
 	padding-left: 50px;
 	padding-right: 50px;
 	width: 100%;
-	-webkit-box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.66);
-	-moz-box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.66);
-	box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.66);
+	-webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.66);
+	-moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.66);
+	box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.66);
 }
 
 .icon-navbar-container{
@@ -103,3 +107,11 @@
 	min-width: 100px;
 	max-width: 150px;
 }
+
+/**** REPORTING ****/
+		[ac-chart] {
+			float:left;
+			width: 48%;
+			height: 400px;
+			margin: 0 1%;
+		}

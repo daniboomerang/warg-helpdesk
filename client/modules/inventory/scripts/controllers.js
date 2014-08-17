@@ -1,9 +1,13 @@
 'use strict';
 
-var reportingControllers = angular.module('reportingControllers', ['authServices'])
+var inventoryControllers = angular.module('inventoryControllers', [])
 
+inventoryControllers.controller('InventoryCtrl', function ($scope, Auth, $location) {
+  
+      $scope.test = 'test';
+  });
 
-reportingControllers.controller('ExpensesReportCtrl', function ($scope, Auth, $location, $timeout) {
+inventoryControllers.controller('ExpensesReportCtrl', function ($scope, Auth, $location, $timeout) {
 
   $timeout(function() {
     $scope.expensesData = {
@@ -41,7 +45,7 @@ reportingControllers.controller('ExpensesReportCtrl', function ($scope, Auth, $l
   };
 });
 
-reportingControllers.controller('StatisticsReportCtrl', function ($scope, Auth, $location) {
+inventoryControllers.controller('StatisticsReportCtrl', function ($scope, Auth, $location) {
 
   $scope.chartType = 'pie';
 
@@ -75,7 +79,4 @@ reportingControllers.controller('StatisticsReportCtrl', function ($scope, Auth, 
 });
 
 
-reportingControllers.controller('EffortReportCtrl', function ($scope, Auth, $location) {
-  
-    
-  });
+

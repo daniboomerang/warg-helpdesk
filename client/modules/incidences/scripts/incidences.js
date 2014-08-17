@@ -7,13 +7,17 @@ var incidences = angular.module('incidences',
     'incidencesControllers',
     'incidencesServices',
     'incidencesDirectives',
-    'authServices'
+    'authServices',
+    'angularCharts'
  	]
 )
 .config(function($stateProvider, $urlRouterProvider) {
 
 	$urlRouterProvider.when('/incidences', '/incidences/open');
 	$urlRouterProvider.when('/incidences/open', '/helpdesk/incidences/open/list');
+	$urlRouterProvider.when('/incidences/reporting', '/helpdesk/incidences/reporting/statistics');
+
+
 	$urlRouterProvider.otherwise('/incidences');
 
 	$stateProvider
@@ -38,32 +42,37 @@ var incidences = angular.module('incidences',
 		        template: '<ui-view/>'
 		    })
 
-		    .state('helpdesk.incidences.open.list', {
-		        url: '/list',
-		        templateUrl: '/modules/incidences/views/partials/list.html',
-		        controller: 'ListCtrl'
-		    })
-
-		    	.state('helpdesk.incidences.open.list.overview', {
-			        url: '/overview/:incidenceId',
-			        views: {
-		            	'overview': {
-							templateUrl: '/modules/incidences/views/partials/overview.html',
-			            	controller: 'OverviewCtrl'
-			            }    
-		            }    
+			    .state('helpdesk.incidences.open.list', {
+			        url: '/list',
+			        templateUrl: '/modules/incidences/views/partials/list.html',
+			        controller: 'ListCtrl'
 			    })
 
-		    .state('helpdesk.incidences.open.incidence', {
-		        url: '/:incidenceId',
-		        templateUrl: '/modules/incidences/views/partials/incidence.html',
-		        controller: 'IncidenceCtrl',
-		        resolve:{
-					techniciansService: "techniciansService",
-					techniciansList: function(techniciansService){
-						techniciansService.initTechList();
+			    	.state('helpdesk.incidences.open.list.overview', {
+				        url: '/overview/:incidenceId',
+				        views: {
+			            	'overview': {
+								templateUrl: '/modules/incidences/views/partials/overview.html',
+				            	controller: 'OverviewCtrl'
+				            }    
+			            }    
+				    })
+
+			    .state('helpdesk.incidences.open.incidence', {
+			        url: '/:incidenceId',
+			        templateUrl: '/modules/incidences/views/partials/incidence.html',
+			        controller: 'IncidenceCtrl',
+			        resolve:{
+						techniciansService: "techniciansService",
+						techniciansList: function(techniciansService){
+							techniciansService.initTechList();
+						}
 					}
-				}
+			    })
+	      	.state('helpdesk.incidences.statistics', {
+		        url: '/statistics',
+		        templateUrl: '/modules/incidences/views/partials/report-statistics.html',
+				controller: 'IncidencesStatisticsCtrl'
 		    })
 })
 .run(function ($rootScope, Auth) {Auth.currentUser();});

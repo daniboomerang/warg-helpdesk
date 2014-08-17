@@ -3,8 +3,6 @@
 var RESULT_SUCCESS = "SUCCESS";
 var RESULT_ERROR = "ERROR"; 
 var ROLE_USER = "user";
-var OWNER = "owner";
-var TECH = "technician";
 
 var mongoose = require('mongoose'),
   Notification = mongoose.model('Notification'),
