@@ -84,6 +84,49 @@ adminControllers.controller('CreateUserFormCtrl', function($scope){
   };
 });
 
+adminControllers.controller('SchoolsCtrl', function ($scope, Users) {
+
+  //////////
+  /* CRUD */
+  //////////
+
+  $scope.create = function(title, description, severity, priority) {
+   
+  };
+
+  $scope.remove = function(incidence) {
+    
+  }; 
+
+  $scope.update = function() {
+   
+  };
+
+  $scope.find = function() {
+
+  };
+
+  $scope.findOne = function() {
+  
+  };
+
+});
+
+adminControllers.controller('CreateUserCtrl', function ($scope, Auth, $location) {
+
+ 
+});
+
+adminControllers.controller('SchoolsListCtrl', function($scope){
+        $scope.schools = [{name:'School1', street:'Marques de Mendigorria', number:'2'}];
+
+});
+
+adminControllers.controller('CreateSchoolFormCtrl', function($scope){
+  $scope.changed = function(filed){
+    return filed.$dirty;
+  };
+});
 
 
 

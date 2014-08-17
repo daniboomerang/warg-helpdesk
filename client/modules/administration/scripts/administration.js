@@ -15,6 +15,9 @@ var administration = angular.module('administration',
 	$urlRouterProvider.when('/admin', '/admin/users');
 	$urlRouterProvider.when('/admin/users', '/helpdesk/admin/users/open/list');
 	$urlRouterProvider.when('/admin/users/create', '/helpdesk/admin/users/create/user');
+	$urlRouterProvider.when('/admin/schools', '/helpdesk/admin/schools/open/list');
+	$urlRouterProvider.when('/admin/schools/create', '/helpdesk/admin/schools/create/school');
+	
 	$urlRouterProvider.otherwise('/admin');
 
 	$stateProvider
@@ -24,7 +27,7 @@ var administration = angular.module('administration',
     .state('helpdesk.admin', {
     	abstract: true,
         url: '/admin',
-        templateUrl: '/modules/administration/views/admin.html'
+       	template: '<ui-view/>'
     })
     	///////////
     	// USERS //
@@ -63,20 +66,52 @@ var administration = angular.module('administration',
 
 			.state('helpdesk.admin.users.open', {
         		url: '/open',
-		        // Note: abstract still needs a ui-view for its children to populate.
 		        template: '<ui-view/>'
 		    })
 		    	.state('helpdesk.admin.users.open.list', {
 			        url: '/list',
-			        templateUrl: '/modules/administration/views/partials/users/users-list.html',
+			        templateUrl: '/modules/administration/views/partials/users/list.html',
 			        controller: 'UsersListCtrl'
 			    })
-			    .state('helpdesk.admin.users.open.user', {
-			        url: '/:userId',
-			        templateUrl: '/modules/administration/views/partials/users/user.html'
+
+		/////////////
+		// SCHOOLS //
+		/////////////
+
+		.state('helpdesk.admin.schools', {
+		    url: '/schools',
+		    templateUrl: '/modules/administration/views/partials/schools/schools.html',
+		    controller: 'SchoolsCtrl'
+		})
+
+			////////////////////
+	    	// SCHOOLS.CREATE //
+	    	////////////////////
+
+			.state('helpdesk.admin.schools.create', {
+	    		url: '/create',
+		        template: '<ui-view/>'
+		    })
+		    	.state('helpdesk.admin.schools.create.school', {
+			        url: '/user',		    
+					templateUrl: '/modules/administration/views/partials/schools/create.html',
+			        controller: 'CreateSchoolCtrl'        
 			    })
 
+			//////////////////
+	    	// SCHOOLS.OPEN //
+	    	//////////////////
 
+			.state('helpdesk.admin.schools.open', {
+	    		url: '/open',
+		        // Note: abstract still needs a ui-view for its children to populate.
+		        template: '<ui-view/>'
+		    })
+		    	.state('helpdesk.admin.schools.open.list', {
+			        url: '/list',
+			        templateUrl: '/modules/administration/views/partials/schools/list.html',
+			        controller: 'SchoolsListCtrl'
+			    })
 
 })
 .run(function ($rootScope, Auth) {Auth.currentUser();});

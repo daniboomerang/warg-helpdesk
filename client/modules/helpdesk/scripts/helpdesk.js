@@ -18,6 +18,7 @@ var helpdesk = angular.module('helpdesk',
 	$urlRouterProvider.when('/helpdesk/incidences', '/incidences');
 	$urlRouterProvider.when('/helpdesk/admin', '/admin');
 	$urlRouterProvider.when('/helpdesk/admin/users', '/admin/users');
+	$urlRouterProvider.when('/helpdesk/admin/schools', '/admin/schools');
 	$urlRouterProvider.when('/helpdesk/inventory', '/inventory');
 	$urlRouterProvider.otherwise('/helpdesk');
 

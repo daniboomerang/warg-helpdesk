@@ -1,0 +1,29 @@
+<section ng-init="find()">
+		<div class="row-fluid">	
+		  	<div class="span12 list-schools-container">
+			    <table tr-ng-grid="" items="schools" selected-items="selectedSchools" selection-mode="SingleRow" >
+				    <thead>
+				        <tr>
+				            <th field-name="name" cell-width="5em">Name</th>  
+				            <th field-name="street" cell-width="5em">Street</th>
+				            <th field-name="number" cell-width="3em">number</th>				          
+				        </tr>
+				    </thead>
+		            <tbody>
+		                <tr>
+		                </tr>
+		            </tbody>
+		            <tfoot>
+		                <tr>
+		                    <td colspan="10">	
+		                        <form class="form-inline tr-ng-grid-footer" grid="">
+		                            <div class="pull-left" tr-ng-grid-global-filter=""></div>
+		                            <div class="pull-right" tr-ng-grid-pager=""></div>
+		                        </form>
+		                    </td>
+		                </tr>
+		            </tfoot>
+		        </table>
+		  	</div>
+		</div>  	
+</section>
