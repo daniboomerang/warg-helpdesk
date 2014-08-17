@@ -1,11 +1,37 @@
   'use strict';
 
-var adminControllers = angular.module('adminControllers', ['authServices'])
+var adminControllers = angular.module('adminControllers', ['adminServices', 'authServices'])
 
-adminControllers.controller('UsersCtrl', function ($scope) {
+adminControllers.controller('UsersCtrl', function ($scope, Users) {
+
+  //////////
+  /* CRUD */
+  //////////
+
+  $scope.create = function(title, description, severity, priority) {
+   
+  };
+
+  $scope.remove = function(incidence) {
+    
+  }; 
+
+  $scope.update = function() {
+   
+  };
+
+  $scope.find = function() {
+    Users.query(function(users) {
+      $scope.users = users;
+    });
+  };
+
+  $scope.findOne = function() {
+  
+  };
 
 });
-  
+
 adminControllers.controller('CreateUserCtrl', function ($scope, Auth, $location) {
 
 	$scope.roleTypes = [{type: 'user'}, {type:'tech'}];
@@ -35,6 +61,8 @@ adminControllers.controller('CreateUserCtrl', function ($scope, Auth, $location)
         if (!err) {
        	  console.log('User successfully created');
        	  $scope.clear(form);
+          $state.go('helpdesk.admin.users', $state.params);
+
         } else {
           angular.forEach(err.errors, function(error, field) {
             form[field].$setValidity('mongoose', false);
@@ -45,6 +73,10 @@ adminControllers.controller('CreateUserCtrl', function ($scope, Auth, $location)
       }
     )};
   });
+
+adminControllers.controller('UsersListCtrl', function($scope){
+
+});
 
 adminControllers.controller('CreateUserFormCtrl', function($scope){
   $scope.changed = function(filed){

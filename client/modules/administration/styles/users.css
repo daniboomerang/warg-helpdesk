@@ -1,12 +1,12 @@
 
 #frame-users{}
 
-.frame-users-content{}
+.frame-users-content{
+}
 
 #users-admin-nav-container{
-	padding-left: 50px;
-	padding-right: 50px;
-	width: 100%;
+	padding: 10px;
+	width: 50%;
 	-webkit-box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.66);
 	-moz-box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.66);
 	box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.66);
@@ -25,4 +25,24 @@
 	-webkit-border-radius: 5px 5px 5px 5px;
 	padding: 5px;
 	width: 100px;
+}
+
+/****** LIST *******/
+
+.border-users{
+	border-radius: 4px 4px 4px 0px;
+	-moz-border-radius: 4px 4px 4px 0px;
+	-webkit-border-radius: 4px 4px 4px 0px;
+	border: 1px solid #62b5f5;
+}
+
+.list-users-container{
+	 width: 50%;
+}
+
+.frame-list-cell{
+	border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
+	-webkit-border-radius: 5px 5px 5px 5px;
+	padding: 5px;
 }

@@ -68,7 +68,8 @@ var administration = angular.module('administration',
 		    })
 		    	.state('helpdesk.admin.users.open.list', {
 			        url: '/list',
-			        templateUrl: '/modules/administration/views/partials/users/users-list.html'
+			        templateUrl: '/modules/administration/views/partials/users/users-list.html',
+			        controller: 'UsersListCtrl'
 			    })
 			    .state('helpdesk.admin.users.open.user', {
 			        url: '/:userId',
