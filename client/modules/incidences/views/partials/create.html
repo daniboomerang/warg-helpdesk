@@ -1,7 +1,7 @@
 <div class="frame-create">
     <div class="panel panel-info incidences-form-container">
       <div class="panel-heading">
-        <div class="panel-title" style="text-align: center;">Create new incidence form</div>
+        <div class="panel-title" style="text-align: center;">New incidence</div>
       </div>  
       <div class="panel-body" style="padding-top:40px">
         <form class="form" name="form" ng-submit="createIncidence(form)" ng-controller="CreateIncidenceFormCtrl">
@@ -21,7 +21,7 @@
           </div>
 
           <div ng-if="changed(form.title)" ng-messages="form.title.$error">
-            <div class="frame-error-arrowup" ng-message="required">Sorry, this field can´t be empty...</div>
+            <div class="frame-error-arrowup" ng-message="required">Sorry, the title can´t be empty.</div>
             <div class="frame-error-arrowup" ng-message="minlength">Sorry, minimum title lenght required 10 characters.</div>
             <div class="frame-error-arrowup" ng-message="maxlength">Sorry, maximum title lenght is 150 characters. </div>
           </div>
@@ -41,7 +41,7 @@
           </div> 
 
           <div ng-if="changed(form.description)" ng-messages="form.description.$error" style="margin-bottom: 10px">
-            <div class="frame-error-arrowup" ng-message="required">Sorry, this field can´t be empty...</div>
+            <div class="frame-error-arrowup" ng-message="required">Sorry, description can´t be empty.</div>
             <div class="frame-error-arrowup" ng-message="minlength">Sorry, minimum description lenght required is 30 characters.</div>
             <div class="frame-error-arrowup" ng-message="maxlength">Sorry, maximum description lenght required is 1500 characters.</div>
           </div>

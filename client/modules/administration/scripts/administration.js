@@ -93,7 +93,7 @@ var administration = angular.module('administration',
 		        template: '<ui-view/>'
 		    })
 		    	.state('helpdesk.admin.schools.create.school', {
-			        url: '/user',		    
+			        url: '/school',		    
 					templateUrl: '/modules/administration/views/partials/schools/create.html',
 			        controller: 'CreateSchoolCtrl'        
 			    })

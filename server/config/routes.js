@@ -12,6 +12,7 @@ module.exports = function(app) {
   // Check if username is available
   // todo: probably should be a query on users
   app.get('/auth/check_username/:username', users.exists);
+
  
   // Session Routes
   var session = require('../controllers/session');
@@ -37,9 +38,9 @@ module.exports = function(app) {
 
   // Updating an incidence
   app.put('/api/incidences/:incidenceId', auth.ensureAuthenticated, incidences.update);
-  app.put('/api/incidences/:incidenceId/postComment', auth.ensureAuthenticated, incidences.postComment, notifications.comment);
+  app.put('/api/incidences/:incidenceId/postComment', auth.ensureAuthenticated, incidences.postComment, notifications.notifyComment);
   app.put('/api/incidences/:incidenceId/rate', auth.ensureAuthenticated, incidences.updateRate);
-  app.put('/api/incidences/:incidenceId/assign', auth.ensureAuthenticated, incidences.updateAssigned);
+  app.put('/api/incidences/:incidenceId/assign', auth.ensureAuthenticated, incidences.updateAssigned, notifications.notifyAssignee);
   app.put('/api/incidences/:incidenceId/effort', auth.ensureAuthenticated, incidences.updateEffort);
   app.put('/api/incidences/:incidenceId/close', auth.ensureAuthenticated, incidences.close);
   
@@ -48,8 +49,18 @@ module.exports = function(app) {
   //Setting up the incidenceId param
   app.param('incidenceId', incidences.incidence);
 
-  // Users Aministration
+  // Users Administration
   app.get('/api/administration/users', auth.ensureAuthenticatedAsAdmin, users.list);
+
+  // Schools Administration
+  var schools = require('../controllers/schools');
+  app.get('/api/schools', auth.ensureAuthenticatedAsAdmin, schools.list);
+  app.post('/api/schools', auth.ensureAuthenticatedAsAdmin, schools.create);
+
+  // Check if schoolsCode is available
+  app.get('/schools/check_schoolcode/:schoolCode', auth.ensureAuthenticatedAsAdmin, schools.exists);
+
+
 
   app.get('/*', function(req, res) {
     if(req.user) {

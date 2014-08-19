@@ -46,3 +46,30 @@ wargHelpdeskDirectives.directive('uniqueUsername', function ($http) {
       }
     };
   });
+
+
+wargHelpdeskDirectives.directive('uniqueSchoolCode', function ($http) {
+    return {
+      restrict: 'A',
+      require: 'ngModel',
+      link: function (scope, element, attrs, ngModel) {
+        function validate(value) {
+          if(!value) {
+            ngModel.$setValidity('unique', true);
+            return;
+          }
+          $http.get('/schools/check_schoolcode/' + value).success(function(school) {
+            if(!school.exists) {
+              ngModel.$setValidity('unique', true);
+            } else {
+              ngModel.$setValidity('unique', false);
+            }
+          });
+        }
+
+        scope.$watch( function() {
+          return ngModel.$viewValue;
+        }, validate);
+      }
+    };
+  });

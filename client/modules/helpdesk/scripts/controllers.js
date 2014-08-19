@@ -36,7 +36,7 @@ helpdeskControllers.controller('HelpdeskCtrl', function ($scope, $state, $rootSc
 
   $scope.isActiveModule = function(module){
   	return $scope.status[module.toLowerCase()];
-  }
+  };
 
 	$scope.searchId = function(actionState, id, module){
 		$scope.status.activeState = actionState;

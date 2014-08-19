@@ -1,9 +1,9 @@
   <div class="panel panel-info signup-form-container">
     <div class="panel-heading">
-      <div class="panel-title" style="text-align: center;">Create new user form</div>
-    </div>  
+      <div class="panel-title" style="text-align: center;">New user</div>
+    </div>
     <div class="panel-body" style="padding-top:25px">
-      <form class="form frame-form" name="form" ng-submit="register(form)" ng-controller="CreateUserFormCtrl">
+      <form class="form frame-form" name="form" ng-submit="createUser(form)" ng-controller="CreateUserFormCtrl">
         <div class="input-group form-line-frame">
           <span class="input-group-addon"><img src="/modules/administration/images/icons/at-16.png"></span>
           <input
@@ -17,7 +17,9 @@
             required />
         </div> 
 
-        <div ng-if="changed(form.email)" ng-messages="form.email.$error" ng-messages-include="modules/administration/views/partials/users/error-messages.html">
+        <div ng-if="changed(form.email)" ng-messages="form.email.$error">
+          <div class="frame-error-arrowup" ng-message="required">Sorry, the email can´t be empty.</div>
+          <div class="frame-error-arrowup" ng-message="email">Sorry, this is an invalid email address.</div>
           <div class="frame-error-arrowup" ng-message="mongoose">{{errors.email}}</div>
         </div>
               
@@ -38,8 +40,12 @@
           </div>
         </div> 
 
-        <div ng-if="changed(form.username)" ng-messages="form.username.$error" ng-messages-include="modules/administration/views/partials/users/error-messages.html">
+        <div ng-if="changed(form.username)" ng-messages="form.username.$error">
+          <div class="frame-error-arrowup" ng-message="required">Sorry, the username can´t be empty.</div>
           <div class="frame-error-arrowup" ng-message="mongoose">{{errors.username}}</div>
+          <div class="frame-error-arrowup" ng-message="minlength">Sorry, the username must have at least 4 characters.</div>
+          <div class="frame-error-arrowup" ng-message="maxlength">Sorry, the username must have as much 25 characters.</div>
+          <div class="frame-error-arrowup" ng-message="unique">Sorry, this user name is already taken.</div>
         </div>
 
         <div class="input-group form-line-frame">
@@ -56,7 +62,8 @@
               required />
           </div>
         </div> 
-        <div ng-if="changed(form.password)" ng-messages="form.password.$error" ng-messages-include="modules/administration/views/partials/users/error-messages.html">
+        <div ng-if="changed(form.password)" ng-messages="form.password.$error">
+          <div class="frame-error-arrowup" ng-message="required">Sorry, the password can´t be empty</div>
           <div class="frame-error-arrowup" ng-message="mongoose">{{errors.password}}</div>
         </div>
 

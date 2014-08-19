@@ -1,15 +1,30 @@
-  'use strict';
+'use strict';
 
-var adminControllers = angular.module('adminControllers', ['adminServices', 'authServices'])
+var adminControllers = angular.module('adminControllers', ['adminServices', 'authServices', 'ui.select'])
 
-adminControllers.controller('UsersCtrl', function ($scope, Users) {
+adminControllers.controller('UsersCtrl', function ($scope, Users, $q, Auth) {
 
   //////////
   /* CRUD */
   //////////
 
-  $scope.create = function(title, description, severity, priority) {
-   
+  $scope.create = function(email, username, password, role) {
+    var deferred = $q.defer();
+    Auth.createUser({
+      email: email,
+      username: username,
+      password: password,
+      role: role
+    },
+    function(err) {
+      $scope.errors = {};
+      if (!err) {
+        deferred.resolve();
+      } else {
+        deferred.reject(err);
+      }
+    });
+    return deferred.promise;
   };
 
   $scope.remove = function(incidence) {
@@ -32,7 +47,7 @@ adminControllers.controller('UsersCtrl', function ($scope, Users) {
 
 });
 
-adminControllers.controller('CreateUserCtrl', function ($scope, Auth, $location) {
+adminControllers.controller('CreateUserCtrl', function ($scope, Auth, $location, $state) {
 
 	$scope.roleTypes = [{type: 'user'}, {type:'tech'}];
 
@@ -48,31 +63,22 @@ adminControllers.controller('CreateUserCtrl', function ($scope, Auth, $location)
     form.$setPristine();
   };
   
-  $scope.register = function(form) {
-    Auth.createUser({
-        email: form.email.$viewValue,
-        username: form.username.$viewValue,
-        password: form.password.$viewValue,
-        role: $scope.user.role.selected.type
-      },
-      function(err) {
-        $scope.errors = {};
-
-        if (!err) {
-       	  console.log('User successfully created');
-       	  $scope.clear(form);
-          $state.go('helpdesk.admin.users', $state.params);
-
-        } else {
-          angular.forEach(err.errors, function(error, field) {
-            form[field].$setValidity('mongoose', false);
-            $scope.errors[field] = error.message;
-          });
-          $scope.error.other = err.message;
-        }
-      }
-    )};
-  });
+  $scope.createUser = function(form){
+    $scope.create(form.email.$viewValue, form.username.$viewValue,
+                  form.password.$viewValue, $scope.user.role.selected.type).then(
+                    function (result){
+                      $scope.clear(form);
+                      $state.go('helpdesk.admin.users', $state.params);
+                    },
+                    function(err) {
+                      angular.forEach(err.errors, function(error, field) {
+                        form[field].$setValidity('mongoose', false);
+                        $scope.errors[field] = error.message;
+                      });
+                      $scope.error.other = err.message;
+                    });
+    };
+});
 
 adminControllers.controller('UsersListCtrl', function($scope){
 
@@ -84,17 +90,29 @@ adminControllers.controller('CreateUserFormCtrl', function($scope){
   };
 });
 
-adminControllers.controller('SchoolsCtrl', function ($scope, Users) {
+adminControllers.controller('SchoolsCtrl', function ($scope, Schools, $q) {
 
   //////////
   /* CRUD */
   //////////
 
-  $scope.create = function(title, description, severity, priority) {
-   
+  $scope.create = function(code, name, address) {
+
+    var deferred = $q.defer();
+
+    var school = new Schools({
+      code: code,
+      name: name,
+      address: address
+    });
+    school.$save(function(response) {
+      deferred.resolve(response);
+    });
+
+    return deferred.promise;
   };
 
-  $scope.remove = function(incidence) {
+  $scope.remove = function() {
     
   }; 
 
@@ -103,7 +121,9 @@ adminControllers.controller('SchoolsCtrl', function ($scope, Users) {
   };
 
   $scope.find = function() {
-
+    Schools.query(function(schools) {
+      $scope.schools = schools;
+    });
   };
 
   $scope.findOne = function() {
@@ -112,13 +132,7 @@ adminControllers.controller('SchoolsCtrl', function ($scope, Users) {
 
 });
 
-adminControllers.controller('CreateUserCtrl', function ($scope, Auth, $location) {
-
- 
-});
-
 adminControllers.controller('SchoolsListCtrl', function($scope){
-        $scope.schools = [{name:'School1', street:'Marques de Mendigorria', number:'2'}];
 
 });
 
@@ -129,5 +143,43 @@ adminControllers.controller('CreateSchoolFormCtrl', function($scope){
 });
 
 
+adminControllers.controller('CreateSchoolCtrl', function ($scope, Auth, $http, $state) {
 
+  $scope.school = {};
 
+  $scope.someGroupFn = function (item){
+
+    if (item.name[0] >= 'A' && item.name[0] <= 'M')
+        return 'From A - M';
+
+    if (item.name[0] >= 'N' && item.name[0] <= 'Z')
+        return 'From N - Z';
+
+  };
+
+  $scope.address = {};
+  $scope.refreshAddresses = function(address) {
+    var params = {address: address, sensor: false};
+    return $http.get(
+      'http://maps.googleapis.com/maps/api/geocode/json',
+      {params: params}
+    ).then(function(response) {
+      $scope.addresses = response.data.results;
+    });
+  };
+
+  $scope.createSchool = function(form){
+    $scope.create(form.code.$viewValue.toUpperCase(), form.name.$viewValue,
+                  $scope.address.selected).then(
+                    function (result){
+                      $state.go('helpdesk.admin.schools', $state.params);
+                    },
+                    function(err) {
+                      angular.forEach(err.errors, function(error, field) {
+                        form[field].$setValidity('mongoose', false);
+                        $scope.errors[field] = error.message;
+                      });
+                      $scope.error.other = err.message;
+                    });
+    };
+});

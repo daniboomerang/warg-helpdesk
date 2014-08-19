@@ -71,10 +71,11 @@ exports.postComment = function(req, res, next) {
 /**
  * Update incidence assignation
  */
-exports.updateAssigned = function(req, res) {
+exports.updateAssigned = function(req, res, next) {
   incidencesDomain.updateAssigned(req.incidence, req.body.assigned).then (function (result){
     if (result.status == 'incidence.updated'){
       res.json(result.incidence);
+      next();
     }  
     else if (result.status == 'incidence.not.updated'){
       res.json(500, result.err);

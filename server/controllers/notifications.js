@@ -23,6 +23,13 @@ exports.list = function(req, res) {
 /**
  * Process possible notifications for a new comment
  */
-exports.comment = function(req, res) {
+exports.notifyComment = function(req, res) {
     notificationsDomain.comment(req.incidence, req.user._id, req.body.comment);
+};
+
+/**
+ * Notify new assignation
+ */
+exports.notifyAssignee = function(req, res) {
+    notificationsDomain.assignee(req.incidence, req.body.assigned);
 };

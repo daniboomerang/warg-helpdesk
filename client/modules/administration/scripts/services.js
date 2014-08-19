@@ -9,3 +9,13 @@ adminServices.factory('Users', function ($resource) {
       }
     });
   });
+
+adminServices.factory('Schools', function ($resource) {
+    return $resource('api/schools', {
+      userId: '@_id'
+    }, {
+      update: {
+        method: 'PUT'
+      }
+    });
+  });

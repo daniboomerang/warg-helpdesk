@@ -109,26 +109,32 @@ exports.comment = function(incidence, commentOwnerId, comment) {
           notify(incidenceAssignedRole, {addressee: incidenceAssignedId, notification: notificationMessage(TECH, commentOwnerUsername)}, {addressee: incidenceAssignedMail, subject: mailSubject, content: comment});
         }  
       }
-
-      /*
-      if commentOwnerId.equals(incidenceOwnerId){
-        notify(incidenceAssignedRole, {addressee: incidenceAssignedId, notification: notificationMessage(TECH, incidenceAssignedUsername)}, {addressee: incidenceAssignedMail, subject: mailSubject, content: comment});
-      }  
-      else { // commentOwner != incidenceOwner
-        var thirdPartyUser = !(commentOwnerId.equals(incidenceOwnerId)) && !(commentOwnerId.equals(incidenceAssignedId));
-        if (thirdPartyUser){
-          notify(incidenceOwnerRole, {addressee: incidenceOwnerId, notification: notificationMessage(OWNER, commentOwnerUsername)}, {addressee: incidenceOwnerMail, subject: mailSubject, content: comment});
-          notify(incidenceAssignedRole, {addressee: incidenceAssignedId, notification: notificationMessage(TECH, commentOwnerUsername)}, {addressee: incidenceAssignedMail, subject: mailSubject, content: comment});
-        }
-        else if (commentOwnerId.equals(incidenceAssignedId)){
-          notify(incidenceOwnerRole, {addressee: incidenceOwnerId, notification: notificationMessage(OWNER, commentOwnerUsername)}, {addressee: incidenceOwnerMail, subject: mailSubject, content: comment});
-        }
-        else{
-          notify(incidenceAssignedRole, {addressee: incidenceAssignedId, notification: notificationMessage(TECH, commentOwnerUsername)}, {addressee: incidenceAssignedMail, subject: mailSubject, content: comment});
-        }
-      }*/
     }  
     else{ console.error("There has been an error trying to retrive users profiles at comment notification."); }  
+  });
+};
+
+/**
+ *  Notify new assignation
+ */
+exports.assignee = function(incidence, assignee) {
+  var incidenceOwnerId = incidence.creator._id;  
+  usersDomain.show(incidenceOwnerId).then( function( result){
+    if (result.status == 'user.shown'){
+
+      var incidenceOwnerRole = result.user.role;
+      var incidenceOwnerMail = result.user.email;
+
+      var notificationMessage = function(incidence){
+        if (incidence.assigned == null){return  "Your incidence " + incidence._id + " has changed status to 'On Going'";}
+        else  {return  "Your incidence " + incidence._id + " has been assigned to a new agent";}
+      };
+
+      var mailSubject = "New Status: On Going for " + incidence._id + ' - ' + incidence.title 
+      // Notify Incidence Owner User
+      notify(incidenceOwnerRole, {addressee: incidenceOwnerId, notification: notificationMessage(incidence)}, {addressee: incidenceOwnerMail, subject: mailSubject, content: notificationMessage(incidence)});
+    }  
+    else{ console.error("There has been an error trying to retrive users profiles at assignee notification."); }  
   });
 };
 
