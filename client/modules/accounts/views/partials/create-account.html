@@ -1,0 +1,86 @@
+<div class="panel panel-info shadow-form-container">
+  <div class="panel-heading">
+    <div class="panel-title" style="text-align: center;">New account</div>
+  </div>
+  <div class="panel-body" style="padding-top:25px">
+    <form class="form frame-form" name="form" ng-submit="createAccount(form)" ng-controller="CreateAccountFormCtrl">
+      <div class="input-group form-line-frame">
+        <span class="input-group-addon"><img src="/modules/accounts/images/icons/at-16.png"></span>
+        <input
+          type="email"
+          name="email"
+          class="form-control"
+          ng-model="user.email"
+          autofocus
+          placeholder="Email"
+          mongoose-error
+          required />
+      </div> 
+
+      <div ng-if="changed(form.email)" ng-messages="form.email.$error">
+        <div class="frame-error-arrowup" ng-message="required">Sorry, the email can´t be empty.</div>
+        <div class="frame-error-arrowup" ng-message="email">Sorry, this is an invalid email address.</div>
+        <div class="frame-error-arrowup" ng-message="mongoose">{{errors.email}}</div>
+      </div>
+            
+      <div class="input-group form-line-frame">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+        <div style="margin-bottom: 5px">
+          <input 
+            type="text"
+            name="username"
+            class="form-control"
+            placeholder="Username"
+            ng-model="user.username"
+            mongoose-error
+            unique-username 
+            required
+            ng-minlength="4"
+            ng-maxlength="25"/>
+        </div>
+      </div> 
+
+      <div ng-if="changed(form.username)" ng-messages="form.username.$error">
+        <div class="frame-error-arrowup" ng-message="required">Sorry, the username can´t be empty.</div>
+        <div class="frame-error-arrowup" ng-message="mongoose">{{errors.username}}</div>
+        <div class="frame-error-arrowup" ng-message="minlength">Sorry, the username must have at least 4 characters.</div>
+        <div class="frame-error-arrowup" ng-message="maxlength">Sorry, the username can´t have more than 25 characters.</div>
+        <div class="frame-error-arrowup" ng-message="unique">Sorry, this user name is already taken.</div>
+      </div>
+
+      <div class="input-group form-line-frame">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+        <div style="margin-bottom: 5px">
+          <input
+            type="password"
+            name="password"
+            class="form-control"
+            ng-model="user.password"
+            mongoose-error
+            autofocus
+            placeholder="Password"
+            required />
+        </div>
+      </div> 
+      <div ng-if="changed(form.password)" ng-messages="form.password.$error">
+        <div class="frame-error-arrowup" ng-message="required">Sorry, the password can´t be empty</div>
+        <div class="frame-error-arrowup" ng-message="mongoose">{{errors.password}}</div>
+      </div>
+
+      <div class="row">
+        <div class="pull-left col-md-4">
+          <ui-select ng-model="user.role.selected" theme="selectize">
+            <ui-select-match placeholder="{{user.role.type}}">{{$select.selected.type}}
+            </ui-select-match>
+            <ui-select-choices repeat="role in roleTypes">
+              <div ng-bind-html="role.type" class="role-select"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div> 
+        <div style="text-align:center;" class="pull-right col-md-4">
+            <input ng-disabled="form.$invalid" class="btn btn-success" value="Create Account" type="submit" ngClick="Submit">
+        </div>
+      </div>    
+    </form>
+  </div>
+</div>  

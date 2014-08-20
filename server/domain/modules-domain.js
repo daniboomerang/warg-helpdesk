@@ -15,25 +15,31 @@ exports.getUserModules = function (role) {
 
   function getActionsOnIncidences (role) {  
     if (role === ROLE_USER){
-      return ['create', 'open', 'list'];
+      return ['create', 'find', 'list'];
     }
       else if (role === ROLE_TECH){
-      return ['create', 'open', 'list'];
+      return ['create', 'find', 'list'];
     }  
     else if (role === ROLE_ADMIN){
-      return ['create', 'open', 'list', 'reporting'];
+      return ['create', 'find', 'list', 'reporting'];
     }  
   }
 
   function getActionsOnInventory (role) {  
     if (role === ROLE_ADMIN){
-      return ['open', 'reporting'];
+      return ['list', 'reporting'];
     }  
   }
 
-  function getActionsOnAdvancedSettings (role) {  
+  function getActionsOnAccounts (role) {  
     if (role === ROLE_ADMIN){
-      return ['users', 'schools'];
+      return ['create', 'import', 'list'];
+    }  
+  }
+
+  function getActionsOnSchools (role) {  
+    if (role === ROLE_ADMIN){
+      return ['create', 'find', 'list'];
     }  
   }
 
@@ -43,7 +49,7 @@ exports.getUserModules = function (role) {
     else if(role === ROLE_TECH)
       return ['Incidences'];
     else if(role === ROLE_ADMIN)
-      return ['Incidences', 'Inventory', 'Admin'];    
+      return ['Incidences', 'Inventory', 'Schools', 'Accounts'];    
   }
 
   if(role != null){
@@ -63,9 +69,13 @@ exports.getUserModules = function (role) {
         actions = getActionsOnInventory(role);
         userModules.push({module: 'Inventory', actions: actions});
       }
-      else if (modules[i] == 'Admin'){
-        actions = getActionsOnAdvancedSettings(role);
-        userModules.push({module: 'Admin', actions: actions});
+      else if (modules[i] == 'Schools'){
+        actions = getActionsOnSchools(role);
+        userModules.push({module: 'Schools', actions: actions});
+      }
+      else if (modules[i] == 'Accounts'){
+        actions = getActionsOnAccounts(role);
+        userModules.push({module: 'Accounts', actions: actions});
       }
     }
     return {status: RESULT_SUCCESS, modules: userModules};

@@ -29,14 +29,14 @@ passport.use(new LocalStrategy({
       if (!user) {
         return done(null, false, {
           'errors': {
-            'email': { message: 'Email not registered' }
+            'email': { message: 'The email or password that you entered is incorrect' }
           }
         });
       }
       if (!user.authenticate(password)) {
         return done(null, false, {
           'errors': {
-            'password': { message: 'Incorrect Password' }
+            'password': { message: 'The email or password that you entered is incorrect' }
           }
         });
       }

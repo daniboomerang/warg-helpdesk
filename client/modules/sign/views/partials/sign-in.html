@@ -1,10 +1,10 @@
 <div class="container col-md-4 col-md-offset-4">
-  <div class="panel panel-info sign-form-container">
+  <div class="panel panel-info shadow-form-container sign-form-container">
     <div class="panel-heading">
-      <div class="panel-title" style="text-align: center;">Please sign in</div>
+      <div class="panel-title" style="text-align: center;">Sign in to continue to Wag-Helpdesk </div>
     </div>     
-    <div class="panel-body" style="padding-top:15px">
-      <form id="form" class="frame-form" name="form" ng-submit="login(form)" ng-controller="CreateUserFormCtrl">                    
+    <div class="panel-body" style="padding-top:40px">
+      <form name="form" ng-submit="login(form)" ng-controller="SigninFormCtrl">                    
         <div class="input-group form-line-frame">
           <span class="input-group-addon"><img src="/modules/sign/images/at-16.png"></span>
           <input 
@@ -12,14 +12,14 @@
             name="email"
             class="form-control"
             placeholder="Email"
-            ng-model="user.email"
+            ng-model="email"
             required
             autofocus
             mongoose-error>
         </div> 
 
-         <div ng-if="changed(form.email)" ng-messages="form.email.$error" ng-messages-include="modules/sign/views/partials/error-messages.html">
-          <div class="frame-error-arrowup" ng-message="mongoose">{{errors.email}}</div>
+        <div ng-if="changed(form.email)" ng-messages="form.email.$error">
+          <div class="frame-error-arrowup" ng-message="required">Please introduce an email account.</div>
         </div>
 
         <div class="form-line-frame input-group">
@@ -29,12 +29,13 @@
              class="form-control"
              placeholder="Password"
              name="password"
-             ng-model="user.password"
+             ng-model="password"
              required
              mongoose-error>
         </div> 
 
-        <div ng-if="changed(form.password)" ng-messages="form.password.$error" ng-messages-include="modules/sign/views/partials/error-messages.html">
+        <div ng-if="changed(form.password)" ng-messages="form.password.$error">
+          <div class="frame-error-arrowup" ng-message="required">Password is missing.</div>
           <div class="frame-error-arrowup" ng-message="mongoose">{{errors.password}}</div>
         </div>
 

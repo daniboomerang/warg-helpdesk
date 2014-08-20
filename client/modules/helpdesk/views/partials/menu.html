@@ -32,6 +32,15 @@
             </div>
             <!-- --> 
 
+            <!-- Very Ugly: Setting OpenCode for module Schools, on second position and with an specific html -->
+            <div class="search-id" ng-show='(action.title == "Code Search")'>
+              <input type="text" ng-model="id" class="form-control search-id-input pull-left" placeholder="Search id" required="" class="form-control">
+              </input>
+              <a class="pull-right module-icon-16 search-id-icon search-id-arrow" ng-click="searchId(action.state, id, module.module)">
+              <span><img src="/modules/helpdesk/images/icons/arrow-circle-20.png" alt="Open Incidence"></span></a>
+            </div>
+            <!-- --> 
+
             <a ng-show='(action.title != "Id Search")' ui-sref="{{action.state}}" ng-click="status.activeState = action.state; status.activeModule = module.module;">
             <span class="pull-left module-icon-16"><img ng-src="{{action.style}}"/></span>
             &nbsp;{{action.title}}</a>

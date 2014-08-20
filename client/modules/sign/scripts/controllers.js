@@ -23,8 +23,9 @@ signControllers.controller('SigninCtrl', function ($scope, Auth, $location) {
           $location.path('/');
         } else {
           angular.forEach(err.errors, function(error, field) {
-            form[field].$setValidity('mongoose', false);
-            $scope.errors[field] = error.message;
+            form.email.$setValidity('mongoose', false);
+            form.password.$setValidity('mongoose', false);
+            $scope.errors.password = error.message;
           });
           $scope.error.other = err.message;
         }
@@ -32,3 +33,8 @@ signControllers.controller('SigninCtrl', function ($scope, Auth, $location) {
     };
   });
 
+signControllers.controller('SigninFormCtrl', function($scope){
+  $scope.changed = function(filed){
+    return filed.$dirty;
+  };
+});

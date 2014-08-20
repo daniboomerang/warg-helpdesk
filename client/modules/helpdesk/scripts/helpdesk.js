@@ -9,17 +9,18 @@ var helpdesk = angular.module('helpdesk',
   	'helpdeskDirectives',
     'auth',
     'incidences',
-    'inventory'
+    'inventory',
+    'schools',
+    'accounts'
  	]
 )
 .config(function($stateProvider, $urlRouterProvider) {
 
 	$urlRouterProvider.when('/helpdesk', '/incidences');
 	$urlRouterProvider.when('/helpdesk/incidences', '/incidences');
-	$urlRouterProvider.when('/helpdesk/admin', '/admin');
-	$urlRouterProvider.when('/helpdesk/admin/users', '/admin/users');
-	$urlRouterProvider.when('/helpdesk/admin/schools', '/admin/schools');
 	$urlRouterProvider.when('/helpdesk/inventory', '/inventory');
+	$urlRouterProvider.when('/helpdesk/schools', '/schools');
+	$urlRouterProvider.when('/helpdesk/accounts', '/accounts');
 	$urlRouterProvider.otherwise('/helpdesk');
 
 	$stateProvider

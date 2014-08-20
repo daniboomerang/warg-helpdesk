@@ -49,10 +49,10 @@ module.exports = function(app) {
   //Setting up the incidenceId param
   app.param('incidenceId', incidences.incidence);
 
-  // Users Administration
-  app.get('/api/administration/users', auth.ensureAuthenticatedAsAdmin, users.list);
+  // Users
+  app.get('/api/users', auth.ensureAuthenticatedAsAdmin, users.list);
 
-  // Schools Administration
+  // Schools
   var schools = require('../controllers/schools');
   app.get('/api/schools', auth.ensureAuthenticatedAsAdmin, schools.list);
   app.post('/api/schools', auth.ensureAuthenticatedAsAdmin, schools.create);

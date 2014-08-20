@@ -9,16 +9,17 @@
 @media (min-width: 768px) {
   .sidebar {
     position: fixed;
-    top: 0;
-    bottom: 0;
+    top: 50px;
+    bottom: 28px;
     left: 0;
     display: block;
-    padding-bottom: 10px;
-    padding-top: 63px;
+    padding-bottom: 0px;
+    /*padding-top: 63px;*/
+    padding-top: 13px;
     padding-right: 10px;
     padding-left: 10px;
-    /*overflow-x: hidden;
-    overflow-y: auto; */
+    overflow-x: hidden;
+    overflow-y: auto;
     border: solid 1px #E0E0E0;
     background-color: #F0F0F0 ;
   }
@@ -30,8 +31,9 @@
 
 @media (min-width: 768px) {
   .main {
-    padding-right: 40px;
-    padding-left: 40px;
+    padding-top: 55px;
+    padding-right: 15px;
+    padding-left: 15px;
   }
 }
 
