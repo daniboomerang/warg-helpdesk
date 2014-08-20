@@ -47,14 +47,9 @@ accountsControllers.controller('AccountsCtrl', function ($scope, Accounts, $q, A
 
 });
 
-accountsControllers.controller('CreateAccountCtrl', function ($scope, Auth, $location, $state) {
+accountsControllers.controller('CreateAccountCtrl', function ($rootScope, $scope, Auth, $modal, $location, $state, schoolsService) {
 
-	$scope.roleTypes = [{type: 'user'}, {type:'tech'}];
-
-  $scope.error = {};
-  $scope.user = {};
-  $scope.user.role = {};
-	$scope.user.role.selected = {type: 'user'};
+  init();
 	
 	$scope.clear = function(form) {
     $scope.user.email = '';
@@ -78,6 +73,53 @@ accountsControllers.controller('CreateAccountCtrl', function ($scope, Auth, $loc
                       $scope.error.other = err.message;
                     });
     };
+  
+  function init(){
+    $scope.roleTypes = [{type: 'user'}, {type:'tech'}];
+    $scope.error = {};
+    $scope.user = {};
+    $scope.user.role = {};
+    $scope.user.role.selected = {type: 'user'};
+
+    $scope.schoolsList = schoolsService.getSchoolsList();
+          $scope.schoolsList= [];
+
+    if ($scope.schoolsList.length > 0){
+      $scope.user.school = $scope.schoolsList[0];
+    }
+    else{
+      openModalWarning();
+    }
+    
+  }
+
+  function openModalWarning() {
+
+      // Please note that $modalInstance represents a modal window (instance) dependency.
+    // It is not the same as the $modal service used above.
+    var ModalWarningInstanceCtrl = function ($scope, $modalInstance) {
+
+      $scope.ok = function () {
+        $modalInstance.close('ok');
+      };
+
+      $scope.cancel = function () {
+        $modalInstance.close('cancel');
+      };
+    };
+
+    var warningModalInstance = $modal.open({
+      templateUrl: '/modules/accounts/views/partials/warning-schools.html',
+      controller: ModalWarningInstanceCtrl,
+      size: 'sm'
+    });
+
+    warningModalInstance.result.then(function (choice) {
+      if (choice == 'ok') {$state.go('helpdesk.schools.create.school');}
+      else {$state.go($rootScope.previousState);}
+    }, function () { });
+    
+  };
 });
 
 accountsControllers.controller('AccountsListCtrl', function($scope){

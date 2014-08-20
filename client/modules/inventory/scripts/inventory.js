@@ -9,13 +9,12 @@ var inventory = angular.module('inventory',
     'ui.router']);
 
 inventory.config(function($stateProvider, $urlRouterProvider) {
-	$urlRouterProvider.when('/inventory', '/inventory/open');
-	$urlRouterProvider.when('/inventory/open', '/helpdesk/inventory/open');
-	$urlRouterProvider.when('/inventory/expenses', '/helpdesk/inventory/expenses');
+	$urlRouterProvider.when('/inventory', '/helpdesk/inventory/open');
 	$urlRouterProvider.otherwise('/inventory');
 	$stateProvider
 	    
 	    // INVENTORY STATES AND NESTED VIEWS ========================================
+	    
 	    .state('helpdesk.inventory', {
 	    	abstract: true,
 	        url: '/inventory',

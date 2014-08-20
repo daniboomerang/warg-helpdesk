@@ -11,20 +11,19 @@ var schools = angular.module('schools',
 )
 .config(function($stateProvider, $urlRouterProvider) {
 
-	$urlRouterProvider.when('/schools', '/schools/open');
-	$urlRouterProvider.when('/schools/open', '/helpdesk/schools/open/list');
-	$urlRouterProvider.when('/schools/create', '/helpdesk/schools/create/school');
+	$urlRouterProvider.when('/schools', '/helpdesk/schools/open/list');
 	$urlRouterProvider.otherwise('/schools');
 
 	$stateProvider
 	
-	// ADMINISTRATION STATES AND NESTED VIEWS ========================================
+	// SCHOOLS STATES AND NESTED VIEWS ========================================
 
 	//////////////
 	// ACCOUNTS //
 	//////////////
 
 	.state('helpdesk.schools', {
+		abstract: true,
 	    url: '/schools',
 	    templateUrl: '/modules/schools/views/schools.html',
 	    controller: 'SchoolsCtrl'
@@ -35,6 +34,7 @@ var schools = angular.module('schools',
     	/////////////////////
 
 		.state('helpdesk.schools.create', {
+			abstract: true,
     		url: '/create',
 	        template: '<ui-view/>'
 	    })
@@ -49,6 +49,7 @@ var schools = angular.module('schools',
     	///////////////////
 
 		.state('helpdesk.schools.open', {
+			abstract: true,
     		url: '/open',
 	        template: '<ui-view/>'
 	    })

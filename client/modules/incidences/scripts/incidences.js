@@ -13,16 +13,13 @@ var incidences = angular.module('incidences',
 )
 .config(function($stateProvider, $urlRouterProvider) {
 
-	$urlRouterProvider.when('/incidences', '/incidences/open');
-	$urlRouterProvider.when('/incidences/open', '/helpdesk/incidences/open/list');
-	$urlRouterProvider.when('/incidences/reporting', '/helpdesk/incidences/reporting/statistics');
-
-
+	$urlRouterProvider.when('/incidences', '/helpdesk/incidences/open/list');
 	$urlRouterProvider.otherwise('/incidences');
 
 	$stateProvider
 	    
-	    // SIGN STATES AND NESTED VIEWS ========================================
+	    // INCIDENCES STATES AND NESTED VIEWS ========================================
+	    
 	    .state('helpdesk.incidences', {
 	    	abstract: true,
 	        url: '/incidences',
@@ -36,12 +33,10 @@ var incidences = angular.module('incidences',
 		    })
 
 		    .state('helpdesk.incidences.open', {
-		    	abstract: true,
+				abstract: true,
         		url: '/open',
-		        // Note: abstract still needs a ui-view for its children to populate.
 		        template: '<ui-view/>'
 		    })
-
 			    .state('helpdesk.incidences.open.list', {
 			        url: '/list',
 			        templateUrl: '/modules/incidences/views/partials/list.html',

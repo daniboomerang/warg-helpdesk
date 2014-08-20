@@ -108,7 +108,6 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
     });
   };
 
-
   $scope.find = function() {
     Incidences.query(function(incidences) {
       $scope.incidences = incidences;
@@ -116,17 +115,22 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
   };
 
   $scope.findOne = function() {
-    Incidences.get({
-      incidenceId: $state.params.incidenceId
-    }, function(incidence) {
-      $scope.incidence = incidence;
-      $scope.incidence.effortHours = Math.floor(incidence.effort / 60);
-      $scope.incidence.effortMinutes = incidence.effort % 60;
-    },
-     function (error){
-      console.log("Server error trying to open the incidence " + $state.params.incidenceId);
+    if ($state.params.incidenceId == ''){
       $state.go('helpdesk.incidences.open.list');
-    });
+    }
+    else{
+      Incidences.get({
+        incidenceId: $state.params.incidenceId
+      }, function(incidence) {
+        $scope.incidence = incidence;
+        $scope.incidence.effortHours = Math.floor(incidence.effort / 60);
+        $scope.incidence.effortMinutes = incidence.effort % 60;
+      },
+       function (error){
+        console.log("Server error trying to open the incidence " + $state.params.incidenceId);
+        $state.go('helpdesk.incidences.open.list');
+      });
+    }
   };
 
 });

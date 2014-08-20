@@ -11,20 +11,19 @@ var accounts = angular.module('accounts',
 )
 .config(function($stateProvider, $urlRouterProvider) {
 
-	$urlRouterProvider.when('/accounts', '/accounts/open');
-	$urlRouterProvider.when('/accounts/open', '/helpdesk/accounts/open/list');
-	$urlRouterProvider.when('/accounts/create', '/helpdesk/accounts/create/account');
+	$urlRouterProvider.when('/accounts', '/helpdesk/accounts/open/list');
 	$urlRouterProvider.otherwise('/accounts');
 
 	$stateProvider
 	
-	// ADMINISTRATION STATES AND NESTED VIEWS ========================================
+	// ACCOUNTS STATES AND NESTED VIEWS ========================================
 
 	//////////////
 	// ACCOUNTS //
 	//////////////
 
 	.state('helpdesk.accounts', {
+		abstract: true,
 	    url: '/accounts',
 	    templateUrl: '/modules/accounts/views/accounts.html',
 	    controller: 'AccountsCtrl'
@@ -35,13 +34,20 @@ var accounts = angular.module('accounts',
     	/////////////////////
 
 		.state('helpdesk.accounts.create', {
+			abstract: true,
     		url: '/create',
 	        template: '<ui-view/>'
 	    })
 	    	.state('helpdesk.accounts.create.account', {
 		        url: '/account',		    
 				templateUrl: '/modules/accounts/views/partials/create-account.html',
-		        controller: 'CreateAccountCtrl'        
+		        controller: 'CreateAccountCtrl',
+		        resolve:{
+						schoolsService: "schoolsService",
+						techniciansList: function(schoolsService){
+							schoolsService.initSchoolsList();
+						}
+					}     
 		    })
 		    .state('helpdesk.accounts.create.list', {
 		        url: '/list',		    
@@ -54,6 +60,7 @@ var accounts = angular.module('accounts',
     	///////////////////
 
 		.state('helpdesk.accounts.open', {
+			abstract: true,
     		url: '/open',
 	        template: '<ui-view/>'
 	    })

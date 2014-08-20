@@ -8,12 +8,12 @@ var helpdeskControllers = angular.module('helpdeskControllers', ['helpdeskServic
 
 helpdeskControllers.controller('HelpdeskCtrl', function ($scope, $state, $rootScope, $location, helpdeskConfigService, Auth, notificationService) {
 
-  	initDesk();
-
-	$scope.oneAtATime = false;
-	$scope.status = {};
+  initDesk();
 
 	function initDesk() {
+
+    $scope.oneAtATime = false;
+    $scope.status = {};
 
     $scope.userNotifications = [];
     notificationService.getNotifications().then( function (notifications){
@@ -21,17 +21,17 @@ helpdeskControllers.controller('HelpdeskCtrl', function ($scope, $state, $rootSc
     });
 
 		helpdeskConfigService.setupDesk().then(function(){
-		  	$scope.menu = helpdeskConfigService.getMenu();
-		  	
-		  	var modules;
-			
-			for (var i=0; i<$scope.menu.length; i++){
-				var currentModule = $scope.menu[i].module.toLowerCase();
-				$scope.status[currentModule] = true;
-  			}
-  			$scope.status.activeModule = 'Incidences';
-	  		$scope.status.activeState = "helpdesk.incidences.open.list";
-		});
+        $scope.menu = helpdeskConfigService.getMenu();
+        
+        var modules;
+      
+      for (var i=0; i<$scope.menu.length; i++){
+        var currentModule = $scope.menu[i].module.toLowerCase();
+        $scope.status[currentModule] = true;
+        }
+        $scope.status.activeModule = $rootScope.currentModule;
+        $scope.status.activeState = $rootScope.currentState;
+    });
 	};
 
   $scope.isActiveModule = function(module){

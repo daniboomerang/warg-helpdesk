@@ -68,12 +68,22 @@
       </div>
 
       <div class="row">
-        <div class="pull-left col-md-4">
+        <div class="pull-left col-md-2">
           <ui-select ng-model="user.role.selected" theme="selectize">
             <ui-select-match placeholder="{{user.role.type}}">{{$select.selected.type}}
             </ui-select-match>
             <ui-select-choices repeat="role in roleTypes">
               <div ng-bind-html="role.type" class="role-select"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+
+        <div class="pull-left col-md-3">
+          <ui-select ng-model="user.school.selected" theme="selectize">
+            <ui-select-match placeholder="{{user.school.name}}">{{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="school in schoolsList">
+              <div ng-bind-html="school.code" class="role-select"></div>
             </ui-select-choices>
           </ui-select>
         </div> 
