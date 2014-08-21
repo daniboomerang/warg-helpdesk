@@ -1,6 +1,6 @@
 'use strict';
 
-var accountsControllers = angular.module('accountsControllers', ['accountsServices', 'authServices', 'ui.select'])
+var accountsControllers = angular.module('accountsControllers', ['accountsServices', 'authServices', 'ui.select', 'helpdeskServices'])
 
 accountsControllers.controller('AccountsCtrl', function ($scope, Accounts, $q, Auth) {
 
@@ -47,7 +47,7 @@ accountsControllers.controller('AccountsCtrl', function ($scope, Accounts, $q, A
 
 });
 
-accountsControllers.controller('CreateAccountCtrl', function ($rootScope, $scope, Auth, $modal, $location, $state, schoolsService) {
+accountsControllers.controller('CreateAccountCtrl', function ($rootScope, $scope, Auth, $modal, $state, schoolsService, locationService) {
 
   init();
 	
@@ -116,7 +116,7 @@ accountsControllers.controller('CreateAccountCtrl', function ($rootScope, $scope
 
     warningModalInstance.result.then(function (choice) {
       if (choice == 'ok') {$state.go('helpdesk.schools.create.school');}
-      else {$state.go($rootScope.previousState);}
+      else {$state.go(locationService.getPreviousState());}
     }, function () { });
     
   };

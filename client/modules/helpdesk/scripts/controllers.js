@@ -6,7 +6,7 @@ var STATUS_SEEN = "Seen";
 
 var helpdeskControllers = angular.module('helpdeskControllers', ['helpdeskServices'])
 
-helpdeskControllers.controller('HelpdeskCtrl', function ($scope, $state, $rootScope, $location, helpdeskConfigService, Auth, notificationService) {
+helpdeskControllers.controller('HelpdeskCtrl', function ($scope, $state, $rootScope, $location, helpdeskConfigService, Auth, notificationService, locationService) {
 
   initDesk();
 
@@ -29,10 +29,15 @@ helpdeskControllers.controller('HelpdeskCtrl', function ($scope, $state, $rootSc
         var currentModule = $scope.menu[i].module.toLowerCase();
         $scope.status[currentModule] = true;
         }
-        $scope.status.activeModule = $rootScope.currentModule;
-        $scope.status.activeState = $rootScope.currentState;
+        $scope.status.activeModule = locationService.getCurrentModule();
+        $scope.status.activeState = locationService.getCurrentState();
     });
 	};
+
+  $rootScope.$on('event:currentLocation-changed', function(event, currentLocation) {
+    $scope.status.activeModule = currentLocation.module;
+    $scope.status.activeState = currentLocation.state;
+  });
 
   $scope.isActiveModule = function(module){
   	return $scope.status[module.toLowerCase()];
@@ -45,8 +50,8 @@ helpdeskControllers.controller('HelpdeskCtrl', function ($scope, $state, $rootSc
   	};
 
   	$rootScope.$on('event:currentUser-changed', function(event) {
-		initDesk();
-	});
+		  initDesk();
+	  });
 
   $scope.logout = function() {
     Auth.logout(function(err) {

@@ -33,7 +33,7 @@ var helpdesk = angular.module('helpdesk',
 	    })
 
 })
-.run(function ($rootScope, Auth) {
+.run(function ($rootScope, Auth, locationService) {
 
 	var INITIAL_STATE = 'helpdesk.incidences.open.list';
 
@@ -45,10 +45,30 @@ var helpdesk = angular.module('helpdesk',
       return capitaliseFirstLetter(states[1]);
 	};
 
+	// DEALING WITH A LOCATION SERVICE (Current Location)
+
+	var previousState;
+	var currentLocation = {};
+	var currentState; 
+	var currentModule;
     $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
-    	if (from.name == ''){$rootScope.previousState = INITIAL_STATE;}
+    	
+    	if (from.name == ''){previousState = INITIAL_STATE;}
+    	else if (previousState != currentState) {previousState = from.name;}
+        currentState = to.name;
+        currentModule = activeModule(currentState);
+
+        locationService.setCurrentState(currentState);
+        locationService.setCurrentModule(currentModule);
+        locationService.setPreviousState(previousState);
+
+        currentLocation = {module: currentModule, state: currentState}
+    	$rootScope.$broadcast('event:currentLocation-changed', currentLocation);
+
+    	/*if (from.name == ''){$rootScope.previousState = INITIAL_STATE;}
     	else if ($rootScope.previousState != $rootScope.currentState) {$rootScope.previousState = from.name;}
         $rootScope.currentState = to.name;
-        $rootScope.currentModule = activeModule($rootScope.currentState);
+        $rootScope.currentModule = activeModule($rootScope.currentState);*/
     });
+
 	Auth.currentUser();});

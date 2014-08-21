@@ -170,3 +170,17 @@ helpdeskServices.factory('notificationService', function ($http, $q){
 		}
 	};
 });
+
+helpdeskServices.factory('locationService', function (){
+	var currentState;
+	var currentModule;
+	var previousState;
+	return {
+		getCurrentModule : function() {return currentModule;},
+		getCurrentState : function() {return currentState;},
+		getPreviousState : function() {return previousState;},
+		setCurrentModule : function(module) {currentModule = module;},
+		setCurrentState : function(state) {currentState = state;},
+		setPreviousState : function(state) {previousState = state;}
+	};
+});
