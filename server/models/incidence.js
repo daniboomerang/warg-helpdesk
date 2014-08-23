@@ -4,6 +4,10 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 var IncidenceSchema = new Schema({
+  id: {
+    type: String, //School code - number: Example: MIL-12343
+    required: true
+  },
   title: {
     type: String,
     index: true,
@@ -81,7 +85,7 @@ IncidenceSchema.pre('save', function(next, done){
 IncidenceSchema.statics = {
   load: function(id, cb) {
     this.findOne({
-      _id: id
+      id: id
     }).populate('creator', 'username').exec(cb);
   }
 };

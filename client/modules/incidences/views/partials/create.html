@@ -4,7 +4,8 @@
     </div>  
     <div class="panel-body" style="padding-top:40px">
       <form class="form" name="form" ng-submit="createIncidence(form)" ng-controller="CreateIncidenceFormCtrl">
-        <div class="input-group form-line-frame">
+
+        <div class="input-group form-line-frame" style="max-width: 85%;">
             <input
               type="text"
               name="title"
@@ -20,12 +21,12 @@
         </div>
 
         <div ng-if="changed(form.title)" ng-messages="form.title.$error">
-          <div class="frame-error-arrowup" ng-message="required">Sorry, the title can´t be empty.</div>
-          <div class="frame-error-arrowup" ng-message="minlength">Sorry, the title must have at least 10 characters.</div>
-          <div class="frame-error-arrowup" ng-message="maxlength">Sorry, the title can´t have more than 150 characters. </div>
+          <div class="frame-error-arrowup" style="max-width: 85%;" ng-message="required">Sorry, the title can´t be empty.</div>
+          <div class="frame-error-arrowup" style="max-width: 85%;" ng-message="minlength">Sorry, the title must have at least 10 characters.</div>
+          <div class="frame-error-arrowup" style="max-width: 85%;" ng-message="maxlength">Sorry, the title can´t have more than 150 characters. </div>
         </div>
               
-        <div class="input-group form-line-frame">
+        <div class="input-group form-line-frame" style="max-width: 85%;">
             <textarea style="resize:vertical; min-height: 200px;"
               type="text"
               name="description"
@@ -40,28 +41,44 @@
         </div> 
 
         <div ng-if="changed(form.description)" ng-messages="form.description.$error" style="margin-bottom: 10px">
-          <div class="frame-error-arrowup" ng-message="required">Sorry, description can´t be empty.</div>
-          <div class="frame-error-arrowup" ng-message="minlength">Sorry, minimum description lenght required is 30 characters.</div>
-          <div class="frame-error-arrowup" ng-message="maxlength">Sorry, maximum description lenght required is 1500 characters.</div>
+          <div class="frame-error-arrowup" style="max-width: 85%;" ng-message="required">Sorry, description can´t be empty.</div>
+          <div class="frame-error-arrowup" style="max-width: 85%;" ng-message="minlength">Sorry, minimum description lenght required is 30 characters.</div>
+          <div class="frame-error-arrowup" style="max-width: 85%;" ng-message="maxlength">Sorry, maximum description lenght required is 1500 characters.</div>
         </div>
 
-        <h5>Severity</h5>
-         <ui-select ng-model="severity.selected" theme="selectize" style="width: 120px;">
-          <ui-select-match placeholder="{{severity.type}}"> <span class="severity-priority-select" ng-class="{serious: $select.selected.type == 'Serious', high: $select.selected.type == 'High'};">{{$select.selected.type}}</ui-select-match></span>
-          <ui-select-choices repeat="severity in urgencyTypes">
-            <div ng-bind-html="severity.type" class="severity-priority-select" ng-class="{serious: severity.type == 'Serious', high: severity.type == 'High'};"></div>
-          </ui-select-choices>
-        </ui-select>
-        <h5>Priority</h5>
-        <ui-select ng-model="priority.selected" theme="selectize" style="width: 120px;">
-          <ui-select-match placeholder="{{priority.type}}"> <span class="severity-priority-select" ng-class="{serious: $select.selected.type == 'Serious', high: $select.selected.type == 'High'};">{{$select.selected.type}}</ui-select-match></span>
-          <ui-select-choices repeat="priority in urgencyTypes">
-            <div ng-bind-html="priority.type" class="severity-priority-select" ng-class="{serious: priority.type == 'Serious', high: priority.type == 'High'};"></div>
-          </ui-select-choices>
-        </ui-select>
-
-        <div style="text-align:center;">
-          <input ng-disabled="form.$invalid" class="btn btn-success" value="Create Incidence" type="submit" ngClick="Submit">
+        <div class="row">
+          <div class="col-xs-6 col-sm-2" ng-show="currentUser.role == 'admin'">
+            <h5>School</h5>
+              <ui-select ng-model="school.selected" theme="selectize" ng-required>
+                <ui-select-match placeholder="{{school.name}}">{{$select.selected.name}}
+                </ui-select-match>
+                <ui-select-choices repeat="school in schoolsList">
+                  <div ng-bind-html="school.code" class="role-select" popover="{{school.name}}" popover-trigger="mouseenter"></div>
+                </ui-select-choices>
+              </ui-select>
+          </div>
+          <div class="col-xs-6 col-sm-2">
+            <h5>Severity</h5>
+             <ui-select ng-model="severity.selected" theme="selectize" style="width: 120px;" ng-required>
+              <ui-select-match placeholder="{{severity.type}}"> <span class="severity-priority-select" ng-class="{serious: $select.selected.type == 'Serious', high: $select.selected.type == 'High'};">{{$select.selected.type}}</ui-select-match></span>
+              <ui-select-choices repeat="severity in urgencyTypes">
+                <div ng-bind-html="severity.type" class="severity-priority-select" ng-class="{serious: severity.type == 'Serious', high: severity.type == 'High'};"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+          <div class="col-xs-6 col-sm-2">
+            <h5>Priority</h5>
+            <ui-select ng-model="priority.selected" theme="selectize" style="width: 120px;" ng-required>
+              <ui-select-match placeholder="{{priority.type}}"> <span class="severity-priority-select" ng-class="{serious: $select.selected.type == 'Serious', high: $select.selected.type == 'High'};">{{$select.selected.type}}</ui-select-match></span>
+              <ui-select-choices repeat="priority in urgencyTypes">
+                <div ng-bind-html="priority.type" class="severity-priority-select" ng-class="{serious: priority.type == 'Serious', high: priority.type == 'High'};"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-warning" ng-click="cancelOperation()">Cancel</button>
+           <input ng-disabled="form.$invalid" class="btn btn-success" value="Create" type="submit" ngClick="Submit">
         </div>
       </form>
     </div>

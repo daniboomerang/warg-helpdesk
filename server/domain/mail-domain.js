@@ -85,8 +85,8 @@ module.exports = function(mailSenderService){
 
                 // Sending Acknowledge eMail
 
-                var acknowledgeSubject = incidence._id + ' - ' + subject;
-                var acknowledgeText = mailAcknowledgeTemplate(user_info.username, incidence._id);
+                var acknowledgeSubject = incidence.id + ' - ' + subject;
+                var acknowledgeText = mailAcknowledgeTemplate(user_info.username, incidence.id);
                 mailSender.sendMail(sender, null, acknowledgeSubject, acknowledgeText, null, null, null, null).then(function (replyMailResult){
                   if (replyMailResult.status == RESULT_ERROR){
                     resolveDeferred({status: 'acknowledge.not.sent'});

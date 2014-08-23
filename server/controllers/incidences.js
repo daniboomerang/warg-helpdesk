@@ -25,7 +25,7 @@ exports.incidence = function(req, res, next, id) {
  * Create a incidence
  */
 exports.create = function(req, res) {
- incidencesDomain.createIncidence(req.body.title, req.body.description, req.user, req.body.severity, req.body.priority).then (function (result){
+ incidencesDomain.createIncidence(req.body.title, req.body.description, req.user, req.body.severity, req.body.priority, req.body.school).then (function (result){
     if (result.status == 'incidence.created'){
       res.json(result.incidence);
     }  

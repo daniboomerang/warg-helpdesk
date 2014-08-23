@@ -15,6 +15,11 @@ var UserSchema = new Schema({
     unique: true,
     required: true
   },
+  school: {
+    type: Schema.ObjectId,
+    ref: 'School',
+    required: true
+  },
   role: String,
   hashedPassword: String,
   salt: String,
@@ -41,9 +46,16 @@ UserSchema
 
 UserSchema
   .virtual('user_info')
+  //.set(function (school) { this.school = school; })
   .get(function () {
-    return { '_id': this._id, 'username': this.username, 'email': this.email, 'role': this.role };
+    return { '_id': this._id, 'username': this.username, 'email': this.email, 'role': this.role, 'school': this.school};
   });
+
+/*UserSchema.findOne = function (email, cb) {
+  return this.findOne({ email: email })
+                    .populate('school')
+                    .exec(cb);
+};*/
 
 /**
  * Validations

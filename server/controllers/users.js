@@ -10,23 +10,20 @@ var mongoose = require('mongoose'),
 
 var usersDomain = require('../domain/users-domain');
 
-
 /**
  * Create user
  * requires: {username, password, email, role}
- * returns: {email, password}
  */
-exports.create = function (req, res, next) {
-  var newUser = new User(req.body);
-  console.log(newUser.user_info);
-  newUser.provider = 'local';
 
-  newUser.save(function(err) {
-    if (err) {
-      return res.json(400, err);
+exports.create = function (req, res, next) {
+  usersDomain.createUser(req.body.email, req.body.username, req.body.password, req.body.role, req.body.school).then (function (result){
+    if (result.status == 'user.created'){
+      res.json(result.user);
+    }  
+    else if (result.status == 'user.not.created'){
+      res.json(400, result.err);
     }
-    return res.json(newUser.user_info);
-  });
+  });   
 };
 
 /**

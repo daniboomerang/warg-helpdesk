@@ -44,7 +44,7 @@ var accounts = angular.module('accounts',
 		        controller: 'CreateAccountCtrl',
 		        resolve:{
 						schoolsService: "schoolsService",
-						techniciansList: function(schoolsService){
+						initSchoolsList: function(schoolsService){
 							schoolsService.initSchoolsList();
 						}
 					}     

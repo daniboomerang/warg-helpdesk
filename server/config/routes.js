@@ -54,7 +54,7 @@ module.exports = function(app) {
 
   // Schools
   var schools = require('../controllers/schools');
-  app.get('/api/schools', auth.ensureAuthenticatedAsAdmin, schools.list);
+  app.get('/api/schools', auth.ensureAuthenticated, schools.list);
   app.post('/api/schools', auth.ensureAuthenticatedAsAdmin, schools.create);
 
   // Check if schoolsCode is available

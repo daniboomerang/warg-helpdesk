@@ -1,6 +1,6 @@
 <div class="container-incidence" ng-init="findOne()">
 
-    <div id="incidence-nav-container">          
+    <div id="incidence-nav-container" ng-controller="IncidenceNavCtrl">          
         <div class="row">
             <div class="pull-left incidence-details">
                 <div class="pull-left box-incidence-datails">
@@ -15,17 +15,19 @@
             </div>
             <div class="pull-right">
                 <div class="row" style="margin-top:10px; margin-bottom:10px;">
-                    <span class="text-muted">Incidence Id: {{incidence._id}}</span>
+                    <span class="text-muted">Incidence Id: {{incidence.id}}</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="text-muted">Owner: {{ incidence.creator.username}}</span>
                 </div>
                 <div class="row">  
-
                     <!-- Close is a modal -->           
-                    <span ng-controller="CloseCtrl" ng-show="incidenceAuth.close" ng-click="closeIncidence()" class="icon-navbar-container btn btn-default"> <img src="/modules/incidences/images/icons/close-24.png" alt="View Details"></span>
+                    <span ng-controller="CloseCtrl" ng-show="((incidence.status == 'On Going') && (incidence.assigned == currentUser.username))" ng-click="closeIncidence()" class="icon-navbar-container btn btn-default pull-right"> <img src="/modules/incidences/images/icons/close-24.png" alt="View Details"></span>
                     <!-- end close -->
-                    <span ng-show="incidenceAuth.rate" ng-click="toogleRateMode()" class="icon-navbar-container btn btn-default" ng-class="{active: edit.rate}"><img src="/modules/incidences/images/icons/rating-24.png" alt="View Details"></span>   
-                    <span ng-show="incidenceAuth.assign" ng-click="toogleAssignMode()" class="icon-navbar-container btn btn-default" ng-class="{active: edit.assign}"> <img src="/modules/incidences/images/icons/worker-24.png" alt="View Details"></span>
-                    <span ng-show="incidenceAuth.effort" ng-click="toogleEffortMode()" class="icon-navbar-container btn btn-default" ng-class="{active: edit.effort}"> <img src="/modules/incidences/images/icons/stopwatch-24.png" alt="View Details"></span>  
-                    <span ng-click="toTheReply()" class="icon-navbar-container btn btn-default"><img src="/modules/incidences/images/icons/reply-24.png" alt="View Details"></span> 
+                    <span ng-show="((incidence.status == 'Close') && (incidence.creator == currentUser))"
+                     ng-click="toogleRateMode()" class="icon-navbar-container btn btn-default pull-right" ng-class="{active: edit.rate}"><img src="/modules/incidences/images/icons/rating-24.png" alt="View Details"></span>   
+                    <span ng-show="((incidence.status != 'Close') && (currentUser.role != 'user'))" ng-click="toogleAssignMode()" class="icon-navbar-container btn btn-default pull-right" ng-class="{active: edit.assign}"> <img src="/modules/incidences/images/icons/worker-24.png" alt="View Details"></span>
+                    <span ng-show="(currentUser._id == 'incidence.assigned')" ng-click="toogleEffortMode()" class="icon-navbar-container btn btn-default pull-right" ng-class="{active: edit.effort}"> <img src="/modules/incidences/images/icons/stopwatch-24.png" alt="View Details"></span>
+                    <span ng-click="toTheReply()" class="icon-navbar-container btn btn-default pull-right"><img src="/modules/incidences/images/icons/reply-24.png" alt="View Details"></span> 
                 </div>
             </div>     
         </div>

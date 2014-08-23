@@ -10,6 +10,10 @@ helpdeskControllers.controller('HelpdeskCtrl', function ($scope, $state, $rootSc
 
   initDesk();
 
+  $scope.cancelOperation = function() {
+    $state.go(locationService.getPreviousState());
+  };
+
 	function initDesk() {
 
     $scope.oneAtATime = false;
@@ -39,19 +43,19 @@ helpdeskControllers.controller('HelpdeskCtrl', function ($scope, $state, $rootSc
     $scope.status.activeState = currentLocation.state;
   });
 
+  $rootScope.$on('event:currentUser-changed', function(event) {
+      initDesk();
+    });
+
   $scope.isActiveModule = function(module){
   	return $scope.status[module.toLowerCase()];
   };
 
-	$scope.searchId = function(actionState, id, module){
+	$scope.searchIncidenceById = function(actionState, id, module){
 		$scope.status.activeState = actionState;
 		$scope.status.activeModule = module;
 		$state.go('helpdesk.incidences.open.incidence', { incidenceId: id });
-  	};
-
-  	$rootScope.$on('event:currentUser-changed', function(event) {
-		  initDesk();
-	  });
+  };
 
   $scope.logout = function() {
     Auth.logout(function(err) {

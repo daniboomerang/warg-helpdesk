@@ -2,13 +2,22 @@
 
 var mongoose = require('mongoose'),
     passport = require('passport');
+var sessionDomain = require('../domain/session-domain');
+
 
 /**
  * Session
- * returns info on authenticated user
+ * returns user_info on authenticated user
  */
 exports.session = function (req, res) {
-  res.json(req.user.user_info);
+  sessionDomain.validateUser(req.user).then (function (result){
+    if (result.status == 'user.found'){
+      res.json(result.user.user_info);
+    }  
+    else if (result.status == 'user.not.found'){
+      res.json(500, result.err);
+    }
+  });
 };
 
 /**

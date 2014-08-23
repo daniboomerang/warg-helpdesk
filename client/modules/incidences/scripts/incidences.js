@@ -29,7 +29,13 @@ var incidences = angular.module('incidences',
 		    .state('helpdesk.incidences.create', {
 		        url: '/create',
 		        templateUrl: '/modules/incidences/views/partials/create.html',
-		        controller:'CreateCtrl'
+		        controller:'CreateCtrl',
+		        resolve:{
+						schoolsService: "schoolsService",
+						initSchoolsList: function(schoolsService){
+							schoolsService.initSchoolsList();
+						}
+					}     
 		    })
 
 		    .state('helpdesk.incidences.open', {
@@ -59,7 +65,7 @@ var incidences = angular.module('incidences',
 			        controller: 'IncidenceCtrl',
 			        resolve:{
 						techniciansService: "techniciansService",
-						techniciansList: function(techniciansService){
+						initTechniciansList: function(techniciansService){
 							techniciansService.initTechList();
 						}
 					}

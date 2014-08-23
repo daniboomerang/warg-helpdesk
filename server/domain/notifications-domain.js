@@ -70,7 +70,7 @@ var notify = function (addresseeRole, notificationInfo, mailInfo) {
  *  Process a comment
  */
 exports.comment = function(incidence, commentOwnerId, comment) {
-  var incidenceId = incidence._id;
+  var incidenceId = incidence.id;
   var incidenceTitle = incidence.title;
   var incidenceOwnerId = incidence.creator._id;
   
@@ -118,6 +118,7 @@ exports.comment = function(incidence, commentOwnerId, comment) {
  *  Notify new assignation
  */
 exports.assignee = function(incidence, assignee) {
+  var incidenceId = incidence.id;
   var incidenceOwnerId = incidence.creator._id;  
   usersDomain.show(incidenceOwnerId).then( function( result){
     if (result.status == 'user.shown'){
@@ -126,11 +127,11 @@ exports.assignee = function(incidence, assignee) {
       var incidenceOwnerMail = result.user.email;
 
       var notificationMessage = function(incidence){
-        if (incidence.assigned == null){return  "Your incidence " + incidence._id + " has changed status to 'On Going'";}
-        else  {return  "Your incidence " + incidence._id + " has been assigned to a new agent";}
+        if (incidence.assigned == null){return  "Your incidence " + incidenceId + " has changed status to 'On Going'";}
+        else  {return  "Your incidence " + incidenceId + " has been assigned to a new agent";}
       };
 
-      var mailSubject = "New Status: On Going for " + incidence._id + ' - ' + incidence.title 
+      var mailSubject = "New Status: On Going for " + incidenceId + ' - ' + incidence.title 
       // Notify Incidence Owner User
       notify(incidenceOwnerRole, {addressee: incidenceOwnerId, notification: notificationMessage(incidence)}, {addressee: incidenceOwnerMail, subject: mailSubject, content: notificationMessage(incidence)});
     }  

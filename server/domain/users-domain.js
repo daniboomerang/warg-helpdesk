@@ -8,6 +8,29 @@ var mongoose = require('mongoose'),
   ObjectId = mongoose.Types.ObjectId,
   Q = require('q');
 
+
+/**
+ * Create a User
+ *  Returns a PROMISE with the result 
+ */
+exports.createUser = function(email, username, password, role, school) {
+
+  var deferred = Q.defer();
+
+  var newUser = new User({email: email, username: username, password: password, role: role, school: school});
+  newUser.provider = 'local';
+  newUser.save(function(err) {
+    if (err) {
+      deferred.resolve({status: 'user.not.created', error: err});
+    } else {
+      newUser.user_info.school = school;
+      deferred.resolve({status: 'user.created', user: newUser.user_info});
+    }
+  });
+
+  return deferred.promise;
+};
+
 /**
  *  Find user by email
  *  Returns a PROMISE with the result 
@@ -103,8 +126,7 @@ exports.role = function (username) {
 exports.listUsers = function() {
 
   var deferred = Q.defer();
-
-  User.find().sort('-created').exec(function(err, users) {
+  User.find().sort('-created').populate('school', 'code').exec(function(err, users) {
     if (err) {
       deferred.resolve({status: RESULT_ERROR, error: err});
     } else {   

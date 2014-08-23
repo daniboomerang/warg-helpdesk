@@ -17,6 +17,7 @@ angular.module('wargHelpdeskApp', [
   'wargHelpdeskDirectives',
   // MODULES
   'auth',
+  'commonServices',
   'sign',
   'helpdesk',
   'inventory',

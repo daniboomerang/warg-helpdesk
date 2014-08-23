@@ -1,6 +1,6 @@
   'use strict';
 
-var incidencesControllers = angular.module('incidencesControllers', ['incidencesServices', 'duScroll'])
+var incidencesControllers = angular.module('incidencesControllers', ['incidencesServices', 'duScroll', 'commonServices'])
 
 incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, $anchorScroll, $routeParams, $state, Incidences, IncidenceRate, IncidenceAssign, IncidenceEffort, IncidenceClose, IncidenceComment) {
 
@@ -8,15 +8,16 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
   /* CRUD */
   //////////
 
-  $scope.create = function(title, description, severity, priority) {
+  $scope.create = function(title, description, severity, priority, school) {
     var incidence = new Incidences({
       title: title,
       description: description,
       severity: severity,
-      priority: priority
+      priority: priority,
+      school: school
     });
     incidence.$save(function(response) {
-      $location.path("helpesk/incidences/open/" + response._id);
+      $location.path("helpesk/incidences/open/" + response.id);
     });
   };
 
@@ -35,53 +36,53 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
     incidence.$update(function() {
     },
     function (error){
-      console.log("Server error trying to update the incidence " + incidence._id);
+      console.log("Server error trying to update the incidence " + incidence.id);
     });
   };
 
 
   $scope.postComment = function(comment) {
     var incidence = new IncidenceComment({
-      _id: $scope.incidence._id,
+      _id: $scope.incidence.id,
       comment: comment
     });
     incidence.$postComment(function(response) {
       $scope.incidence.history = response.history;
     },
     function (error){
-      console.log("Server error trying to post a comment for incidence " + incidence._id);
+      console.log("Server error trying to post a comment for incidence " + incidence.id);
     });
   };
 
   $scope.updateAssigned = function(assignation) {
     var incidence = new IncidenceAssign({
-      _id: $scope.incidence._id,
+      _id: $scope.incidence.id,
       assigned: assignation
     });
     incidence.$updateAssign(function(response) {
       $scope.incidence.assigned = response.assigned;
     },
     function (error){
-      console.log("Server error trying to assign a technician for incidence " + incidence._id);
+      console.log("Server error trying to assign a technician for incidence " + incidence.id);
     });
   };
 
   $scope.updateRate = function(rate) {
     var incidence = new IncidenceRate({
-      _id: $scope.incidence._id,
+      _id: $scope.incidence.id,
       rate: rate
     });
     incidence.$updateRate(function(response) {
       $scope.incidence.rate = response.rate;
     },
     function (error){
-      console.log("Server error trying to rate the incidence " + incidence._id);
+      console.log("Server error trying to rate the incidence " + incidence.id);
     });  
   };
 
   $scope.updateEffort = function(effort) {
     var incidence = new IncidenceEffort({
-      _id: $scope.incidence._id,
+      _id: $scope.incidence.id,
       effort: effort
     });
     incidence.$updateEffort(function(response) {
@@ -90,13 +91,13 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
       $scope.incidence.effortMinutes = response.effort % 60;
     },
     function (error){
-      console.log("Server error trying to report effort for the incidence " + incidence._id);
+      console.log("Server error trying to report effort for the incidence " + incidence.id);
     });
   };
 
   $scope.close = function(reason) {
     var incidence = new IncidenceClose({
-      _id: $scope.incidence._id,
+      _id: $scope.incidence.id,
       substatus: reason
     });
     incidence.$closeIncidence(function(response) {
@@ -104,7 +105,7 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
       $scope.incidence.substatus = response.substatus;
     },
     function (error){
-      console.log("Server error trying to close the incidence " + incidence._id);
+      console.log("Server error trying to close the incidence " + incidence.id);
     });
   };
 
@@ -135,16 +136,26 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
 
 });
 
-incidencesControllers.controller('CreateCtrl', function($scope){
+incidencesControllers.controller('CreateCtrl', function ($scope, schoolsService){
 
   $scope.changed = function(filed){
     return filed.$dirty;
   };
 
   $scope.createIncidence = function(form){
-    $scope.create(form.title.$viewValue, form.description.$viewValue, $scope.severity.selected.type, $scope.priority.selected.type);
+    $scope.create(form.title.$viewValue, form.description.$viewValue, $scope.severity.selected.type, $scope.priority.selected.type, $scope.school.selected);
   };
 
+  // INITIALIZING DROPDOWNS DATA
+
+  $scope.school = {};
+  $scope.schoolsList = schoolsService.getSchoolsList();
+  if ($scope.schoolsList.length > 0){
+    $scope.school.selected = $scope.schoolsList[0];
+  }
+  else{
+    $scope.school.selected = "Error retreiving the schools";
+  }
   $scope.severity = {};
   $scope.priority = {};
   $scope.severity.selected = {type: 'Medium'};
@@ -155,6 +166,8 @@ incidencesControllers.controller('CreateCtrl', function($scope){
     { type: 'Medium'},
     { type: 'Low'}
   ];
+
+  ////////////////////////////
 
   $scope.descriptionLength = function (form) {
       if (form.description.$viewValue == undefined){return 0};
@@ -185,7 +198,7 @@ incidencesControllers.controller('ListCtrl', function ($scope, $state, $document
 
   $scope.onSelectedIncidence = function(incidence) {
     var sectionOverview = angular.element(document.getElementById('overview'));
-    $state.go('helpdesk.incidences.open.list.overview', { incidenceId: incidence._id });
+    $state.go('helpdesk.incidences.open.list.overview', { incidenceId: incidence.id });
     $document.scrollTo(sectionOverview, 0, 1000);
   };
 
@@ -204,25 +217,13 @@ incidencesControllers.controller('OverviewCtrl', function ($scope, $routeParams,
 
 });
 
-incidencesControllers.controller('IncidenceCtrl', function ($scope, $routeParams, $state, incidenceAuth, $document) {
-
-  init()
-
-  $scope.goToState = function (state) {
-    $state.goToState('helpdesk.incidences.open.incidence' + state, $state.params);
-  }; 
+incidencesControllers.controller('IncidenceNavCtrl', function ($scope, $document, $rootScope) {
+  
+  init();
 
   function init(){
 
-    $scope.incidenceAuth = {};
-
-    $scope.incidenceAuth.rate = incidenceAuth.isAllowedToReportRate($scope.incidence);
-    $scope.incidenceAuth.effort = incidenceAuth.isAllowedToReportEffort($scope.incidence);
-    $scope.incidenceAuth.assign = incidenceAuth.isAllowedToAssign($scope.incidence);
-    $scope.incidenceAuth.close = incidenceAuth.isAllowedToClose($scope.incidence);
-    
     $scope.edit = {};
-
     $scope.edit.rate = false;
     $scope.edit.effort = false;
     $scope.edit.assign = false;
@@ -240,6 +241,29 @@ incidencesControllers.controller('IncidenceCtrl', function ($scope, $routeParams
 
   $scope.toogleAssignMode = function(){
     $scope.edit.assign = !$scope.edit.assign;
+  }
+
+  $scope.toTheTop = function() {
+    $document.scrollTo(top, 0, 1000);
+  };
+
+  $scope.toTheReply = function() {
+    var reply = angular.element(document.getElementById('incidence-reply'));
+    $document.scrollTo(reply, 0, 1000);
+  };
+
+});
+
+incidencesControllers.controller('IncidenceCtrl', function ($scope, $routeParams, $state, incidenceAuth, $document, $rootScope) {
+
+  init();
+
+  $scope.goToState = function (state) {
+    $state.goToState('helpdesk.incidences.open.incidence' + state, $state.params);
+  }; 
+
+  function init(){
+    $document.scrollTo(top, 0, 1000);
   }
 
   $scope.toTheTop = function() {

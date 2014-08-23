@@ -1,6 +1,6 @@
 'use strict';
 
-var accountsControllers = angular.module('accountsControllers', ['accountsServices', 'authServices', 'ui.select', 'helpdeskServices'])
+var accountsControllers = angular.module('accountsControllers', ['accountsServices', 'authServices', 'ui.select', 'helpdeskServices', 'commonServices'])
 
 accountsControllers.controller('AccountsCtrl', function ($scope, Accounts, $q, Auth) {
 
@@ -8,13 +8,14 @@ accountsControllers.controller('AccountsCtrl', function ($scope, Accounts, $q, A
   /* CRUD */
   //////////
 
-  $scope.create = function(email, username, password, role) {
+  $scope.create = function(email, username, password, role, school) {
     var deferred = $q.defer();
     Auth.createUser({
       email: email,
       username: username,
       password: password,
-      role: role
+      role: role,
+      school: school  
     },
     function(err) {
       $scope.errors = {};
@@ -50,7 +51,7 @@ accountsControllers.controller('AccountsCtrl', function ($scope, Accounts, $q, A
 accountsControllers.controller('CreateAccountCtrl', function ($rootScope, $scope, Auth, $modal, $state, schoolsService, locationService) {
 
   init();
-	
+
 	$scope.clear = function(form) {
     $scope.user.email = '';
     $scope.user.username = '';
@@ -60,7 +61,7 @@ accountsControllers.controller('CreateAccountCtrl', function ($rootScope, $scope
   
   $scope.createAccount = function(form){
     $scope.create(form.email.$viewValue, form.username.$viewValue,
-                  form.password.$viewValue, $scope.user.role.selected.type).then(
+                  form.password.$viewValue, $scope.user.role.selected.type, $scope.user.school.selected).then(
                     function (result){
                       $scope.clear(form);
                       $state.go('helpdesk.accounts.open.list', $state.params);
@@ -82,10 +83,10 @@ accountsControllers.controller('CreateAccountCtrl', function ($rootScope, $scope
     $scope.user.role.selected = {type: 'user'};
 
     $scope.schoolsList = schoolsService.getSchoolsList();
-          $scope.schoolsList= [];
+    $scope.user.school = {};
 
     if ($scope.schoolsList.length > 0){
-      $scope.user.school = $scope.schoolsList[0];
+      $scope.user.school.selected = $scope.schoolsList[0];
     }
     else{
       openModalWarning();

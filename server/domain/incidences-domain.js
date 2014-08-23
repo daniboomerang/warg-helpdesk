@@ -14,24 +14,48 @@ var mongoose = require('mongoose'),
  * Create a incidence
  *  Returns a PROMISE with the result 
  */
-exports.createIncidence = function(title, description, user, severity, priority) {
+exports.createIncidence = function(title, description, user, severity, priority, school) {
+
+  var generateNewId = function (schoolCode){
+
+    var deferred = Q.defer();
+    var regExp = new RegExp(schoolCode, 'i');
+    //var regExp = '/'+ schoolCode + '/';
+    var nextIncidenceId;
+    Incidence.findOne({id: regExp}).sort({ 'created' : -1 }).exec(function(err, lastIncidence) {
+      if (err) {
+        deferred.resolve({status: 'incidence.not.created', error: 'Error at incidence creation, trying to retrieve the last record on incidences.'});
+      } else {
+        if (lastIncidence == null){
+          nextIncidenceId = 1; 
+        } else {
+          nextIncidenceId = parseInt(lastIncidence.id.split('-')[1]) + 1; 
+        }
+        deferred.resolve(schoolCode + '-' + nextIncidenceId.toString());
+      }
+    });
+
+    return deferred.promise;
+  };
 
   var deferred = Q.defer();
 
   if (severity==null){severity = "Medium";}
   if (priority==null){priority = "Medium";}
 
-  var incidence = new Incidence({title: title, description: description, severity: severity, priority: priority});
+  var incidence = new Incidence({title: title, description: description, severity: severity, priority: priority, school: school});
   incidence.creator =  user;
 
-  incidence.save(function(err) {
-    if (err) {
-      deferred.resolve({status: 'incidence.not.created', error: err});
-    } else {
-      deferred.resolve({status: 'incidence.created', incidence: incidence});
-    }
-  });
-
+  generateNewId(school.code).then(function (newId){
+    incidence.id = newId;
+    incidence.save(function(err) {
+      if (err) {
+        deferred.resolve({status: 'incidence.not.created', error: err});
+      } else {
+        deferred.resolve({status: 'incidence.created', incidence: incidence});
+      }
+    });
+  })
   return deferred.promise;
 };
 
