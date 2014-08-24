@@ -17,11 +17,8 @@ module.exports = function(config){
       'client/bower_components/angular-animate/angular-animate.js',
       'client/scripts/directives.js',
       'client/modules/common/auth/services.js',
-      'client/modules/sign/scripts/controllers.js',
-      'client/modules/sign/scripts/directives.js',
       'test/unit/client/directives.js',
       'test/unit/client/helpers/browserTrigger.js',
-      'test/unit/client/modules/sign/controllers.js',
       'test/unit/client/modules/common/auth/services.js'    
     ],
 

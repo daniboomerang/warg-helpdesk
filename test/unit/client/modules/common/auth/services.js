@@ -48,15 +48,4 @@ describe('Service: Auth', function () {
     expect($rootScope.currentUser).toBe(null);
   });
 
-  it('should create a new user and set global user', function () {
-    $httpBackend.expectPOST(userURL)
-      .respond(user);
-    expect($rootScope.currentUser).toBe(null);
-
-    Auth.createUser(user);
-    $httpBackend.flush();
-
-    expect($rootScope.currentUser.username).toBe(user.username);
-  });
-
 });
