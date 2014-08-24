@@ -4,7 +4,7 @@
 		  	<div class="span12 list-container">
 			    <table tr-ng-grid="" items="incidences" selected-items="selectedIncidences" selection-mode="SingleRow">
 				    <thead>
-				        <tr>
+				        <tr style="background-color: #E0F2F9;">
 				        	<th field-name="id" cell-width="5em">ID</th>  
 				            <th field-name="severity" cell-width="5em">Severity</th>  
 				            <th field-name="priority" cell-width="5em">Priority</th>
@@ -18,31 +18,47 @@
 				    </thead>
 		            <tbody>
 		                <tr>
-		                	<td field-name="severity"><span class="frame-list-cell" ng-class="{serious: gridItem.severity == 'Serious', high: gridItem.severity == 'High'}">{{gridItem.severity}}</span></td>
-								<td field-name="priority"><span class="frame-list-cell" ng-class="{serious: gridItem.priority == 'Serious', high: gridItem.priority == 'High'}">{{gridItem.priority}}</span></td>
-		                    <!--Create the row template, remember the field-name attribute to match the columns defined in the header-->
-		                    
-							<td field-name="title">{{gridItem.title.slice(0,50)}}</td>
+		                	<td field-name="severity">
+		                		<span class="frame-list-cell" ng-class="{serious: gridItem.severity == 'Serious', high: gridItem.severity == 'High'}">{{gridItem.severity}}</span>
+		                	</td>
+							<td field-name="priority">
+								<span class="frame-list-cell" ng-class="{serious: gridItem.priority == 'Serious', high: gridItem.priority == 'High'}">{{gridItem.priority}}</span>
+							</td>
+							<td field-name="title">
+								<span class="frame-list-cell">  
+									<span class="pull-left" >{{gridItem.title.slice(0,50)}}</span>
+									<span ng-click="overview(gridItem)" class="pull-right" popover-placement="bottom" popover="Overview {{gridItem.id}}" popover-trigger="mouseenter">
+										<img src="/modules/incidences/images/icons/eye-16.png" alt="View Details">
+									</span> 
+								</span>
+							</td>
 
-		                    <!-- Dates: If date is today we show the time, if it wasn´t today we show the date -->
-		                    	<td field-name="created">
+		                    <!-- Dates: We show Today, Yesterday, 2 days ago or a short date format -->
+	                    	<td field-name="created">
+		                    	<div popover-placement="bottom" popover="{{ gridItem.created | date:'shortTime' }}" popover-trigger="mouseenter">
 		                    		<span ng-if="(gridItem.created | date:'shortDate') == (today | date:'shortDate')">
-		                    		{{gridItem.created | date:'shortTime'}}
+		                    		Today
 		                    		</span>
-		                    		<span ng-if="(gridItem.created | date:'shortDate') != (today | date:'shortDate')">
-										{{gridItem.created | date:'shortDate'}}
-										</span>
-								</td>
+		                    		<span ng-if="(gridItem.created | date:'shortDate') == (yesterday | date:'shortDate')">
+									Yesterday
+									</span>
+									<span ng-if="(gridItem.created | date:'shortDate') == (twoDaysAgo | date:'shortDate')">
+									2 Days ago
+									</span>
+									<span ng-if="((gridItem.created | date:'shortDate') < (twoDaysAgo | date:'shortDate'))">
+									{{gridItem.created | date:'shortDate'}}
+									</span>
+								</div>
+							</td>
 
-								<td field-name="updated">
-		                    		<span ng-if="(gridItem.updated[gridItem.updated.length - 1] | date:'shortDate') == (today | date:'shortDate')">
-		                    		{{gridItem.updated[gridItem.updated.length - 1] | date:'shortTime'}}
-		                    		</span>
-		                    		<span ng-if="(gridItem.updated[gridItem.updated.length - 1] | date:'shortDate') != (today | date:'shortDate')">
-										{{gridItem.updated[gridItem.updated.length - 1] | date:'shortDate'}}
-										</span>
-								</td>								
-		                    <!-- -->
+							<td field-name="updated">
+	                    		<span ng-if="(gridItem.updated[gridItem.updated.length - 1] | date:'shortDate') == (today | date:'shortDate')">
+	                    			{{gridItem.updated[gridItem.updated.length - 1] | date:'shortTime'}}
+	                    		</span>
+	                    		<span ng-if="(gridItem.updated[gridItem.updated.length - 1] | date:'shortDate') != (today | date:'shortDate')">
+									{{gridItem.updated[gridItem.updated.length - 1] | date:'shortDate'}}
+								</span>
+							</td>								
 
 		                    <td field-name="status"><span class="frame-list-cell" ng-class="{open: gridItem.status == 'Open', ongoing: gridItem.status == 'On Going', closed: gridItem.status == 'Closed'}">{{gridItem.status}}</span></td>
 		                </tr>
@@ -59,7 +75,8 @@
 		            </tfoot>
 		        </table>
 		  	</div>
-		</div>  	
-		<div id="overview" ui-view="overview" class="span9"></div>
+		</div>
+		<!-- Deprecated -->  	
+		<!--<div id="overview" ui-view="overview" class="span9"></div>-->
 	</div>
 </section>

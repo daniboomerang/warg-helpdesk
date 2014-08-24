@@ -30,27 +30,30 @@ module.exports = function(app) {
   var notifications = require('../controllers/notifications');
   app.get('/api/notifications', auth.ensureAuthenticated, notifications.list);
 
-  // Incidence Routes
+  //////////////////////
+  // Incidence Routes //
+  //////////////////////
+
   var incidences = require('../controllers/incidences');
   app.get('/api/incidences', auth.ensureAuthenticated, incidences.list);
   app.post('/api/incidences', auth.ensureAuthenticated, incidences.create);
   app.get('/api/incidences/:incidenceId', incidences.show);
-
   // Updating an incidence
   app.put('/api/incidences/:incidenceId', auth.ensureAuthenticated, incidences.update);
-  app.put('/api/incidences/:incidenceId/postComment', auth.ensureAuthenticated, incidences.postComment, notifications.notifyComment);
-  app.put('/api/incidences/:incidenceId/rate', auth.ensureAuthenticated, incidences.updateRate);
-  app.put('/api/incidences/:incidenceId/assign', auth.ensureAuthenticated, incidences.updateAssigned, notifications.notifyAssignee);
-  app.put('/api/incidences/:incidenceId/effort', auth.ensureAuthenticated, incidences.updateEffort);
-  app.put('/api/incidences/:incidenceId/close', auth.ensureAuthenticated, incidences.close);
-  
-  app.delete('/api/incidences/:incidenceId', auth.ensureAuthenticated, incidences.destroy);
-
+  app.put('/api/incidences/:incidenceId/comment', auth.ensureAuthenticated, incidences.comment, notifications.notifyComment);
+  app.put('/api/incidences/:incidenceId/rate', auth.ensureAuthenticated, incidences.rate);
+  app.put('/api/incidences/:incidenceId/assignee', auth.ensureAuthenticated, incidences.assignee, notifications.notifyAssignee);
+  app.put('/api/incidences/:incidenceId/effort', auth.ensureAuthenticated, incidences.effort);
+  app.put('/api/incidences/:incidenceId/close', auth.ensureAuthenticated, incidences.close); 
+  //app.delete('/api/incidences/:incidenceId', auth.ensureAuthenticated, incidences.destroy);
   //Setting up the incidenceId param
   app.param('incidenceId', incidences.incidence);
 
-  // Users
+  /////////////////
+  // User Routes //
+  /////////////////
   app.get('/api/users', auth.ensureAuthenticatedAsAdmin, users.list);
+
 
   // Schools
   var schools = require('../controllers/schools');

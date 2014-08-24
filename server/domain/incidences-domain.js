@@ -95,12 +95,32 @@ exports.listIncidences = function(user) {
  *  Updates an incidence assignation
  *  Returns a PROMISE with the result 
  */
-exports.updateAssigned = function(incidence, assigned) {
+exports.updateAssignee = function(incidence, assigned) {
 
   var deferred = Q.defer();
 
   incidence.assigned = assigned.username;
   incidence.status = STATUS_ONGOING;
+  incidence.save(function(err) {
+    if (err) {
+      deferred.resolve({status: 'incidence.not.updated', error: err});
+    } else {
+      deferred.resolve({status: 'incidence.updated', incidence: incidence});
+    }
+  });
+
+  return deferred.promise;
+};
+
+/**
+ *  Updates the arry of comments of an incidence
+ *  Returns a PROMISE with the result 
+ */
+exports.updateComment = function(incidence, comment, author, date) {
+
+  var deferred = Q.defer();
+  var post = {post: comment, author: author, date: date};
+  incidence.history.unshift(post);
   incidence.save(function(err) {
     if (err) {
       deferred.resolve({status: 'incidence.not.updated', error: err});

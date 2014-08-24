@@ -11,11 +11,11 @@ incidencesServices.factory('Incidences', function ($resource) {
   });
 
 incidencesServices.factory('IncidenceComment', function ($resource) {
-    return $resource('api/incidences/:incidenceId/postComment', {
+    return $resource('api/incidences/:incidenceId/comment', {
       incidenceId: '@_id',
 
     }, {
-      postComment: {
+      updateComment: {
         method: 'PUT'
       }
     });
@@ -23,11 +23,11 @@ incidencesServices.factory('IncidenceComment', function ($resource) {
 
 
 incidencesServices.factory('IncidenceAssign', function ($resource) {
-    return $resource('api/incidences/:incidenceId/assign', {
+    return $resource('api/incidences/:incidenceId/assignee', {
       incidenceId: '@_id',
 
     }, {
-      updateAssign: {
+      updateAssignee: {
         method: 'PUT'
       }
     });

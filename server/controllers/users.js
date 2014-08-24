@@ -21,7 +21,7 @@ exports.create = function (req, res, next) {
       res.json(result.user);
     }  
     else if (result.status == 'user.not.created'){
-      res.json(400, result.err);
+      res.json(400, result.error);
     }
   });   
 };
@@ -51,15 +51,6 @@ exports.show = function (req, res, next) {
  *  returns [technicianObjectIds]
  */
 exports.technicians = function (req, res, next) {
-
-  /*var getObjectIds = function (listUsers){
-    var objectIds = [];
-    for (var i=0; i<listUsers.length; i++){
-      objectIds.push(listUsers[i]._id);
-    }
-    return objectIds;
-  };*/ 
-
   User.find({role: 'tech'}, function (err, technicians) {
     if (err) {
       return next(new Error('Failed to the list of Technicians'));

@@ -54,25 +54,23 @@ exports.update = function(req, res) {
 /**
  * Post a comment incidence 
  */
-exports.postComment = function(req, res, next) {  
-  var incidence = req.incidence;
-  var post = {post: req.body.comment, author: req.user.user_info.username, date: Date.now()};
-  incidence.history.push(post);
-  incidence.save(function(err) {
-    if (err) {
-      res.json(500, err);
-    } else {
-      res.json(incidence);
+exports.comment = function(req, res, next) {
+  incidencesDomain.updateComment(req.incidence, req.body.comment, req.user.user_info.username, Date.now()).then (function (result){
+    if (result.status == 'incidence.updated'){
+      res.json(result.incidence);
       next();
+    }  
+    else if (result.status == 'incidence.not.updated'){
+      res.json(500, result.err);
     }
-  });
+  });  
 };
 
 /**
  * Update incidence assignation
  */
-exports.updateAssigned = function(req, res, next) {
-  incidencesDomain.updateAssigned(req.incidence, req.body.assigned).then (function (result){
+exports.assignee = function(req, res, next) {
+  incidencesDomain.updateAssignee(req.incidence, req.body.assigned).then (function (result){
     if (result.status == 'incidence.updated'){
       res.json(result.incidence);
       next();
@@ -86,7 +84,7 @@ exports.updateAssigned = function(req, res, next) {
 /**
  * Update incidence rating
  */
-exports.updateRate = function(req, res) {
+exports.rate = function(req, res) {
   var incidence = req.incidence;
   incidence.rate = req.body.rate;
   incidence.save(function(err) {
@@ -101,7 +99,7 @@ exports.updateRate = function(req, res) {
 /**
  * Update incidence effort
  */
-exports.updateEffort = function(req, res) {
+exports.effort = function(req, res) {
   var incidence = req.incidence;
   incidence.effort = req.body.effort;
   incidence.save(function(err) {

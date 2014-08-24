@@ -41,12 +41,12 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
   };
 
 
-  $scope.postComment = function(comment) {
+  $scope.updateComment = function(comment) {
     var incidence = new IncidenceComment({
       _id: $scope.incidence.id,
       comment: comment
     });
-    incidence.$postComment(function(response) {
+    incidence.$updateComment(function(response) {
       $scope.incidence.history = response.history;
     },
     function (error){
@@ -54,12 +54,12 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
     });
   };
 
-  $scope.updateAssigned = function(assignation) {
+  $scope.updateAssignee = function(assignation) {
     var incidence = new IncidenceAssign({
       _id: $scope.incidence.id,
       assigned: assignation
     });
-    incidence.$updateAssign(function(response) {
+    incidence.$updateAssignee(function(response) {
       $scope.incidence.assigned = response.assigned;
     },
     function (error){
@@ -136,14 +136,21 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
 
 });
 
-incidencesControllers.controller('CreateCtrl', function ($scope, schoolsService){
+incidencesControllers.controller('CreateCtrl', function ($scope, schoolsService, $rootScope){
 
   $scope.changed = function(filed){
     return filed.$dirty;
   };
 
   $scope.createIncidence = function(form){
-    $scope.create(form.title.$viewValue, form.description.$viewValue, $scope.severity.selected.type, $scope.priority.selected.type, $scope.school.selected);
+    var incidenceSchool;
+    var incidenceTitle = form.title.$viewValue;
+    var incidenceDescription = form.description.$viewValue;
+    var incidenceSeverity = $scope.severity.selected.type;
+    var incidencePriority = $scope.priority.selected.type;
+    if ($rootScope.currentUser.role == 'user'){incidenceSchool = $rootScope.currentUser.school}
+    else{incidenceSchool = $scope.school.selected;}
+    $scope.create(incidenceTitle, incidenceDescription, incidenceSeverity, incidencePriority, incidenceSchool);
   };
 
   // INITIALIZING DROPDOWNS DATA
@@ -182,24 +189,77 @@ incidencesControllers.controller('CreateCtrl', function ($scope, schoolsService)
 });
  
 
-incidencesControllers.controller('ListCtrl', function ($scope, $state, $document) {
+incidencesControllers.controller('ListCtrl', function ($scope, $state, $document, $modal, $log) {
+
+  // It helps us with the fact that if we click on overview, the watcher of selectedIncidences is
+  // triggered and therefore redirected to open. And we don´t want that.
+  $scope.overviewing = false; 
 
   $scope.today = Date.now();
+  $scope.yesterday = new Date();
+  $scope.yesterday.setDate($scope.yesterday.getDate() - 1);
+  $scope.twoDaysAgo = new Date();
+  $scope.twoDaysAgo.setDate($scope.twoDaysAgo.getDate() - 2);
 
   $scope.selectedIncidences = [];
   $scope.$watch('selectedIncidences', function() {
-    if ($scope.selectedIncidences.length > 0){
-      if ($scope.selectedIncidences.length > 1)
-        $scope.selectedIncidences.splice( 0, 1 );
-      $scope.onSelectedIncidence($scope.selectedIncidences[$scope.selectedIncidences.length - 1]);
-    } 
+    if ($scope.overviewing == false){
+      if ($scope.selectedIncidences.length > 0){
+        if ($scope.selectedIncidences.length > 1)
+          $scope.selectedIncidences.splice( 0, 1 );
+        $state.go('helpdesk.incidences.open.incidence', { incidenceId: $scope.selectedIncidences[$scope.selectedIncidences.length - 1].id });
+      } 
+    }
   },
   true);
 
+  /* DEPRECATED */
+  /*
   $scope.onSelectedIncidence = function(incidence) {
     var sectionOverview = angular.element(document.getElementById('overview'));
     $state.go('helpdesk.incidences.open.list.overview', { incidenceId: incidence.id });
     $document.scrollTo(sectionOverview, 0, 1000);
+  };*/
+
+  $scope.overview = function(incidence) {
+
+    $scope.overviewing = true; 
+    $scope.selectedIncidence = incidence;
+    modalOverview();
+
+    function modalOverview (incidence) {
+      var overviewModalInstance = $modal.open({
+        templateUrl: '/modules/incidences/views/partials/overview-popover.html',
+        controller: OverviewModalInstanceCtrl,
+        size: 'sm',
+        resolve: {
+        incidence: function () {
+          return $scope.selectedIncidence;
+        }
+        }
+      });
+
+      overviewModalInstance.result.then(function (incidenceId) {
+        $state.go('helpdesk.incidences.open.incidence', {incidenceId: incidenceId});
+      }, function () {
+        $scope.overviewing = false; 
+        $log.info('Overview dismissed at: ' + new Date());
+      });
+    };
+  };
+
+  // Please note that $modalInstance represents a modal window (instance) dependency.
+  // It is not the same as the $modal service used above.
+  var OverviewModalInstanceCtrl = function ($scope, $modalInstance, incidence) {
+
+    $scope.overviewingIncidence = incidence;
+
+    $scope.openIncidence = function () {
+      $modalInstance.close(incidence.id);
+    };
+    $scope.backToList = function () {
+      $modalInstance.dismiss('cancel');
+    };
   };
 
 });
@@ -254,7 +314,7 @@ incidencesControllers.controller('IncidenceNavCtrl', function ($scope, $document
 
 });
 
-incidencesControllers.controller('IncidenceCtrl', function ($scope, $routeParams, $state, incidenceAuth, $document, $rootScope) {
+incidencesControllers.controller('IncidenceCtrl', function ($scope, $routeParams, $state, $document, $rootScope) {
 
   init();
 
@@ -276,7 +336,7 @@ incidencesControllers.controller('IncidenceCtrl', function ($scope, $routeParams
   };
 
   $scope.sendComment = function(comment) {
-    $scope.postComment(comment);
+    $scope.updateComment(comment);
     $scope.form.$setPristine();
     $scope.comment = '';
   };
@@ -285,9 +345,9 @@ incidencesControllers.controller('IncidenceCtrl', function ($scope, $routeParams
     return filed.$dirty;
   };
 
-  $scope.commentLength = function () {
-      if ($scope.form.comment.$viewValue == undefined){return 0};
-      return $scope.form.comment.$viewValue.length;     
+  $scope.commentLength = function (form) {
+      if (form.comment.$viewValue == undefined){return 0};
+      return form.comment.$viewValue.length;     
   };
 
 });
@@ -350,7 +410,7 @@ incidencesControllers.controller('AssignCtrl', function ($scope, techniciansServ
 
   $scope.poolAssignation = function(){     
       $scope.assign.allowUpdate = false;
-      $scope.updateAssigned($scope.assign.currentAssignation);
+      $scope.updateAssignee($scope.assign.currentAssignation);
       $scope.edit.assign = false;
   }
 

@@ -17,13 +17,12 @@ exports.createUser = function(email, username, password, role, school) {
 
   var deferred = Q.defer();
 
-  var newUser = new User({email: email, username: username, password: password, role: role, school: school});
+  var newUser = new User({email: email, username: username, password: password, role: role, school: school._id});
   newUser.provider = 'local';
   newUser.save(function(err) {
     if (err) {
       deferred.resolve({status: 'user.not.created', error: err});
     } else {
-      newUser.user_info.school = school;
       deferred.resolve({status: 'user.created', user: newUser.user_info});
     }
   });
