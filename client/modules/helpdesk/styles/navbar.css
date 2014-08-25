@@ -37,28 +37,6 @@
 	box-shadow: inset -9px 0px 4px -9px rgba(0,0,0,0.41), inset 9px 0px 4px -9px rgba(0,0,0,0.41);
 }
 
-.solid-blue-bar-fill{
-
-	background-color: #517fa4;
-	background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-webkit-gradient(linear,left top,left bottom,from(#517fa4),to(#306088));
-	background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-webkit-linear-gradient(top,#517fa4,#306088);
-	background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-moz-linear-gradient(top,#517fa4,#306088);
-	background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-o-linear-gradient(top,#517fa4,#306088);
-	background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-ms-linear-gradient(top,#517fa4,#306088);
-	background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),linear-gradient(top,#517fa4,#306088);
-}
-
-.solid-yellow-bar-fill{
-
-	background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-webkit-gradient(linear,left top,left bottom,from(#f4e8b5),to(#306088));
-	background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-webkit-linear-gradient(top,#f4e8b5,#f4e8b5);
-	background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-moz-linear-gradient(top,#f4e8b5,#f4e8b5);
-	background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-o-linear-gradient(top,#f4e8b5,#f4e8b5);
-	background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-ms-linear-gradient(top,#f4e8b5,#f4e8b5);
-	background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),linear-gradient(top,#f4e8b5,#f4e8b5);
-}
-
-
 .navbar .nav li.dropdown.open > .dropdown-toggle, .navbar .nav li.dropdown.active > .dropdown-toggle, .navbar .nav li.dropdown.open.active > .dropdown-toggle {
 	background-color: #B54646;
 	-webkit-box-shadow: inset 10px 0px 4px -9px rgba(0,0,0,0.41);
@@ -71,10 +49,10 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 }
 
 .hover-effect:hover {
-		background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-webkit-gradient(linear,left top,left bottom,from(#4f7999),to(#306088));
+	background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-webkit-gradient(linear,left top,left bottom,from(#4f7999),to(#306088));
 	background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-webkit-linear-gradient(top,#4f7999,#306088);
 	background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-moz-linear-gradient(top,#4f7999,#306088);
 	background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-o-linear-gradient(top,#4f7999,#306088);
 	background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-ms-linear-gradient(top,#4f7999,#306088);
 	background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),linear-gradient(top,#4f7999,#306088);
-};
+}

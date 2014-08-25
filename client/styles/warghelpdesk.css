@@ -9,6 +9,11 @@ body, html {
   min-height:96%;position:relative;
 }
 
+
+/**********/
+/* frames */
+/**********/
+
 .frame-form{
   padding: 30px;
 }
@@ -171,8 +176,8 @@ input.ng-dirty.ng-invalid ~ span.ko, textarea.ng-dirty.ng-invalid ~ span.ko{ col
 }
 
 .solid-yellow-bar-fill{
-  background-color: #f4e8b5;
 
+  background-color: #f4e8b5;
   background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-webkit-gradient(linear,left top,left bottom,from(#f4e8b5),to(#306088));
   background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-webkit-linear-gradient(top,#f4e8b5,#f4e8b5);
   background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-moz-linear-gradient(top,#f4e8b5,#f4e8b5);
