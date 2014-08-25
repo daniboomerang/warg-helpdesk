@@ -13,8 +13,8 @@ angular.module('wargHelpdeskApp', [
   // VENDOR
   'trNgGrid',
   // WARG HELPDESK
-  'wargHelpdeskControllers',
   'wargHelpdeskDirectives',
+  'wargHelpdeskFilters',
   // MODULES
   'auth',
   'commonServices',

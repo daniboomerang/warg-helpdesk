@@ -70,19 +70,22 @@
 }
 
 #incidence-nav-container {
-	padding-left: 50px;
-	padding-right: 50px;
+	padding-left: 10px;
+	padding-right: 10px;
 	width: 100%;
 	-webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.66);
 	-moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.66);
 	box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.66);
 }
 
+.frame-reply {
+	padding: 10px;
+}
+
 #incidence-reply {
-	margin-top: 20px;
-	padding: 20px;
 	width: 100%;
 	background-color: #f4e8b5;
+	padding: 10px;
 }
 .icon-navbar-container{
 	padding: 5px;
@@ -100,7 +103,7 @@
 
 .assign-select-dropdown{
 	width: auto;
-	min-width: 100px;
+	min-width: 110px;
 	max-width: 150px;
 }
 

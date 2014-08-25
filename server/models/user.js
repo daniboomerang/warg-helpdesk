@@ -17,8 +17,7 @@ var UserSchema = new Schema({
   },
   school: {
     type: Schema.ObjectId,
-    ref: 'School',
-    required: true
+    ref: 'School'
   },
   role: String,
   hashedPassword: String,

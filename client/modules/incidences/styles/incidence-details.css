@@ -1,22 +1,17 @@
 .incidence-details{
 	width: auto;
 	height: auto;
+	padding-left: 30px;
 }
 
 .box-incidence-datails{
-	border: 0px solid #000000;
 	height: auto;
 	width: auto;
 	margin: 10px;
-	margin-right: 50px;
+	margin-top: 5px;
 	text-align: center;
-	padding: 10px;
-
-}
-
-.stars{
-	margin-left: 10px;
-	margin-right: 15px;
+	padding: 15px;
+	padding-top: 10px;
 }
 
 .glyphicon-rate { margin-right:5px; font-size: 15px;}

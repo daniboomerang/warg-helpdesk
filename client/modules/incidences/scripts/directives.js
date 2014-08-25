@@ -21,3 +21,10 @@ incidencesDirectives.directive('effort', function() {
     templateUrl: '/modules/incidences/views/partials/effort.html'
   };
 })
+
+incidencesDirectives.directive('reply', function() {
+  return {
+    restrict: 'E',
+    templateUrl: '/modules/incidences/views/partials/reply.html'
+  };
+})

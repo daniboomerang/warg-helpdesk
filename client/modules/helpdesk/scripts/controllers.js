@@ -30,7 +30,7 @@ helpdeskControllers.controller('HelpdeskCtrl', function ($scope, $state, $rootSc
         var modules;
       
       for (var i=0; i<$scope.menu.length; i++){
-        var currentModule = $scope.menu[i].module.toLowerCase();
+        var currentModule = $scope.menu[i].name.toLowerCase();
         $scope.status[currentModule] = true;
         }
         $scope.status.activeModule = locationService.getCurrentModule();

@@ -65,8 +65,8 @@
 
 .arrow-box-module {
     position: relative;
-    background: #c2e1f5;
-    border: 1px solid #c2e1f5;
+    background: #f4e8b5;
+    border: 1px solid #f4e8b5;
 }
 .arrow-box-module:after, .arrow-box-module:before {
     left: 100%;
@@ -81,13 +81,13 @@
 
 .arrow-box-module:after {
     border-color: rgba(245, 254, 255, 0);
-    /*border-left-color: #f5feff;*/
+    border-left-color: #ff4e8b5;
     border-width: 7px;
     margin-top: -7px;
 }
 .arrow-box-module:before {
     border-color: rgba(194, 225, 245, 0);
-    border-left-color: #c2e1f5;
+    border-left-color: #f4e8b5;
     border-width: 13px;
     margin-top: -13px;
 }

@@ -9,58 +9,6 @@ body, html {
   min-height:96%;position:relative;
 }
 
-
-/**********/
-/* FOOTER */
-/**********/
-
-.footer {
-  position: relative;
-  left:0px;
-  bottom:0px;
-  width:100%;
-  color: #517fa4;
-  height: 35px;
-  padding-top: 9px;
-  text-align: center;
-  padding-left: 7%;
-  /*-webkit-box-shadow: 0px 3px 16px -2px rgba(20,20,20,1);
-  -moz-box-shadow: 0px 3px 16px -2px rgba(20,20,20,1);
-  box-shadow: 0px 3px 16px -2px rgba(20,20,20,1);
-  background-image:url('/modules/helpdesk/images/svgs/greenAndYellow.svg');
-  background-image:url('/modules/helpdesk/images/svgs/greenCircles.svg');
-  background-image:url('/modules/helpdesk/images/svgs/greenAndBlue.svg');*/
-  
-
-}
-.footer p {font-size: 11px;}
-.footer a {color: #513a94;}
-
-/* /////// */
-
-/**************/
-/* Components */
-/**************/
-
-
-input.ng-pristine, textarea.ng-pristine { border-radius: 1px 1px 1px 1px;
-  border-radius: 1px 1px 1px 1px;
-  -moz-border-radius: 1px 1px 1px 1px;
-  -webkit-border-radius: 1px 1px 1px 1px;
-  border: 1px solid NavajoWhite;}
-input.ng-dirty.ng-valid, textarea.ng-dirty.ng-valid{
-  border-radius: 1px 1px 1px 1px;
-  -moz-border-radius: 1px 1px 1px 1px;
-  -webkit-border-radius: 1px 1px 1px 1px;
-  border: 1px solid #9AF0A6;}
-input.ng-dirty.ng-invalid, textarea.ng-dirty.ng-invalid{ border:1px solid #FC6F71; }
-input.ng-dirty.ng-valid ~ span.ok, textarea.ng-dirty.ng-valid ~ span.ok{ 
-  border-radius: 1px 1px 1px 1px;
-  -moz-border-radius: 1px 1px 1px 1px;
-  -webkit-border-radius: 1px 1px 1px 1px;
-  border: 1px solid #9AF0A6; display:inline; }
-input.ng-dirty.ng-invalid ~ span.ko, textarea.ng-dirty.ng-invalid ~ span.ko{ color:#FC6F71; display:inline; } 
-
 .frame-form{
   padding: 30px;
 }
@@ -158,10 +106,78 @@ input.ng-dirty.ng-invalid ~ span.ko, textarea.ng-dirty.ng-invalid ~ span.ko{ col
   position: relative;
 }
 
-/* FORMS */
+/***************/
+/* ng-pristine */
+/***************/
+
+
+input.ng-pristine, textarea.ng-pristine { border-radius: 1px 1px 1px 1px;
+  border-radius: 1px 1px 1px 1px;
+  -moz-border-radius: 1px 1px 1px 1px;
+  -webkit-border-radius: 1px 1px 1px 1px;
+  border: 1px solid NavajoWhite;}
+input.ng-dirty.ng-valid, textarea.ng-dirty.ng-valid{
+  border-radius: 1px 1px 1px 1px;
+  -moz-border-radius: 1px 1px 1px 1px;
+  -webkit-border-radius: 1px 1px 1px 1px;
+  border: 1px solid #9AF0A6;}
+input.ng-dirty.ng-invalid, textarea.ng-dirty.ng-invalid{ border:1px solid #FC6F71; }
+input.ng-dirty.ng-valid ~ span.ok, textarea.ng-dirty.ng-valid ~ span.ok{ 
+  border-radius: 1px 1px 1px 1px;
+  -moz-border-radius: 1px 1px 1px 1px;
+  -webkit-border-radius: 1px 1px 1px 1px;
+  border: 1px solid #9AF0A6; display:inline; }
+input.ng-dirty.ng-invalid ~ span.ko, textarea.ng-dirty.ng-invalid ~ span.ko{ color:#FC6F71; display:inline; } 
+
+/****************************/
+/* FORMS BARS COLORS AND SHADOWS */
+/****************************/
+
+.frame-form-head{
+  -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.66);
+  -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.66);
+  box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.66);
+  padding-top: 5px;
+  height: 35px;
+}
+
 .shadow-form-container{
   -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.66);
   -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.66);
   box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.66);
 }
-/* /////// */
+
+.shadow-left{ 
+  -webkit-box-shadow: inset 9px 0px 4px -9px rgba(0,0,0,0.41);
+  -moz-box-shadow:  inset 9px 0px 4px -9px rgba(0,0,0,0.41);
+  box-shadow: inset 9px 0px 4px -9px rgba(0,0,0,0.41);
+}
+
+.shadow-right{
+  -webkit-box-shadow: inset -9px 0px 4px -9px rgba(0,0,0,0.41), inset 9px 0px 4px -9px rgba(0,0,0,0.41);
+  -moz-box-shadow: inset -9px 0px 4px -9px rgba(0,0,0,0.41), inset 9px 0px 4px -9px rgba(0,0,0,0.41);
+  box-shadow: inset -9px 0px 4px -9px rgba(0,0,0,0.41), inset 9px 0px 4px -9px rgba(0,0,0,0.41);
+}
+
+.solid-blue-bar-fill{
+
+  background-color: #517fa4;
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-webkit-gradient(linear,left top,left bottom,from(#517fa4),to(#306088));
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-webkit-linear-gradient(top,#517fa4,#306088);
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-moz-linear-gradient(top,#517fa4,#306088);
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-o-linear-gradient(top,#517fa4,#306088);
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-ms-linear-gradient(top,#517fa4,#306088);
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),linear-gradient(top,#517fa4,#306088);
+}
+
+.solid-yellow-bar-fill{
+  background-color: #f4e8b5;
+
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-webkit-gradient(linear,left top,left bottom,from(#f4e8b5),to(#306088));
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-webkit-linear-gradient(top,#f4e8b5,#f4e8b5);
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-moz-linear-gradient(top,#f4e8b5,#f4e8b5);
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-o-linear-gradient(top,#f4e8b5,#f4e8b5);
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-ms-linear-gradient(top,#f4e8b5,#f4e8b5);
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),linear-gradient(top,#f4e8b5,#f4e8b5);
+}
+

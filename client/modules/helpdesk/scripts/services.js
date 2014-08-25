@@ -10,30 +10,33 @@ helpdeskServices.service('deskMenuStyleService', function(){
 		getStyle : function(module){	
 			var moduleStyle = [];	
 		   	if (module == 'Incidences'){
-		   		moduleStyle.module = {'background-image': 'url(/modules/helpdesk/images/icons/incidence-24.png)'};
+		   		moduleStyle.image = {'background-image': 'url(/modules/helpdesk/images/icons/incidence-24.png)'};
 		   		moduleStyle.create = '/modules/helpdesk/images/icons/create-16.png';
 		   		moduleStyle.openId = '/modules/helpdesk/images/icons/zoom-16.png';
 		   		moduleStyle.openList = '/modules/helpdesk/images/icons/list-16.png';
 		   		moduleStyle.statistics = '/modules/helpdesk/images/icons/statistics-16.png';
+		   		moduleStyle.color = {'color': '#F4BE6E'};
 
 		   	}	
 		   	if (module == 'Inventory'){
-		   		moduleStyle.module = {'background-image': 'url(/modules/helpdesk/images/icons/book-24.png)'};
+		   		moduleStyle.image = {'background-image': 'url(/modules/helpdesk/images/icons/book-24.png)'};
 				moduleStyle.open = '/modules/helpdesk/images/icons/inventory-16.png';
 				moduleStyle.expenses = '/modules/helpdesk/images/icons/coins-16.png';
-				
+				moduleStyle.color = {'color': '#B54646'};	
 		   	}
 		   	if (module == 'Schools'){
-		   		moduleStyle.module = {'background-image': 'url(/modules/helpdesk/images/icons/school-24.png)'};
+		   		moduleStyle.image = {'background-image': 'url(/modules/helpdesk/images/icons/school-24.png)'};
 		   		moduleStyle.create = '/modules/helpdesk/images/icons/create-16.png';
 		   		moduleStyle.openCode = '/modules/helpdesk/images/icons/zoom-16.png';
 		   		moduleStyle.openList = '/modules/helpdesk/images/icons/list-16.png';
+		   		moduleStyle.color = {'color': '#6a5acd'};
 		   	}
 		   	if (module == 'Accounts'){
-		   		moduleStyle.module = {'background-image': 'url(/modules/helpdesk/images/icons/accounts-24.png)'};
+		   		moduleStyle.image = {'background-image': 'url(/modules/helpdesk/images/icons/accounts-24.png)'};
 		   		moduleStyle.create = '/modules/helpdesk/images/icons/create-16.png';
 		   		moduleStyle.import = '/modules/helpdesk/images/icons/excel-16.png';
 		   		moduleStyle.openList = '/modules/helpdesk/images/icons/list-16.png';
+		   		moduleStyle.color = {'color': '#2e8b57'};
 		   	}
 		   	return moduleStyle;
 		}
@@ -57,7 +60,7 @@ helpdeskServices.service('helpdeskConfigService', function ($q, $http, menu, des
 					actions.push({title: 'Statistics', state: 'helpdesk.incidences.statistics', style: moduleMenuStyle.statistics});
 			}		
 		}
-        var menu = {module: 'Incidences', actions: actions, style: moduleMenuStyle.module};
+        var menu = {name: 'Incidences', actions: actions, image: moduleMenuStyle.image, color: moduleMenuStyle.color};
         return menu;
      }
 
@@ -72,7 +75,7 @@ helpdeskServices.service('helpdeskConfigService', function ($q, $http, menu, des
 					actions.push({title: 'Expenses', state: 'helpdesk.inventory.expenses', style: moduleMenuStyle.expenses});
 			}		
 		}
-        var menu = {module: 'Inventory', actions: actions, style: moduleMenuStyle.module};
+        var menu = {name: 'Inventory', actions: actions, style: moduleMenuStyle.module, image: moduleMenuStyle.image, color: moduleMenuStyle.color};
         return menu;
      }
 
@@ -88,7 +91,7 @@ helpdeskServices.service('helpdeskConfigService', function ($q, $http, menu, des
 				}
 			}		
 		}
-        var menu = {module: 'Schools', actions: actions, style: moduleMenuStyle.module};
+        var menu = {name: 'Schools', actions: actions, style: moduleMenuStyle.module, image: moduleMenuStyle.image, color: moduleMenuStyle.color};
         return menu;
      }
 
@@ -105,7 +108,7 @@ helpdeskServices.service('helpdeskConfigService', function ($q, $http, menu, des
 					actions.push({title: 'Import Excel', state: 'helpdesk.accounts.create.list', style: moduleMenuStyle.import});
 			}		
 		}
-        var menu = {module: 'Accounts', actions: actions, style: moduleMenuStyle.module};
+        var menu = {name: 'Accounts', actions: actions, style: moduleMenuStyle.module, image: moduleMenuStyle.image, color: moduleMenuStyle.color};
         return menu;
      }
 

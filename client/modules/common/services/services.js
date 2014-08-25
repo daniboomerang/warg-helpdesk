@@ -20,7 +20,7 @@ commonServices.factory('techniciansService', function ($http){
   };
 });
 
-commonServices.factory('schoolsService', function ($http){
+/*commonServices.factory('schoolsService', function ($http){
 
   var schoolsList = [];
 
@@ -28,6 +28,7 @@ commonServices.factory('schoolsService', function ($http){
     initSchoolsList : function() {
       $http.get('/api/schools').success(function(list) {
         schoolsList = list;
+        return schoolsList;
       }).error(function() {
         console.log("Error retrieving schools list")
       });
@@ -37,5 +38,36 @@ commonServices.factory('schoolsService', function ($http){
     }
   };
 });
+
+
+commonServices.factory('schoolsServicet', function ($http){
+
+  return {
+    getSchools : function() {
+      $http.get('/api/schools').success(function(list) {
+        return list;
+      }).error(function() {
+        console.log("Error retrieving schools list")
+      });
+    }
+  };
+});
+
+*/
+
+commonServices.factory('schoolsService', function ($http, $q){
+  return {
+    getSchools : function() {
+      var deferred = $q.defer(); 
+          $http.get('/api/schools').success(function(schools) {
+            return deferred.resolve(schools);
+          }).error(function() {
+            console.log("Error retrieving the schools")
+          });
+        return deferred.promise;
+    }
+  };
+});
+
 
 

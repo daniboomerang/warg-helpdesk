@@ -1,0 +1,27 @@
+/**********/
+/* FOOTER */
+/**********/
+
+.footer {
+  position: relative;
+  left:0px;
+  bottom:0px;
+  width:100%;
+  color: #517fa4;
+  height: 35px;
+  padding-top: 9px;
+  text-align: center;
+  padding-left: 7%;
+  /*-webkit-box-shadow: 0px 3px 16px -2px rgba(20,20,20,1);
+  -moz-box-shadow: 0px 3px 16px -2px rgba(20,20,20,1);
+  box-shadow: 0px 3px 16px -2px rgba(20,20,20,1);
+  background-image:url('/modules/helpdesk/images/svgs/greenAndYellow.svg');
+  background-image:url('/modules/helpdesk/images/svgs/greenCircles.svg');
+  background-image:url('/modules/helpdesk/images/svgs/greenAndBlue.svg');*/
+  
+
+}
+.footer p {font-size: 11px;}
+.footer a {color: #513a94;}
+
+/* /////// */

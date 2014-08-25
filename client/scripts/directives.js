@@ -1,14 +1,5 @@
 var wargHelpdeskDirectives = angular.module('wargHelpdeskDirectives', [])
 
-
-wargHelpdeskDirectives.directive('footer', function() {
-  return {
-    restrict: 'E',
-    templateUrl: '/views/partials/footer.html'
-  };
-});
-
-
 wargHelpdeskDirectives.directive('mongooseError', function () {
   return {
     restrict: 'A',

@@ -1,15 +1,24 @@
-<div ng-controller="AssignCtrl">
+<div ng-controller="AssignCtrl" class="box-incidence-datails">
 	<div ng-show="edit.assign">		
-    <div class="row">
-      <ui-select ng-model="technician.selected" theme="selectize" class="assign-select-dropdown pull-left">
-        <ui-select-match placeholder="Assign tech"> <span class="severity-priority-select">{{$select.selected.username}}</ui-select-match></span>
-        <ui-select-choices repeat="technician in assign.techniciansListDropdown">
-          <div ng-bind-html="technician.username" class="severity-priority-select" ng-click="assignTo(technician)">{{technician.username}}></div>
-        </ui-select-choices>
-      </ui-select>
-        <div ng-show="assign.allowUpdate" ng-click="poolAssignation()" class="pull-right" style="margin-left: 15px">
-          <div class="btn btn-default"><img src="/modules/incidences/images/icons/ok-24.png" alt="Save Assignation"></div>
+    <div>
+      <div class="row" style="margin-bottom:2px;"> 
+        <div class="pull-left text-muted">Select Assignee:</div>    
+      </div>
+      <div class="row">
+        <ui-select ng-model="technician.selected" theme="selectize" class="assign-select-dropdown pull-left">
+          <ui-select-match placeholder="Assign tech"> <span class="severity-priority-select">{{$select.selected.username}}</ui-select-match></span>
+          <ui-select-choices repeat="technician in assign.techniciansListDropdown">
+            <div ng-bind-html="technician.username" class="severity-priority-select" ng-click="assignTo(technician)">{{technician.username}}></div>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+      <div class="row pull-left">
+        <div ng-show="assign.allowUpdate">
+          <div ng-click="poolAssignation()">
+            <div class="btn btn-primary">Submit Assignee</div>
+          </div>  
         </div>
+      </div>
     </div>
 	</div>    
 	<div ng-show="!edit.assign">

@@ -1,15 +1,22 @@
-<div ng-controller="EffortCtrl">
+<div ng-controller="EffortCtrl" class="box-incidence-datails">
 	<div ng-show="edit.effort">
-		<div class="row">
-         	<div class="pull-left"> 
-         	<div class="controls input-group time-input">
-                 <input ng-change="effortChanged()" type="number" ng-model="effort.hours" class="form-control" placeholder="hours"><div class="input-group-addon">h</div>
-                 <input ng-change="effortChanged()" type="number" ng-model="effort.minutes" class="form-control" placeholder="minutes"><div class="input-group-addon">m</div>
-            </div>		    
+		<div>
+			<div class="row" style="margin-bottom:2px;"> 
+	        	<div class="pull-left text-muted">Report your time:</div>    
          	</div>
-			<div ng-show="effort.allowToPool" class="pull-right" style="margin:5px;">  					
-				<div ng-click="poolEffort()"> <img src="/modules/incidences/images/icons/ok-16.png" alt="Save time reporting"></div>
-            </div>
+         	<div class="row"> 
+	         	<div class="controls input-group time-input">
+	                 <input ng-change="effortChanged()" type="number" ng-model="effort.hours" class="form-control"><div class="input-group-addon">h</div>
+	                 <input ng-change="effortChanged()" type="number" ng-model="effort.minutes" class="form-control"><div class="input-group-addon">m</div>
+	            </div>		    
+         	</div>
+			<div class="row pull-left" style="margin-top:5px;">
+				<div ng-show="effort.allowToPool">  					
+					<div ng-click="poolEffort()">
+						<div class="btn btn-info">Submit Time</div>
+					</div>
+	        	</div>
+			</div>    
         </div>    
 	</div>    
 	<div ng-show="!edit.effort">

@@ -1,40 +1,44 @@
-<div ng-controller="RateCtrl">
+<div ng-controller="RateCtrl" class="box-incidence-datails">
 	<div ng-show="edit.rate">
 		<div class="row">
-         	<div class="pull-left stars"> 		
-	         		<div class="row" ng-click="rating.showOkButton = true">
-						<rating ng-model="rating.rate" value="rating.rate" max="rating.max" readonly="false" state-on="'glyphicon-rate glyphicon-star'" state-off="'glyphicon-rate glyphicon-star-empty'" on-hover="hoveringOver(value)" on-leave="rating.overStar = null" ></rating>
+         	<div> 		
+         		<div class="row" ng-click="rating.showOkButton = true">
+					<rating ng-model="rating.rate" value="rating.rate" max="rating.max" readonly="false" state-on="'glyphicon-rate glyphicon-star'" state-off="'glyphicon-rate glyphicon-star-empty'" on-hover="hoveringOver(value)" on-leave="rating.overStar = null" ></rating>
+				</div>
+				<div class="row" ng-show="rating.overStar" style="margin-top:8px;">
+					<span class="label" style="font-size:20px;" ng-class="{'label-warning': rating.percent<30, 'label-info': rating.percent>=30 && rating.percent<70, 'label-success': rating.percent>=70}">{{rating.percent}}%</span>
+				</div>
+				<div class="row" ng-show="!rating.overStar" style="margin-top:8px;">
+					<span class="label" style="font-size:20px;" ng-class="{'label-warning': rating.percent<30, 'label-info': rating.percent>=30 && rating.percent<70, 'label-success': rating.percent>=70}" >{{(100 * rating.rate) / rating.max}}%</span>
+					<div ng-show="rating.showOkButton" style="margin-top:10px;">
+						<div ng-click="poolRating()">
+            				<div class="btn btn-warning">Submit Rate</div>
+          				</div> 
 					</div>
-					<!--state-on="rating.starOn" state-off="rating.starOff" -->
-					<div class="row" ng-show="rating.overStar" style="margin-top:5px;">
-						<span class="label pull-left" style="font-size:20px;" ng-class="{'label-warning': rating.percent<30, 'label-info': rating.percent>=30 && rating.percent<70, 'label-success': rating.percent>=70}">{{rating.percent}}%</span>
-					</div>
-					<div class="row" ng-show="!rating.overStar" style="margin-top:5px;">
-						<span class="label pull-left" style="font-size:20px;" ng-class="{'label-warning': rating.percent<30, 'label-info': rating.percent>=30 && rating.percent<70, 'label-success': rating.percent>=70}" >{{(100 * rating.rate) / rating.max}}%</span>
-						<div ng-show="rating.showOkButton" ng-class="pull-right" ng-click="poolRating()"> <img src="/modules/incidences/images/icons/ok-16.png" alt="Pool Rating"></div>
-					</div>
-         	</div>
-			
+				</div>
+         	</div>		
         </div>    
 	</div>    
 	<div ng-show="!edit.rate">
-		<div ng-show="incidence.rate == -1">
-				<div> <img src="/modules/incidences/images/icons/rating-gray-48.png" alt="Rating"></div>
-				<font size="1" class="text-muted">No ratings reported</font>
-		</div>
-		<div ng-show="incidence.rate > -1">
-            <div class="row">
-             	<div class="pull-left" style="margin-right: 15px;"> <img src="/modules/incidences/images/icons/rating-yellow-48.png" alt="Rating">
-             	</div>
-  				<div class="pull-right">  					
-  					<div class="row">
-	                	<rating value="incidence.rate" max="rating.max" readonly="true"></rating>
-	                </div>
-	                <div>
-	                	<font size="5">{{(100 * incidence.rate) / rating.max}}%</font>
-	                </div>
+		<div class="row">
+			<div ng-show="incidence.rate == -1">
+					<div> <img src="/modules/incidences/images/icons/rating-gray-48.png" alt="Rating"></div>
+					<font size="1" class="text-muted">No ratings reported</font>
+			</div>
+			<div ng-show="incidence.rate > -1">
+	            <div class="row">
+	             	<div class="pull-left" style="margin-right: 15px;"> <img src="/modules/incidences/images/icons/rating-yellow-48.png" alt="Rating">
+	             	</div>
+	  				<div class="pull-left">  					
+	  					<div class="row">
+		                	<rating value="incidence.rate" max="rating.max" readonly="true"></rating>
+		                </div>
+		                <div>
+		                	<font size="5">{{(100 * incidence.rate) / rating.max}}%</font>
+		                </div>
+		            </div>    
 	            </div>    
-            </div>    
-        </div> 
+	        </div>
+	    </div>    
 	</div> 
 </div>

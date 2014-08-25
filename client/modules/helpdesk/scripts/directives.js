@@ -21,9 +21,17 @@ helpdeskDirectives.directive('navbar', function() {
   };
 });
 
+wargHelpdeskDirectives.directive('footer', function() {
+  return {
+    restrict: 'E',
+    templateUrl: '/modules/helpdesk/views/partials/footer.html'
+  };
+});
+
 helpdeskDirectives.directive('helpdesk', function() {
   return {
     restrict: 'E',
     templateUrl: '/modules/helpdesk/views/helpdesk.html'
   };
 })
+

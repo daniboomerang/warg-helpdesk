@@ -156,13 +156,18 @@ incidencesControllers.controller('CreateCtrl', function ($scope, schoolsService,
   // INITIALIZING DROPDOWNS DATA
 
   $scope.school = {};
-  $scope.schoolsList = schoolsService.getSchoolsList();
-  if ($scope.schoolsList.length > 0){
-    $scope.school.selected = $scope.schoolsList[0];
-  }
-  else{
-    $scope.school.selected = "Error retreiving the schools";
-  }
+  $scope.schoolsList = {};
+  $scope.schoolsList = [];
+  $scope.schoolsListReady = false;
+
+  $scope.refreshSchools = function(){
+    schoolsService.getSchools().then(function (schoolsList){
+      $scope.schoolsList = schoolsList;
+      $scope.school.selected = $scope.schoolsList[0];
+      $scope.schoolsListReady = true;
+    });
+  };
+
   $scope.severity = {};
   $scope.priority = {};
   $scope.severity.selected = {type: 'Medium'};
@@ -303,36 +308,28 @@ incidencesControllers.controller('IncidenceNavCtrl', function ($scope, $document
     $scope.edit.assign = !$scope.edit.assign;
   }
 
-  $scope.toTheTop = function() {
-    $document.scrollTo(top, 0, 1000);
-  };
-
-  $scope.toTheReply = function() {
-    var reply = angular.element(document.getElementById('incidence-reply'));
-    $document.scrollTo(reply, 0, 1000);
+  $scope.toTheBottom = function() {
+    var bottom = angular.element(document.getElementById('bottom'));
+    $document.scrollTo(bottom, 0, 1000);
   };
 
 });
 
 incidencesControllers.controller('IncidenceCtrl', function ($scope, $routeParams, $state, $document, $rootScope) {
 
-  init();
+  $scope.commentsStatus = {};
+  $scope.commentsStatus.expanded = false;
+
+  $scope.toogleComments = function(){
+    $scope.commentsStatus.expanded = !$scope.commentsStatus.expanded;
+  };
 
   $scope.goToState = function (state) {
     $state.goToState('helpdesk.incidences.open.incidence' + state, $state.params);
   }; 
 
-  function init(){
-    $document.scrollTo(top, 0, 1000);
-  }
-
   $scope.toTheTop = function() {
     $document.scrollTo(top, 0, 1000);
-  };
-
-  $scope.toTheReply = function() {
-    var reply = angular.element(document.getElementById('incidence-reply'));
-    $document.scrollTo(reply, 0, 1000);
   };
 
   $scope.sendComment = function(comment) {
@@ -377,16 +374,19 @@ incidencesControllers.controller('EffortCtrl', function ($scope) {
 
   $scope.effort = {};
   $scope.effort.hours = 0;
-  $scope.effort.minutes = 0
+  $scope.effort.minutes = 0;
   $scope.effort.allowToPool = false;
   $scope.effortChanged = function () {
-    if ($scope.effort.minutes > 60)
+    if ((typeof $scope.effort.hours == 'undefined') || (typeof $scope.effort.minutes == 'undefined')){
+      $scope.effort.allowToPool = false;
+    }
+    else if ($scope.effort.minutes > 60)
       $scope.effort.minutes = 0;
-    if ($scope.effort.hours < 0)
+    else if ($scope.effort.hours < 0)
       $scope.effort.hours = 99;
-    if ($scope.effort.minutes < 0)
+    else if ($scope.effort.minutes < 0)
       $scope.effort.minutes = 60;
-    if (($scope.effort.hours > 0) || (($scope.effort.hours == 0) && ($scope.effort.minutes > 0)))
+    else if (($scope.effort.hours > 0) || (($scope.effort.hours == 0) && ($scope.effort.minutes > 0)))
       $scope.effort.allowToPool = true;
     else
       $scope.effort.allowToPool = false;

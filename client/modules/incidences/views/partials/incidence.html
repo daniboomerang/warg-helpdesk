@@ -1,33 +1,40 @@
 <div ng-init="findOne()">
     <div id="incidence-nav-container" ng-controller="IncidenceNavCtrl">          
         <div class="row">
-            <div class="pull-left incidence-details">
-                <div class="pull-left box-incidence-datails">
-                    <rate></rate>
-                </div>
-                <div class="pull-left box-incidence-datails">
-                    <assign></assign>
-                </div>
-                <div class="pull-left box-incidence-datails">
-                    <effort></effort>
-                </div>
+            <div class="col-md-2" style="padding: 10px; padding-left: 25px;">
+                <div class="text-muted">Incidence: <strong> {{incidence.id}} </strong></div>
+                <div class="text-muted"> <strong> {{ incidence.creator.username}} </strong></div>
+                <div class="text-muted"> On: {{incidence.created | date:'shortDate'}}</div>
+                <div class="text-muted"> Severity: <strong>  {{incidence.severity}} </strong></div>
+                <div class="text-muted"> Priority: <strong> {{incidence.priority}} </strong></div>
             </div>
-            <div class="pull-right">
-                <div class="row" style="margin-top:10px; margin-bottom:10px;">
-                    <span class="text-muted">Incidence Id: {{incidence.id}}</span>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <span class="text-muted">Owner: {{ incidence.creator.username}}</span>
-                </div>
-                <div class="row">  
-                    <!-- Close is a modal -->           
-                    <span ng-controller="CloseCtrl" ng-show="((incidence.status == 'On Going') && (incidence.assigned == currentUser.username))" ng-click="closeIncidence()" class="icon-navbar-container btn btn-default pull-right"> <img src="/modules/incidences/images/icons/close-24.png" alt="View Details"></span>
-                    <!-- end close -->
-                    <span ng-show="((incidence.status == 'Close') && (incidence.creator == currentUser))"
-                     ng-click="toogleRateMode()" class="icon-navbar-container btn btn-default pull-right" ng-class="{active: edit.rate}"><img src="/modules/incidences/images/icons/rating-24.png" alt="View Details"></span>   
-                    <span ng-show="((incidence.status != 'Close') && (currentUser.role != 'user'))" ng-click="toogleAssignMode()" class="icon-navbar-container btn btn-default pull-right" ng-class="{active: edit.assign}"> <img src="/modules/incidences/images/icons/worker-24.png" alt="View Details"></span>
-                    <span ng-show="(currentUser.username == incidence.assigned)" ng-click="toogleEffortMode()" class="icon-navbar-container btn btn-default pull-right" ng-class="{active: edit.effort}"> <img src="/modules/incidences/images/icons/stopwatch-24.png" alt="View Details"></span>
-                    <span ng-click="toTheReply()" class="icon-navbar-container btn btn-default pull-right"><img src="/modules/incidences/images/icons/reply-24.png" alt="View Details"></span> 
-                </div>
+            <div class="col-md-7" style="padding-left: 80px; padding-right: 60px;">
+                <div class="row">
+                    <div class="col-md-4">
+                        <rate></rate>
+                    </div>
+                    <div class="col-md-4">
+                        <assign></assign>
+                    </div>
+                    <div class="col-md-4">
+                        <effort></effort>
+                    </div>
+                </div>    
+            </div>    
+            <div class="col-md-3" style="padding: 20px; padding-top: 13px;">
+                <span ng-click="toogleComments()" class="icon-navbar-container btn btn-default pull-right">
+
+                    <span ng-if="!commentsStatus.expanded"> <img src="/modules/incidences/images/icons/expand-24.png" popover-placement="bottom" popover="Expand all comments" popover-trigger="mouseenter"></span>
+                    <span ng-if="commentsStatus.expanded"> <img src="/modules/incidences/images/icons/shrink-24.png"popover-placement="bottom" popover="Shrink all comments" popover-trigger="mouseenter"></span>
+
+                </span>
+                <span ng-click="toTheBottom()" class="icon-navbar-container btn btn-default pull-right"><img src="/modules/incidences/images/icons/bottomArrow-24.png"  popover-placement="bottom" popover="Go to bottom" popover-trigger="mouseenter"></span>
+                
+                <span ng-controller="CloseCtrl" ng-show="((incidence.status == 'On Going') && (incidence.assigned == currentUser.username))" ng-click="closeIncidence()" class="icon-navbar-container btn btn-default pull-right" popover-placement="bottom" popover="Close {{incidence.id}}" popover-trigger="mouseenter"> <img src="/modules/incidences/images/icons/close-24.png" ></span>
+                <span ng-show="((incidence.status == 'Close') && (incidence.creator == currentUser))" 
+                ng-click="toogleRateMode()" class="icon-navbar-container btn btn-default pull-right" ng-class="{active: edit.rate}" popover-placement="bottom" popover="Happy with our service?" popover-trigger="mouseenter"><img src="/modules/incidences/images/icons/rating-24.png" ></span>   
+                <span ng-show="((incidence.status != 'Close') && (currentUser.role != 'user'))" ng-click="toogleAssignMode()" class="icon-navbar-container btn btn-default pull-right" ng-class="{active: edit.assign}" popover-placement="bottom" popover="Assign Incidence" popover-trigger="mouseenter"> <img src="/modules/incidences/images/icons/worker-24.png" ></span>
+                <span ng-show="(currentUser.username == incidence.assigned)" ng-click="toogleEffortMode()" class="icon-navbar-container btn btn-default pull-right" ng-class="{active: edit.effort}" popover-placement="bottom" popover="Report your effort" popover-trigger="mouseenter"> <img src="/modules/incidences/images/icons/stopwatch-24.png" ></span>
             </div>     
         </div>
     </div>
@@ -41,91 +48,28 @@
 <!--</div>-->
 
 
-    <div class="row" ng-show="incidence.history.length == 0">
-        <div id="incidence-reply">
-            <form class="form" name="form" ng-submit="sendComment(comment)" style="margin-bottom: 30px">
-                <div class="row" style="margin-bottom: 10px;">
-                    <div class="col-md-1">
-                        <input class="btn btn-default" value="Submit" type="image" ngClick="Submit" src="/modules/incidences/images/icons/reply-24-blue.png" ng-disabled="form.$invalid">
-                    </div>
-                    <div class="col-md-10">
-                        <div ng-if="changed(form.comment)" ng-messages="form.comment.$error" style="width: auto;">
-                            <div class="frame-error-arrowdown" ng-message="required">Sorry, comment can´t be blank</div>
-                            <div class="frame-error-arrowdown" ng-message="minlength">The minimum comment lenght required is 70 characters.</div>
-                            <div class="frame-error-arrowdown" ng-message="maxlength">The maximum comment lenght required is 3500 characters.</div>
-                        </div>
-                    </div>
-                    <div class="col-md-1">    
-                        <div ng-click="toTheTop()" class="btn btn-default"><img src="/modules/incidences/images/icons/arrow-top-24.png" alt=" Go To Top Page"></div>
-                    </div>
-                </div>  
-                <div class="form-group">
-                    <div class="input-group">
-                        <textarea style="resize:vertical; min-height: 200px;"
-                             type="text"
-                            name="comment"
-                            class="form-control"
-                            placeholder="Post comment"
-                            ng-model="comment"
-                            required
-                            ng-minlength="70"
-                            ng-maxlength="3500"/>
-                        </textarea>
-                        <div class="input-group-addon bg-success">{{ commentLength(form) }}</div>
-                    </div>
-                </div>
-            </form> 
-        </div>
+    <div class="row frame-reply" ng-show="incidence.history.length == 0">
+        <reply></reply>
     </div>
 
     <accordion close-others="false">
-      <accordion-group ng-repeat="post in incidence.history" is-open="$index == 0" ng-class="">
+      <accordion-group ng-repeat="post in incidence.history" is-open="$index == 0 || commentsStatus.expanded" ng-class="">
         <accordion-heading>
-         <span class="badge alert-info" style="padding:8px;">Posted {{post.date | date:'medium'}}</span>
-         <div class="pull-right">
-            <span class="badge alert-info" style="padding:8px;">Posted by: {{post.author}}</span>
-         </div>
+            <span class="badge alert-info" style="padding:8px;">Posted {{post.date | date:'medium'}}</span>
+            <div class="pull-right">
+                <span ng-show="($index == incidence.history.length -1)" ng-click="toTheTop()" class="icon-navbar-container btn btn-default pull-right"><img src="/modules/incidences/images/icons/topArrow-16.png" popover-placement="top" popover="Go to top" popover-trigger="mouseenter"></span>
+             </div>
+             <div class="pull-right">
+                <span class="badge alert-info" style="padding:8px;">Posted by: {{post.author}}</span>
+             </div>          
         </accordion-heading>
-        {{post.post}}
-        <div class="row" ng-show="$index == 0">
-            <div id="incidence-reply">
-                <form class="form" name="form" ng-submit="sendComment(comment)" style="margin-bottom: 30px">
-                    <div class="row" style="margin-bottom: 10px;">
-                        <div class="col-md-1">
-                            <input class="btn btn-default" value="Submit" type="image" ngClick="Submit" src="/modules/incidences/images/icons/reply-24-blue.png" ng-disabled="form.$invalid">
-                        </div>
-                        <div class="col-md-10">
-                            <div ng-if="changed(form.comment)" ng-messages="form.comment.$error" style="width: auto;">
-                                <div class="frame-error-arrowdown" ng-message="required">Sorry, comment can´t be blank</div>
-                                <div class="frame-error-arrowdown" ng-message="minlength">The minimum comment lenght required is 70 characters.</div>
-                                <div class="frame-error-arrowdown" ng-message="maxlength">The maximum comment lenght required is 3500 characters.</div>
-                            </div>
-                        </div>
-                        <div class="col-md-1">    
-                            <div ng-click="toTheTop()" class="btn btn-default"><img src="/modules/incidences/images/icons/arrow-top-24.png" alt=" Go To Top Page"></div>
-                        </div>
-                    </div>  
-                    <div class="form-group">
-                        <div class="input-group">
-                            <textarea style="resize:vertical; min-height: 200px;"
-                                 type="text"
-                                name="comment"
-                                class="form-control"
-                                placeholder="Post comment"
-                                ng-model="comment"
-                                required
-                                ng-minlength="70"
-                                ng-maxlength="3500"/>
-                            </textarea>
-                            <div class="input-group-addon bg-success">{{ commentLength(form) }}</div>
-                        </div>
-                    </div>
-                </form> 
-            </div>
+        <div ng-bind-html="post.post | breakFilter"></div>
+        <div class="row frame-reply" ng-show="$index == 0">
+            <reply></reply>
         </div>
       </accordion-group>
     </accordion>
 
-   
+   <section id="bottom"></section>
 </div>      
 
