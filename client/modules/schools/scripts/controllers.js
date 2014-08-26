@@ -44,11 +44,13 @@ schoolsControllers.controller('SchoolsCtrl', function ($scope, Schools, $q) {
 
 });
 
-schoolsControllers.controller('SchoolsListCtrl', function($scope){
-
+schoolsControllers.controller('SchoolsListCtrl', function ($scope, $state){
+  $scope.goToState = function (state) {
+    $state.go(state);
+  }; 
 });
 
-schoolsControllers.controller('CreateSchoolFormCtrl', function($scope){
+schoolsControllers.controller('CreateSchoolFormCtrl', function ($scope){
   $scope.changed = function(filed){
     return filed.$dirty;
   };

@@ -1,7 +1,6 @@
 <div class="col-sm-3 col-md-2 sidebar">
-
-  <accordion close-others="oneAtATime">
-    <div ng-repeat="module in menu" ng-class="{true: module.style.active}[status.activeModule == module.name]" class="frame-module">
+    <accordion close-others="oneAtATime">
+      <div ng-repeat="module in menu" ng-class="{true: module.style.active}[status.activeModule == module.name]" class="frame-module">
       <accordion-group is-open="isActiveModule(module.name)">
         <accordion-heading>
   
@@ -27,6 +26,8 @@
           </li>
         </ul>
       </accordion-group>
-    </div>
+            </div>
+
   </accordion>
+
 </div>

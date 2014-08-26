@@ -1,11 +1,10 @@
 'use strict';
 
-var inventoryControllers = angular.module('inventoryControllers', [])
+var inventoryControllers = angular.module('inventoryControllers', ['helpdeskServices'])
 
-inventoryControllers.controller('InventoryCtrl', function ($scope, Auth, $location) {
-  
-      $scope.test = 'test';
-  });
+inventoryControllers.controller('InventoryCtrl', function ($scope, messengerService) {
+    messengerService.popMessage('success', 'Inventory succesfully opened', 'This is a test');
+});
 
 inventoryControllers.controller('ExpensesReportCtrl', function ($scope, Auth, $location, $timeout) {
 

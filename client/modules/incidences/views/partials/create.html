@@ -45,12 +45,16 @@
           <div class="frame-error-arrowup" style="max-width: 85%;" ng-message="minlength">Sorry, minimum description lenght required is 30 characters.</div>
           <div class="frame-error-arrowup" style="max-width: 85%;" ng-message="maxlength">Sorry, maximum description lenght required is 1500 characters.</div>
         </div>
-
         <div class="row">
           <section ng-show="currentUser.role == 'admin'">
-            <div class="col-xs-6 col-sm-2" ng-show="schoolsListReady">
+            <!-- show unavailability message -->
+            <div class="col-xs-6 col-sm-2" ng-show="schoolsListEmpty && schoolsListReady" style="margin-left: 15px;">
+              <div class="row" style="text-align: center; margin-bottom: 5px;"><img src="/images/icons/warning-24.png"></div>
+              <div class="row frame-div-warning">No Schools available.</br>Please contact your administrator</div>
+            </div>
+            <div class="col-xs-6 col-sm-2" ng-show="schoolsListReady && !schoolsListEmpty">
             <h5>School</h5>
-              <ui-select ng-model="school.selected" theme="selectize" ng-required="true">
+              <ui-select ng-model="school.selected" theme="selectize" ng-required="currentUser.role == 'admin'">
                 <ui-select-match placeholder="{{school.name}}">{{$select.selected.name}}
                 </ui-select-match>
                 <ui-select-choices repeat="school in schoolsList">
@@ -65,6 +69,7 @@
               </div>  
             </div>
           </section>
+
           <div class="col-xs-6 col-sm-2">
             <h5>Severity</h5>
              <ui-select ng-model="severity.selected" theme="selectize" style="width: 120px;" ng-required="true">

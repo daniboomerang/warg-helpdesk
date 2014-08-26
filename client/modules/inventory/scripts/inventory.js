@@ -4,6 +4,7 @@
 var inventory = angular.module('inventory',
   [
     'inventoryControllers',
+	'helpdeskServices',
     'angularCharts',
     'auth',
     'ui.router']);

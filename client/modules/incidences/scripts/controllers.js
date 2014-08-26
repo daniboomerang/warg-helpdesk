@@ -1,8 +1,8 @@
   'use strict';
 
-var incidencesControllers = angular.module('incidencesControllers', ['incidencesServices', 'duScroll', 'commonServices'])
+var incidencesControllers = angular.module('incidencesControllers', ['incidencesServices', 'duScroll', 'commonServices', 'helpdeskServices'])
 
-incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, $anchorScroll, $routeParams, $state, Incidences, IncidenceRate, IncidenceAssign, IncidenceEffort, IncidenceClose, IncidenceComment) {
+incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, $anchorScroll, $routeParams, $state, messengerService, Incidences, IncidenceRate, IncidenceAssign, IncidenceEffort, IncidenceClose, IncidenceComment) {
 
   //////////
   /* CRUD */
@@ -18,6 +18,7 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
     });
     incidence.$save(function(response) {
       $location.path("helpesk/incidences/open/" + response.id);
+      messengerService.popMessage('success', 'Incidence created successfully.', response.id);
     });
   };
 
@@ -136,7 +137,9 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
 
 });
 
-incidencesControllers.controller('CreateCtrl', function ($scope, schoolsService, $rootScope){
+incidencesControllers.controller('CreateCtrl', function ($scope, $rootScope, $modal, $state, schoolsService, locationService){
+
+  init();
 
   $scope.changed = function(filed){
     return filed.$dirty;
@@ -153,34 +156,6 @@ incidencesControllers.controller('CreateCtrl', function ($scope, schoolsService,
     $scope.create(incidenceTitle, incidenceDescription, incidenceSeverity, incidencePriority, incidenceSchool);
   };
 
-  // INITIALIZING DROPDOWNS DATA
-
-  $scope.school = {};
-  $scope.schoolsList = {};
-  $scope.schoolsList = [];
-  $scope.schoolsListReady = false;
-
-  $scope.refreshSchools = function(){
-    schoolsService.getSchools().then(function (schoolsList){
-      $scope.schoolsList = schoolsList;
-      $scope.school.selected = $scope.schoolsList[0];
-      $scope.schoolsListReady = true;
-    });
-  };
-
-  $scope.severity = {};
-  $scope.priority = {};
-  $scope.severity.selected = {type: 'Medium'};
-  $scope.priority.selected = {type: 'Medium'};
-  $scope.urgencyTypes = [
-    { type: 'Serious'},
-    { type: 'High'},
-    { type: 'Medium'},
-    { type: 'Low'}
-  ];
-
-  ////////////////////////////
-
   $scope.descriptionLength = function (form) {
       if (form.description.$viewValue == undefined){return 0};
       return form.description.$viewValue.length;     
@@ -191,10 +166,112 @@ incidencesControllers.controller('CreateCtrl', function ($scope, schoolsService,
       return form.title.$viewValue.length;     
   };
 
+  $scope.refreshSchools = function(){
+    schoolsService.retrieveSchools().then(function (schoolsList){      
+      if (schoolsList.length > 0){
+        $scope.schoolsList = schoolsList;
+        $scope.school.selected = $scope.schoolsList[0];
+        $scope.schoolsListReady = true;
+      }
+      else{
+        if ($rootScope.currentUser.role = "admin"){
+          openModalWarning();
+        }
+        else{
+          $scope.schoolsListReady = true;
+          $scope.schoolsListEmpty = true;   
+        }
+      }
+    });
+  };
+
+  function init(){
+
+    // Schools
+    $scope.school = {};
+    $scope.allowUpdate = false;
+    $scope.schoolsListReady = false;
+
+    var schoolsList = schoolsService.getSchools();
+    if (schoolsList == null){
+      $scope.schoolsListReady = false;
+      $scope.schoolsListEmpty = false
+    }
+    else if (schoolsList.length == 0){
+      // We need to check a School has been created recently.
+      // So we ensure that, calling again to the server.
+      schoolsService.retrieveSchools().then(function (schoolsList){      
+        if (schoolsList.length > 0){
+          $scope.schoolsList = schoolsList;
+          $scope.school.selected = $scope.schoolsList[0];
+          $scope.schoolsListReady = true;
+        }
+        else{
+          if ($rootScope.currentUser.role = "admin"){
+            openModalWarning();
+          }
+          else{
+            $scope.schoolsListReady = true;
+            $scope.schoolsListEmpty = true;   
+          }
+        }
+      });
+    }
+    else{
+      $scope.schoolsList = schoolsList;
+      $scope.school.selected = $scope.schoolsList[0];
+      $scope.schoolsListReady = true;
+      $scope.schoolsListEmpty = false;
+    }
+
+    // Priority
+    $scope.severity = {};
+    $scope.priority = {};
+    $scope.severity.selected = {type: 'Medium'};
+    $scope.priority.selected = {type: 'Medium'};
+    $scope.urgencyTypes = [
+      { type: 'Serious'},
+      { type: 'High'},
+      { type: 'Medium'},
+      { type: 'Low'}
+    ];
+  }
+
+  function openModalWarning() {
+
+      // Please note that $modalInstance represents a modal window (instance) dependency.
+    // It is not the same as the $modal service used above.
+    var ModalWarningInstanceCtrl = function ($scope, $modalInstance) {
+
+      $scope.ok = function () {
+        $modalInstance.close('ok');
+      };
+
+      $scope.cancel = function () {
+        $modalInstance.close('cancel');
+      };
+    };
+
+    var warningModalInstance = $modal.open({
+      templateUrl: '/modules/accounts/views/partials/warning-schools.html',
+      controller: ModalWarningInstanceCtrl,
+      size: 'sm'
+    });
+
+    warningModalInstance.result.then(function (choice) {
+      if (choice == 'ok') {$state.go('helpdesk.schools.create.school');}
+      else {$state.go(locationService.getPreviousState());}
+    }, function () { });
+    
+  };
 });
  
 
 incidencesControllers.controller('ListCtrl', function ($scope, $state, $document, $modal, $log) {
+
+  $scope.goToState = function (state) {
+    $state.go(state);
+  }; 
 
   // It helps us with the fact that if we click on overview, the watcher of selectedIncidences is
   // triggered and therefore redirected to open. And we don´t want that.
@@ -282,7 +359,7 @@ incidencesControllers.controller('OverviewCtrl', function ($scope, $routeParams,
 
 });
 
-incidencesControllers.controller('IncidenceNavCtrl', function ($scope, $document, $rootScope) {
+incidencesControllers.controller('IncidenceNavCtrl', function ($scope, $document, $rootScope, techniciansService) {
   
   init();
 
@@ -399,7 +476,7 @@ incidencesControllers.controller('EffortCtrl', function ($scope) {
 });
 
 
-incidencesControllers.controller('AssignCtrl', function ($scope, techniciansService) {
+incidencesControllers.controller('AssignCtrl', function ($rootScope, $scope, $state, $modal, techniciansService, locationService) {
 
   init();
   
@@ -414,13 +491,92 @@ incidencesControllers.controller('AssignCtrl', function ($scope, techniciansServ
       $scope.edit.assign = false;
   }
 
-  function init(){
-    $scope.assign = {};
-    $scope.assign.allowUpdate = false;
-    $scope.assign.techniciansList = techniciansService.getTechList();
-    $scope.assign.techniciansListDropdown = $scope.assign.techniciansList;
-  }
+  $scope.refreshTechnicians = function(){
+    techniciansService.retrieveTechnicians().then(function (techniciansList){
+      $scope.assign.techniciansList = techniciansList;
+      if ($scope.assign.techniciansList.length == 0){
+        if ($rootScope.currentUser.role = "admin"){
+          openModalWarning();
+        }
+        else{
+          $scope.assign.techniciansListReady = true;
+          $scope.assign.techniciansListEmpty = true;   
+        }
+      }
+      else{
+        $scope.technician.selected = $scope.assign.techniciansList[0];
+        $scope.assign.techniciansListReady = true;
+        $scope.assign.techniciansListEmpty = false;   
+      }
+    });
+  };
 
+  function openModalWarning() {
+
+      // Please note that $modalInstance represents a modal window (instance) dependency.
+    // It is not the same as the $modal service used above.
+    var ModalWarningInstanceCtrl = function ($scope, $modalInstance) {
+
+      $scope.ok = function () {
+        $modalInstance.close('ok');
+      };
+
+      $scope.cancel = function () {
+        $modalInstance.close('cancel');
+      };
+    };
+
+    var warningModalInstance = $modal.open({
+      templateUrl: '/modules/incidences/views/partials/warning-technicians.html',
+      controller: ModalWarningInstanceCtrl,
+      size: 'sm'
+    });
+
+    warningModalInstance.result.then(function (choice) {
+      if (choice == 'ok') {$state.go('helpdesk.accounts.create.account');}
+      else {$state.go(locationService.getPreviousState());}
+    }, function () { });
+    
+  };
+
+  function init(){
+
+    // Technicians
+    $scope.assign = {};
+    $scope.technician = {};
+    $scope.assign.allowUpdate = false;
+    $scope.assign.techniciansListReady = false;
+
+    var techniciansList = techniciansService.getTechnicians();
+    if (techniciansList == null){
+      $scope.assign.techniciansListReady = false;
+      $scope.assign.techniciansListEmpty = false
+    }
+    else if (techniciansList.length == 0){
+      techniciansService.retrieveTechnicians().then(function (techniciansList){      
+        if (techniciansList.length > 0){
+          $scope.assign.techniciansList = techniciansList;
+          $scope.technician.selected = $scope.assign.techniciansList[0];
+          $scope.assign.techniciansListReady = true;
+        }
+        else{
+          if ($rootScope.currentUser.role = "admin"){
+            openModalWarning();
+          }
+          else{
+            $scope.assign.techniciansListReady = true;
+            $scope.assign.techniciansListEmpty = true
+          }
+        }
+      });
+    }  
+    else{
+      $scope.assign.techniciansList = techniciansList;
+      $scope.technician.selected = $scope.assign.techniciansList[0];
+      $scope.assign.techniciansListReady = true;
+      $scope.assign.techniciansListEmpty = false;
+    }  
+  }
 });
 
 incidencesControllers.controller('CloseCtrl', function ($scope, $modal, $log) {

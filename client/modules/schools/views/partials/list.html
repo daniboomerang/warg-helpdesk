@@ -1,29 +1,32 @@
 <section ng-init="find()">
-		<div class="row-fluid">	
-		  	<div class="span12 list-schools-container">
-			    <table tr-ng-grid="" items="schools" selected-items="selectedSchools" selection-mode="SingleRow" >
-				    <thead>
-				        <tr>
-				            <th field-name="code" cell-width="5em">Code</th>  
-				            <th field-name="name" cell-width="5em">Name</th>
-				            <th field-name="address" cell-width="3em">Address</th>				          
-				        </tr>
-				    </thead>
-		            <tbody>
-		                <tr>
-		                </tr>
-		            </tbody>
-		            <tfoot>
-		                <tr>
-		                    <td colspan="10">	
-		                        <form class="form-inline tr-ng-grid-footer" grid="">
-		                            <div class="pull-left" tr-ng-grid-global-filter=""></div>
-		                            <div class="pull-right" tr-ng-grid-pager=""></div>
-		                        </form>
-		                    </td>
-		                </tr>
-		            </tfoot>
-		        </table>
-		  	</div>
-		</div>  	
+	<div class="row-fluid" ng-show="schools.length > 0">	
+	  	<div class="span12 list-schools-container">
+		    <table tr-ng-grid="" items="schools" selected-items="selectedSchools" selection-mode="SingleRow" >
+			    <thead>
+			        <tr>
+			            <th field-name="code" cell-width="1em">Code</th>  
+			            <th field-name="name" cell-width="5em">Name</th>
+			            <th field-name="address" cell-width="5em">Address</th>				          
+			        </tr>
+			    </thead>
+	            <tbody>
+	                <tr style="text-align: center;">
+	                </tr>
+	            </tbody>
+	            <tfoot>
+	                <tr>
+	                    <td colspan="10">	
+	                        <form class="form-inline tr-ng-grid-footer" grid="">
+	                            <div class="pull-left" tr-ng-grid-global-filter=""></div>
+	                            <div class="pull-right" tr-ng-grid-pager=""></div>
+	                        </form>
+	                    </td>
+	                </tr>
+	            </tfoot>
+	        </table>
+	  	</div>
+	</div>  
+	<div class="frame-empty-resource-message" ng-hide="schools.length > 0">
+		<h1>No schools yet. <br> Why don't you <a ng-click="goToState('helpdesk.schools.create.school')">Create One</a>?</h1>
+	</div>		
 </section>

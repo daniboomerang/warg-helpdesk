@@ -6,7 +6,7 @@ var incidences = angular.module('incidences',
     'ui.router',
     'incidencesControllers',
     'incidencesServices',
-    'incidencesDirectives',
+    'incidencesDirectives', 
     'authServices',
     'angularCharts'
  	]
@@ -56,14 +56,9 @@ var incidences = angular.module('incidences',
 			    .state('helpdesk.incidences.open.incidence', {
 			        url: '/:incidenceId',
 			        templateUrl: '/modules/incidences/views/partials/incidence.html',
-			        controller: 'IncidenceCtrl',
-			        resolve:{
-						techniciansService: "techniciansService",
-						initTechniciansList: function(techniciansService){
-							techniciansService.initTechList();
-						}
-					}
+			        controller: 'IncidenceCtrl'
 			    })
+			    
 	      	.state('helpdesk.incidences.statistics', {
 		        url: '/statistics',
 		        templateUrl: '/modules/incidences/views/partials/report-statistics.html',

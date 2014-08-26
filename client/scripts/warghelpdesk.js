@@ -12,6 +12,7 @@ angular.module('wargHelpdeskApp', [
   'ui.select',
   // VENDOR
   'trNgGrid',
+  'toaster',
   // WARG HELPDESK
   'wargHelpdeskDirectives',
   'wargHelpdeskFilters',

@@ -2,69 +2,44 @@
 
 var commonServices = angular.module('commonServices', [])
 
-commonServices.factory('techniciansService', function ($http){
+commonServices.factory('techniciansService', function ($http, $q){
 
-  var techsList = [];
+  var technicians = null;
 
   return {
-    initTechList : function() {
-      $http.get('/api/techs').success(function(list) {
-        techsList = list;
-      }).error(function() {
-        console.log("Error retrieving technicians list")
-      });
+    retrieveTechnicians : function() {
+      var deferred = $q.defer(); 
+      $http.get('/api/techs').success(function(techniciansList) {
+        technicians = techniciansList;
+        return deferred.resolve(techniciansList);
+        }).error(function() {
+          console.log("Error retrieving technicians list")
+        });
+      return deferred.promise;
     },
-    getTechList: function() {
-      return techsList;
+    getTechnicians : function() {
+      return technicians;
     }
   };
 });
-
-/*commonServices.factory('schoolsService', function ($http){
-
-  var schoolsList = [];
-
-  return {
-    initSchoolsList : function() {
-      $http.get('/api/schools').success(function(list) {
-        schoolsList = list;
-        return schoolsList;
-      }).error(function() {
-        console.log("Error retrieving schools list")
-      });
-    },
-    getSchoolsList: function() {
-      return schoolsList;
-    }
-  };
-});
-
-
-commonServices.factory('schoolsServicet', function ($http){
-
-  return {
-    getSchools : function() {
-      $http.get('/api/schools').success(function(list) {
-        return list;
-      }).error(function() {
-        console.log("Error retrieving schools list")
-      });
-    }
-  };
-});
-
-*/
 
 commonServices.factory('schoolsService', function ($http, $q){
+
+  var schools = null;
+
   return {
-    getSchools : function() {
+    retrieveSchools : function() {
       var deferred = $q.defer(); 
-          $http.get('/api/schools').success(function(schools) {
-            return deferred.resolve(schools);
-          }).error(function() {
-            console.log("Error retrieving the schools")
-          });
-        return deferred.promise;
+      $http.get('/api/schools').success(function(schoolsList) {
+        schools = schoolsList;
+        return deferred.resolve(schoolsList);
+        }).error(function() {
+        console.log("Error retrieving the schools")
+        });
+      return deferred.promise;
+    },
+    getSchools : function() {
+      return schools;
     }
   };
 });

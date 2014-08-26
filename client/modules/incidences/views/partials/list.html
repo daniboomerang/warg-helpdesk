@@ -1,5 +1,5 @@
 <section ng-init="find()">
-	<div class="row">
+	<div class="row" ng-show="incidences.length > 0">
 		<div class="row-fluid">	
 		  	<div class="span12 list-container">
 			    <table tr-ng-grid="" items="incidences" selected-items="selectedIncidences" selection-mode="SingleRow">
@@ -17,7 +17,7 @@
 				        </tr>
 				    </thead>
 		            <tbody>
-		                <tr>
+		                <tr style="text-align: center;">
 		                	<td field-name="severity">
 		                		<span class="frame-list-cell" ng-class="{serious: gridItem.severity == 'Serious', high: gridItem.severity == 'High'}">{{gridItem.severity}}</span>
 		                	</td>
@@ -79,4 +79,7 @@
 		<!-- Deprecated -->  	
 		<!--<div id="overview" ui-view="overview" class="span9"></div>-->
 	</div>
+	<div class="frame-empty-resource-message" ng-hide="incidences.length > 0">
+		<h1>No incidences yet. <br> Why don't you <a ng-click="goToState('helpdesk.incidences.create')">Create One</a>?</h1>
+	</div>		
 </section>

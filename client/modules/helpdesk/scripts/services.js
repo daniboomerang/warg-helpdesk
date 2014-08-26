@@ -197,3 +197,11 @@ helpdeskServices.factory('locationService', function (){
 		setPreviousState : function(state) {previousState = state;}
 	};
 });
+
+helpdeskServices.factory('messengerService', function ($rootScope){
+	return {
+		popMessage : function(type, title, message) {
+			$rootScope.$broadcast('event:pop-message', {type: type, title: title, text: message});
+		}
+	};
+});

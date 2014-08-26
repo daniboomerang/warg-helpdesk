@@ -75,23 +75,60 @@ accountsControllers.controller('CreateAccountCtrl', function ($rootScope, $scope
                     });
     };
   
+  $scope.refreshSchools = function(){
+    schoolsService.retrieveSchools().then(function (schoolsList){      
+      if (schoolsList.length > 0){
+        $scope.schoolsList = schoolsList;
+        $scope.user.school.selected = $scope.schoolsList[0];
+        $scope.schoolsListReady = true;
+      }
+      else{
+        openModalWarning();
+      }
+    });
+  };
+
   function init(){
+
+    // INITIALIZING DROPDOWNS DATA
+    
+    // Roles
     $scope.roleTypes = [{type: 'user'}, {type:'tech'}];
     $scope.error = {};
     $scope.user = {};
     $scope.user.role = {};
     $scope.user.role.selected = {type: 'user'};
 
-    $scope.schoolsList = schoolsService.getSchoolsList();
+    // Schools
     $scope.user.school = {};
-
-    if ($scope.schoolsList.length > 0){
-      $scope.user.school.selected = $scope.schoolsList[0];
+    var schoolsList = schoolsService.getSchools();
+    if (schoolsList == null){
+      $scope.schoolsListReady = false;
+    }
+    else if (schoolsList.length == 0){
+      // We need to check a School has been created recently.
+      // So we ensure that, calling again to the server.
+      schoolsService.retrieveSchools().then(function (schoolsList){      
+        if (schoolsList.length > 0){
+          $scope.schoolsList = schoolsList;
+          $scope.user.school.selected = $scope.schoolsList[0];
+          $scope.schoolsListReady = true;
+        }
+        else{
+          if ($rootScope.currentUser.role = "admin"){
+            openModalWarning();
+          }
+          else{
+            $scope.schoolsListReady = true;
+          }
+        }
+      });
     }
     else{
-      openModalWarning();
+      $scope.schoolsList = schoolsList;
+      $scope.user.school.selected = $scope.schoolsList[0];
+      $scope.schoolsListReady = true;
     }
-    
   }
 
   function openModalWarning() {
@@ -121,6 +158,7 @@ accountsControllers.controller('CreateAccountCtrl', function ($rootScope, $scope
     }, function () { });
     
   };
+
 });
 
 accountsControllers.controller('AccountsListCtrl', function($scope){

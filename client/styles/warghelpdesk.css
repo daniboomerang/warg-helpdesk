@@ -96,6 +96,16 @@ body, html {
   margin-left: -11px;
 }
 
+.frame-div-warning{
+  text-align: center;
+  background: #990000;
+  border-radius: 6px 6px 6px 6px;
+  -moz-border-radius: 6px 6px 6px 6px;
+  -webkit-border-radius: 6px 6px 6px 6px;
+  border: 1px solid #c2e1f5;
+  padding: 7px;
+  color: white;
+}
 
 .full-width{
   width: 100%;
@@ -109,6 +119,12 @@ body, html {
 }
 .relative{
   position: relative;
+}
+
+.frame-empty-resource-message{
+    width: 75%;
+    margin: 0 auto;
+    text-align: center;
 }
 
 /***************/

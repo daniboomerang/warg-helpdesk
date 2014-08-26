@@ -14,14 +14,13 @@
     left: 0;
     display: block;
     padding-bottom: 0px;
-    /*padding-top: 63px;*/
     padding-top: 13px;
     padding-right: 10px;
     padding-left: 10px;
     overflow-x: hidden;
     overflow-y: auto;
     border: solid 1px #E0E0E0;
-    background-color: #F0F0F0 ;
+    background-color: #ebebeb ;
   }
 }
 

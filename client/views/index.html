@@ -16,16 +16,19 @@
     
     <!-- CSS VENDOR -->
     <link rel="stylesheet" href="modules/vendor/trNgGrid/trNgGrid.min.css">
+
     <!-- Bootstrap -->
     <link rel="stylesheet" href="styles/vendor/bootstrap/css/bootstrap.css">
     <!-- Angular-Select -->
     <link rel="stylesheet" href="styles/vendor/selectize.bootstrap3.css">
     <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css">    
+    <!-- AngularJS-Toaster -->
+    <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.css">    
     
     <!-- CSS WARGHELPDESK -->
     <link rel="stylesheet" href="styles/warghelpdesk.css">
 
-    <!-- Module auth -->
+    <!-- Module sign -->
     <link rel="stylesheet" href="modules/sign/styles/sign.css">
     <!-- Module helpdesk -->
     <link rel="stylesheet" href="modules/helpdesk/styles/helpdesk.css">
@@ -48,7 +51,7 @@
 <body ng-app="wargHelpdeskApp">
 
     <!-- WARG HELPDESK APP -->
-    <div id="app" ui-view></div>
+    <div id="app" class="full-height relative" ui-view></div>
 
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/angular/angular.js"></script>
@@ -66,6 +69,8 @@
     <script src="bower_components/angular-charts/dist/angular-charts.min.js"></script>
     <script src="bower_components/select2/select2.js"></script>
     <script src="bower_components/angular-ui-select/dist/select.min.js"></script>
+    <script src="bower_components/AngularJS-Toaster/toaster.js"></script>
+      
 
 
     <! -- WARGHELPDESK -->
@@ -115,7 +120,7 @@
         <script src="modules/accounts/scripts/services.js"></script> 
 
         <!-- VENDOR -->
-        <script src="modules/vendor/trNgGrid/trNgGrid.min.js"></script> 
+        <script src="modules/vendor/trNgGrid/trNgGrid.min.js"></script>
 
 </body>
 </html>

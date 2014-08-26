@@ -41,13 +41,7 @@ var accounts = angular.module('accounts',
 	    	.state('helpdesk.accounts.create.account', {
 		        url: '/account',		    
 				templateUrl: '/modules/accounts/views/partials/create-account.html',
-		        controller: 'CreateAccountCtrl',
-		        resolve:{
-						schoolsService: "schoolsService",
-						schoolsList: function(schoolsService){
-							schoolsService.initSchoolsList();
-						}
-					}     
+		        controller: 'CreateAccountCtrl'
 		    })
 		    .state('helpdesk.accounts.create.list', {
 		        url: '/list',		    
