@@ -153,7 +153,7 @@ input.ng-dirty.ng-invalid ~ span.ko, textarea.ng-dirty.ng-invalid ~ span.ko{ col
 /* FORMS BARS COLORS AND SHADOWS */
 /****************************/
 
-.white-letters{
+.centered-and-white{
   color: white;
   text-align: center;
 }
