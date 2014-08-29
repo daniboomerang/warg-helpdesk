@@ -78,17 +78,17 @@ exports.createIncidence = function(title, description, user, severity, priority,
  *  Show profile
  *  returns {incidence}
  */
-exports.findOne = function (incidenceId) {
+exports.findOne = function (id) {
 
   var deferred = Q.defer();
 
-  Incidence.findOne({id: incidenceId}, function (err, incidence) {
-    if (err) {
-      deferred.resolve({status: 'incidence.not.found', error: err});
-    } else if (incidence == null){
-      deferred.resolve({status: 'incidence.not.found', error: 'Failed to load incidence ' + incidenceId + '.' + '\n' + 'Please be sure ' + incidenceId + 'is a correct.' });
-    } else deferred.resolve({status: 'incidence.found', incidence: incidence});
-  });
+   Incidence.load(id, function (err, incidence) {
+      if (err) {
+        deferred.resolve({status: 'incidence.not.found', error: err});
+      } else if (incidence == null){
+        deferred.resolve({status: 'incidence.not.found', error: 'Failed to load incidence ' + id + '.' + '\n' + 'Please be sure ' + id + 'is a correct.' });
+      } else deferred.resolve({status: 'incidence.found', incidence: incidence});
+    });
 
   return deferred.promise;
 
