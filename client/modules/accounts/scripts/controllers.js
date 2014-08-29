@@ -2,7 +2,7 @@
 
 var accountsControllers = angular.module('accountsControllers', ['accountsServices', 'authServices', 'ui.select', 'helpdeskServices', 'commonServices'])
 
-accountsControllers.controller('AccountsCtrl', function ($scope, Accounts, $q, Auth) {
+accountsControllers.controller('AccountsCtrl', function ($scope, Accounts, $q, Auth, messengerService) {
 
   //////////
   /* CRUD */
@@ -17,12 +17,14 @@ accountsControllers.controller('AccountsCtrl', function ($scope, Accounts, $q, A
       role: role,
       school: school  
     },
-    function(err) {
+    function(error) {
       $scope.errors = {};
-      if (!err) {
+      if (!error) {
+        messengerService.popMessage('success', 'Account successfully created.');
         deferred.resolve();
       } else {
-        deferred.reject(err);
+        deferred.reject(error);
+        messengerService.popMessage('error', 'The account couldn´t be created.', error);
       }
     });
     return deferred.promise;
@@ -161,11 +163,12 @@ accountsControllers.controller('CreateAccountCtrl', function ($rootScope, $scope
 
 });
 
-accountsControllers.controller('AccountsListCtrl', function($scope){
+accountsControllers.controller('CreateListCtrl', function($scope){
+  
 });
 
-accountsControllers.controller('CreateAccountListCtrl', function($scope){
-
+accountsControllers.controller('ListAccountsCtrl', function($scope){
+  
 });
 
 accountsControllers.controller('CreateAccountFormCtrl', function($scope){

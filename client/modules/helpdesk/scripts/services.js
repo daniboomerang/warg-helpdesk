@@ -33,7 +33,7 @@ helpdeskServices.service('deskMenuStyleService', function(){
 		   		actionsStyle.openList = '/modules/helpdesk/images/icons/list-16.png';
 				moduleStyle.image = {'background-image': 'url(/modules/helpdesk/images/icons/school-24.png)'};
 		   		moduleStyle.active ='enlarged-active-module arrow-box-purple';
-		   		moduleStyle.color = {'color': '#6a5acd'};
+		   		moduleStyle.color = {'color': '#9572A9'};
 		   	}
 		   	if (module == 'Accounts'){
 		   		actionsStyle.create = '/modules/helpdesk/images/icons/create-16.png';
@@ -115,7 +115,7 @@ helpdeskServices.service('helpdeskConfigService', function ($q, $http, menu, des
 				else if (actionsOnAccounts[i] == 'list')
 					actions.push({title: 'List', state: 'helpdesk.accounts.open.list', style: actionsStyle.openList});
 				else if (actionsOnAccounts[i] == 'import')
-					actions.push({title: 'Import Excel', state: 'helpdesk.accounts.create.list', style: actionsStyle.import});
+					actions.push({title: 'Import CSV', state: 'helpdesk.accounts.create.list', style: actionsStyle.import});
 			}		
 		}
         var menu = {name: 'Accounts', actions: actions, style: style.moduleStyle};
@@ -201,6 +201,7 @@ helpdeskServices.factory('locationService', function (){
 helpdeskServices.factory('messengerService', function ($rootScope){
 	return {
 		popMessage : function(type, title, message) {
+			if (message ==  null){message='';}
 			$rootScope.$broadcast('event:pop-message', {type: type, title: title, text: message});
 		}
 	};

@@ -57,8 +57,12 @@
 }
 
 .enlarged-active-module{
-  padding: 4px;
-  margin: 5px;
+  padding: 1px;
+  margin: 1px;
+  margin-bottom: 10px;
+  margin-right: 2px;
+
+
 }
 
 /*************************/

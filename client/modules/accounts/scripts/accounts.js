@@ -46,7 +46,7 @@ var accounts = angular.module('accounts',
 		    .state('helpdesk.accounts.create.list', {
 		        url: '/list',		    
 				templateUrl: '/modules/accounts/views/partials/create-list.html',
-		        controller: 'CreateAccountListCtrl'        
+		        controller: 'CreateListCtrl'        
 		    })
 
 		///////////////////
@@ -61,7 +61,7 @@ var accounts = angular.module('accounts',
 	    	.state('helpdesk.accounts.open.list', {
 		        url: '/list',
 		        templateUrl: '/modules/accounts/views/partials/list.html',
-		        controller: 'AccountsListCtrl'
+		        controller: 'ListAccountsCtrl'
 		    })
 })
 .run(function ($rootScope, Auth) {Auth.currentUser();});

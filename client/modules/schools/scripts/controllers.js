@@ -1,8 +1,8 @@
 'use strict';
 
-var schoolsControllers = angular.module('schoolsControllers', ['schoolsServices', 'authServices'])
+var schoolsControllers = angular.module('schoolsControllers', ['schoolsServices', 'authServices', 'helpdeskServices'])
 
-schoolsControllers.controller('SchoolsCtrl', function ($scope, Schools, $q) {
+schoolsControllers.controller('SchoolsCtrl', function ($scope, Schools, $q, messengerService) {
 
   //////////
   /* CRUD */
@@ -17,8 +17,12 @@ schoolsControllers.controller('SchoolsCtrl', function ($scope, Schools, $q) {
       name: name,
       address: address
     });
-    school.$save(function(response) {
-      deferred.resolve(response);
+    school.$save(function(school) {
+      messengerService.popMessage('success', 'School successfully created.', null);
+      deferred.resolve(school);
+    },
+    function (error){
+      messengerService.popMessage('error', 'School not created.', error);
     });
 
     return deferred.promise;

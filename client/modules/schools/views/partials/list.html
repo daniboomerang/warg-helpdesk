@@ -2,7 +2,7 @@
 	<div class="row-fluid" ng-show="schools.length > 0">	
 	  	<div class="span12 list-schools-container">
 		    <table tr-ng-grid="" items="schools" selected-items="selectedSchools" selection-mode="SingleRow" >
-			    <thead>
+			    <thead class="solid-purple-bar-fill">
 			        <tr>
 			            <th field-name="code" cell-width="1em">Code</th>  
 			            <th field-name="name" cell-width="5em">Name</th>
@@ -26,7 +26,7 @@
 	        </table>
 	  	</div>
 	</div>  
-	<div class="frame-empty-resource-message" ng-hide="schools.length > 0">
+	<div class="frame-empty-resource-message" ng-show="schools.length == 0">
 		<h1>No schools yet. <br> Why don't you <a ng-click="goToState('helpdesk.schools.create.school')">Create One</a>?</h1>
 	</div>		
 </section>

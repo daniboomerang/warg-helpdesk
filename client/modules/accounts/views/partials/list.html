@@ -2,18 +2,25 @@
 	<div class="row-fluid">	
 	  	<div class="span12 list-accounts-container">
 		    <table tr-ng-grid="" items="accounts" selected-items="selectedAccounts" selection-mode="SingleRow" >
-			    <thead>
+			    <thead  class="solid-green-bar-fill">
 			        <tr>
 			            <th field-name="username" cell-width="5em">Username</th>
-			            <th field-name="school.code" cell-width="1em">School Code</th>
+			            <th field-name="schoolCode" cell-width="1em">School</th>
 			            <th field-name="email" cell-width="5em">Email</th>
 			            <th field-name="role" cell-width="2em">Role</th>
-			            <th field-name="membership" cell-width="3em">Memebership</th>
+			            <th field-name="membership" cell-width="5em">Memebership</th>
 			        </tr>
 			    </thead>
 	            <tbody>
 	                <tr style="text-align: center;">
-						<td field-name="membership" style="text-align: center;">
+	                	<td field-name="schoolCode">
+	                		<div popover-placement="bottom" popover="{{gridItem.school.name}}" popover-trigger="mouseenter">
+                    			<span class="frame-list-cell">
+                    				{{gridItem.school.code}}
+                    			</span>
+                    		</div>
+						</td>
+						<td field-name="membership">
                     		<span class="frame-list-cell">
                     		{{gridItem.membership | date:'longDate'}}
                     		</span>
