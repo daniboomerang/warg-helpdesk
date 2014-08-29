@@ -8,16 +8,18 @@ var mongoose = require('mongoose'),
 
 var incidencesDomain = require('../domain/incidences-domain');
 
-
 /**
  * Find incidence by id
  */
 exports.incidence = function(req, res, next, id) {
-  Incidence.load(id, function(err, incidence) {
-    if (err) return res.json(500, err);
-    if (!incidence) return next(new Error('Failed to load incidence ' + id));
-    req.incidence = incidence;
-    next();
+  incidencesDomain.findOne(id).then (function (result){
+    if (result.status == 'incidence.found'){
+      req.incidence = result.incidence;
+      next(); // Go to show
+    }  
+    else if (result.status == 'incidence.not.found'){
+      return res.json(500, result.error);
+    }
   });
 };
 
@@ -30,7 +32,7 @@ exports.create = function(req, res) {
       res.json(result.incidence);
     }  
     else if (result.status == 'incidence.not.created'){
-      res.json(500, result.err);
+      res.json(500, result.error);
     }
   });   
 };
@@ -61,7 +63,7 @@ exports.comment = function(req, res, next) {
       next();
     }  
     else if (result.status == 'incidence.not.updated'){
-      res.json(500, result.err);
+      res.json(500, result.error);
     }
   });  
 };
@@ -76,7 +78,7 @@ exports.assignee = function(req, res, next) {
       next();
     }  
     else if (result.status == 'incidence.not.updated'){
-      res.json(500, result.err);
+      res.json(500, result.error);
     }
   });   
 };

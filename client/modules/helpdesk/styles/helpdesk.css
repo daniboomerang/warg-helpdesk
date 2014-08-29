@@ -36,4 +36,10 @@
   }
 }
 
+.toast-top-centered {
+  margin-top: 28px;
+  top: 0;
+  right: 0;
+  width: 57%;
+}
 

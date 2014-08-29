@@ -43,21 +43,57 @@ exports.createIncidence = function(title, description, user, severity, priority,
   if (severity==null){severity = "Medium";}
   if (priority==null){priority = "Medium";}
 
-  var incidence = new Incidence({title: title, description: description, severity: severity, priority: priority, school: school});
+  var status = {
+      // Possible statuses : Open, Closed, Reopened
+      currentStatus: 'Open',
+      // Possible substatuses : Open-OnGoing, Open-Blocked,
+      // Closed-Solved, Closed-Duplicated, Closed-Invalid
+      currentSubstatus: '',
+      duplicatedOf: null,
+      blockedBy: null
+  };
+
+ var incidence = new Incidence({title: title, description: description, severity: severity, priority: priority, status: status });
   incidence.creator =  user;
 
-  generateNewId(school.code).then(function (newId){
-    incidence.id = newId;
-    incidence.save(function(err) {
-      if (err) {
-        deferred.resolve({status: 'incidence.not.created', error: err});
-      } else {
-        deferred.resolve({status: 'incidence.created', incidence: incidence});
-      }
-    });
-  })
+  if (school == null){
+    deferred.resolve({status: 'incidence.not.created', error: "Server internal error: 'User organization not found.'"});
+  }
+  else {
+    generateNewId(school.code).then(function (newId){
+      incidence.id = newId;
+      incidence.save(function(err) {
+        if (err) {
+          deferred.resolve({status: 'incidence.not.created', error: err});
+        } else {
+          deferred.resolve({status: 'incidence.created', incidence: incidence});
+        }
+      });
+    })
+  }  
   return deferred.promise;
 };
+
+/**
+ *  Show profile
+ *  returns {incidence}
+ */
+exports.findOne = function (incidenceId) {
+
+  var deferred = Q.defer();
+
+  Incidence.findOne({id: incidenceId}, function (err, incidence) {
+    if (err) {
+      deferred.resolve({status: 'incidence.not.found', error: err});
+    } else if (incidence == null){
+      deferred.resolve({status: 'incidence.not.found', error: 'Failed to load incidence ' + incidenceId + '.' + '\n' + 'Please be sure ' + incidenceId + 'is a correct.' });
+    } else deferred.resolve({status: 'incidence.found', incidence: incidence});
+  });
+
+  return deferred.promise;
+
+};
+
 
 /**
  *  Return the list of incidences of a user

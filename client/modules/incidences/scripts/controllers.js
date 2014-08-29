@@ -4,10 +4,6 @@ var incidencesControllers = angular.module('incidencesControllers', ['incidences
 
 incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, $anchorScroll, $routeParams, $state, messengerService, Incidences, IncidenceRate, IncidenceAssign, IncidenceEffort, IncidenceClose, IncidenceComment) {
 
-  //////////
-  /* CRUD */
-  //////////
-
   $scope.create = function(title, description, severity, priority, school) {
     var incidence = new Incidences({
       title: title,
@@ -16,15 +12,17 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
       priority: priority,
       school: school
     });
-    incidence.$save(function(response) {
-      $location.path("helpesk/incidences/open/" + response.id);
-      messengerService.popMessage('success', 'Incidence created successfully.', response.id);
+    incidence.$save(function(incidence) {
+      $location.path("helpesk/incidences/open/" + incidence.id);
+      messengerService.popMessage('success', 'Incidence successfully created.', 'Your incidence ID is: ' + incidence.id + '.');
+    },
+    function (error){
+      messengerService.popMessage('error', 'Incidence not created.', error.data);
     });
   };
 
   $scope.remove = function(incidence) {
     incidence.$remove();
-
     for (var i in $scope.incidences) {
       if ($scope.incidences[i] == incidence) {
         $scope.incidences.splice(i, 1);
@@ -34,24 +32,26 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
 
   $scope.update = function() {
     var incidence = $scope.incidence;
-    incidence.$update(function() {
+    incidence.$update(function(incidence) {
+      $scope.incidence = incidence;
+      messengerService.popMessage('success', 'Incidence successfully updated.', null);
     },
     function (error){
-      console.log("Server error trying to update the incidence " + incidence.id);
+      messengerService.popMessage('error', 'Incidence not updated.', error.data);
     });
   };
-
 
   $scope.updateComment = function(comment) {
     var incidence = new IncidenceComment({
       _id: $scope.incidence.id,
       comment: comment
     });
-    incidence.$updateComment(function(response) {
-      $scope.incidence.history = response.history;
+    incidence.$updateComment(function(incidence) {
+      $scope.incidence = incidence;
+      messengerService.popMessage('success', 'Comment successfully posted.', null);
     },
     function (error){
-      console.log("Server error trying to post a comment for incidence " + incidence.id);
+      messengerService.popMessage('error', 'Comment not posted.', error.data);
     });
   };
 
@@ -60,11 +60,12 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
       _id: $scope.incidence.id,
       assigned: assignation
     });
-    incidence.$updateAssignee(function(response) {
-      $scope.incidence.assigned = response.assigned;
+    incidence.$updateAssignee(function(incidence) {
+      $scope.incidence = incidence;
+      messengerService.popMessage('success', 'Incidence successfully assigned', incidence.assigned + ' is in charge now.');
     },
     function (error){
-      console.log("Server error trying to assign a technician for incidence " + incidence.id);
+      messengerService.popMessage('error', 'Assination couldn´t be done.', error.data);
     });
   };
 
@@ -73,11 +74,12 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
       _id: $scope.incidence.id,
       rate: rate
     });
-    incidence.$updateRate(function(response) {
-      $scope.incidence.rate = response.rate;
+    incidence.$updateRate(function(incidence) {
+      $scope.incidence = incidence;
+      messengerService.popMessage('success', 'Incidence successfully rated', 'The rate for ' + incidence.id + ' is ' + incidence.rate );
     },
     function (error){
-      console.log("Server error trying to rate the incidence " + incidence.id);
+      messengerService.popMessage('error', 'Rate couldn´t be done.', error.data);
     });  
   };
 
@@ -86,33 +88,40 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
       _id: $scope.incidence.id,
       effort: effort
     });
-    incidence.$updateEffort(function(response) {
-      $scope.incidence.effort = response.effort;
-      $scope.incidence.effortHours = Math.floor(response.effort / 60);
-      $scope.incidence.effortMinutes = response.effort % 60;
+    incidence.$updateEffort(function(incidence) {
+      $scope.incidence = incidence;
+      $scope.incidence.effortHours = Math.floor(incidence.effort / 60);
+      $scope.incidence.effortMinutes = incidence.effort % 60;
+      messengerService.popMessage('success', 'Effort successfully reported', 'The total expended time for ' + incidence.id
+                                   + ' is ' + $scope.incidence.effortHours + ' hours and '
+                                   + $scope.incidence.effortMinutes + ' minutes.');
     },
     function (error){
-      console.log("Server error trying to report effort for the incidence " + incidence.id);
+      messengerService.popMessage('error', 'Time effort couldn´t be reported.', error.data);
     });
   };
 
-  $scope.close = function(reason) {
+  $scope.close = function(reason, effort, duplicated) {
     var incidence = new IncidenceClose({
       _id: $scope.incidence.id,
       substatus: reason
     });
-    incidence.$closeIncidence(function(response) {
-      $scope.incidence.status = response.status;
-      $scope.incidence.substatus = response.substatus;
+    incidence.$closeIncidence(function(incidence) {
+      $scope.incidence = incidence;
+      messengerService.popMessage('success', 'Incidence successfully closed', 'The incidence has been closed as ' + incidence.substatus + '.');    
     },
     function (error){
-      console.log("Server error trying to close the incidence " + incidence.id);
+      messengerService.popMessage('error', 'The incidence couldn´t be closed.', error.data);
     });
   };
 
   $scope.find = function() {
     Incidences.query(function(incidences) {
       $scope.incidences = incidences;
+      //messengerService.popMessage('success', 'Incidences successfully retrieved', null);    
+    },
+    function (error){
+      messengerService.popMessage('error', 'The list of incidences couldn´t be retrieved.', error.data);
     });
   };
 
@@ -127,9 +136,13 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
         $scope.incidence = incidence;
         $scope.incidence.effortHours = Math.floor(incidence.effort / 60);
         $scope.incidence.effortMinutes = incidence.effort % 60;
+        $scope.incidence.previousPosts = incidence.history;
+        //removes 1 element from index 3
+        //$scope.incidence.lastPost = $scope.incidence.previousPosts.splice(0, 1);
+        
       },
        function (error){
-        console.log("Server error trying to open the incidence " + $state.params.incidenceId);
+        messengerService.popMessage('error', 'Incidence ' + $state.params.incidenceId +  ' couldn´t be retrieved.', error.data);
         $state.go('helpdesk.incidences.open.list');
       });
     }
@@ -151,8 +164,12 @@ incidencesControllers.controller('CreateCtrl', function ($scope, $rootScope, $mo
     var incidenceDescription = form.description.$viewValue;
     var incidenceSeverity = $scope.severity.selected.type;
     var incidencePriority = $scope.priority.selected.type;
-    if ($rootScope.currentUser.role == 'user'){incidenceSchool = $rootScope.currentUser.school}
-    else{incidenceSchool = $scope.school.selected;}
+    if (($rootScope.currentUser.role == 'user') || ($rootScope.currentUser.role == 'tech')){
+      incidenceSchool = $rootScope.currentUser.school;
+    }
+    else{
+      incidenceSchool = $scope.school.selected;
+    }
     $scope.create(incidenceTitle, incidenceDescription, incidenceSeverity, incidencePriority, incidenceSchool);
   };
 
