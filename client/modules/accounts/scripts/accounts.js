@@ -63,5 +63,10 @@ var accounts = angular.module('accounts',
 		        templateUrl: '/modules/accounts/views/partials/list.html',
 		        controller: 'ListAccountsCtrl'
 		    })
+		   	.state('helpdesk.accounts.open.settings', {
+		        url: '/settings',
+		        templateUrl: '/modules/accounts/views/partials/user-settings.html',
+		        controller: 'AccountSettingsCtrl'
+		    })
 })
 .run(function ($rootScope, Auth) {Auth.currentUser();});

@@ -57,6 +57,10 @@ helpdeskControllers.controller('HelpdeskCtrl', function ($scope, $state, $rootSc
 		$state.go('helpdesk.incidences.open.incidence', { incidenceId: id });
   };
 
+  $scope.goToState = function (state) {
+    $state.go(state);
+  }; 
+
   $scope.logout = function() {
     Auth.logout(function(err) {
       if(!err) {
