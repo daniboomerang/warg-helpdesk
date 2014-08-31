@@ -2,7 +2,7 @@
 
 var accountsControllers = angular.module('accountsControllers', ['accountsServices', 'authServices', 'ui.select', 'helpdeskServices', 'commonServices'])
 
-accountsControllers.controller('AccountsCtrl', function ($scope, Accounts, $q, Auth, messengerService) {
+accountsControllers.controller('AccountsCtrl', function ($scope, $state, $q, Accounts, Auth, messengerService) {
 
   //////////
   /* CRUD */
@@ -30,7 +30,7 @@ accountsControllers.controller('AccountsCtrl', function ($scope, Accounts, $q, A
     return deferred.promise;
   };
 
-  $scope.remove = function(incidence) {
+  $scope.remove = function(account) {
     
   }; 
 
@@ -44,8 +44,21 @@ accountsControllers.controller('AccountsCtrl', function ($scope, Accounts, $q, A
     });
   };
 
-  $scope.findOne = function() {
-  
+  $scope.findOne = function(){
+    if ($state.params.accountId == ''){
+      $state.go('helpdesk.accounts.open');
+    }
+    else{
+      Accounts.get({
+        accountId: $state.params.accountId
+      }, function(account) {
+        $scope.account = account;
+      },
+       function (error){
+        messengerService.popMessage('error', 'The account couldn´t be retrieved.', error.data);
+        $state.go('helpdesk.accounts.open');
+      });
+    }
   };
 
 });
@@ -66,7 +79,7 @@ accountsControllers.controller('CreateAccountCtrl', function ($rootScope, $scope
                   form.password.$viewValue, $scope.user.role.selected.type, $scope.user.school.selected).then(
                     function (result){
                       $scope.clear(form);
-                      $state.go('helpdesk.accounts.open.list', $state.params);
+                      $state.go('helpdesk.accounts.open', $state.params);
                     },
                     function(err) {
                       angular.forEach(err.errors, function(error, field) {
@@ -167,7 +180,33 @@ accountsControllers.controller('CreateListCtrl', function($scope){
   
 });
 
-accountsControllers.controller('ListAccountsCtrl', function($scope){
+accountsControllers.controller('OpenAccountsCtrl', function($scope){
+  
+});
+
+accountsControllers.controller('ListAccountsCtrl', function ($scope, $state) {
+
+  $scope.selectedAccounts = [];
+  $scope.$watch('selectedAccounts', function() {
+    if ($scope.selectedAccounts.length > 0){
+      if ($scope.selectedAccounts.length > 1)
+        $scope.selectedAccounts.splice( 0, 1 );
+      $scope.onSelectedAccount($scope.selectedAccounts[$scope.selectedAccounts.length - 1]);
+    } 
+  },
+  true);
+
+  $scope.onSelectedAccount = function(account) {
+    $state.go('helpdesk.accounts.open.account', { accountId: account._id });
+  };
+
+});
+
+accountsControllers.controller('AccountCtrl', function($scope){
+  
+});
+
+accountsControllers.controller('AccountSettingsCtrl', function($scope){
   
 });
 

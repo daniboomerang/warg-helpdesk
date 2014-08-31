@@ -1,6 +1,6 @@
 <section ng-init="find()">
 	<div class="row-fluid">	
-	  	<div class="span12 list-accounts-container">
+	  	<div class="list-accounts-container col-md-7">
 		    <table tr-ng-grid="" items="accounts" selected-items="selectedAccounts" selection-mode="SingleRow" >
 			    <thead class="solid-green-bar-fill centered-and-white">
 			        <tr>
@@ -39,5 +39,6 @@
 	            </tfoot>
 	        </table>
 	  	</div>
-	</div>		  	
+		<div id="account" ui-view="account" class="col-md-5"></div>		  	  	
+	</div>
 </section>

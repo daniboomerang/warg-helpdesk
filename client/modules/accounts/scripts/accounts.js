@@ -53,20 +53,24 @@ var accounts = angular.module('accounts',
     	// ACCOUNTS.OPEN //
     	///////////////////
 
-		.state('helpdesk.accounts.open', {
-			abstract: true,
-    		url: '/open',
-	        template: '<ui-view/>'
-	    })
-	    	.state('helpdesk.accounts.open.list', {
-		        url: '/list',
+ 		.state('helpdesk.accounts.open', {
+		        url: '/open',
 		        templateUrl: '/modules/accounts/views/partials/list.html',
 		        controller: 'ListAccountsCtrl'
 		    })
+			.state('helpdesk.accounts.open.account', {
+		        url: '/:accountId',
+		        views: {
+	            	'account': {
+						templateUrl: '/modules/accounts/views/partials/account.html',
+		            	controller: 'AccountCtrl'
+		            }    
+	            }    
+		    })
 		   	.state('helpdesk.accounts.open.settings', {
 		        url: '/settings',
-		        templateUrl: '/modules/accounts/views/partials/user-settings.html',
-		        controller: 'AccountSettingsCtrl'
+		        templateUrl: '/modules/accounts/views/partials/user-settings.html'
+		        //controller: 'AccountSettingsCtrl'
 		    })
 })
 .run(function ($rootScope, Auth) {Auth.currentUser();});

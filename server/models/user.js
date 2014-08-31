@@ -107,6 +107,7 @@ UserSchema.pre('save', function(next) {
  * Methods
  */
 
+
 UserSchema.methods = {
 
   /**

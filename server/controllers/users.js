@@ -2,6 +2,8 @@
 
 var RESULT_SUCCESS = "SUCCESS";
 var RESULT_ERROR = "ERROR";
+var USER_NOT_FOUND = '404 - User not found';
+var INTERNAL_SERVER_ERROR = '500 - Internal server error';
 
 var mongoose = require('mongoose'),
   User = mongoose.model('User'),
@@ -9,6 +11,24 @@ var mongoose = require('mongoose'),
   ObjectId = mongoose.Types.ObjectId;
 
 var usersDomain = require('../domain/users-domain');
+
+/**
+ * Find user by id
+ */
+exports.user = function(req, res, next, id) {
+  usersDomain.findUser(id).then (function (result){
+    if (result.status == 'user.found'){
+      req.user = result.user;
+      next(); // Go to show
+    }
+    else if (result.status == 'user.not.found'){
+      res.send(404, USER_NOT_FOUND);
+    }
+    else if (result.status == 'db.exception'){
+      res.send(500, INTERNAL_SERVER_ERROR);
+    }
+  });
+};
 
 /**
  * Create user
@@ -27,9 +47,16 @@ exports.create = function (req, res, next) {
 };
 
 /**
+ * Show a user
+ */
+exports.show = function(req, res) {
+  res.json(req.user);
+};
+
+/**
  *  Show profile
  *  returns {username, profile}
- */
+ *
 exports.show = function (req, res, next) {
   var userId = req.params.userId;
 
@@ -43,7 +70,7 @@ exports.show = function (req, res, next) {
       res.send(404, 'USER_NOT_FOUND')
     }
   });
-};
+};*/
 
 
 /**
@@ -84,7 +111,7 @@ exports.exists = function (req, res, next) {
 }
 
 /**
- * List of incidences for a user
+ * List of users for a user
  */
 exports.list = function(req, res) {
   usersDomain.listUsers(req.user).then (function (resultList){

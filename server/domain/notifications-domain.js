@@ -77,14 +77,14 @@ exports.comment = function(incidence, commentOwnerId, comment) {
   var incidenceTitle = incidence.title;
   var incidenceOwnerId = incidence.creator._id;
   
-  var userProfilesPromise = Q.all([ usersDomain.show(commentOwnerId), usersDomain.show(incidenceOwnerId), usersDomain.findByUsername(incidence.assigned)])
+  var userProfilesPromise = Q.all([ usersDomain.findUser(commentOwnerId), usersDomain.findUser(incidenceOwnerId), usersDomain.findByUsername(incidence.assigned)])
   userProfilesPromise.then(function(results){
     var commentOwnerResult = results[0];
     var incidenceOwnerResult = results[1];
     var incidenceAssignedResult = results[2];
 
-    if  (commentOwnerResult.status == 'user.shown' &&
-         incidenceOwnerResult.status == 'user.shown'){
+    if  (commentOwnerResult.status == 'user.found' &&
+         incidenceOwnerResult.status == 'user.found'){
 
       var incidenceOwnerRole = incidenceOwnerResult.user.role;
       var incidenceOwnerMail = incidenceOwnerResult.user.email;
@@ -123,8 +123,8 @@ exports.comment = function(incidence, commentOwnerId, comment) {
 exports.assignee = function(incidence, assignee) {
   var incidenceId = incidence.id;
   var incidenceOwnerId = incidence.creator._id;  
-  usersDomain.show(incidenceOwnerId).then( function( result){
-    if (result.status == 'user.shown'){
+  usersDomain.findUser(incidenceOwnerId).then( function( result){
+    if (result.status == 'user.found'){
 
       var incidenceOwnerRole = result.user.role;
       var incidenceOwnerMail = result.user.email;

@@ -78,7 +78,7 @@ exports.createIncidence = function(title, description, user, severity, priority,
  *  Show profile
  *  returns {incidence}
  */
-exports.findOne = function (id) {
+exports.findIncidence = function (id) {
 
   var deferred = Q.defer();
 

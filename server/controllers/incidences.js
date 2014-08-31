@@ -1,7 +1,9 @@
 'use strict';
 
 var RESULT_SUCCESS = "SUCCESS";
-var RESULT_ERROR = "ERROR"; 
+var RESULT_ERROR = "ERROR";
+var INCIDENCE_NOT_FOUND = '404 - Incidence not found';
+var INTERNAL_SERVER_ERROR = '500 - Internal server error';
 
 var mongoose = require('mongoose'),
   Incidence = mongoose.model('Incidence');
@@ -12,13 +14,16 @@ var incidencesDomain = require('../domain/incidences-domain');
  * Find incidence by id
  */
 exports.incidence = function(req, res, next, id) {
-  incidencesDomain.findOne(id).then (function (result){
+  incidencesDomain.findIncidence(id).then (function (result){
     if (result.status == 'incidence.found'){
       req.incidence = result.incidence;
       next(); // Go to show
     }  
     else if (result.status == 'incidence.not.found'){
-      return res.json(500, result.error);
+      res.send(404, INCIDENCE_NOT_FOUND);
+    }
+    else if (result.status == 'db.exception'){
+      res.send(500, INTERNAL_SERVER_ERROR);
     }
   });
 };
@@ -146,7 +151,7 @@ exports.destroy = function(req, res) {
 };
 
 /**
- * Show a incidence
+ * Show an incidence
  */
 exports.show = function(req, res) {
   res.json(req.incidence);

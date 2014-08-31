@@ -4,11 +4,18 @@ var path = require('path'),
     auth = require('../controllers/auth');
 
 module.exports = function(app) {
-  // User Routes
+
+  /////////////////
+  // User Routes //
+  /////////////////
   var users = require('../controllers/users');
+
+  app.get('/api/users', auth.ensureAuthenticatedAsAdmin, users.list);
+  app.get('/api/users/:accountId', users.show);
+  //Setting up the userId param
+  app.param('accountId', users.user);
   app.post('/auth/users', auth.ensureAuthenticatedAsAdmin, users.create);
   app.get('/auth/users/:userId', users.show);
-  
   // Check if username is available
   // todo: probably should be a query on users
   app.get('/auth/check_username/:username', users.exists);
@@ -48,11 +55,6 @@ module.exports = function(app) {
   //app.delete('/api/incidences/:incidenceId', auth.ensureAuthenticated, incidences.destroy);
   //Setting up the incidenceId param
   app.param('incidenceId', incidences.incidence);
-
-  /////////////////
-  // User Routes //
-  /////////////////
-  app.get('/api/users', auth.ensureAuthenticatedAsAdmin, users.list);
 
 
   // Schools

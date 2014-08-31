@@ -1,1 +1,78 @@
-sañld,asñld,aslUser
+<section ng-init="findOne()">
+	<div class="shadow-form-container">
+	  	<div class="panel-body" style="padding-top:2px">
+		  	<div class="row">
+				<span class="col-md-1 col-md-offset-11" ng-click="cancelOperation()" popover-placement="left" popover="Close" popover-trigger="mouseenter"><img src="/modules/accounts/images/icons/close-window-16.png"></span>
+			</div>
+		    <form class="form frame-form" name="form" ng-submit="" ng-controller="CreateAccountFormCtrl">
+				<div class="input-group form-line-frame">
+				<span class="input-group-addon"><img src="/modules/accounts/images/icons/at-16.png"></span>
+				<input
+				  type="email"
+				  name="email"
+				  class="form-control"
+				  ng-model="account.email"
+				  autofocus
+				  placeholder="{{account.email}}"
+				  mongoose-error
+				  required />
+				</div> 
+
+				<div ng-if="changed(form.email)" ng-messages="form.email.$error">
+				<div class="frame-error-arrowup" ng-message="required">Sorry, the email can´t be empty.</div>
+				<div class="frame-error-arrowup" ng-message="email">Sorry, this is an invalid email address.</div>
+				<div class="frame-error-arrowup" ng-message="mongoose">{{errors.email}}</div>
+				</div>
+				    
+				<div class="input-group form-line-frame">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				<div>
+				  <input 
+				    type="text"
+				    name="username"
+				    class="form-control"
+				    placeholder="{{account.username}}"
+				    ng-model="account.username"
+				    mongoose-error
+				    unique-username 
+				    required
+				    ng-minlength="4"
+				    ng-maxlength="25"/>
+				</div>
+				</div> 
+
+				<div ng-if="changed(form.username)" ng-messages="form.username.$error">
+				<div class="frame-error-arrowup" ng-message="required">Sorry, the username can´t be empty.</div>
+				<div class="frame-error-arrowup" ng-message="mongoose">{{errors.username}}</div>
+				<div class="frame-error-arrowup" ng-message="minlength">Sorry, the username must have at least 4 characters.</div>
+				<div class="frame-error-arrowup" ng-message="maxlength">Sorry, the username can´t have more than 25 characters.</div>
+				<div class="frame-error-arrowup" ng-message="unique">Sorry, this user name is already taken.</div>
+				</div>
+
+				<div class="input-group form-line-frame">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+				<div>
+				  <input
+				    type="password"
+				    name="password"
+				    class="form-control"
+				    ng-model="account.password"
+				    mongoose-error
+				    autofocus
+				    placeholder="Password"
+				    required />
+				</div>
+				</div> 
+				<div ng-if="changed(form.password)" ng-messages="form.password.$error">
+				<div class="frame-error-arrowup" ng-message="required">Sorry, the password can´t be empty</div>
+				<div class="frame-error-arrowup" ng-message="mongoose">{{errors.password}}</div>
+				</div>
+
+
+				<div class="modal-footer">
+				<input ng-disabled="true" class="btn btn-success" value="Save Changes" type="submit" ngClick="Submit">
+				</div>
+			</form>
+	  	</div>
+	</div>
+</section>  

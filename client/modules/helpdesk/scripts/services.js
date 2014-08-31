@@ -113,7 +113,7 @@ helpdeskServices.service('helpdeskConfigService', function ($q, $http, menu, des
 				if (actionsOnAccounts[i] == 'create')
 					actions.push({title: 'Create', state: 'helpdesk.accounts.create.account', style: actionsStyle.create});
 				else if (actionsOnAccounts[i] == 'list')
-					actions.push({title: 'List', state: 'helpdesk.accounts.open.list', style: actionsStyle.openList});
+					actions.push({title: 'List', state: 'helpdesk.accounts.open', style: actionsStyle.openList});
 				else if (actionsOnAccounts[i] == 'import')
 					actions.push({title: 'Import CSV', state: 'helpdesk.accounts.create.list', style: actionsStyle.import});
 			}		

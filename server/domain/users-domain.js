@@ -75,21 +75,21 @@ exports.findByUsername = function (username) {
 }
 
 /**
- *  Show profile
- *  returns {username, profile}
+ *  Retrieves a user
+ *  returns {user}
  */
 
-exports.show = function (userId) {
+exports.findUser = function (id) {
   var deferred = Q.defer();
   var result = {};
-  User.findById(ObjectId(userId), function (err, user) {
+  User.findById(id, function (err, user) {
     if (err) {
       result = {status: 'db.exception', error: err};
     }
-    if(user) {
-      result = {status: 'user.shown', user: user};
+    else if(user) {
+      result = {status: 'user.found', user: user};
     } else {
-      result = {status: 'user.not.shown', user: null};
+      result = {status: 'user.not.found', user: null};
     }
     deferred.resolve(result);
   });
