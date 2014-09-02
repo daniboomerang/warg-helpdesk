@@ -54,12 +54,9 @@
     </div>
 
     <accordion close-others="false">
-      <accordion-group ng-repeat="post in incidence.history" is-open="$index == 0 || commentsStatus.expanded" ng-class="">
+      <accordion-group ng-repeat="post in incidence.history" is-open="true && commentsStatus.expanded" ng-class="">
         <accordion-heading>
             <span class="badge alert-info" style="padding:8px;">Posted {{post.date | date:'medium'}}</span>
-            <div class="pull-right">
-                <span ng-show="($index == incidence.history.length -1)" ng-click="toTheTop()" class="icon-navbar-container btn btn-default pull-right"><img src="/modules/incidences/images/icons/topArrow-16.png" popover-placement="top" popover="Go to top" popover-trigger="mouseenter"></span>
-             </div>
              <div class="pull-right">
                 <span class="badge alert-info" style="padding:8px;">Posted by: {{post.author}}</span>
              </div>          
@@ -71,6 +68,8 @@
       </accordion-group>
     </accordion>
 
-   <section id="bottom"></section>
-</div>      
+    <section id="bottom" style="padding-top:50px;">
+        
+    </section>
 
+</div>      
