@@ -30,7 +30,7 @@
 
 /***** FORM *****/
 
-.severity-priority-select{
+.frame-select-row{
 	border-radius: 5px 5px 5px 5px;
 	-moz-border-radius: 5px 5px 5px 5px;
 	-webkit-border-radius: 5px 5px 5px 5px;
@@ -90,6 +90,14 @@
 .icon-navbar-container{
 	padding: 5px;
 	margin-left: 10px;
+}
+
+.frame-status-incidence{
+	border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
+	-webkit-border-radius: 5px 5px 5px 5px;
+	padding: 3px;
+	text-align: center;
 }
 
 /***** OVERVIEW ******/

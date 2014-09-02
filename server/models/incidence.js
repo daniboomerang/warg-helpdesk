@@ -31,15 +31,21 @@ var IncidenceSchema = new Schema({
   },
   updated: [Date],
   status: {
-    // Possible statuses : Open, Closed, Reopened
-    type: String,
-    default: 'Open'
-  },  
-  substatus: { 
-    // Possible substatuses : Open-OnGoing, Open-Blocked,
-    // Closed-Solved, Closed-Duplicated, Closed-Invalid
-    type: String,
-    default: ''
+    type: {
+      // Possible statuses : Open, Closed, Reopened
+      currentStatus: String,
+      // Possible substatuses : Open-OnGoing, Open-Blocked,
+      // Closed-Solved, Closed-Duplicated, Closed-Invalid
+      currentSubstatus: String,
+      duplicatedOf: {
+        type: Schema.IncidenceId,
+        ref: 'User'
+      },
+      blockedBy: {
+        type: Schema.IncidenceId,
+        ref: 'User'
+      }
+    }
   },  
   assigned: String, //UserId of the technician in charge
   history: {
@@ -58,7 +64,7 @@ var IncidenceSchema = new Schema({
   effort: {
     //number of minutes
     type: Number,
-    default: -1
+    default: 0
   },
   slug: {
     type: String,

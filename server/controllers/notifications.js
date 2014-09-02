@@ -33,3 +33,10 @@ exports.notifyComment = function(req, res) {
 exports.notifyAssignee = function(req, res) {
     notificationsDomain.assignee(req.incidence, req.body.assigned);
 };
+
+/**
+ * Notify closing
+ */
+exports.notifyClose = function(req, res) {
+    //notificationsDomain.assignee(req.incidence, req.body.assigned);
+};

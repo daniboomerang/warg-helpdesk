@@ -1,7 +1,6 @@
 <div ng-controller="AssignCtrl" class="box-incidence-datails">
 	<div ng-show="edit.assign">		
     <div>
-
       <!-- show dropdown -->
       <div ng-show="assign.techniciansListReady && !assign.techniciansListEmpty">
         <div class="row" style="margin-bottom:2px;"> 
@@ -9,9 +8,9 @@
         </div>
         <div class="row">
           <ui-select ng-model="technician.selected" theme="selectize" class="assign-select-dropdown pull-left">
-            <ui-select-match placeholder="Assign tech"> <span class="severity-priority-select">{{$select.selected.username}}</ui-select-match></span>
+            <ui-select-match placeholder="Assign tech"> <span class="frame-select-row">{{$select.selected.username}}</ui-select-match></span>
             <ui-select-choices repeat="technician in assign.techniciansList">
-              <div ng-bind-html="technician.username" class="severity-priority-select" ng-click="assignTo(technician)"></div>
+              <div ng-bind-html="technician.username" class="frame-select-row" ng-click="assignTo(technician)"></div>
             </ui-select-choices>
           </ui-select>
         </div>
@@ -36,7 +35,6 @@
         <div class="frame-div-warning">No technicians available. <br> Plase contact your administrator</div>
       </div>
     </div>
-
 	</div>    
 	<div ng-show="!edit.assign">
 		<div ng-show="incidence.assigned == null || incidence.assigned == ''">

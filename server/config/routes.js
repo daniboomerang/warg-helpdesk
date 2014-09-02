@@ -56,7 +56,6 @@ module.exports = function(app) {
   //Setting up the incidenceId param
   app.param('incidenceId', incidences.incidence);
 
-
   // Schools
   var schools = require('../controllers/schools');
   app.get('/api/schools', auth.ensureAuthenticated, schools.list);
@@ -64,8 +63,6 @@ module.exports = function(app) {
 
   // Check if schoolsCode is available
   app.get('/schools/check_schoolcode/:schoolCode', auth.ensureAuthenticatedAsAdmin, schools.exists);
-
-
 
   app.get('/*', function(req, res) {
     if(req.user) {

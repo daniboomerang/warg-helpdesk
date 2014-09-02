@@ -3,8 +3,10 @@
         <div class="row">
             <div class="col-md-2" style="padding: 10px; padding-left: 25px;">
                 <div class="text-muted">Incidence: <strong> {{incidence.id}} </strong></div>
-                <div class="text-muted"> <strong> {{ incidence.creator.username}} </strong></div>
-                <div class="text-muted"> On: {{incidence.created | date:'shortDate'}}</div>
+                <div class="text-muted frame-status-incidence" ng-class="{open: incidence.status.currentStatus == 'Open', ongoing: incidence.status.currentStatus == 'On Going', closed: incidence.status.currentStatus == 'Closed'}"> <strong> <span>{{incidence.status.currentStatus}}</span><span ng-show="incidence.status.currentStatus == 'Closed'"> as {{incidence.status.currentSubstatus}}</span> </strong></div>
+                <div ng-show="incidence.status.currentStatus == 'Closed' && incidence.status.currentSubstatus == 'Duplicated'" class="text-muted">Duplicated Of: <a ng-click="goToIncidence(incidence.status.duplicatedOf)"><strong> {{incidence.status.duplicatedOf}} </strong></a></div>
+                <div class="text-muted"> Owner: <strong> {{ incidence.creator.username}} </strong></div>
+                <div class="text-muted"> Opened on: {{incidence.created | date:'shortDate'}}</div>
                 <div class="text-muted"> Severity: <strong>  {{incidence.severity}} </strong></div>
                 <div class="text-muted"> Priority: <strong> {{incidence.priority}} </strong></div>
             </div>
@@ -13,7 +15,7 @@
                     <div class="col-md-4">
                         <rate></rate>
                     </div>
-                    <div class="col-md-4">
+                    <div ng-show="incidence.status.currentStatus != 'Closed'"class="col-md-4">
                         <assign></assign>
                     </div>
                     <div class="col-md-4">
@@ -29,11 +31,10 @@
 
                 </span>
                 <span ng-click="toTheBottom()" class="icon-navbar-container btn btn-default pull-right"><img src="/modules/incidences/images/icons/bottomArrow-24.png"  popover-placement="bottom" popover="Go to bottom" popover-trigger="mouseenter"></span>
-                
-                <span ng-controller="CloseCtrl" ng-show="((incidence.status == 'On Going') && (incidence.assigned == currentUser.username))" ng-click="closeIncidence()" class="icon-navbar-container btn btn-default pull-right" popover-placement="bottom" popover="Close {{incidence.id}}" popover-trigger="mouseenter"> <img src="/modules/incidences/images/icons/close-24.png" ></span>
-                <span ng-show="((incidence.status == 'Close') && (incidence.creator == currentUser))" 
+                <span ng-controller="CloseCtrl" ng-show="((incidence.status.currentStatus == 'On Going') && (incidence.assigned == currentUser.username))" ng-click="closeIncidence()" class="icon-navbar-container btn btn-default pull-right" popover-placement="bottom" popover="Close {{incidence.id}}" popover-trigger="mouseenter"> <img src="/modules/incidences/images/icons/close-24.png" ></span>
+                <span ng-show="((incidence.status.currentStatus == 'Closed') && (incidence.creator._id == currentUser._id))" 
                 ng-click="toogleRateMode()" class="icon-navbar-container btn btn-default pull-right" ng-class="{active: edit.rate}" popover-placement="bottom" popover="Happy with our service?" popover-trigger="mouseenter"><img src="/modules/incidences/images/icons/rating-24.png" ></span>   
-                <span ng-show="((incidence.status != 'Close') && (currentUser.role != 'user'))" ng-click="toogleAssignMode()" class="icon-navbar-container btn btn-default pull-right" ng-class="{active: edit.assign}" popover-placement="bottom" popover="Assign Incidence" popover-trigger="mouseenter"> <img src="/modules/incidences/images/icons/worker-24.png" ></span>
+                <span ng-show="((incidence.status.currentStatus != 'Closed') && (currentUser.role != 'user'))" ng-click="toogleAssignMode()" class="icon-navbar-container btn btn-default pull-right" ng-class="{active: edit.assign}" popover-placement="bottom" popover="Assign Incidence" popover-trigger="mouseenter"> <img src="/modules/incidences/images/icons/worker-24.png" ></span>
                 <span ng-show="(currentUser.username == incidence.assigned)" ng-click="toogleEffortMode()" class="icon-navbar-container btn btn-default pull-right" ng-class="{active: edit.effort}" popover-placement="bottom" popover="Report your effort" popover-trigger="mouseenter"> <img src="/modules/incidences/images/icons/stopwatch-24.png" ></span>
             </div>     
         </div>
@@ -48,7 +49,7 @@
 <!--</div>-->
 
 
-    <div class="row frame-reply" ng-show="incidence.history.length == 0">
+    <div class="row frame-reply" ng-show="incidence.history.length == 0 && incidence.status.currentStatus != 'Closed'">
         <reply></reply>
     </div>
 
@@ -64,7 +65,7 @@
              </div>          
         </accordion-heading>
         <div ng-bind-html="post.post | breakFilter"></div>
-        <div class="row frame-reply" ng-show="$index == 0">
+        <div class="row frame-reply" ng-show="$index == 0 && incidence.status.currentStatus != 'Closed'">
             <reply></reply>
         </div>
       </accordion-group>

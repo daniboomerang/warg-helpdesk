@@ -4,6 +4,8 @@ var RESULT_SUCCESS = "SUCCESS";
 var RESULT_ERROR = "ERROR"; 
 var ROLE_USER = "user";
 var STATUS_ONGOING = "On Going";
+var STATUS_CLOSED = "Closed";
+var STATUS_OPEN = "Open"
 
 var mongoose = require('mongoose'),
   Incidence = mongoose.model('Incidence'),
@@ -45,7 +47,7 @@ exports.createIncidence = function(title, description, user, severity, priority,
 
   var status = {
       // Possible statuses : Open, Closed, Reopened
-      currentStatus: 'Open',
+      currentStatus: STATUS_OPEN,
       // Possible substatuses : Open-OnGoing, Open-Blocked,
       // Closed-Solved, Closed-Duplicated, Closed-Invalid
       currentSubstatus: '',
@@ -94,7 +96,6 @@ exports.findIncidence = function (id) {
 
 };
 
-
 /**
  *  Return the list of incidences of a user
  *  Returns a PROMISE with the result 
@@ -128,6 +129,45 @@ exports.listIncidences = function(user) {
 };
 
 /**
+ *  Closes an incidence 
+ *  Returns a PROMISE with the result 
+ */
+exports.closeIncidence = function(incidence, reason, effort, duplicated, invalidComment, date) {
+
+  var deferred = Q.defer();
+
+  var status = {
+      // Possible statuses : Open, Closed, Reopened
+      currentStatus: STATUS_CLOSED,
+      // Possible substatuses : Open-OnGoing, Open-Blocked,
+      // Closed-Solved, Closed-Duplicated, Closed-Invalid
+      currentSubstatus: reason,
+      duplicatedOf: duplicated,
+      blockedBy: null
+  };
+  
+  incidence.status = status;
+  incidence.effort = effort;
+  incidence.markModified('status');
+
+  if (reason == "Invalid"){
+    var post = {post: invalidComment, author: incidence.assigned, date: date};
+    incidence.history.unshift(post);  
+  }
+  
+  incidence.assigned = null;
+  incidence.save(function(err) {
+    if (err) {
+      deferred.resolve({status: 'incidence.not.closed', error: err});
+    } else {
+      deferred.resolve({status: 'incidence.closed', incidence: incidence});
+    }
+  });
+
+  return deferred.promise;
+};
+
+/**
  *  Updates an incidence assignation
  *  Returns a PROMISE with the result 
  */
@@ -136,7 +176,9 @@ exports.updateAssignee = function(incidence, assigned) {
   var deferred = Q.defer();
 
   incidence.assigned = assigned.username;
-  incidence.status = STATUS_ONGOING;
+  incidence.status.currentStatus = STATUS_ONGOING;
+  incidence.markModified('status.currentStatus');
+
   incidence.save(function(err) {
     if (err) {
       deferred.resolve({status: 'incidence.not.updated', error: err});

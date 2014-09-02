@@ -202,8 +202,8 @@ accountsControllers.controller('ListAccountsCtrl', function ($scope, $state) {
 
 });
 
-accountsControllers.controller('AccountCtrl', function($scope){
-  
+accountsControllers.controller('AccountCtrl', function ($scope){
+ 
 });
 
 accountsControllers.controller('AccountSettingsCtrl', function($scope){

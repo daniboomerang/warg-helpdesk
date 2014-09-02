@@ -65,11 +65,6 @@ var helpdesk = angular.module('helpdesk',
 
         currentLocation = {module: currentModule, state: currentState}
     	$rootScope.$broadcast('event:currentLocation-changed', currentLocation);
-
-    	/*if (from.name == ''){$rootScope.previousState = INITIAL_STATE;}
-    	else if ($rootScope.previousState != $rootScope.currentState) {$rootScope.previousState = from.name;}
-        $rootScope.currentState = to.name;
-        $rootScope.currentModule = activeModule($rootScope.currentState);*/
     });
 
 	Auth.currentUser();});

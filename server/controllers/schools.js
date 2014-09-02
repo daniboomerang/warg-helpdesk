@@ -47,7 +47,7 @@ exports.exists = function (req, res, next) {
       res.json({exists: false});
     }
     else if (result.status == 'db.exception'){
-      return next(new Error('DB Exception: Failed to load School with code ' + schoolCode));
+      return next(new Error('DB Exception: Failed to load School with code ' + req.params.schoolCode));
     }
   });   
 };

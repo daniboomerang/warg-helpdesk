@@ -1,10 +1,10 @@
 <section ng-init="find()">
 	<div class="row" ng-show="incidences.length > 0">
 		<div class="row-fluid">	
-		  	<div class="span12 list-container">
+		  	<div class="span12 list-incidences-container">
 			    <table tr-ng-grid="" items="incidences" selected-items="selectedIncidences" selection-mode="SingleRow">
 				    <thead>
-				        <tr style="color: white;" class="solid-yellow-bar-fill">
+				        <tr class="solid-yellow-bar-fill">
 				        	<th field-name="id" cell-width="5em">ID</th>  
 				            <th field-name="severity" cell-width="5em">Severity</th>  
 				            <th field-name="priority" cell-width="5em">Priority</th>
@@ -12,7 +12,7 @@
 				            <th field-name="creator.username" cell-width="7em">Owner</th>
 				            <th field-name="created" cell-width="8em">Created</th>
 				            <th field-name="updated" cell-width="8em">Updated</th>
-				            <th field-name="status" cell-width="8em">Status</th>
+				            <th field-name="status.currentStatus" cell-width="8em">Status</th>
 				            <th field-name="assigned" cell-width="5em">Assigned</th>
 				        </tr>
 				    </thead>
@@ -60,7 +60,7 @@
 								</span>
 							</td>								
 
-		                    <td field-name="status"><span class="frame-list-cell" ng-class="{open: gridItem.status == 'Open', ongoing: gridItem.status == 'On Going', closed: gridItem.status == 'Closed'}">{{gridItem.status}}</span></td>
+		                    <td field-name="status.currentStatus"><span class="frame-list-cell" ng-class="{open: gridItem.status.currentStatus == 'Open', ongoing: gridItem.status.currentStatus == 'On Going', closed: gridItem.status.currentStatus == 'Closed'}">{{gridItem.status.currentStatus}}</span></td>
 		                </tr>
 		            </tbody>
 		            <tfoot>
@@ -79,7 +79,7 @@
 		<!-- Deprecated -->  	
 		<!--<div id="overview" ui-view="overview" class="span9"></div>-->
 	</div>
-	<div class="frame-empty-resource-message" ng-hide="incidences.length > 0">
-		<h1>No incidences yet. <br> Why don't you <a ng-click="goToState('helpdesk.accounts.create')">Create One</a>?</h1>
+	<div class="frame-empty-resource-message" ng-show="incidences.length == 0">
+		<h1>No incidences yet. <br> Why don't you <a ng-click="goToState('helpdesk.incidences.create')">Create One</a>?</h1>
 	</div>		
 </section>

@@ -72,18 +72,18 @@
           <div class="col-xs-6 col-sm-2">
             <h5>Severity</h5>
              <ui-select ng-model="severity.selected" theme="selectize" style="width: 120px;" ng-required="true">
-              <ui-select-match placeholder="{{severity.type}}"> <span class="severity-priority-select" ng-class="{serious: $select.selected.type == 'Serious', high: $select.selected.type == 'High'};">{{$select.selected.type}}</ui-select-match></span>
+              <ui-select-match placeholder="{{severity.type}}"> <span class="frame-select-rows" ng-class="{'frame-select-rows': true, serious: $select.selected.type == 'Serious', high: $select.selected.type == 'High'};">{{$select.selected.type}}</ui-select-match></span>
               <ui-select-choices repeat="severity in urgencyTypes">
-                <div ng-bind-html="severity.type" class="severity-priority-select" ng-class="{serious: severity.type == 'Serious', high: severity.type == 'High'};"></div>
+                <div ng-bind-html="severity.type" class="frame-select-rows" ng-class="{serious: severity.type == 'Serious', high: severity.type == 'High'};"></div>
               </ui-select-choices>
             </ui-select>
           </div>
           <div class="col-xs-6 col-sm-2">
             <h5>Priority</h5>
             <ui-select ng-model="priority.selected" theme="selectize" style="width: 120px;" ng-required="true">
-              <ui-select-match placeholder="{{priority.type}}"> <span class="severity-priority-select" ng-class="{serious: $select.selected.type == 'Serious', high: $select.selected.type == 'High'};">{{$select.selected.type}}</ui-select-match></span>
+              <ui-select-match placeholder="{{priority.type}}"> <span class="frame-select-rows" ng-class="{serious: $select.selected.type == 'Serious', high: $select.selected.type == 'High'};">{{$select.selected.type}}</ui-select-match></span>
               <ui-select-choices repeat="priority in urgencyTypes">
-                <div ng-bind-html="priority.type" class="severity-priority-select" ng-class="{serious: priority.type == 'Serious', high: priority.type == 'High'};"></div>
+                <div ng-bind-html="priority.type" class="frame-select-rows" ng-class="{serious: priority.type == 'Serious', high: priority.type == 'High'};"></div>
               </ui-select-choices>
             </ui-select>
           </div>

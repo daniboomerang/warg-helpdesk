@@ -96,6 +96,6 @@ helpdeskControllers.controller('HelpdeskCtrl', function ($scope, $state, $rootSc
 
 helpdeskControllers.controller('ToasterCtrl', function($scope, toaster, $window) {
   $scope.$on('event:pop-message', function(event, message) {
-    toaster.pop(message.type, message.title, message.text, 10000);
+    toaster.pop(message.type, message.title, message.text, 5000);
   }); 
 });

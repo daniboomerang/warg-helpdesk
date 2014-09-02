@@ -21,6 +21,13 @@ body, html {
   padding-bottom: 25px;
 }
 
+.frame-select-rows{
+  border-radius: 5px 5px 5px 5px;
+  -moz-border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  padding: 5px;
+}
+
 .frame-error-arrowup {
   text-align: center;
   position: relative;
@@ -234,3 +241,12 @@ input.ng-dirty.ng-invalid ~ span.ko, textarea.ng-dirty.ng-invalid ~ span.ko{ col
   background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),linear-gradient(top,#52B37D,#2e8b57);
 }
 
+.solid-gray-bar-fill{
+  background-color: #D9D9D9;
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-webkit-gradient(linear,left top,left bottom,from(#D9D9D9),to(#B5B5B5));
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-webkit-linear-gradient(top,#D9D9D9,#B5B5B5);
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-moz-linear-gradient(top,#D9D9D9,#B5B5B5);
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-o-linear-gradient(top,#D9D9D9,#B5B5B5);
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-ms-linear-gradient(top,#D9D9D9,#B5B5B5);
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),linear-gradient(top,#D9D9D9,#B5B5B5);
+}

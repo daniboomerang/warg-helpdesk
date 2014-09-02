@@ -32,7 +32,7 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
 
   $scope.update = function() {
     var incidence = $scope.incidence;
-    incidence.$update(function(incidence) {
+    incidence.$update(function (incidence) {
       $scope.incidence = incidence;
       messengerService.popMessage('success', 'Incidence successfully updated.', null);
     },
@@ -46,8 +46,10 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
       _id: $scope.incidence.id,
       comment: comment
     });
-    incidence.$updateComment(function(incidence) {
+    incidence.$updateComment(function (incidence) {
       $scope.incidence = incidence;
+      $scope.incidence.effortHours = Math.floor(incidence.effort / 60);
+      $scope.incidence.effortMinutes = incidence.effort % 60;
       messengerService.popMessage('success', 'Comment successfully posted.', null);
     },
     function (error){
@@ -60,9 +62,11 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
       _id: $scope.incidence.id,
       assigned: assignation
     });
-    incidence.$updateAssignee(function(incidence) {
-      $scope.incidence = incidence;
+    incidence.$updateAssignee(function (incidence) {
       messengerService.popMessage('success', 'Incidence successfully assigned', incidence.assigned + ' is in charge now.');
+      $scope.incidence = incidence;
+      $scope.incidence.effortHours = Math.floor(incidence.effort / 60);
+      $scope.incidence.effortMinutes = incidence.effort % 60;
     },
     function (error){
       messengerService.popMessage('error', 'Assination couldn´t be done.', error.data);
@@ -74,8 +78,10 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
       _id: $scope.incidence.id,
       rate: rate
     });
-    incidence.$updateRate(function(incidence) {
+    incidence.$updateRate(function (incidence) {
       $scope.incidence = incidence;
+      $scope.incidence.effortHours = Math.floor(incidence.effort / 60);
+      $scope.incidence.effortMinutes = incidence.effort % 60;
       messengerService.popMessage('success', 'Incidence successfully rated', 'The rate for ' + incidence.id + ' is ' + incidence.rate );
     },
     function (error){
@@ -88,7 +94,7 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
       _id: $scope.incidence.id,
       effort: effort
     });
-    incidence.$updateEffort(function(incidence) {
+    incidence.$updateEffort(function (incidence) {
       $scope.incidence = incidence;
       $scope.incidence.effortHours = Math.floor(incidence.effort / 60);
       $scope.incidence.effortMinutes = incidence.effort % 60;
@@ -101,14 +107,18 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
     });
   };
 
-  $scope.close = function(reason, effort, duplicated) {
+  $scope.updateClose = function(reason, effort, duplicated, invalidComment) {
     var incidence = new IncidenceClose({
       _id: $scope.incidence.id,
-      substatus: reason
+      substatus: reason,
+      effort: effort,
+      duplicated: duplicated,
+      invalidComment: invalidComment
     });
-    incidence.$closeIncidence(function(incidence) {
+    incidence.$closeIncidence(function (incidence) {
       $scope.incidence = incidence;
-      messengerService.popMessage('success', 'Incidence successfully closed', 'The incidence has been closed as ' + incidence.substatus + '.');    
+      messengerService.popMessage('success', 'Incidence successfully closed', 'The incidence has been closed as ' + incidence.status.currentSubstatus + '.');
+      $location.path("helpesk/incidences/open/list");
     },
     function (error){
       messengerService.popMessage('error', 'The incidence couldn´t be closed.', error.data);
@@ -116,7 +126,7 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
   };
 
   $scope.find = function() {
-    Incidences.query(function(incidences) {
+    Incidences.query(function (incidences) {
       $scope.incidences = incidences;
       //messengerService.popMessage('success', 'Incidences successfully retrieved', null);    
     },
@@ -132,7 +142,7 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
     else{
       Incidences.get({
         incidenceId: $state.params.incidenceId
-      }, function(incidence) {
+      }, function (incidence) {
         $scope.incidence = incidence;
         $scope.incidence.effortHours = Math.floor(incidence.effort / 60);
         $scope.incidence.effortMinutes = incidence.effort % 60;
@@ -334,7 +344,7 @@ incidencesControllers.controller('ListCtrl', function ($scope, $state, $document
         resolve: {
         incidence: function () {
           return $scope.selectedIncidence;
-        }
+          }
         }
       });
 
@@ -418,9 +428,19 @@ incidencesControllers.controller('IncidenceCtrl', function ($scope, $routeParams
     $scope.commentsStatus.expanded = !$scope.commentsStatus.expanded;
   };
 
+//Is this function = CACA!!!!! ???
+//Is this function = CACA!!!!! ???
+//Is this function = CACA!!!!! ???
   $scope.goToState = function (state) {
     $state.goToState('helpdesk.incidences.open.incidence' + state, $state.params);
   }; 
+//Is this function = CACA!!!!! ???
+//Is this function = CACA!!!!! ???
+//Is this function = CACA!!!!! ???
+
+  $scope.goToIncidence = function (id) {
+    $state.go('helpdesk.incidences.open.incidence', { incidenceId: id });
+  };
 
   $scope.toTheTop = function() {
     $document.scrollTo(top, 0, 1000);
@@ -600,44 +620,103 @@ incidencesControllers.controller('CloseCtrl', function ($scope, $modal, $log) {
 
   $scope.closeIncidence = function () {
 
-    var closeModalInstance = $modal.open({
-      templateUrl: '/modules/incidences/views/partials/close.html',
-      controller: ModalInstanceCtrl,
-      size: 'lg',
-      resolve: {
-        incidence: function () {
-          return $scope.incidence;
-        }
-      }
-    });
+    modalClose();
 
-    closeModalInstance.result.then(function (reason, effort) {
-      $scope.incidence.substatus = reason;
-      $scope.incidence.effort = effort;
-    }, function () {
-      $log.info('Close incidence dismissed at: ' + new Date());
-    });
+    function modalClose (){
+      var closeModalInstance = $modal.open({
+        templateUrl: '/modules/incidences/views/partials/close.html',
+        controller: ModalInstanceCtrl,
+        size: 'sm',
+        resolve: {
+          incidence: function () {
+            return $scope.incidence;
+          }
+        }
+      });
+
+      closeModalInstance.result.then(function (closeResult) {
+        $scope.updateClose(closeResult.reason, closeResult.effort, closeResult.duplicated, closeResult.invalidComment)
+      }, function () {
+        $log.info('Close incidence dismissed at: ' + new Date());
+      });
+    }  
   };
 
   // Please note that $modalInstance represents a modal window (instance) dependency.
   // It is not the same as the $modal service used above.
   var ModalInstanceCtrl = function ($scope, $modalInstance, incidence) {
+    
+    init();
 
-    $scope.close = {};
-    $scope.close.incidence = incidence;
-    $scope.close.reasons = ['Solved', 'Duplicated', 'Invalid'];
-    $scope.close.currentEffort = incidence.effort; // 1hour
-    $scope.close.selectedReason;
+    $scope.commentLength = function (form) {
+        if (form.invalidComment.$viewValue == undefined){return 0};
+        return form.invalidComment.$viewValue.length;     
+    };
 
-
-    $scope.ok = function () {
-      $modalInstance.close($scope.close.reason, $scope.close.updatedEffort);
+    $scope.closeIncidence = function (form) {
+      var closeResult = {
+        reason: $scope.close.reason.selected.type,
+        effort: $scope.close.totalEffort,
+        duplicated: form.duplicated.$viewValue,
+        invalidComment: form.invalidComment.$viewValue
+      }
+      $modalInstance.close(closeResult);
     };
 
     $scope.cancel = function () {
       $modalInstance.dismiss('cancel');
     };
-  };
+
+    $scope.changed = function(filed){
+      return filed.$dirty;
+    };
+
+    $scope.getMinlengthValidation = function(){
+      if ($scope.close.reason.selected.type == 'Invalid'){
+        return 25;
+      }
+      else return 0;
+    };
+
+    $scope.getMinutesValidation = function(){
+      if ($scope.close.totalEffort == 0){
+        return 1;
+      }
+      else return 0;
+    };
+
+    $scope.validCurrentEffort = function(){
+      return ((typeof $scope.close.currentEffortHours != 'undefined') &&
+              (typeof $scope.close.currentEffortMinutes != 'undefined'))
+    };
+
+    $scope.effortChanged = function () {
+      if ((typeof $scope.close.currentEffortHours == 'undefined') || (typeof $scope.close.currentEffortMinutes == 'undefined')){
+        // Do Nothing: this keeps the form as invalid
+      }
+      else{
+        $scope.close.totalEffortMinutes = incidence.effortMinutes + $scope.close.currentEffortMinutes;
+        $scope.close.totalEffortHours = incidence.effortHours + $scope.close.currentEffortHours;
+        $scope.close.totalEffort = $scope.close.totalEffortHours * 60 + $scope.close.totalEffortMinutes;
+      }  
+    };
+
+    $scope.close.currentReason = $scope.close.reason.selected;
+
+    function init(){
+      $scope.close = {};
+      $scope.close.reason = {};
+      $scope.close.incidence = incidence;
+      $scope.close.reasons = [{type: 'Solved'}, {type:'Duplicated'}, {type:'Invalid'}];
+      $scope.close.reason.selected = $scope.close.reasons[0];
+      $scope.close.incidenceTotalEffort = incidence.effort;   
+      $scope.close.currentEffortMinutes = 0;
+      $scope.close.currentEffortHours = 0;
+      $scope.close.totalEffort = incidence.effort;
+      $scope.close.totalEffortMinutes = incidence.effortMinutes;
+      $scope.close.totalEffortHours = incidence.effortHours;
+    };
+  };  
 });
 
 incidencesControllers.controller('CreateIncidenceFormCtrl', function($scope){

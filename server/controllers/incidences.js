@@ -118,19 +118,20 @@ exports.effort = function(req, res) {
   });
 };
 
-
 /**
  * Close incidence
  */
-exports.close = function(req, res) {
-  var incidence = req.incidence;
-  incidence.substatus = req.body.substatus;
-  incidence.status = 'Closed';
-  incidence.save(function(err) {
-    if (err) {
-      res.json(500, err);
-    } else {
-      res.json(incidence);
+exports.close = function(req, res, next) {
+  incidencesDomain.closeIncidence(req.incidence, req.body.substatus, req.body.effort,
+                         req.body.duplicated, req.body.invalidComment, Date.now()).then (function (result){
+    if (result.status == 'incidence.closed'){
+      res.json(result.incidence);
+    }  
+    else if (result.status == 'incidence.not.closed'){
+      res.send(404, INCIDENCE_NOT_FOUND);
+    }
+    else if (result.status == 'db.exception'){
+      res.send(500, INTERNAL_SERVER_ERROR);
     }
   });
 };
@@ -169,4 +170,23 @@ exports.list = function(req, res) {
       res.json(resultList.list);
     }
   });
+};
+
+/**
+ *  School Code exists
+ *  returns {exists}
+ */
+ 
+exports.exists = function (req, res, next) {
+  incidencesDomain.findIncidence(req.params.incidenceId).then (function (result){
+    if (result.status == 'incidence.found'){
+      res.json({exists: true});
+    }  
+    else if (result.status == 'incidence.not.found'){
+      res.json({exists: false});
+    }
+    else if (result.status == 'db.exception'){
+      return next(new Error('DB Exception: Failed to load Incidence with ID ' + req.params.incidenceId));
+    }
+  });   
 };
