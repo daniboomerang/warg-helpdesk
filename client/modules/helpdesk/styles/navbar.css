@@ -1,12 +1,19 @@
-.shading-notification {
-  background-color: #EFF5FF;
+.navbar-fixed-top .navbar-brand {
+        padding:10px;
+        padding-left: 15px;
 }
 
-.frame-logo{
-  	background-color: red;
-	margin-bottom: 10px;
-	padding-bottom: 10px;
+.shading-notification {
+  background-color: #E6E6E6;
+  border-radius: 12px 12px 12px 12px;
+  -moz-border-radius: 12px 12px 12px 12px;
+  -webkit-border-radius: 12px 12px 12px 12px;
+  border: 1px solid #C4C4C4;
 }
+
+.notifications-dropdown{
+	overflow: auto; max-height: 368px; height: 368px; 
+}	
 
 .frame-user-settings{
   margin: 7px;
@@ -14,16 +21,16 @@
 }
 
 .link-notification{
-	background-color: #EDEDED;
+	background-color: #F5F5F5;
 	padding: 8px;
   	border-bottom: 1px solid #e5e5e5;
   	color: black;
 }
 
 .link-dropdown{
-	 padding: 8px;
+	padding: 8px;
   	border-bottom: 1px solid #e5e5e5;
-	background-color: #EDEDED;
+	background-color: #F5F5F5;
 }
 
 .shadow-left{	

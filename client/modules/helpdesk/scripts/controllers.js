@@ -4,25 +4,20 @@ var STATUS_NEW = "New";
 var STATUS_DISPLAYED = "Displayed";
 var STATUS_SEEN = "Seen";
 
-var helpdeskControllers = angular.module('helpdeskControllers', ['helpdeskServices'])
+var helpdeskControllers = angular.module('helpdeskControllers', ['helpdeskServices', 'notificationServices'])
 
-helpdeskControllers.controller('HelpdeskCtrl', function ($scope, $state, $rootScope, $location, helpdeskConfigService, Auth, notificationService, locationService) {
+helpdeskControllers.controller('HelpdeskCtrl', function ($scope, $state, $rootScope, $location, helpdeskConfigService, Auth, locationService, messengerService) {
 
   initDesk();
 
-  $scope.cancelOperation = function() {
-    $state.go(locationService.getPreviousState());
-  };
-
 	function initDesk() {
+
+    $rootScope.$on('event:currentUser-changed', function(event) {
+        initDesk();
+    });
 
     $scope.oneAtATime = false;
     $scope.status = {};
-
-    $scope.userNotifications = [];
-    notificationService.getNotifications().then( function (notifications){
-      $scope.userNotifications = notifications;
-    });
 
 		helpdeskConfigService.setupDesk().then(function(){
         $scope.menu = helpdeskConfigService.getMenu();
@@ -43,9 +38,9 @@ helpdeskControllers.controller('HelpdeskCtrl', function ($scope, $state, $rootSc
     $scope.status.activeState = currentLocation.state;
   });
 
-  $rootScope.$on('event:currentUser-changed', function(event) {
-      initDesk();
-    });
+  $scope.cancelOperation = function() {
+    $state.go(locationService.getPreviousState());
+  };
 
   $scope.isActiveModule = function(module){
   	return $scope.status[module.toLowerCase()];
@@ -69,11 +64,14 @@ helpdeskControllers.controller('HelpdeskCtrl', function ($scope, $state, $rootSc
     });
   };
 
-  $scope.markNotAsSeen = function(notification) {
-    notification.status = STATUS_SEEN;
-  };
 
-  $scope.newNotifications = function() {
+});
+
+helpdeskControllers.controller('NavbarCtrl', function ($scope, Notifications, NotificationStatus) {
+
+  initNotifications();
+
+  function getNewNotifications() {
     var newNotifications = [];
     for (var i=0; i<$scope.userNotifications.length; i++){
       if ($scope.userNotifications[i].status == STATUS_NEW){
@@ -83,16 +81,50 @@ helpdeskControllers.controller('HelpdeskCtrl', function ($scope, $state, $rootSc
     return newNotifications;
   };
 
+  function initNotifications(){
+
+    Notifications.query(function (notifications) {
+        $scope.userNotifications = notifications;
+        $scope.newNotifications = getNewNotifications();
+      },
+    function (error){
+      messengerService.popMessage('error', 'Ups...notifications couldn´t be retrieved.', error.data);
+    });
+
+  }
+ 
+  /*********** NOTIFICATIONS ***********/
+
+  $scope.updateNotificationStatus = function(currentNotification, status) {
+    var notification = new NotificationStatus({
+      _id: currentNotification._id,
+      status: status
+    });
+    notification.$updateStatus(function (notification) {
+      $scope.userNotifications = notifications;Notifications.query(function (notifications) {
+        $scope.userNotifications = notifications;
+        $scope.newNotifications = getNewNotifications();
+      },
+      function (error){
+        messengerService.popMessage('error', 'Ups...notifications couldn´t be retrieved.', error.data);
+      });
+    },
+    function (error){
+      console.log("Error trying to update status for notification " + currentNotification._id);
+    });
+  };
+
   $scope.markNewNotsAsDisplayed = function() {
     for (var i=0; i<$scope.userNotifications.length; i++){
       if ($scope.userNotifications[i].status == STATUS_NEW){
         $scope.userNotifications[i].status = STATUS_DISPLAYED;
       }  
     }
+    $scope.newNotifications = [];
   };
+
+  /******** END NOTIFICATIONS *******/
 });
-
-
 
 helpdeskControllers.controller('ToasterCtrl', function($scope, toaster, $window) {
   $scope.$on('event:pop-message', function(event, message) {

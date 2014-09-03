@@ -143,18 +143,58 @@ exports.assignee = function(incidence, assignee) {
 };
 
 /**
- *  Return the list of notifications of a user
- *  Returns a PROMISE with the result 
+ *  Finds Notification
+ *  returns {notification}
  */
-exports.listNotifications = function(user) {
+exports.findNotification = function (id) {
 
   var deferred = Q.defer();
 
-  Notification.find({addressee: user}).sort('-created').exec(function(err, notifications) {
+   Notification.load(id, function (err, notification) {
+      if (err) {
+        deferred.resolve({status: 'notification.not.found', error: err});
+      } else if (notification == null){
+        deferred.resolve({status: 'notification.not.found', error: 'Failed to load notification ' + id + '.' + '\n' + 'Please be sure ' + id + 'is correct.' });
+      } else deferred.resolve({status: 'notification.found', notification: notification});
+    });
+
+  return deferred.promise;
+
+};
+
+/**
+ *  Return the list of notifications of a user
+ *  Returns a PROMISE with the result 
+ */
+exports.listNotifications = function(userId) {
+
+  var deferred = Q.defer();
+
+  Notification.find({addressee: userId}).sort('-created').exec(function(err, notifications) {
      if (err) {
       deferred.resolve({status: RESULT_ERROR, error: err});
     } else {   
       deferred.resolve({status: RESULT_SUCCESS, list: notifications});
+    }
+  });
+
+  return deferred.promise;
+};
+
+/**
+ *  Updates the status of a notification
+ *  Returns a PROMISE with the result 
+ */
+exports.updateStatus = function(notification, status) {
+
+  var deferred = Q.defer();
+
+  notification.status = status;
+  notification.save(function(err) {
+    if (err) {
+      deferred.resolve({status: 'notification.not.updated', error: err});
+    } else {
+      deferred.resolve({status: 'notification.updated', notification: notification});
     }
   });
 

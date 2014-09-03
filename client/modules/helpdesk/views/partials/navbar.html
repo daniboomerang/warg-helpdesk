@@ -1,3 +1,4 @@
+<section ng-controller="NavbarCtrl">
 <nav class="navbar navbar-default navbar-fixed-top solid-blue-bar-fill" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -8,23 +9,26 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a style="margin-left: 5px; color: #ebebeb;" class="navbar-brand">{{currentUser.school.name}}</a>
+      <a style="color: #ebebeb;" class="navbar-brand"><img src="/images/warg-gray-32-30.svg">
+        &nbsp;<span ng-show="currentUser.school != null"> {{currentUser.school.name}}</span>
+                    <span ng-show="currentUser.school == null">WARG HELPDESK</span>
+      </a>
     </div>
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav navbar-right" ng-show="currentUser" style="margin-right:10px;">
         <li class="dropdown shadow-left hover-effect">
           <a ng-click="markNewNotsAsDisplayed()" class="dropdown-toggle" data-toggle="dropdown">
-            <span ng-class="{'sounding-bell' : newNotifications().length > 0}"><img ng-if="newNotifications().length > 0" src="/modules/helpdesk/images/icons/bell-claret-24.png" alt="notification" popover-placement="bottom" popover="You have {{ newNotifications().length }} new notification(s)" popover-trigger="mouseenter"><img ng-if="newNotifications().length == 0" src="/modules/helpdesk/images/icons/bell-gray-24.png" alt="notification"></span>
+            <span ng-class="{'sounding-bell' : newNotifications.length > 0}"><img ng-if="newNotifications.length > 0" src="/modules/helpdesk/images/icons/bell-claret-24.png" alt="notification" popover-placement="bottom" popover="You have {{ newNotifications.length }} new notification(s)" popover-trigger="mouseenter"><img ng-if="newNotifications.length == 0" src="/modules/helpdesk/images/icons/bell-gray-24.png" alt="notification"></span>
           </a>
-          <ul class="dropdown-menu" ng-if="userNotifications.length > 0">
-            <li ng-repeat="notification in userNotifications" class="link-dropdown" ng-class="{'shading-notification': notification.status != 'Seen'}">
-              <a ng-click="markNotAsSeen(notification)">
+          <ul class="dropdown-menu notifications-dropdown"  ng-if="userNotifications.length > 0">
+            <li ng-repeat="notification in userNotifications" class="link-dropdown">
+              <a ng-class="{'shading-notification': notification.status != 'Seen'}" ng-click="updateNotificationStatus(notification, 'Seen')">
                 <span>{{notification.text}}</span>&nbsp;&nbsp;
                 <span><img src="/modules/helpdesk/images/icons/planner-16.png"></span>&nbsp;&nbsp;
                 <span>{{notification.created | date:'shortDate'}}</span>&nbsp;&nbsp;
-                <span ng-if="notification.status != 'Seen'"><img src="/modules/helpdesk/images/icons/circle-dashed-8.png" popover-placement="top" popover="Mark as seen" popover-trigger="mouseenter" ng-click="markNotAsSeen(notification)"></span>
-                <span ng-if="notification.status == 'Seen'"><img src="/modules/helpdesk/images/icons/circle-8.png" popover-placement="top" popover="Seen" popover-trigger="mouseenter"></span>
+                <span ng-if="notification.status != 'Seen'"><img src="/modules/helpdesk/images/icons/circle-dashed-8.png" popover-placement="left" popover="Mark as seen" popover-trigger="mouseenter" ng-click="updateNotificationStatus(notification, 'Seen')"></span>
+                <span ng-if="notification.status == 'Seen'"><img src="/modules/helpdesk/images/icons/circle-8.png" popover-placement="left" popover="Seen" popover-trigger="mouseenter"></span>
               </a>
             </li>
           </ul>
@@ -33,9 +37,9 @@
           </ul>
         </li>
         <li class="dropdown shadow-right hover-effect">
-          <a class="dropdown-toggle" data-toggle="dropdown" style="color: #ebebeb;">{{currentUser.username}}&nbsp;&nbsp;&nbsp;<img src="/modules/helpdesk/images/icons/guest-24-black.png" alt="logout"></a>
+          <a class="dropdown-toggle" data-toggle="dropdown" style="color: #ebebeb;">{{currentUser.username}}&nbsp;&nbsp;&nbsp;<img src="/modules/helpdesk/images/icons/guest-24-black.png"></a>
           <ul class="dropdown-menu">
-            <li class="link-dropdown link-user"><a ng-click="goToState('helpdesk.accounts.open.settings')"><img src="/modules/helpdesk/images/icons/settings-24.png" alt="logout">&nbsp;&nbsp;User Settings</a></li>
+            <li class="link-dropdown link-user"><a ng-click="goToState('helpdesk.accounts.settings')"><img src="/modules/helpdesk/images/icons/settings-24.png" alt="logout">&nbsp;&nbsp;User Settings</a></li>
             <li class="link-dropdown link-user"><a ng-click="logout()"><img src="/modules/helpdesk/images/icons/logout-24.png" alt="logout">&nbsp;&nbsp;Sign out</a></li>
             <!--<li class="link-dropdown"><a>{{currentUser.username}}</a></li>-->
           </ul>
@@ -44,3 +48,4 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+</section>

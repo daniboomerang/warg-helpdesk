@@ -77,7 +77,7 @@ exports.createIncidence = function(title, description, user, severity, priority,
 };
 
 /**
- *  Show profile
+ *  Finds an incidence
  *  returns {incidence}
  */
 exports.findIncidence = function (id) {
@@ -88,7 +88,7 @@ exports.findIncidence = function (id) {
       if (err) {
         deferred.resolve({status: 'incidence.not.found', error: err});
       } else if (incidence == null){
-        deferred.resolve({status: 'incidence.not.found', error: 'Failed to load incidence ' + id + '.' + '\n' + 'Please be sure ' + id + 'is a correct.' });
+        deferred.resolve({status: 'incidence.not.found', error: 'Failed to load incidence ' + id + '.' + '\n' + 'Please be sure ' + id + 'is correct.' });
       } else deferred.resolve({status: 'incidence.found', incidence: incidence});
     });
 

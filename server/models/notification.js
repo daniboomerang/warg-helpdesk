@@ -34,6 +34,16 @@ NotificationSchema.pre('save', function(next, done){
   next();
 });
 
+/**
+ * Statics
+ */
+NotificationSchema.statics = {
+  load: function(id, cb) {
+    this.findOne({
+      _id: id
+    }).populate('addressee','username').exec(cb);
+  }
+};
 
 /**
  * Plugins

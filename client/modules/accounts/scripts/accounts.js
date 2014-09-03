@@ -59,7 +59,7 @@ var accounts = angular.module('accounts',
 		        controller: 'ListAccountsCtrl'
 		    })
 			.state('helpdesk.accounts.open.account', {
-		        url: '/:accountId',
+		        url: '/account/:accountId',
 		        views: {
 	            	'account': {
 						templateUrl: '/modules/accounts/views/partials/account.html',
@@ -67,10 +67,10 @@ var accounts = angular.module('accounts',
 		            }    
 	            }    
 		    })
-		   	.state('helpdesk.accounts.open.settings', {
-		        url: '/settings',
-		        templateUrl: '/modules/accounts/views/partials/user-settings.html'
-		        //controller: 'AccountSettingsCtrl'
-		    })
+		.state('helpdesk.accounts.settings', {
+	        url: '/settings',
+	        templateUrl: '/modules/accounts/views/partials/user-settings.html'
+	        //controller: 'AccountSettingsCtrl'
+		})
 })
 .run(function ($rootScope, Auth) {Auth.currentUser();});

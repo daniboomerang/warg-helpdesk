@@ -33,19 +33,24 @@ module.exports = function(app) {
   var modules = require('../controllers/modules');
   app.get('/api/modules', auth.ensureAuthenticated, modules.modules);
 
-  // Notifications
+
+  ///////////////////////
+  // Notifications API //
+  ///////////////////////
   var notifications = require('../controllers/notifications');
   app.get('/api/notifications', auth.ensureAuthenticated, notifications.list);
-
-  //////////////////////
-  // Incidence Routes //
-  //////////////////////
-
+  app.get('/api/notifications/:notificationId', notifications.show);
+  app.put('/api/notifications/:notificationId', auth.ensureAuthenticated);
+  app.put('/api/notifications/:notificationId/status', auth.ensureAuthenticated, notifications.status);
+  app.param('notificationId', notifications.notification);
+  
+  ////////////////////
+  // Incidences API //
+  ////////////////////
   var incidences = require('../controllers/incidences');
-  app.get('/api/incidences', auth.ensureAuthenticated, incidences.list);
   app.post('/api/incidences', auth.ensureAuthenticated, incidences.create);
+  app.get('/api/incidences', auth.ensureAuthenticated, incidences.list);
   app.get('/api/incidences/:incidenceId', incidences.show);
-  // Updating an incidence
   app.put('/api/incidences/:incidenceId', auth.ensureAuthenticated, incidences.update);
   app.put('/api/incidences/:incidenceId/comment', auth.ensureAuthenticated, incidences.comment, notifications.notifyComment);
   app.put('/api/incidences/:incidenceId/rate', auth.ensureAuthenticated, incidences.rate);
