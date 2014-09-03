@@ -21,6 +21,9 @@ var NotificationSchema = new Schema({
     // Possible statuses : Unseen, Seen
     type: String,
     default: 'New'
+  },
+  incidenceId: {
+    type: String
   }
 });
 

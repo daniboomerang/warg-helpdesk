@@ -67,7 +67,7 @@ helpdeskControllers.controller('HelpdeskCtrl', function ($scope, $state, $rootSc
 
 });
 
-helpdeskControllers.controller('NavbarCtrl', function ($scope, Notifications, NotificationStatus) {
+helpdeskControllers.controller('NavbarCtrl', function ($scope, Notifications, NotificationStatus, $state) {
 
   initNotifications();
 
@@ -101,7 +101,9 @@ helpdeskControllers.controller('NavbarCtrl', function ($scope, Notifications, No
       status: status
     });
     notification.$updateStatus(function (notification) {
-      $scope.userNotifications = notifications;Notifications.query(function (notifications) {
+        $scope.userNotifications = notifications;
+        $state.go('helpdesk.incidences.open.incidence', { incidenceId: notification.incidenceId});
+        Notifications.query(function (notifications) {
         $scope.userNotifications = notifications;
         $scope.newNotifications = getNewNotifications();
       },

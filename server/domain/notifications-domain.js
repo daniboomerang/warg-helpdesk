@@ -37,10 +37,10 @@ var notify = function (addresseeRole, notificationInfo, mailInfo) {
   };
 
 
-  function createNotification(userId, notificationText) {
+  function createNotification(userId, notificationText, incidenceId) {
 
     var deferred = Q.defer();
-    var notification = new Notification({text: notificationText, addressee: userId});
+    var notification = new Notification({text: notificationText, addressee: userId, incidenceId: incidenceId});
 
     notification.save(function(err) {
       if (err) {
@@ -62,7 +62,7 @@ var notify = function (addresseeRole, notificationInfo, mailInfo) {
       }
     });
   }
-  createNotification(notificationInfo.addressee, notificationInfo.notification).then( function (result){
+  createNotification(notificationInfo.addressee, notificationInfo.notification, notificationInfo.incidenceId).then( function (result){
     if (result.status == 'notification.not.sent'){
       console.log("There has been an error trying to create a user notification");
     }
@@ -100,7 +100,7 @@ exports.comment = function(incidence, commentOwnerId, comment) {
 
       // Notify Incidence Owner User?
       if (!commentOwnerId.equals(incidenceOwnerId)){
-        notify(incidenceOwnerRole, {addressee: incidenceOwnerId, notification: notificationMessage(OWNER, commentOwnerUsername)}, {addressee: incidenceOwnerMail, subject: mailSubject, content: comment});
+        notify(incidenceOwnerRole, {addressee: incidenceOwnerId, notification: notificationMessage(OWNER, commentOwnerUsername), incidenceId: incidenceId}, {addressee: incidenceOwnerMail, subject: mailSubject, content: comment});
       }
 
       // Notify Incidence Assigned User?
@@ -109,7 +109,7 @@ exports.comment = function(incidence, commentOwnerId, comment) {
         if (!(commentOwnerId.equals(incidenceAssignedId))){
           var incidenceAssignedMail = incidenceAssignedResult.user.email;
           var incidenceAssignedRole = incidenceAssignedResult.user.role;
-          notify(incidenceAssignedRole, {addressee: incidenceAssignedId, notification: notificationMessage(TECH, commentOwnerUsername)}, {addressee: incidenceAssignedMail, subject: mailSubject, content: comment});
+          notify(incidenceAssignedRole, {addressee: incidenceAssignedId, notification: notificationMessage(TECH, commentOwnerUsername), incidenceId: incidenceId}, {addressee: incidenceAssignedMail, subject: mailSubject, content: comment});
         }  
       }
     }  
