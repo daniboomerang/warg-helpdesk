@@ -78,9 +78,9 @@ try {
 
   global.mailSender = require('./server/config/mail-sender')(config.mailSending); // Mail Sender set up with (SENDGRID)
   // Setting up Mail Listener
-  /*var mailListener = require('./server/config/mail-listener')(config.mailListening);
+  var mailListener = require('./server/config/mail-listener')(config.mailListening);
   mailListener.onMailReceived(require('./server/domain/mail-domain')(global.mailSender).processIncoming);
-  mailListener.start;           */
+  mailListener.start;           
 }
 catch (e){
   console.log("It has been issues setting up the Mailing services.")      

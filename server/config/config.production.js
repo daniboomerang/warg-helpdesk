@@ -17,7 +17,7 @@ config.mailListening = {
   username: process.env.PRODUCTION_MAIL_USERNAME,
   password: process.env.PRODUCTION_MAIL_PASSWORD,
   host: process.env.PRODUCTION_MAIL_HOST,
-  port: 993, // imap port
+  port: process.env.PRODUCTION_MAIL_PORT_IMAP // imap port
   tls: true,
   tlsOptions: { rejectUnauthorized: false },
   mailbox: "INBOX", // mailbox to monitor
