@@ -12,7 +12,7 @@
 }
 
 .notifications-dropdown{
-	overflow: auto; max-height: 368px; height: 368px; 
+	overflow: auto; max-height: 368px; min-height: 150px; 
 }	
 
 .frame-user-settings{
