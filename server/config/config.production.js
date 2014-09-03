@@ -14,10 +14,10 @@ config.mailSending = {
 
 // Mail-Listener
 config.mailListening = {
-  username: process.env.LOCAL_MAIL_USERNAME,
-  password: process.env.LOCAL_MAIL_PASSWORD,
-  host: process.env.LOCAL_MAIL_HOST,
-  port: process.env.LOCAL_MAIL_PORT_IMAP, // imap port
+  username: process.env.PRODUCTION_MAIL_USERNAME,
+  password: process.env.PRODUCTION_MAIL_PASSWORD,
+  host: process.env.PRODUCTION_MAIL_HOST,
+  port: process.env.PRODUCTION_MAIL_PORT_IMAP, // imap port
   tls: true,
   tlsOptions: { rejectUnauthorized: false },
   mailbox: "INBOX", // mailbox to monitor

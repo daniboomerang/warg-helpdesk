@@ -80,18 +80,22 @@ try {
   // Setting up Mail Listener
   var mailListener = require('./server/config/mail-listener')(config.mailListening);
   mailListener.onMailReceived(require('./server/domain/mail-domain')(global.mailSender).processIncoming);
-  mailListener.start;           
+  mailListener.start;
 }
 catch (e){
   console.log("It has been issues setting up the Mailing services.")      
 }
+
+  console.log(process.env.PRODUCTION_MAIL_USERNAME,
+  process.env.PRODUCTION_MAIL_PASSWORD,
+  process.env.PRODUCTION_MAIL_HOST,
+  process.env.PRODUCTION_MAIL_PORT_IMAP); // imap port
 
 // Start server
 var port = process.env.PORT || 3000;
 
 app.listen(port, function () {
   console.log('Express server listening on port %d in %s mode', port, app.get('env'));
-  console.log("sdfsdfsadfdsAFasdfasdfsadfñasdl´fksáñldfksáñldfk");
 });
 
 if (process.platform !== 'win32') {
