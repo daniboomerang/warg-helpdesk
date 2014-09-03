@@ -16,7 +16,7 @@ config.mailSending = {
 config.mailListening = {
   username: process.env.PRODUCTION_MAIL_USERNAME,
   password: process.env.PRODUCTION_MAIL_PASSWORD,
-  host: PRODUCTION_MAIL_HOST,
+  host: process.env.PRODUCTION_MAIL_HOST,
   port: 993, // imap port
   tls: true,
   tlsOptions: { rejectUnauthorized: false },
