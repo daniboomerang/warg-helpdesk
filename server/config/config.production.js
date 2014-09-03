@@ -14,9 +14,9 @@ config.mailSending = {
 
 // Mail-Listener
 config.mailListening = {
-  username: process.env.GMAIL_USERNAME,
-  password: process.env.GMAIL_PASSWORD,
-  host: "imap.gmail.com",
+  username: process.env.PRODUCTION_MAIL_USERNAME,
+  password: process.env.PRODUCTION_MAIL_PASSWORD,
+  host: PRODUCTION_MAIL_HOST,
   port: 993, // imap port
   tls: true,
   tlsOptions: { rejectUnauthorized: false },
