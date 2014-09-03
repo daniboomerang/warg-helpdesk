@@ -86,11 +86,6 @@ catch (e){
   console.log("It has been issues setting up the Mailing services.")      
 }
 
-  console.log(process.env.PRODUCTION_MAIL_USERNAME,
-  process.env.PRODUCTION_MAIL_PASSWORD,
-  process.env.PRODUCTION_MAIL_HOST,
-  process.env.PRODUCTION_MAIL_PORT_IMAP); // imap port
-
 // Start server
 var port = process.env.PORT || 3000;
 
