@@ -136,7 +136,7 @@ exports.assignee = function(incidence, assignee) {
 
       var mailSubject = "New Status: On Going for " + incidenceId + ' - ' + incidence.title 
       // Notify Incidence Owner User
-      notify(incidenceOwnerRole, {addressee: incidenceOwnerId, notification: notificationMessage(incidence)}, {addressee: incidenceOwnerMail, subject: mailSubject, content: notificationMessage(incidence)});
+      notify(incidenceOwnerRole, {addressee: incidenceOwnerId, notification: notificationMessage(incidence), incidenceId: incidenceId}, {addressee: incidenceOwnerMail, subject: mailSubject, content: notificationMessage(incidence)});
     }  
     else{ console.error("There has been an error trying to retrive users profiles at assignee notification."); }  
   });
