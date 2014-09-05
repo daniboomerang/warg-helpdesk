@@ -10,6 +10,7 @@ angular.module('wargHelpdeskApp', [
   'ui.bootstrap',
   'ngMessages',
   'ui.select',
+  'duScroll',
   // VENDOR
   'trNgGrid',
   'toaster',
@@ -18,7 +19,6 @@ angular.module('wargHelpdeskApp', [
   'wargHelpdeskFilters',
   // MODULES
   'auth',
-  'commonServices',
   'sign',
   'helpdesk',
   'inventory',

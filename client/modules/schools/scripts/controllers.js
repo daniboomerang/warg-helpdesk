@@ -1,49 +1,46 @@
 'use strict';
 
-var schoolsControllers = angular.module('schoolsControllers', ['schoolsServices', 'authServices', 'helpdeskServices'])
+var schoolsControllers = angular.module('schoolsControllers', ['schoolsServices', 'helpdeskServices'])
 
-schoolsControllers.controller('SchoolsCtrl', function ($scope, Schools, $q, messengerService) {
+schoolsControllers.controller('SchoolsCtrl', function ($scope, $q, $state, messengerService, schoolResourceService) {
 
   //////////
   /* CRUD */
   //////////
 
   $scope.create = function(code, name, address) {
-
-    var deferred = $q.defer();
-
-    var school = new Schools({
-      code: code,
-      name: name,
-      address: address
-    });
-    school.$save(function(school) {
+    schoolResourceService.createSchool(code, name, address).then(function(school) {
+      $scope.school = school;
       messengerService.popMessage('success', 'School successfully created.', null);
-      deferred.resolve(school);
+      $state.go('helpdesk.schools.open.list');
     },
     function (error){
-      messengerService.popMessage('error', 'School not created.', error);
+      messengerService.popMessage('error', 'School couldn´t be created.', error.data);
     });
-
-    return deferred.promise;
-  };
-
-  $scope.remove = function() {
-    
-  }; 
-
-  $scope.update = function() {
-   
   };
 
   $scope.find = function() {
-    Schools.query(function(schools) {
+    schoolResourceService.findSchools().then(function(schools) {
       $scope.schools = schools;
+    },
+    function (error){
+      messengerService.popMessage('error', 'The Schools couldn´t be retrieved.', error.data);
     });
   };
 
-  $scope.findOne = function() {
-  
+  $scope.findOne = function(id) {
+    if ($state.params.accountId == ''){
+      $state.go('helpdesk.schools.open.list');
+    }
+    else{
+      schoolResourceService.findOne($state.params.accountId).then(function(school) {
+        $scope.school = school;
+        messengerService.popMessage('success', 'School successfully created.', null);
+      },
+      function (error){
+        messengerService.popMessage('error', 'School couldn´t be created.', error.data);
+      });
+    }  
   };
 
 });
@@ -54,14 +51,7 @@ schoolsControllers.controller('SchoolsListCtrl', function ($scope, $state){
   }; 
 });
 
-schoolsControllers.controller('CreateSchoolFormCtrl', function ($scope){
-  $scope.changed = function(filed){
-    return filed.$dirty;
-  };
-});
-
-
-schoolsControllers.controller('CreateSchoolCtrl', function ($scope, Auth, $http, $state) {
+schoolsControllers.controller('CreateSchoolCtrl', function ($scope, $http) {
 
   $scope.school = {};
 
@@ -87,17 +77,10 @@ schoolsControllers.controller('CreateSchoolCtrl', function ($scope, Auth, $http,
   };
 
   $scope.createSchool = function(form){
-    $scope.create(form.code.$viewValue.toUpperCase(), form.name.$viewValue,
-                  $scope.address.selected).then(
-                    function (result){
-                      $state.go('helpdesk.schools.open.list', $state.params);
-                    },
-                    function(err) {
-                      angular.forEach(err.errors, function(error, field) {
-                        form[field].$setValidity('mongoose', false);
-                        $scope.errors[field] = error.message;
-                      });
-                      $scope.error.other = err.message;
-                    });
-    };
+    $scope.create(form.code.$viewValue.toUpperCase(), form.name.$viewValue, $scope.address.selected);
+  };
+
+  $scope.changed = function(filed){
+    return filed.$dirty;
+  };
 });

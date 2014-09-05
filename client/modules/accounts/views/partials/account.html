@@ -1,10 +1,11 @@
 <section ng-init="findOne()">
+	<div  style="position: fixed; margin-right:20px;">
 	<div class="shadow-form-container">
-	  	<div class="panel-body" style="padding-top:2px">
+	  	<div class="panel-body" style="padding-top:2px;">
 		  	<div class="row">
 				<span class="col-md-1 col-md-offset-11" ng-click="cancelOperation()" popover-placement="left" popover="Close" popover-trigger="mouseenter"><img src="/modules/accounts/images/icons/close-window-16.png"></span>
 			</div>
-		    <form class="form frame-form" name="form" ng-submit="" ng-controller="CreateAccountFormCtrl">
+		    <form class="form frame-form" name="form" ng-submit="">
 				<div class="input-group form-line-frame">
 				<span class="input-group-addon"><img src="/modules/accounts/images/icons/at-16.png"></span>
 				<input
@@ -75,4 +76,5 @@
 			</form>
 	  	</div>
 	</div>
+	</div>	
 </section>  

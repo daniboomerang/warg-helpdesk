@@ -1,97 +1,60 @@
 'use strict';
 
-var accountsControllers = angular.module('accountsControllers', ['accountsServices', 'authServices', 'ui.select', 'helpdeskServices', 'commonServices'])
+var accountsControllers = angular.module('accountsControllers', ['accountsServices', 'authServices', 'schoolsServices', 'helpdeskServices'])
 
-accountsControllers.controller('AccountsCtrl', function ($scope, $state, $q, Accounts, Auth, messengerService) {
+accountsControllers.controller('AccountsCtrl', function ($scope, $state, $q, accountResourceService, messengerService) {
 
   //////////
   /* CRUD */
   //////////
 
   $scope.create = function(email, username, password, role, school) {
-    var deferred = $q.defer();
-    Auth.createUser({
-      email: email,
-      username: username,
-      password: password,
-      role: role,
-      school: school  
+    accountResourceService.createAccount(email, username, password, role, school).then(function(account) {
+      $scope.account = account;
+      messengerService.popMessage('success', 'Account successfully created.', null);
+      $state.go('helpdesk.accounts.open');
     },
-    function(error) {
-      $scope.errors = {};
-      if (!error) {
-        messengerService.popMessage('success', 'Account successfully created.');
-        deferred.resolve();
-      } else {
-        deferred.reject(error);
-        messengerService.popMessage('error', 'The account couldn´t be created.', error);
-      }
+    function (error){
+      messengerService.popMessage('error', 'Account couldn´t be created.', error.data);
     });
-    return deferred.promise;
-  };
-
-  $scope.remove = function(account) {
-    
-  }; 
-
-  $scope.update = function() {
-   
   };
 
   $scope.find = function() {
-    Accounts.query(function(accounts) {
+    accountResourceService.findAccounts().then(function(accounts) {
       $scope.accounts = accounts;
+    },
+    function (error){
+      messengerService.popMessage('error', 'The list of accounts couldn´t be retrieved.', error.data);
     });
   };
 
-  $scope.findOne = function(){
+  $scope.findOne = function() {
     if ($state.params.accountId == ''){
       $state.go('helpdesk.accounts.open');
     }
-    else{
-      Accounts.get({
-        accountId: $state.params.accountId
-      }, function(account) {
+    else{  
+      accountResourceService.findOne($state.params.accountId).then(function(account) {
         $scope.account = account;
       },
-       function (error){
+      function (error){
         messengerService.popMessage('error', 'The account couldn´t be retrieved.', error.data);
         $state.go('helpdesk.accounts.open');
       });
-    }
+    }  
   };
-
 });
 
-accountsControllers.controller('CreateAccountCtrl', function ($rootScope, $scope, Auth, $modal, $state, schoolsService, locationService) {
+accountsControllers.controller('CreateAccountCtrl', function ($rootScope, $scope, $modal, $state, schoolResourceService, locationService) {
 
   init();
 
-	$scope.clear = function(form) {
-    $scope.user.email = '';
-    $scope.user.username = '';
-    $scope.user.password = '';
-    form.$setPristine();
-  };
-  
   $scope.createAccount = function(form){
     $scope.create(form.email.$viewValue, form.username.$viewValue,
-                  form.password.$viewValue, $scope.user.role.selected.type, $scope.user.school.selected).then(
-                    function (result){
-                      $scope.clear(form);
-                      $state.go('helpdesk.accounts.open', $state.params);
-                    },
-                    function(err) {
-                      angular.forEach(err.errors, function(error, field) {
-                        form[field].$setValidity('mongoose', false);
-                        $scope.errors[field] = error.message;
-                      });
-                      $scope.error.other = err.message;
-                    });
+                  form.password.$viewValue, $scope.user.role.selected.type, $scope.user.school.selected);
     };
   
   $scope.refreshSchools = function(){
-    schoolsService.retrieveSchools().then(function (schoolsList){      
+    schoolResourceService.findSchools().then(function (schoolsList){      
       if (schoolsList.length > 0){
         $scope.schoolsList = schoolsList;
         $scope.user.school.selected = $scope.schoolsList[0];
@@ -101,6 +64,10 @@ accountsControllers.controller('CreateAccountCtrl', function ($rootScope, $scope
         openModalWarning();
       }
     });
+  };
+
+  $scope.changed = function(filed){
+    return filed.$dirty;
   };
 
   function init(){
@@ -116,14 +83,14 @@ accountsControllers.controller('CreateAccountCtrl', function ($rootScope, $scope
 
     // Schools
     $scope.user.school = {};
-    var schoolsList = schoolsService.getSchools();
+    var schoolsList = schoolResourceService.getSchools();
     if (schoolsList == null){
       $scope.schoolsListReady = false;
     }
     else if (schoolsList.length == 0){
       // We need to check a School has been created recently.
       // So we ensure that, calling again to the server.
-      schoolsService.retrieveSchools().then(function (schoolsList){      
+      schoolResourceService.findSchools().then(function (schoolsList){      
         if (schoolsList.length > 0){
           $scope.schoolsList = schoolsList;
           $scope.user.school.selected = $scope.schoolsList[0];
@@ -208,10 +175,4 @@ accountsControllers.controller('AccountCtrl', function ($scope){
 
 accountsControllers.controller('AccountSettingsCtrl', function($scope){
   
-});
-
-accountsControllers.controller('CreateAccountFormCtrl', function($scope){
-  $scope.changed = function(filed){
-    return filed.$dirty;
-  };
 });

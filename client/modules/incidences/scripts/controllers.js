@@ -1,6 +1,6 @@
   'use strict';
 
-var incidencesControllers = angular.module('incidencesControllers', ['incidencesServices', 'duScroll', 'commonServices', 'helpdeskServices'])
+var incidencesControllers = angular.module('incidencesControllers', ['incidencesServices', 'helpdeskServices', 'schoolsServices', 'accountsServices'])
 
 incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, $anchorScroll, $routeParams, $state, messengerService, Incidences, IncidenceRate, IncidenceAssign, IncidenceEffort, IncidenceClose, IncidenceComment) {
 
@@ -147,9 +147,6 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
         $scope.incidence.effortHours = Math.floor(incidence.effort / 60);
         $scope.incidence.effortMinutes = incidence.effort % 60;
         $scope.incidence.previousPosts = incidence.history;
-        //removes 1 element from index 3
-        //$scope.incidence.lastPost = $scope.incidence.previousPosts.splice(0, 1);
-        
       },
        function (error){
         messengerService.popMessage('error', 'Incidence ' + $state.params.incidenceId +  ' couldn´t be retrieved.', error.data);
@@ -160,7 +157,7 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
 
 });
 
-incidencesControllers.controller('CreateCtrl', function ($scope, $rootScope, $modal, $state, schoolsService, locationService){
+incidencesControllers.controller('CreateCtrl', function ($scope, $rootScope, $modal, $state, schoolResourceService, locationService){
 
   init();
 
@@ -194,7 +191,7 @@ incidencesControllers.controller('CreateCtrl', function ($scope, $rootScope, $mo
   };
 
   $scope.refreshSchools = function(){
-    schoolsService.retrieveSchools().then(function (schoolsList){      
+    schoolResourceService.findSchools().then(function (schoolsList){      
       if (schoolsList.length > 0){
         $scope.schoolsList = schoolsList;
         $scope.school.selected = $scope.schoolsList[0];
@@ -219,7 +216,7 @@ incidencesControllers.controller('CreateCtrl', function ($scope, $rootScope, $mo
     $scope.allowUpdate = false;
     $scope.schoolsListReady = false;
 
-    var schoolsList = schoolsService.getSchools();
+    var schoolsList = schoolResourceService.getSchools();
     if (schoolsList == null){
       $scope.schoolsListReady = false;
       $scope.schoolsListEmpty = false
@@ -227,7 +224,7 @@ incidencesControllers.controller('CreateCtrl', function ($scope, $rootScope, $mo
     else if (schoolsList.length == 0){
       // We need to check a School has been created recently.
       // So we ensure that, calling again to the server.
-      schoolsService.retrieveSchools().then(function (schoolsList){      
+      schoolResourceService.findSchools().then(function (schoolsList){      
         if (schoolsList.length > 0){
           $scope.schoolsList = schoolsList;
           $scope.school.selected = $scope.schoolsList[0];
@@ -386,7 +383,7 @@ incidencesControllers.controller('OverviewCtrl', function ($scope, $routeParams,
 
 });
 
-incidencesControllers.controller('IncidenceNavCtrl', function ($scope, $document, $rootScope, techniciansService) {
+incidencesControllers.controller('IncidenceNavCtrl', function ($scope, $document, $rootScope, accountResourceService) {
   
   init();
 
@@ -513,7 +510,7 @@ incidencesControllers.controller('EffortCtrl', function ($scope) {
 });
 
 
-incidencesControllers.controller('AssignCtrl', function ($rootScope, $scope, $state, $modal, techniciansService, locationService) {
+incidencesControllers.controller('AssignCtrl', function ($rootScope, $scope, $state, $modal, accountResourceService, locationService) {
 
   init();
   
@@ -529,7 +526,7 @@ incidencesControllers.controller('AssignCtrl', function ($rootScope, $scope, $st
   }
 
   $scope.refreshTechnicians = function(){
-    techniciansService.retrieveTechnicians().then(function (techniciansList){
+    accountResourceService.findTechnicians().then(function (techniciansList){
       $scope.assign.techniciansList = techniciansList;
       if ($scope.assign.techniciansList.length == 0){
         if ($rootScope.currentUser.role = "admin"){
@@ -584,13 +581,13 @@ incidencesControllers.controller('AssignCtrl', function ($rootScope, $scope, $st
     $scope.assign.allowUpdate = false;
     $scope.assign.techniciansListReady = false;
 
-    var techniciansList = techniciansService.getTechnicians();
+    var techniciansList = accountResourceService.getTechnicians();
     if (techniciansList == null){
       $scope.assign.techniciansListReady = false;
       $scope.assign.techniciansListEmpty = false
     }
     else if (techniciansList.length == 0){
-      techniciansService.retrieveTechnicians().then(function (techniciansList){      
+      accountResourceService.findTechnicians().then(function (techniciansList){      
         if (techniciansList.length > 0){
           $scope.assign.techniciansList = techniciansList;
           $scope.technician.selected = $scope.assign.techniciansList[0];
@@ -717,12 +714,6 @@ incidencesControllers.controller('CloseCtrl', function ($scope, $modal, $log) {
       $scope.close.totalEffortHours = incidence.effortHours;
     };
   };  
-});
-
-incidencesControllers.controller('CreateIncidenceFormCtrl', function($scope){
-  $scope.changed = function(filed){
-    return filed.$dirty;
-  };
 });
 
 incidencesControllers.controller('IncidencesStatisticsCtrl', function($scope){

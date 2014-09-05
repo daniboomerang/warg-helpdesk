@@ -4,35 +4,41 @@ var path = require('path'),
     auth = require('../controllers/auth');
 
 module.exports = function(app) {
-
-  /////////////////
-  // User Routes //
-  /////////////////
-  var users = require('../controllers/users');
-
-  app.get('/api/users', auth.ensureAuthenticatedAsAdmin, users.list);
-  app.get('/api/users/:accountId', users.show);
-  //Setting up the userId param
-  app.param('accountId', users.user);
-  app.post('/auth/users', auth.ensureAuthenticatedAsAdmin, users.create);
-  app.get('/auth/users/:userId', users.show);
-  // Check if username is available
-  // todo: probably should be a query on users
-  app.get('/auth/check_username/:username', users.exists);
-
  
-  // Session Routes
+  /////////////////
+  // Session API //
+  /////////////////
   var session = require('../controllers/session');
   app.get('/auth/session', auth.ensureAuthenticated, session.session);
   app.post('/auth/session', session.login);
   app.delete('/auth/session', session.logout);
 
-   // Service for getting the technicians of the system
-  app.get('/api/techs', auth.ensureAuthenticated, users.technicians);
-   // Service for getting the modules of a user
+  /////////////////
+  // Modules API //
+  /////////////////
   var modules = require('../controllers/modules');
   app.get('/api/modules', auth.ensureAuthenticated, modules.modules);
 
+  /////////////////
+  // Schools API //
+  /////////////////
+  var schools = require('../controllers/schools');
+  app.post('/api/schools', auth.ensureAuthenticatedAsAdmin, schools.create);
+  app.get('/api/schools', auth.ensureAuthenticated, schools.list);
+  // Check if schoolsCode is available
+  app.get('/schools/check_schoolcode/:schoolCode', auth.ensureAuthenticatedAsAdmin, schools.exists);
+
+  ///////////////
+  // Users API //
+  ///////////////
+  var users = require('../controllers/users');
+  app.post('/api/users', auth.ensureAuthenticatedAsAdmin, users.create);
+  app.get('/api/users', auth.ensureAuthenticatedAsAdmin, users.list);
+  app.get('/api/users/:accountId', users.show);
+  //Setting up the userId param
+  app.param('accountId', users.user);
+  // Check if username is available
+  app.get('/auth/check_username/:username', users.exists);
 
   ///////////////////////
   // Notifications API //
@@ -57,17 +63,9 @@ module.exports = function(app) {
   app.put('/api/incidences/:incidenceId/assignee', auth.ensureAuthenticated, incidences.assignee, notifications.notifyAssignee);
   app.put('/api/incidences/:incidenceId/effort', auth.ensureAuthenticated, incidences.effort);
   app.put('/api/incidences/:incidenceId/close', auth.ensureAuthenticated, incidences.close); 
-  //app.delete('/api/incidences/:incidenceId', auth.ensureAuthenticated, incidences.destroy);
   //Setting up the incidenceId param
   app.param('incidenceId', incidences.incidence);
 
-  // Schools
-  var schools = require('../controllers/schools');
-  app.get('/api/schools', auth.ensureAuthenticated, schools.list);
-  app.post('/api/schools', auth.ensureAuthenticatedAsAdmin, schools.create);
-
-  // Check if schoolsCode is available
-  app.get('/schools/check_schoolcode/:schoolCode', auth.ensureAuthenticatedAsAdmin, schools.exists);
 
   app.get('/*', function(req, res) {
     if(req.user) {
