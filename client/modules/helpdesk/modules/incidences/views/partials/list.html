@@ -5,24 +5,25 @@
 			    <table tr-ng-grid="" items="incidences" selected-items="selectedIncidences" selection-mode="SingleRow">
 				    <thead class="solid-yellow-bar-fill centered-and-white">
 				        <tr class="solid-yellow-bar-fill">
-				        	<th field-name="id" cell-width="5em">ID</th>  
-				            <th field-name="severity" cell-width="5em">Severity</th>  
-				            <th field-name="priority" cell-width="5em">Priority</th>
-				            <th field-name="title">Title</th>
-				            <th field-name="creator.username" cell-width="7em">Owner</th>
-				            <th field-name="created" cell-width="8em">Created</th>
-				            <th field-name="updated" cell-width="8em">Updated</th>
-				            <th field-name="status.currentStatus" cell-width="8em">Status</th>
-				            <th field-name="assigned" cell-width="5em">Assigned</th>
+				        	<th field-name="id" cell-width="5em">ID<warg-translate word="SEVERITY"></warg-translate></th>  
+				            <th field-name="severity" cell-width="5em">{{ 'SEVERITY' | translate }}</th>  
+				            <th field-name="priority" cell-width="5em">{{ 'PRIORITY' | translate }}</th>
+				            <th field-name="title">{{ 'TITLE' | translate }}</th>
+				            <th field-name="creator.username" cell-width="7em">{{ 'OWNER' | translate }}</th>
+				            <th field-name="created" cell-width="8em">{{ 'CREATED' | translate }}</th>
+				            <th field-name="updated" cell-width="8em">{{ 'UPDATED' | translate }}</th>
+				            <th field-name="status.currentStatus" cell-width="8em">{{ 'STATUS' | translate }}</th>
+				            <th field-name="assigned" cell-width="5em">{{ 'ASSIGNED' | translate }}</th>
 				        </tr>
 				    </thead>
 		            <tbody>
 		                <tr style="text-align: center;">
 		                	<td field-name="severity">
-		                		<span class="frame-list-cell" ng-class="{serious: gridItem.severity == 'Serious', high: gridItem.severity == 'High'}">{{gridItem.severity}}</span>
+		                		<span class="frame-list-cell" ng-class="{serious: gridItem.severity == 'Serious', high: gridItem.severity == 'High'}">
+		                			{{ gridItem.severity | translate }}</span>
 		                	</td>
 							<td field-name="priority">
-								<span class="frame-list-cell" ng-class="{serious: gridItem.priority == 'Serious', high: gridItem.priority == 'High'}">{{gridItem.priority}}</span>
+								<span class="frame-list-cell" ng-class="{serious: gridItem.priority == 'Serious', high: gridItem.priority == 'High'}">{{ gridItem.priority | translate }}</span>
 							</td>
 							<td field-name="title">
 								<span class="frame-list-cell">  
@@ -60,7 +61,7 @@
 								</span>
 							</td>								
 
-		                    <td field-name="status.currentStatus"><span class="frame-list-cell" ng-class="{open: gridItem.status.currentStatus == 'Open', ongoing: gridItem.status.currentStatus == 'On Going', closed: gridItem.status.currentStatus == 'Closed'}">{{gridItem.status.currentStatus}}</span></td>
+		                    <td field-name="status.currentStatus"><span class="frame-list-cell" ng-class="{open: gridItem.status.currentStatus == 'Open', ongoing: gridItem.status.currentStatus == 'On Going', closed: gridItem.status.currentStatus == 'Closed'}">{{ gridItem.status.currentStatus | translate }}</span></td>
 		                </tr>
 		            </tbody>
 		            <tfoot>

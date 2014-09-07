@@ -1,0 +1,32 @@
+'use strict';
+
+angular.module('wargHelpdeskApp')
+.constant('translations_es', {
+  'SEVERITY': 'Severidad',
+  'PRIORITY': 'Prioridad',
+  'UPDATED': 'Actualizada',
+  'STATUS': 'Estado',
+  'CREATED': 'Creada',
+  'OWNER': 'Propietario',
+  'TITLE': 'Título',
+  'ASSIGNED': 'Asignada',
+  'Medium': 'Media',
+  'Serious': 'Seria',
+  'High': 'Alta',
+  'Low': 'Baja',
+  'Open': 'Abierta',
+  'On Going': 'En Proceso',
+  'Closed': 'Cerrada',
+  'Create': 'Crear',
+  'List': 'Listar',
+  'Statistics': 'Estadísticas',
+  'Import CSV': 'Importar CSV',
+  'Expenses': 'Gastos',
+  'Search id': 'Buscar ID',
+  'Incidences': 'Incidencias',
+  'Inventory': 'Inventario',
+  'Schools': 'Escuelas',
+  'Accounts': 'Cuentas',
+  'USER.SETTINGS': 'Configuración Usuario',
+  'SIGN.OUT': 'Desconectar',
+});

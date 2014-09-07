@@ -39,8 +39,8 @@
         <li class="dropdown shadow-right hover-effect">
           <a class="dropdown-toggle" data-toggle="dropdown" style="color: #ebebeb;">{{currentUser.username}}&nbsp;&nbsp;&nbsp;<img src="/modules/helpdesk/images/icons/guest-24-black.png"></a>
           <ul class="dropdown-menu">
-            <li class="link-dropdown link-user"><a ng-click="goToState('helpdesk.accounts.settings')"><img src="/modules/helpdesk/images/icons/settings-24.png" alt="logout">&nbsp;&nbsp;User Settings</a></li>
-            <li class="link-dropdown link-user"><a ng-click="logout()"><img src="/modules/helpdesk/images/icons/logout-24.png" alt="logout">&nbsp;&nbsp;Sign out</a></li>
+            <li class="link-dropdown link-user"><a ng-click="goToState('helpdesk.accounts.settings')"><img src="/modules/helpdesk/images/icons/settings-24.png" alt="logout">&nbsp;&nbsp;{{ 'USER.SETTINGS' | translate }}</a></li>
+            <li class="link-dropdown link-user"><a ng-click="logout()"><img src="/modules/helpdesk/images/icons/logout-24.png" alt="logout">&nbsp;&nbsp;{{ 'SIGN.OUT' | translate }}</a></li>
             <!--<li class="link-dropdown"><a>{{currentUser.username}}</a></li>-->
           </ul>
         </li>
