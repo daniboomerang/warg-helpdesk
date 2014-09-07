@@ -18,7 +18,7 @@ var usersDomain = require('../domain/users-domain');
 exports.user = function(req, res, next, id) {
   usersDomain.findUser(id).then (function (result){
     if (result.status == 'user.found'){
-      req.user = result.user;
+      req.requestedUser = result.user;
       next(); // Go to show
     }
     else if (result.status == 'user.not.found'){
@@ -50,27 +50,8 @@ exports.create = function (req, res, next) {
  * Show a user
  */
 exports.show = function(req, res) {
-  res.json(req.user);
+  res.json(req.requestedUser);
 };
-
-/**
- *  Show profile
- *  returns {username, profile}
- *
-exports.show = function (req, res, next) {
-  var userId = req.params.userId;
-
-  User.findById(ObjectId(userId), function (err, user) {
-    if (err) {
-      return next(new Error('Failed to load User'));
-    }
-    if (user) {
-      res.send({username: user.username, profile: user.profile });
-    } else {
-      res.send(404, 'USER_NOT_FOUND')
-    }
-  });
-};*/
 
 
 /**

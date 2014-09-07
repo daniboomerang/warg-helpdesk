@@ -14,15 +14,18 @@ angular.module('wargHelpdeskApp', [
   // VENDOR
   'trNgGrid',
   'toaster',
+  'angularCharts',
   // WARG HELPDESK
   'wargHelpdeskDirectives',
   'wargHelpdeskFilters',
   // MODULES
-  'auth',
-  'sign',
-  'helpdesk',
-  'inventory',
-  'accounts'
+    // COMMON
+    'urlLocation',
+    'securityCheck',
+    'auth',
+    // SUB-SECTIONS
+    'sign',
+    'helpdesk'
 ])
 .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
   
@@ -31,21 +34,28 @@ angular.module('wargHelpdeskApp', [
     $urlRouterProvider.otherwise('/');
   })
 
-  .run(function ($rootScope, $location, Auth) {
+.run(function ($rootScope, $location, Auth, LocationService, SecurityCheckService) {
 
-    //watching the value of the currentUser variable.
-    $rootScope.$watch('currentUser', function(currentUser) {
-      // if no currentUser and on a page that requires authorization then try to update it
-      // will trigger 401s if user does not have a valid session
-      if (!currentUser && (['/', '/sign/in'].indexOf($location.path()) == -1 )) {
-        Auth.currentUser();
-      }
-      $rootScope.$broadcast('event:currentUser-changed');
-    });
+  // INIT COMMON SERVICES
+  LocationService.init();
+  SecurityCheckService.init();
+  // COMMON SERVICES // 
 
-    // On catching 401 errors, redirect to the login page.
-    $rootScope.$on('event:auth-loginRequired', function() {
-      $location.path('/sign');
-      return false;
-    });
+  //watching the value of the currentUser variable.
+  $rootScope.$watch('currentUser', function(currentUser) {
+    // if no currentUser and on a page that requires authorization then try to update it
+    // will trigger 401s if user does not have a valid session
+    if (!currentUser && (['/', '/sign/in'].indexOf($location.path()) == -1 )) {
+      Auth.currentUser();
+    }
+    $rootScope.$broadcast('event:currentUser-changed');
   });
+
+  // On catching 401 errors, redirect to the login page.
+  $rootScope.$on('event:auth-loginRequired', function() {
+    /*messengerService.popMessage('error', UNAUTHORIZED_ERROR, 'This operation requires administration permissions.');
+    $location.path('/');*/
+    $location.path('/sign/in');
+    return false;
+  });
+});

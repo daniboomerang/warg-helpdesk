@@ -1,0 +1,38 @@
+<div id="incidence-reply">
+    <form class="form" name="form" ng-submit="sendComment(comment)" style="margin-bottom: 30px">
+        <div class="row" style="margin-bottom: 10px;">
+            <div class="col-md-1">
+                <input class="btn btn-default" value="Submit" type="image" ngClick="Submit" src="/modules/helpdesk/modules/incidences/images/icons/reply-24-blue.png" ng-disabled="form.$invalid">
+            </div>
+            <div class="col-md-10">
+                <div ng-if="changed(form.comment)" ng-messages="form.comment.$error" style="width: auto;">
+                    <div class="frame-error-arrowdown" ng-message="required">Sorry, comment can´t be blank</div>
+                    <div class="frame-error-arrowdown" ng-message="minlength">The minimum comment lenght required is 70 characters.</div>
+                    <div class="frame-error-arrowdown" ng-message="maxlength">The maximum comment lenght required is 3500 characters.</div>
+                </div>
+            </div>
+            <div class="col-md-2">    
+                <!--<div ng-click="toTheTop()" class="btn btn-default"><img src="/modules/helpdesk/modules/incidences/images/icons/arrow-top-24.png" alt=" Go To Top Page"></div>-->
+            </div>
+        </div>  
+        <div class="form-group">
+            <div class="input-group">
+                <textarea style="resize:vertical; min-height: 200px;"
+                    type="text"
+                    name="comment"
+                    class="form-control"
+                    placeholder="Post comment"
+                    ng-trim
+                    ng-model="comment"
+                    required
+                    ng-minlength="70"
+                    ng-maxlength="3500"/>
+                </textarea>
+                <div class="input-group-addon bg-success">{{ commentLength(form) }}</div>
+            </div>
+        </div>
+    </form> 
+</div>
+
+
+

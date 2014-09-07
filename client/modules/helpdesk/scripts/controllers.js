@@ -4,9 +4,9 @@ var STATUS_NEW = "New";
 var STATUS_DISPLAYED = "Displayed";
 var STATUS_SEEN = "Seen";
 
-var helpdeskControllers = angular.module('helpdeskControllers', ['helpdeskServices', 'notificationServices'])
+var helpdeskControllers = angular.module('helpdeskControllers', [])
 
-helpdeskControllers.controller('HelpdeskCtrl', function ($scope, $state, $rootScope, $location, helpdeskConfigService, Auth, locationService, messengerService) {
+helpdeskControllers.controller('HelpdeskCtrl', function ($scope, $state, $rootScope, $location, helpdeskConfigService, Auth, LocationService, messengerService) {
 
   initDesk();
 
@@ -28,18 +28,18 @@ helpdeskControllers.controller('HelpdeskCtrl', function ($scope, $state, $rootSc
         var currentModule = $scope.menu[i].name.toLowerCase();
         $scope.status[currentModule] = true;
         }
-        $scope.status.activeModule = locationService.getCurrentModule();
-        $scope.status.activeState = locationService.getCurrentState();
+        $scope.status.activeModule = LocationService.getCurrentModule();
+        $scope.status.activeState = LocationService.getCurrentState();
     });
 	};
 
-  $rootScope.$on('event:currentLocation-changed', function(event, currentLocation) {
+  $rootScope.$on(LocationService.subscribe(), function(event, currentLocation) {
     $scope.status.activeModule = currentLocation.module;
     $scope.status.activeState = currentLocation.state;
   });
 
   $scope.cancelOperation = function() {
-    $state.go(locationService.getPreviousState());
+    $state.go(LocationService.getPreviousState());
   };
 
   $scope.isActiveModule = function(module){
@@ -128,8 +128,12 @@ helpdeskControllers.controller('NavbarCtrl', function ($scope, Notifications, No
   /******** END NOTIFICATIONS *******/
 });
 
-helpdeskControllers.controller('ToasterCtrl', function($scope, toaster, $window) {
-  $scope.$on('event:pop-message', function(event, message) {
-    toaster.pop(message.type, message.title, message.text, 5000);
-  }); 
+helpdeskControllers.controller('MessengerCtrl', function ($scope, toaster, $window, messengerService) {
+
+  init();
+  function init() {
+    $scope.$on(messengerService.subscribe(), function(event, message) {
+      toaster.pop(message.type, message.title, message.text, 5000);
+    });    
+  }
 });

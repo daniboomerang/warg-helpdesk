@@ -1,0 +1,71 @@
+  <div class="panel shadow-form-container" style="width: 70%">
+    <div class="panel-heading">
+      <div class="panel-title solid-purple-bar-fill frame-form-head centered-and-white">New school</div>
+    </div>
+    <div class="panel-body" style="padding-top:25px">
+      <form class="form frame-form" name="form" ng-submit="createSchool(form)">
+        <div class="input-group form-line-frame">
+          <span class="input-group-addon"><img src="/modules/helpdesk/modules/schools/images/icons/school-16.png"></span>
+          <input
+            type="name"
+            name="name"
+            class="form-control"
+            ng-model="school.name"
+            autofocus
+            placeholder="School Name"
+            mongoose-error
+            required
+            ng-minlength="6"
+            ng-maxlength="20" />
+        </div> 
+
+        <div ng-if="changed(form.name)" ng-messages="form.name.$error">
+          <div class="frame-error-arrowup" ng-message="required">Sorry, the school name can´t be empty.</div>
+          <div class="frame-error-arrowup" ng-message="mongoose">{{errors.name}}</div>
+          <div class="frame-error-arrowup" ng-message="minlength">Sorry, the name of the school must have at least 6 characters.</div>
+          <div class="frame-error-arrowup" ng-message="maxlength">Sorry, the name of the school can´t have more than 20 characters.</div>
+        </div>
+
+        <div class="input-group form-line-frame" style="width: 150px;">
+          <span class="input-group-addon"><img src="/modules/helpdesk/modules/schools/images/icons/code-16.png"></span>
+          <input
+            type="text"
+            name="code"
+            class="form-control"
+            ng-model="school.code"
+            autofocus
+            placeholder="Code"
+            unique-school-code
+            ng-minlength="3"
+            ng-maxlength="3"
+            required />
+        </div>
+        
+        <div ng-if="changed(form.code)" ng-messages="form.code.$error" style="width: 152px;">
+          <div class="frame-error-arrowup" ng-message="required">Sorry, school code can´t be empty.</div>
+          <div class="frame-error-arrowup" ng-message="minlength">Sorry, school code must have 3 characters.</div>
+          <div class="frame-error-arrowup" ng-message="maxlength">Sorry, school code must have 3 characters.</div>
+          <div class="frame-error-arrowup" ng-message="unique">Sorry, this school code is already taken.</div>
+        </div>
+
+       	<div class="input-group form-line-frame">
+           <span class="input-group-addon"><img src="/modules/helpdesk/modules/schools/images/icons/address-16.png"></span>
+           <ui-select ng-model="address.selected" theme="selectize" ng-disabled="disabled" reset-search-input="false" style="width: 300px; height:0px;" ng-required="true">
+    			   <ui-select-match placeholder="Enter an address...">{{$select.selected.formatted_address}}</ui-select-match>
+    			    <ui-select-choices repeat="address in addresses track by $index"
+    			             refresh="refreshAddresses($select.search)"
+    			             refresh-delay="0">
+    			      <div ng-bind-html="address.formatted_address | highlight: $select.search"></div>
+    			    </ui-select-choices>
+    			</ui-select>
+    		</div>
+
+        <div class="modal-footer">
+          <button class="btn btn-warning" ng-click="cancelOperation()">Cancel</button>
+          <input ng-disabled="form.$invalid" class="btn btn-success" value="Create" type="submit" ngClick="Submit">
+        </div>
+      </form>
+    </div>
+  </div>  
+
+

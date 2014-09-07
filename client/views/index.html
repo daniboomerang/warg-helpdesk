@@ -15,7 +15,7 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     
     <!-- CSS VENDOR -->
-    <link rel="stylesheet" href="modules/vendor/trNgGrid/trNgGrid.min.css">
+    <link rel="stylesheet" href="modules/common/vendor/trNgGrid/trNgGrid.min.css">
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="styles/vendor/bootstrap/css/bootstrap.css">
@@ -38,13 +38,13 @@
     <link rel="stylesheet" href="modules/helpdesk/styles/arrow-boxes-menu.css">
 
     <!-- Module incidences -->
-    <link rel="stylesheet" href="modules/incidences/styles/incidences.css">
-    <link rel="stylesheet" href="modules/incidences/styles/incidence-details.css">
-    <link rel="stylesheet" href="modules/incidences/styles/close.css">
+    <link rel="stylesheet" href="modules/helpdesk/modules/incidences/styles/incidences.css">
+    <link rel="stylesheet" href="modules/helpdesk/modules/incidences/styles/incidence-details.css">
+    <link rel="stylesheet" href="modules/helpdesk/modules/incidences/styles/close.css">
     <!-- Module accounts -->
-    <link rel="stylesheet" href="modules/accounts/styles/accounts.css">
+    <link rel="stylesheet" href="modules/helpdesk/modules/accounts/styles/accounts.css">
     <!-- Module schools -->
-    <link rel="stylesheet" href="modules/schools/styles/schools.css">
+    <link rel="stylesheet" href="modules/helpdesk/modules/schools/styles/schools.css">
 
 </head>
 
@@ -53,6 +53,7 @@
 
     <!-- WARG HELPDESK APP -->
     <div id="app" class="full-height relative" ui-view></div>
+    <!-- -->
 
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/angular/angular.js"></script>
@@ -72,8 +73,6 @@
     <script src="bower_components/angular-ui-select/dist/select.min.js"></script>
     <script src="bower_components/AngularJS-Toaster/toaster.js"></script>
       
-
-
     <! -- WARGHELPDESK -->
 
     <script src="scripts/warghelpdesk.js"></script>
@@ -82,48 +81,60 @@
 
     <!-- MODULES -->
 
-        <!-- COMMON  -->
-        <!-- AUTHENTICATION -->
-        <script src="modules/common/auth/auth.js"></script> 
-        <script src="modules/common/auth/services.js"></script> 
+        <!-- COMPONENTS: COMMON  -->
+
+            <!-- AUTHENTICATION -->
+            <script src="modules/common/auth/auth.js"></script> 
+            <script src="modules/common/auth/services.js"></script> 
+            <!-- NOTIFICATIONS -->
+            <script src="modules/common/notifications/notifications.js"></script> 
+            <script src="modules/common/notifications/services.js"></script>
+            <!-- URLLOCATION -->
+            <script src="modules/common/urllocation/urllocation.js"></script> 
+            <script src="modules/common/urllocation/services.js"></script>
+            <!-- SECURITYCHECK -->
+            <script src="modules/common/securitycheck/securitycheck.js"></script> 
+            <script src="modules/common/securitycheck/services.js"></script>
+             <!-- MESSENGER -->
+            <script src="modules/common/messenger/messenger.js"></script> 
+            <script src="modules/common/messenger/services.js"></script>
+            <!-- VENDOR -->
+            <script src="modules/common/vendor/trNgGrid/trNgGrid.min.js"></script>
         
+        <!-- -->
+
+        <!-- SIGNING -->
+        <script src="modules/sign/scripts/sign.js"></script> 
+        <script src="modules/sign/scripts/controllers.js"></script> 
+
         <!-- HELPDESK -->
         <script src="modules/helpdesk/scripts/helpdesk.js"></script> 
         <script src="modules/helpdesk/scripts/controllers.js"></script> 
         <script src="modules/helpdesk/scripts/directives.js"></script> 
         <script src="modules/helpdesk/scripts/services.js"></script> 
 
-        <!-- SIGNING -->
-        <script src="modules/sign/scripts/sign.js"></script> 
-        <script src="modules/sign/scripts/controllers.js"></script> 
+            <!-- INCIDENCES -->
+            <script src="modules/helpdesk/modules/incidences/scripts/incidences.js"></script> 
+            <script src="modules/helpdesk/modules/incidences/scripts/controllers.js"></script> 
+            <script src="modules/helpdesk/modules/incidences/scripts/services.js"></script> 
+            <script src="modules/helpdesk/modules/incidences/scripts/directives.js"></script> 
 
-        <!-- NOTIFICATIONS -->
-        <script src="modules/notifications/notifications.js"></script> 
-        <script src="modules/notifications/services.js"></script> 
+            <!-- INVENTORY -->
+            <script src="modules/helpdesk/modules/inventory/scripts/inventory.js"></script> 
+            <script src="modules/helpdesk/modules/inventory/scripts/controllers.js"></script> 
+            <script src="modules/helpdesk/modules/inventory/scripts/directives.js"></script> 
 
-        <!-- INCIDENCES -->
-        <script src="modules/incidences/scripts/incidences.js"></script> 
-        <script src="modules/incidences/scripts/controllers.js"></script> 
-        <script src="modules/incidences/scripts/services.js"></script> 
-        <script src="modules/incidences/scripts/directives.js"></script> 
+             <!-- SCHOOLS -->
+            <script src="modules/helpdesk/modules/schools/scripts/schools.js"></script> 
+            <script src="modules/helpdesk/modules/schools/scripts/controllers.js"></script> 
+            <script src="modules/helpdesk/modules/schools/scripts/services.js"></script> 
 
-        <!-- INVENTORY -->
-        <script src="modules/inventory/scripts/inventory.js"></script> 
-        <script src="modules/inventory/scripts/controllers.js"></script> 
-        <script src="modules/inventory/scripts/directives.js"></script> 
+            <!-- ACCOUNTS -->
+            <script src="modules/helpdesk/modules/accounts/scripts/accounts.js"></script> 
+            <script src="modules/helpdesk/modules/accounts/scripts/controllers.js"></script> 
+            <script src="modules/helpdesk/modules/accounts/scripts/services.js"></script> 
 
-         <!-- SCHOOLS -->
-        <script src="modules/schools/scripts/schools.js"></script> 
-        <script src="modules/schools/scripts/controllers.js"></script> 
-        <script src="modules/schools/scripts/services.js"></script> 
-
-        <!-- ACCOUNTS -->
-        <script src="modules/accounts/scripts/accounts.js"></script> 
-        <script src="modules/accounts/scripts/controllers.js"></script> 
-        <script src="modules/accounts/scripts/services.js"></script> 
-
-        <!-- VENDOR -->
-        <script src="modules/vendor/trNgGrid/trNgGrid.min.js"></script>
+        <!-- -->    
 
 </body>
 </html>

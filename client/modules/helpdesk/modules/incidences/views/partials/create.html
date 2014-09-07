@@ -1,0 +1,117 @@
+  <div class="panel shadow-form-container">
+    <div class="panel-heading">
+      <div class="panel-title solid-yellow-bar-fill frame-form-head centered-and-white">New incidence</div>
+    </div>  
+    <div class="panel-body" style="padding-top:40px">
+      <form class="form" name="form" ng-submit="createIncidence(form)">
+        
+        <div class="row">
+          <div class= "col-md-8">
+            <div class="input-group form-line-frame">
+              <input
+                type="text"
+                name="title"
+                class="form-control"
+                ng-model="title"
+                autofocus
+                placeholder="Title"
+                mongoose-error
+                required
+                ng-minlength="10"
+                ng-maxlength="150"/>
+                <div class="input-group-addon bg-success">{{ titleLength(form) }}</div>
+            </div>
+            <div ng-if="changed(form.title)" ng-messages="form.title.$error">
+              <div class="frame-error-arrowup" ng-message="required">Sorry, the title can´t be empty.</div>
+              <div class="frame-error-arrowup" ng-message="minlength">Sorry, the title must have at least 10 characters.</div>
+              <div class="frame-error-arrowup" ng-message="maxlength">Sorry, the title can´t have more than 150 characters. </div>
+            </div>
+          </div>  
+          <div ng-show="currentUser.role == 'admin'" class="col-md-4">
+            <!-- show unavailability message -->
+            <div class="col-md-12" ng-show="schoolsListEmpty && schoolsListReady" style="margin-left: 15px;">
+              <div class="row" style="text-align: center; margin-bottom: 5px;"><img src="/modules/common/images/icons/warning-24.png"></div>
+              <div class="row frame-div-warning">No Schools available.</br>Please contact your administrator</div>
+            </div>
+            <div class="col-md-12">
+              <div ng-show="schoolsListReady && !schoolsListEmpty">
+                <div class="row">
+                  <div class="col-md-5"><h5>Select school:</h5></div>
+                  <div class="col-md-7"> 
+                    <ui-select ng-model="school.selected" theme="selectize" ng-required="currentUser.role == 'admin'">
+                      <ui-select-match placeholder="{{school.name}}">{{$select.selected.name}}
+                      </ui-select-match>
+                      <ui-select-choices repeat="school in schoolsList">
+                        <div ng-bind-html="school.code" class="role-select" popover="{{school.name}}" popover-trigger="mouseenter"></div>
+                      </ui-select-choices>
+                    </ui-select>
+                  </div> 
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div ng-show="!schoolsListReady">
+                  <div class="row">
+                    <div class="col-md-5"><h5>Load schools:</h5></div>
+                    <div class="col-md-7">
+                      <div style="width: 150px;" class="btn btn-default" ng-click="refreshSchools()"><img src="/modules/helpdesk/modules/incidences/images/icons/synchronize-24.png"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>  
+            </div>
+          </div>
+        </div> 
+
+        <div class="row">    
+          <div class="col-md-8">
+            <div class="input-group form-line-frame">
+                <textarea style="resize:vertical; min-height: 200px;"
+                  type="text"
+                  name="description"
+                  class="form-control"
+                  placeholder="Description"
+                  ng-model="description"
+                  mongoose-error
+                  required
+                  ng-minlength="30"
+                  ng-maxlength="1500"/></textarea>          
+                  <div class="input-group-addon bg-success">{{ descriptionLength(form) }}</div>
+            </div> 
+
+            <div ng-if="changed(form.description)" ng-messages="form.description.$error" style="margin-bottom: 10px">
+              <div class="frame-error-arrowup" ng-message="required">Sorry, description can´t be empty.</div>
+              <div class="frame-error-arrowup" ng-message="minlength">Sorry, minimum description lenght required is 30 characters.</div>
+              <div class="frame-error-arrowup" ng-message="maxlength">Sorry, maximum description lenght required is 1500 characters.</div>
+            </div>
+          </div>    
+        </div>  
+
+        <div class="row">
+          <div class="col-xs-6 col-sm-2">
+            <h5>Severity</h5>
+             <ui-select ng-model="severity.selected" theme="selectize" style="width: 120px;" ng-required="true">
+              <ui-select-match placeholder="{{severity.type}}"> <span class="frame-select-rows" ng-class="{'frame-select-rows': true, serious: $select.selected.type == 'Serious', high: $select.selected.type == 'High'};">{{$select.selected.type}}</ui-select-match></span>
+              <ui-select-choices repeat="severity in urgencyTypes">
+                <div ng-bind-html="severity.type" class="frame-select-rows" ng-class="{serious: severity.type == 'Serious', high: severity.type == 'High'};"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+          <div class="col-xs-6 col-sm-2">
+            <h5>Priority</h5>
+            <ui-select ng-model="priority.selected" theme="selectize" style="width: 120px;" ng-required="true">
+              <ui-select-match placeholder="{{priority.type}}"> <span class="frame-select-rows" ng-class="{serious: $select.selected.type == 'Serious', high: $select.selected.type == 'High'};">{{$select.selected.type}}</ui-select-match></span>
+              <ui-select-choices repeat="priority in urgencyTypes">
+                <div ng-bind-html="priority.type" class="frame-select-rows" ng-class="{serious: priority.type == 'Serious', high: priority.type == 'High'};"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-warning" ng-click="cancelOperation()">Cancel</button>
+           <input ng-disabled="form.$invalid" class="btn btn-success" value="Create" type="submit" ngClick="Submit">
+        </div>
+      </form>
+    </div>
+  </div>      
+</div> 

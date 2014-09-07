@@ -1,11 +1,12 @@
 'use strict';
 			
-// Define main module Sign and injects all other modules as dependencies
+// Define main module sign and injects all other modules as dependencies
 var sign = angular.module('sign',
   [
     'signControllers',
     'auth',
-    'ui.router']);
+  ]
+);
 
 sign.config(function($stateProvider, $urlRouterProvider) {
 	$urlRouterProvider.when('/sign', '/sign/in');

@@ -5,16 +5,16 @@ An AngularJS application that uses Express, Passport, MongoDB. with:
 
 * Authentication multiple roles using Passport
 * Account creation and server validation with Mongoose.
-* CRUD interface for creating incidences with MongoDB
+* CRUD interface for creating incidences, accounts and organizations with MongoDB
 * Authorization middleware for checking specific rights (role) for specific API services. 
 * Unit tests for client code
 * Unit tests for server code
 * e2e tests
 
 ## Live Example
-Try out the app: 
+Try out the app: <http://warg-helpdesk.herokuapp.com> . 
 
-## How to use warg-helpdesk-beta
+## How to use warg-helpdesk
 
 Before you continue, make sure you have MongoDB installed <http://www.mongodb.org/downloads/>. 
 
