@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('wargHelpdeskApp', [
+  'pascalprecht.translate',
   // NG 
   'ui.router',
   'ngSanitize',
