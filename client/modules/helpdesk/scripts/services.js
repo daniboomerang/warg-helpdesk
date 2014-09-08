@@ -96,7 +96,7 @@ helpdeskServices.service('helpdeskConfigService', function ($q, $http, menu, des
 				if (actionsOnSchools[i] == 'create')
 					actions.push({title: 'Create', state: 'helpdesk.schools.create.school', style: actionsStyle.create});
 				else if (actionsOnSchools[i] == 'find'){
-					actions.push({title: 'List', state: 'helpdesk.schools.open.list', style: actionsStyle.openList});
+					actions.push({title: 'List', state: 'helpdesk.schools.open', style: actionsStyle.openList});
 				}
 			}		
 		}

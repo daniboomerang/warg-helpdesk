@@ -1,16 +1,25 @@
 <section ng-init="find()">
 	<div class="row-fluid" ng-show="schools.length > 0">	
-	  	<div class="span12 list-schools-container">
-		    <table tr-ng-grid="" items="schools" selected-items="selectedSchools" selection-mode="SingleRow" >
+	  	<div class="col-md-7 list-schools-container">
+		    <table tr-ng-grid="" items="schools" selected-items="selectedSchools" page-items="15">
 			    <thead class="solid-purple-bar-fill centered-and-white">
 			        <tr>
 			            <th field-name="code" cell-width="1em">Code</th>  
 			            <th field-name="name" cell-width="5em">Name</th>
-			            <th field-name="address" cell-width="5em">Address</th>				          
+			            <th field-name="address" cell-width="5em">Address</th>				
+			            
 			        </tr>
 			    </thead>
 	            <tbody>
 	                <tr style="text-align: center;">
+	                	<td field-name="actions" style="width: 15px;">
+                                <!--You can stop the click event to bubble up and mess up the selection set by calling $event.stopPropagation() -->
+                                <!--alert is a method on the scope which calls $window.alert-->
+                                <span ng-click="goToSchool(gridItem._id);$event.stopPropagation();">
+                                    <img src="/modules/common/images/icons/open-book-32.png">
+                                </span>
+
+                        </td>
 	                </tr>
 	            </tbody>
 	            <tfoot>
@@ -25,6 +34,7 @@
 	            </tfoot>
 	        </table>
 	  	</div>
+	  	<div id="school" ui-view="school" class="col-md-5"></div>		  	  	
 	</div>  
 	<div class="frame-empty-resource-message" ng-show="schools.length == 0">
 		<h1>No schools yet. <br> Why don't you <a ng-click="goToState('helpdesk.schools.create.school')">Create One</a>?</h1>

@@ -27,9 +27,9 @@ var schools = angular.module('schools',
 	    controller: 'SchoolsCtrl'
 	})
 
-		/////////////////////
-    	// ACCOUNTS.CREATE //
-    	/////////////////////
+		////////////////////
+    	// SCHOOLS.CREATE //
+    	////////////////////
 
 		.state('helpdesk.schools.create', {
 			abstract: true,
@@ -42,18 +42,22 @@ var schools = angular.module('schools',
 		        controller: 'CreateSchoolCtrl'        
 		    })
 
-		///////////////////
-    	// ACCOUNTS.OPEN //
-    	///////////////////
-
-		.state('helpdesk.schools.open', {
-			abstract: true,
-    		url: '/open',
-	        template: '<ui-view/>'
+		//////////////////
+    	// SCHOOLS.OPEN //
+    	//////////////////
+    	.state('helpdesk.schools.open', {
+	        url: '/list',
+	        templateUrl: '/modules/helpdesk/modules/schools/views/partials/list.html',
+	        controller: 'ListSchoolsCtrl'
 	    })
-	    	.state('helpdesk.schools.open.list', {
-		        url: '/list',
-		        templateUrl: '/modules/helpdesk/modules/schools/views/partials/list.html',
-		        controller: 'SchoolsListCtrl'
+			.state('helpdesk.schools.open.school', {
+		        url: '/school/:schoolId',
+		        views: {
+	            	'school': {
+						templateUrl: '/modules/helpdesk/modules/schools/views/partials/school.html',
+		            	controller: 'SchoolCtrl'
+		            }    
+	            }    
 		    })
+
 })

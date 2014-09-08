@@ -22,7 +22,7 @@ wargHelpdeskDirectives.directive('uniqueUsername', function ($http) {
             ngModel.$setValidity('unique', true);
             return;
           }
-          $http.get('/auth/check_username/' + value).success(function(user) {
+          $http.get('/api/users/username/' + value).success(function(user) {
             if(!user.exists) {
               ngModel.$setValidity('unique', true);
             } else {
@@ -49,7 +49,7 @@ wargHelpdeskDirectives.directive('uniqueSchoolCode', function ($http) {
             ngModel.$setValidity('unique', true);
             return;
           }
-          $http.get('/schools/check_schoolcode/' + value).success(function (school) {
+          $http.get('/api/schools/code/' + value).success(function (school) {
             if(!school.exists) {
               ngModel.$setValidity('unique', true);
             } else {

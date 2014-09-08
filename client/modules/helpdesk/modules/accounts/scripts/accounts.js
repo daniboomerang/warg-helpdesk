@@ -52,7 +52,7 @@ var accounts = angular.module('accounts',
     	///////////////////
 
  		.state('helpdesk.accounts.open', {
-		        url: '/open',
+		        url: '/list',
 		        templateUrl: '/modules/helpdesk/modules/accounts/views/partials/list.html',
 		        controller: 'ListAccountsCtrl'
 		    })

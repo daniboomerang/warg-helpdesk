@@ -166,7 +166,9 @@ accountsControllers.controller('ListAccountsCtrl', function ($scope, $state) {
 });
 
 accountsControllers.controller('AccountCtrl', function ($scope){
- 
+  $scope.changed = function(filed){
+    return filed.$dirty;
+  };
 });
 
 accountsControllers.controller('AccountSettingsCtrl', function($scope){

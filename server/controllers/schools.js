@@ -1,20 +1,27 @@
 'use strict';
 
 var RESULT_SUCCESS = "SUCCESS";
-var RESULT_ERROR = "ERROR"; 
+var RESULT_ERROR = "ERROR";
+var SCHOOL_NOT_FOUND = '404 - User not found';
+var INTERNAL_SERVER_ERROR = '500 - Internal server error';
+
 var schoolsDomain = require('../domain/schools-domain');
 
 
 /**
- * List of schools
+ * Find user by id
  */
-exports.list = function(req, res) {
-  schoolsDomain.listSchools(req.body.schoolCode).then (function (resultList){
-    if (resultList.status == RESULT_ERROR){
-      res.json(500, resultList.error);
-    }  
-    else if (resultList.status == RESULT_SUCCESS){
-      res.json(resultList.list);
+exports.school = function(req, res, next, id) {
+  schoolsDomain.findSchool(id).then (function (result){
+    if (result.status == 'school.found'){
+      req.school = result.school;
+      next(); // Go to show
+    }
+    else if (result.status == 'school.not.found'){
+      res.send(404, SCHOOL_NOT_FOUND);
+    }
+    else if (result.status == 'db.exception'){
+      res.send(500, INTERNAL_SERVER_ERROR);
     }
   });
 };
@@ -31,6 +38,27 @@ exports.create = function(req, res) {
       res.json(500, result.err);
     }
   });   
+};
+
+/**
+ * Show a schools
+ */
+exports.show = function(req, res) {
+  res.json(req.school);
+};
+
+/**
+ * List of schools
+ */
+exports.list = function(req, res) {
+  schoolsDomain.listSchools(req.body.schoolCode).then (function (resultList){
+    if (resultList.status == RESULT_ERROR){
+      res.json(500, resultList.error);
+    }  
+    else if (resultList.status == RESULT_SUCCESS){
+      res.json(resultList.list);
+    }
+  });
 };
 
 /**

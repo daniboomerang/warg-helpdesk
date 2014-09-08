@@ -25,9 +25,9 @@ module.exports = function(app) {
   var schools = require('../controllers/schools');
   app.post('/api/schools', auth.ensureAuthenticatedAsAdmin, schools.create);
   app.get('/api/schools', auth.ensureAuthenticatedAsAdmin, schools.list);
-  
-  // Check if schoolsCode is available
-  app.get('/schools/check_schoolcode/:schoolCode', auth.ensureAuthenticatedAsAdmin, schools.exists);
+  app.get('/api/schools/:schoolId', auth.ensureAuthenticatedAsAdmin, schools.show);
+  app.get('/api/schools/code/:schoolCode', auth.ensureAuthenticatedAsAdmin, schools.exists);
+  app.param('schoolId', schools.school);
 
   ///////////////
   // Users API //
@@ -35,13 +35,11 @@ module.exports = function(app) {
   var users = require('../controllers/users');
   app.post('/api/users', auth.ensureAuthenticatedAsAdmin, users.create);
   app.get('/api/users', auth.ensureAuthenticatedAsAdmin, users.list);
-  app.get('/api/users/technicians', auth.ensureAuthenticated, users.technicians);
   app.get('/api/users/:userId', auth.ensureAuthenticatedAsAdmin, users.show);
+  app.get('/api/users/username/:username', auth.ensureAuthenticatedAsAdmin, users.exists);
+  app.get('/api/users/technicians', auth.ensureAuthenticated, users.technicians);
   app.param('userId', users.user);
   
-  // Check if username is available
-  app.get('/auth/check_username/:username', users.exists);
-
   ///////////////////////
   // Notifications API //
   ///////////////////////
@@ -66,7 +64,6 @@ module.exports = function(app) {
   app.put('/api/incidences/:incidenceId/effort', auth.ensureAuthenticated, incidences.effort);
   app.put('/api/incidences/:incidenceId/close', auth.ensureAuthenticated, incidences.close); 
   app.param('incidenceId', incidences.incidence);
-
 
   app.get('/*', function(req, res) {
     if(req.user) {

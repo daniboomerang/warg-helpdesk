@@ -33,7 +33,7 @@ exports.createSchool = function(code, name, address) {
  *  Return the list of schools
  *  Returns a PROMISE with the result 
  */
-exports.listSchools = function(user) {
+exports.listSchools = function() {
 
   var deferred = Q.defer();
 
@@ -73,3 +73,24 @@ exports.findByCode = function (code) {
   return deferred.promise;
 
 };
+
+/**
+ *  Retrieves a school
+ */
+
+exports.findSchool = function (id) {
+  var deferred = Q.defer();
+  var result = {};
+  School.findById(id, function (err, school) {
+    if (err) {
+      result = {status: 'db.exception', error: err};
+    }
+    else if(school) {
+      result = {status: 'school.found', school: school};
+    } else {
+      result = {status: 'school.not.found', school: null};
+    }
+    deferred.resolve(result);
+  });
+  return deferred.promise;
+}

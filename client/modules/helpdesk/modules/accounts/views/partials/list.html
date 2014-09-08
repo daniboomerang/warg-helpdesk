@@ -1,7 +1,9 @@
 <section ng-init="find()">
+      {{selectedSchools}}
+
 	<div class="row-fluid">	
 	  	<div class="list-accounts-container col-md-7">
-		    <table tr-ng-grid="" items="accounts" selected-items="selectedAccounts" selection-mode="SingleRow" >
+		    <table tr-ng-grid="" items="accounts" selected-items="selectedAccounts" page-items="15">
 			    <thead class="solid-green-bar-fill centered-and-white">
 			        <tr>
 			            <th field-name="username" cell-width="5em">Username</th>
