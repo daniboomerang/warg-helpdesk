@@ -308,25 +308,10 @@ incidencesControllers.controller('ListCtrl', function ($scope, $state, $document
   $scope.twoDaysAgo.setDate($scope.twoDaysAgo.getDate() - 2);
 
   $scope.selectedIncidences = [];
-  $scope.$watch('selectedIncidences', function() {
-    if ($scope.overviewing == false){
-      if ($scope.selectedIncidences.length > 0){
-        if ($scope.selectedIncidences.length > 1)
-          $scope.selectedIncidences.splice( 0, 1 );
-        $state.go('helpdesk.incidences.open.incidence', { incidenceId: $scope.selectedIncidences[$scope.selectedIncidences.length - 1].id });
-      } 
-    }
-  },
-  true);
-
-  /* DEPRECATED */
-  /*
-  $scope.onSelectedIncidence = function(incidence) {
-    var sectionOverview = angular.element(document.getElementById('overview'));
-    $state.go('helpdesk.incidences.open.list.overview', { incidenceId: incidence.id });
-    $document.scrollTo(sectionOverview, 0, 1000);
-  };*/
-
+  $scope.openIncidence = function (id) {
+    $state.go('helpdesk.incidences.open.incidence', { incidenceId: id });
+  };
+  
   $scope.overview = function(incidence) {
 
     $scope.overviewing = true; 

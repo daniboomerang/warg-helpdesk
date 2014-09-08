@@ -50,13 +50,6 @@
 	position:relative;top:0;left:0;right:0;bottom:0
 }
 
-.frame-list-cell{
-	border-radius: 5px 5px 5px 5px;
-	-moz-border-radius: 5px 5px 5px 5px;
-	-webkit-border-radius: 5px 5px 5px 5px;
-	padding: 5px;
-}
-
 /****** INCIDENCE *******/
 
 #frame-incidence-title {
@@ -114,11 +107,3 @@
 	min-width: 110px;
 	max-width: 150px;
 }
-
-/**** REPORTING ****/
-		[ac-chart] {
-			float:left;
-			width: 48%;
-			height: 400px;
-			margin: 0 1%;
-		}

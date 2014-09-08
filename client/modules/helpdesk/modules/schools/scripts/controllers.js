@@ -34,17 +34,7 @@ schoolsControllers.controller('SchoolsCtrl', function ($scope, $q, $state, messe
     }
     else{
       schoolResourceService.findOne($state.params.schoolId).then(function(school) {
-        
-        /*var formatAddress = function(addressString){
-
-          var replaceAll = function (toReplace, str1, str2, ignore) {
-              return toReplace.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
-          }
-          return replaceAll(addressString, ", ", "\n", true);
-        }*/
-        $scope.school = school;
-        /*$scope.school.formatted_address = formatAddress($scope.school.address);*/
-
+      $scope.school = school;
       },
       function (error){
         messengerService.popMessage('error', 'The school couldn´t be retrieved.', error.data);
@@ -57,25 +47,11 @@ schoolsControllers.controller('SchoolsCtrl', function ($scope, $q, $state, messe
 
 schoolsControllers.controller('ListSchoolsCtrl', function ($scope, $state) {
 
-  $scope.goToSchool = function (id) {
+  $scope.selectedSchools = [];
+  $scope.openSchool = function (id) {
     $state.go('helpdesk.schools.open.school', { schoolId: id });
   };
-
-/*
-  $scope.selectedSchools = [];
-  $scope.$watch('selectedSchools', function() {
-    if ($scope.selectedSchools.length > 0){
-      if ($scope.selectedSchools.length > 1)
-        $scope.selectedSchools.splice( 0, 1 );
-      $scope.onSelectedSchool($scope.selectedSchools[$scope.selectedSchools.length - 1]);
-    } 
-  },
-  true);
-
-  $scope.onSelectedSchool = function(school) {
-    $state.go('helpdesk.schools.open.school', { schoolId: school._id });
-  };*/
-
+  
 });
 
 schoolsControllers.controller('CreateSchoolCtrl', function ($scope, $http) {
@@ -113,9 +89,6 @@ schoolsControllers.controller('CreateSchoolCtrl', function ($scope, $http) {
 });
 
 schoolsControllers.controller('SchoolCtrl', function ($scope, $http){
-
-  /*if ($scope.school == null) $scope.address.selected = 'Loading....';
-  else $scope.address.selected = $scope.school.address;*/
 
   $scope.changed = function(filed){
     return filed.$dirty;

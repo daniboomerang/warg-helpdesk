@@ -1,32 +1,34 @@
 <section ng-init="find()">
-      {{selectedSchools}}
-
 	<div class="row-fluid">	
 	  	<div class="list-accounts-container col-md-7">
-		    <table tr-ng-grid="" items="accounts" selected-items="selectedAccounts" page-items="15">
-			    <thead class="solid-green-bar-fill centered-and-white">
+		    <table tr-ng-grid="" items="accounts" selected-items="selectedAccounts" enable-sorting="false">
+			    <thead>
 			        <tr>
-			            <th field-name="username" cell-width="5em">Username</th>
-			            <th field-name="schoolCode" cell-width="1em">School</th>
-			            <th field-name="email" cell-width="5em">Email</th>
-			            <th field-name="role" cell-width="2em">Role</th>
-			            <th field-name="membership" cell-width="5em">Memebership</th>
+			            <th field-name="username" cell-width="4em">Username</th>
+			            <th field-name="school" cell-width="1em">School</th>
+			            <th field-name="email" cell-width="4em">Email</th>
+			            <th field-name="role" cell-width="3em">Role</th>
+			            <th field-name="membership" cell-width="10em">Memebership</th>
 			        </tr>
 			    </thead>
 	            <tbody>
 	                <tr style="text-align: center;">
-	                	<td field-name="schoolCode">
-	                		<div popover-placement="bottom" popover="{{gridItem.school.name}}" popover-trigger="mouseenter">
-                    			<span class="frame-list-cell">
-                    				{{gridItem.school.code}}
-                    			</span>
-                    		</div>
+	                	<td field-name="school">                		
+                			<span class="frame-list-cell">
+                				{{gridItem.school.code}}
+                			</span>
 						</td>
 						<td field-name="membership">
                     		<span class="frame-list-cell">
                     		{{gridItem.membership | date:'longDate'}}
                     		</span>
 						</td>
+	                    <td>
+	                        <div>  
+	                            <button class="btn btn-xs btn-success" ng-click="openAccount(gridItem._id)">{{ 'BUTTON.OPEN' | translate }}
+	                            </button>
+	                        </div>
+	                    </td>
 	                </tr>
 	            </tbody>
 	            <tfoot>

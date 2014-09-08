@@ -1,4 +1,4 @@
-body, html {
+  body, html {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -14,6 +14,13 @@ body, html {
 /* frames */
 /**********/
 
+.frame-list-cell{
+  border-radius: 5px 5px 5px 5px;
+  -moz-border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  padding: 5px;
+}
+
 .frame-form{
   padding: 30px;
 }
@@ -25,7 +32,7 @@ body, html {
   border-radius: 5px 5px 5px 5px;
   -moz-border-radius: 5px 5px 5px 5px;
   -webkit-border-radius: 5px 5px 5px 5px;
-  padding: 5px;
+  padding: 3px;
 }
 
 .frame-error-arrowup {

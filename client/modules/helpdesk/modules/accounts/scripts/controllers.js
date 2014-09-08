@@ -150,17 +150,9 @@ accountsControllers.controller('CreateListCtrl', function($scope){
 accountsControllers.controller('ListAccountsCtrl', function ($scope, $state) {
 
   $scope.selectedAccounts = [];
-  $scope.$watch('selectedAccounts', function() {
-    if ($scope.selectedAccounts.length > 0){
-      if ($scope.selectedAccounts.length > 1)
-        $scope.selectedAccounts.splice( 0, 1 );
-      $scope.onSelectedAccount($scope.selectedAccounts[$scope.selectedAccounts.length - 1]);
-    } 
-  },
-  true);
 
-  $scope.onSelectedAccount = function(account) {
-    $state.go('helpdesk.accounts.open.account', { accountId: account._id });
+  $scope.openAccount = function(id) {
+    $state.go('helpdesk.accounts.open.account', { accountId: id });
   };
 
 });

@@ -2,10 +2,10 @@
 	<div class="row" ng-show="incidences.length > 0">
 		<div class="row-fluid">	
 		  	<div class="span12 list-incidences-container">
-			    <table tr-ng-grid="" items="incidences" selected-items="selectedIncidences" page-items="15">
-				    <thead class="solid-yellow-bar-fill centered-and-white">
-				        <tr class="solid-yellow-bar-fill">
-				        	<th field-name="id" cell-width="5em">ID<warg-translate word="SEVERITY"></warg-translate></th>  
+			    <table tr-ng-grid="" items="incidences" selected-items="selectedIncidences" selection-mode="None" enable-sorting="false">
+				    <thead>
+				        <tr>
+				        	<th field-name="id" cell-width="5em">ID</th>  
 				            <th field-name="severity" cell-width="5em">{{ 'SEVERITY' | translate }}</th>  
 				            <th field-name="priority" cell-width="5em">{{ 'PRIORITY' | translate }}</th>
 				            <th field-name="title">{{ 'TITLE' | translate }}</th>
@@ -29,7 +29,8 @@
 								<span class="frame-list-cell">  
 									<span class="pull-left" >{{gridItem.title.slice(0,50)}}</span>
 									<span ng-click="overview(gridItem)" class="pull-right" popover-placement="bottom" popover="Overview {{gridItem.id}}" popover-trigger="mouseenter">
-										<img src="/modules/helpdesk/modules/incidences/images/icons/eye-16.png" alt="View Details">
+										<button class="btn btn-info btn-xs"><img src="/modules/helpdesk/modules/incidences/images/icons/eye-16-black.png" alt="View Details">
+		                            	</button>
 									</span> 
 								</span>
 							</td>
@@ -61,7 +62,16 @@
 								</span>
 							</td>								
 
-		                    <td field-name="status.currentStatus"><span class="frame-list-cell" ng-class="{open: gridItem.status.currentStatus == 'Open', ongoing: gridItem.status.currentStatus == 'On Going', closed: gridItem.status.currentStatus == 'Closed'}">{{ gridItem.status.currentStatus | translate }}</span></td>
+		                    <td field-name="status.currentStatus"><span class="frame-list-cell" ng-class="{open: gridItem.status.currentStatus == 'Open', ongoing: gridItem.status.currentStatus == 'On Going', closed: gridItem.status.currentStatus == 'Closed'}">{{ gridItem.status.currentStatus | translate }}</span>
+		                    </td>
+
+		                    <td>
+		                        <div>
+		                            <button class="btn btn-success btn-xs" ng-click="openIncidence(gridItem.id)">
+		                                {{ 'BUTTON.OPEN' | translate }}
+		                            </button>
+		                        </div>
+	                    	</td>
 		                </tr>
 		            </tbody>
 		            <tfoot>
@@ -77,8 +87,6 @@
 		        </table>
 		  	</div>
 		</div>
-		<!-- Deprecated -->  	
-		<!--<div id="overview" ui-view="overview" class="span9"></div>-->
 	</div>
 	<div class="frame-empty-resource-message" ng-show="incidences.length == 0">
 		<h1>No incidences yet. <br> Why don't you <a ng-click="goToState('helpdesk.incidences.create')">Create One</a>?</h1>

@@ -18,6 +18,8 @@ angular.module('wargHelpdeskApp')
   'On Going': 'En Proceso',
   'Closed': 'Cerrada',
   'Create': 'Crear',
+  'BUTTON.OPEN': 'Abrir',
+  'BUTTON.CLOSE': 'Cerrar',
   'List': 'Listar',
   'Statistics': 'Estadísticas',
   'Import CSV': 'Importar CSV',
