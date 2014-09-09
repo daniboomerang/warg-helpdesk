@@ -17,7 +17,7 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
       messengerService.popMessage('success', 'Incidence successfully created.', 'Your incidence ID is: ' + incidence.id + '.');
     },
     function (error){
-      messengerService.popMessage('error', 'Incidence not created.', error.data);
+      messengerService.popMessage('error', 'Incidence not created.', error.status + ' - ' + error.statusText);
     });
   };
 
@@ -37,7 +37,7 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
       messengerService.popMessage('success', 'Incidence successfully updated.', null);
     },
     function (error){
-      messengerService.popMessage('error', 'Incidence not updated.', error.data);
+      messengerService.popMessage('error', 'Incidence not updated.', error.status + ' - ' + error.statusText);
     });
   };
 
@@ -53,7 +53,7 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
       messengerService.popMessage('success', 'Comment successfully posted.', null);
     },
     function (error){
-      messengerService.popMessage('error', 'Comment not posted.', error.data);
+      messengerService.popMessage('error', 'Comment not posted.', error.status + ' - ' + error.statusText);
     });
   };
 
@@ -69,7 +69,7 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
       $scope.incidence.effortMinutes = incidence.effort % 60;
     },
     function (error){
-      messengerService.popMessage('error', 'Assination couldn´t be done.', error.data);
+      messengerService.popMessage('error', 'Assination couldn´t be done.', error.status + ' - ' + error.statusText);
     });
   };
 
@@ -85,7 +85,7 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
       messengerService.popMessage('success', 'Incidence successfully rated', 'The rate for ' + incidence.id + ' is ' + incidence.rate );
     },
     function (error){
-      messengerService.popMessage('error', 'Rate couldn´t be done.', error.data);
+      messengerService.popMessage('error', 'Rate couldn´t be done.', error.status + ' - ' + error.statusText);
     });  
   };
 
@@ -103,7 +103,7 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
                                    + $scope.incidence.effortMinutes + ' minutes.');
     },
     function (error){
-      messengerService.popMessage('error', 'Time effort couldn´t be reported.', error.data);
+      messengerService.popMessage('error', 'Time effort couldn´t be reported.', error.status + ' - ' + error.statusText);
     });
   };
 
@@ -121,7 +121,7 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
       $location.path("helpesk/incidences/open/list");
     },
     function (error){
-      messengerService.popMessage('error', 'The incidence couldn´t be closed.', error.data);
+      messengerService.popMessage('error', 'The incidence couldn´t be closed.', error.status + ' - ' + error.statusText);
     });
   };
 
@@ -131,7 +131,7 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
       //messengerService.popMessage('success', 'Incidences successfully retrieved', null);    
     },
     function (error){
-      messengerService.popMessage('error', 'The list of incidences couldn´t be retrieved.', error.data);
+      messengerService.popMessage('error', 'The list of incidences couldn´t be retrieved.', error.status + ' - ' + error.statusText);
     });
   };
 
@@ -149,7 +149,7 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
         $scope.incidence.previousPosts = incidence.history;
       },
        function (error){
-        messengerService.popMessage('error', 'Incidence ' + $state.params.incidenceId +  ' couldn´t be retrieved.', error.data);
+        messengerService.popMessage('error', 'Incidence ' + $state.params.incidenceId +  ' couldn´t be retrieved.', error.status + ' - ' + error.statusText);
         $state.go('helpdesk.incidences.open.list');
       });
     }
