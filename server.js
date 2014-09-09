@@ -32,9 +32,9 @@ var pass = require('./server/config/pass');
 // configuration ===============================================================
 
 app.configure(function() {
-  app.use(express.static(path.join(__dirname, 'client')));
+  app.use(express.static(path.join(__dirname, 'www')));
   app.use(express.errorHandler());
-  app.set('views', __dirname + '/client/views');
+  app.set('views', __dirname + '/www');
   app.use(express.logger('dev'));             // log every request to the console
 });
 
@@ -78,9 +78,11 @@ try {
 
   global.mailSender = require('./server/config/mail-sender')(config.mailSending); // Mail Sender set up with (SENDGRID)
   // Setting up Mail Listener
-  var mailListener = require('./server/config/mail-listener')(config.mailListening);
-  mailListener.onMailReceived(require('./server/domain/mail-domain')(global.mailSender).processIncoming);
-  mailListener.start;
+  if (!config.mailListening.disabled){
+    var mailListener = require('./server/config/mail-listener')(config.mailListening);
+    mailListener.onMailReceived(require('./server/domain/mail-domain')(global.mailSender).processIncoming);
+    mailListener.start;
+  }
 }
 catch (e){
   console.log("It has been issues setting up the Mailing services.")      

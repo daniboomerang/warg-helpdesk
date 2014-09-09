@@ -17,6 +17,7 @@ config.mailSending = {
 
 // Mail-Listener
 config.mailListening = {
+  disabled: process.env.MAIL_INACTIVE,
   username: process.env.LOCAL_MAIL_USERNAME,
   password: process.env.LOCAL_MAIL_PASSWORD,
   host: process.env.LOCAL_MAIL_HOST,

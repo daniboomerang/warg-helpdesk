@@ -14,17 +14,20 @@
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     
-    <!-- CSS VENDOR -->
+    <!-- build:css styles/vendor.css -->
     <link rel="stylesheet" href="modules/common/vendor/trNgGrid/trNgGrid.min.css">
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="styles/vendor/bootstrap/css/bootstrap.css">
     <!-- Angular-Select -->
     <link rel="stylesheet" href="styles/vendor/selectize.bootstrap3.css">
-    <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css">    
-    <!-- AngularJS-Toaster -->
-    <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.css">    
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
+    <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
     
+    <!-- build:css({.tmp,client}) styles/main.css -->
     <!-- CSS WARGHELPDESK -->
     <link rel="stylesheet" href="styles/warghelpdesk.css">
 
@@ -45,6 +48,7 @@
     <link rel="stylesheet" href="modules/helpdesk/modules/accounts/styles/accounts.css">
     <!-- Module schools -->
     <link rel="stylesheet" href="modules/helpdesk/modules/schools/styles/schools.css">
+    <!-- endbuild -->
 
 </head>
 
@@ -55,27 +59,32 @@
     <div id="app" class="full-height relative" ui-view></div>
     <!-- -->
 
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/json3/lib/json3.min.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/angular-translate/angular-translate.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls-0.10.0.js"></script> 
     <script src="bower_components/angular-http-auth/src/http-auth-interceptor.js"></script>
-    <script src="bower_components/angular-scroll/angular-scroll.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-scroll/angular-scroll.min.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.js"></script>
     <script src="bower_components/angular-messages/angular-messages.js"></script>
-    <script src="bower_components/d3/d3.min.js"></script> 
-    <script src="bower_components/angular-charts/dist/angular-charts.min.js"></script>
-    <script src="bower_components/select2/select2.js"></script>
-    <script src="bower_components/angular-ui-select/dist/select.min.js"></script>
+    <script src="bower_components/d3/d3.js"></script>
+    <script src="bower_components/angular-charts/dist/angular-charts.js"></script>
+    <script src="bower_components/angular-ui-select/dist/select.js"></script>
     <script src="bower_components/AngularJS-Toaster/toaster.js"></script>
-      
-    <! -- WARGHELPDESK -->
+    <!-- endbower -->
+    <!-- endbuild -->
 
+    <!-- WARGHELPDESK -->
+
+    <!-- build:js({.tmp,client}) scripts/scripts.js -->
     <script src="scripts/warghelpdesk.js"></script>
     <script src="scripts/directives.js"></script>
     <script src="scripts/filters.js"></script>
@@ -138,6 +147,7 @@
             <script src="modules/helpdesk/modules/accounts/scripts/controllers.js"></script> 
             <script src="modules/helpdesk/modules/accounts/scripts/services.js"></script> 
 
+    <!-- endbuild -->
         <!-- -->    
 
 </body>
