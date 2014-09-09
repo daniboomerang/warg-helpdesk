@@ -2,5 +2,6 @@ deployment:
   staging:
     branch: master
     commands:
+      - gem install compass
       - grunt build
       - git push git@heroku.com:warg-helpdesk.git $CIRCLE_SHA1:refs/heads/master
