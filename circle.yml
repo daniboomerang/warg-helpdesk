@@ -1,6 +1,6 @@
 deployment:
-  production:
-    branch: production
+  staging:
+    branch: master
     commands:
       - grunt build
       - git push git@heroku.com:warg-helpdesk.git $CIRCLE_SHA1:refs/heads/master
