@@ -1,5 +1,6 @@
 deployment:
-  staging:
-    branch: master
-    heroku:
-      appname: warg-helpdesk
+  production:
+    branch: production
+    commands:
+      - grunt build
+      - git push git@heroku.com:warg-helpdesk.git $CIRCLE_SHA1:refs/heads/master
