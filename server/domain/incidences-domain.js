@@ -2,6 +2,7 @@
 
 var RESULT_SUCCESS = "SUCCESS";
 var RESULT_ERROR = "ERROR"; 
+var ROLE_TECH = "tech";
 var ROLE_USER = "user";
 var STATUS_ONGOING = "On Going";
 var STATUS_CLOSED = "Closed";
@@ -110,6 +111,16 @@ exports.listIncidences = function(user) {
   if (user.role == ROLE_USER){
     Incidence.find({creator: user}).sort('-created').populate('creator', 'username').exec(function(err, incidences) {
      if (err) {
+      deferred.resolve({status: RESULT_ERROR, error: err});
+    } else {   
+      deferred.resolve({status: RESULT_SUCCESS, list: incidences});
+    }
+    });
+  }
+  else if (user.role == ROLE_TECH) {
+    var regExp = new RegExp(user.school.code, 'i');
+    Incidence.find({id: regExp}).sort('-created').populate('creator', 'username').exec(function(err, incidences) {
+    if (err) {
       deferred.resolve({status: RESULT_ERROR, error: err});
     } else {   
       deferred.resolve({status: RESULT_SUCCESS, list: incidences});
