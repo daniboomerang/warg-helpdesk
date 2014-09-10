@@ -32,9 +32,9 @@ var pass = require('./server/config/pass');
 // configuration ===============================================================
 
 app.configure(function() {
-  app.use(express.static(path.join(__dirname, 'client')));
+  app.use(express.static(path.join(__dirname, 'www')));
   app.use(express.errorHandler());
-  app.set('views', __dirname + '/client');
+  app.set('views', __dirname + '/www');
   app.use(express.logger('dev'));             // log every request to the console
 });
 

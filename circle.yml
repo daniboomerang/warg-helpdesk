@@ -2,4 +2,4 @@ deployment:
   staging:
     branch: master
     commands:
-      - git push git@heroku.com:warg-helpdesk.git $CIRCLE_SHA1:refs/heads/master
+      - ./build-tools/push-to-heroku.sh

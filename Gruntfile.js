@@ -9,47 +9,24 @@
 
 module.exports = function (grunt) {
 
-  // Load grunt tasks automatically
   require('load-grunt-tasks')(grunt);
-
-  // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
-  // Define the configuration for all the tasks
   grunt.initConfig({
 
     shell: {
-        deployToBuild: {
-            command: './build-tools/push-to-virtualama-build.sh'
-            // command: './build-tools/deploy-to-build.sh'
-        },
-        startNode: {
-            command: 'node server.js &'
-        },
-    },
-
-    // Project settings
-    yeoman: {
-      // configurable paths
-      app: require('./bower.json').appPath || 'client',
-      dist: 'www',
-      domain: 'domain/src',
-      domainTest: 'domain/test',
-      appdomain: (require('./bower.json').appPath || 'client') + '/scripts/domain'
-    },
-
-    jasmine: {
-      pivotal: {
-        src: '<%= yeoman.domain %>/**/*.js',
-        options: {
-          specs: '<%= yeoman.domainTest %>/spec/*.js'
-        }
+      deployToBuild: {
+        command: './build-tools/push-to-virtualama-build.sh'
       }
+    },
+
+    yeoman: {
+      app: require('./bower.json').appPath || 'client',
+      dist: 'www'
     },
 
     express: {
       options: {
-        // Override defaults here
       },
       dev: {
         options: {
@@ -69,10 +46,9 @@ module.exports = function (grunt) {
       }
     },
 
-    // Watches files for changes and runs tasks based on the changed files
     watch: {
       js: {
-        files: ['<%= yeoman.app %>/scripts/{,*/}*.js', '!<%= yeoman.app %>/scripts/domain/{,*/}*.js', '<%= yeoman.domain %>/{,*/}*.js'],
+        files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
         tasks: ['copy:client', 'express:dev'],
         options: {
           livereload: true
@@ -135,25 +111,6 @@ module.exports = function (grunt) {
       }
     },
 
-    // Make sure code styles are up to par and there are no obvious mistakes
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc',
-        reporter: require('jshint-stylish')
-      },
-      all: [
-        'Gruntfile.js',
-        '<%= yeoman.app %>/scripts/{,*/}*.js'
-      ],
-      test: {
-        options: {
-          jshintrc: 'test/.jshintrc'
-        },
-        src: ['test/spec/{,*/}*.js']
-      }
-    },
-
-    // Empties folders to start fresh
     clean: {
       dist: {
         files: [{
@@ -168,7 +125,6 @@ module.exports = function (grunt) {
       server: '.tmp'
     },
 
-    // Add vendor prefixed styles
     autoprefixer: {
       options: {
         browsers: ['last 1 version']
@@ -183,16 +139,12 @@ module.exports = function (grunt) {
       }
     },
 
-    // Automatically inject Bower components into the app
     'bower-install': {
       app: {
         html: '<%= yeoman.app %>/index.html',
         ignorePath: '<%= yeoman.app %>/'
       }
     },
-
-
-
 
     // Compiles Sass to CSS and generates necessary files if requested
     compass: {
@@ -223,7 +175,6 @@ module.exports = function (grunt) {
       }
     },
 
-    // Renames files for browser caching purposes
     rev: {
       dist: {
         files: {
@@ -422,44 +373,44 @@ module.exports = function (grunt) {
     //   dist: {}
     // },
 
-    // replace: {
-    //   development: {
-    //     options: {
-    //       patterns: [{
-    //         json: grunt.file.readJSON('./config/environments/development.json')
-    //       }]
-    //     },
-    //     files: [{
-    //       expand: true,
-    //       flatten: true,
-    //       src: ['./config/backend-env.js'],
-    //       dest: '<%= yeoman.app %>/scripts/services/'
-    //     }]
-    //   },
-
-    //   staging: {
-    //     options: {
-    //       patterns: [{
-    //         json: grunt.file.readJSON('./config/environments/staging.json')
-    //       }]
-    //     },
-    //     files: [{
-    //       expand: true,
-    //       flatten: true,
-    //       src: ['./config/backend-env.js'],
-    //       dest: '<%= yeoman.app %>/scripts/services/'
-    //     }]
-    //   }
-    // },
-
-
     // Test settings
     karma: {
       unit: {
         configFile: 'karma.conf.js',
         singleRun: true
       }
+    },
+
+    replace: {
+      development: {
+        options: {
+          patterns: [{
+            json: grunt.file.readJSON('./build-tools/development.json')
+          }]
+        },
+        files: [{
+          expand: true,
+          flatten: true,
+          src: ['./build-tools/.gitignore'],
+          dest: './'
+        }]
+      },
+
+      staging: {
+        options: {
+          patterns: [{
+            json: grunt.file.readJSON('./build-tools/heroku.json')
+          }]
+        },
+        files: [{
+          expand: true,
+          flatten: true,
+          src: ['./build-tools/.gitignore'],
+          dest: './'
+        }]
+      }
     }
+
   });
 
 
@@ -467,6 +418,10 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:dist',
       'copy:client',
+      'clean:server',
+      'bower-install',
+      'concurrent:server',
+      'autoprefixer',
       'express:dev',
       'watch'
     ]);
@@ -478,27 +433,6 @@ module.exports = function (grunt) {
       'express:dev',
       'watch'
     ]);
-  });
-
-  // grunt.registerTask('serve', function (target) {
-  //   if (target === 'dist') {
-  //     return grunt.task.run(['build', 'connect:dist:keepalive']);
-  //   }
-
-  //   grunt.task.run([
-  //     'clean:server',
-  //     'bower-install',
-  //     'concurrent:server',
-  //     'autoprefixer',
-  //     'connect:livereload',
-  //     'watch',
-  //     'shell:startNode',
-  //   ]);
-  // });
-
-  grunt.registerTask('server', function () {
-    grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-    grunt.task.run(['serve']);
   });
 
   grunt.registerTask('test', [
@@ -513,6 +447,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'replace:heroku',
     'bower-install',
     'useminPrepare',
     'concurrent:dist',
