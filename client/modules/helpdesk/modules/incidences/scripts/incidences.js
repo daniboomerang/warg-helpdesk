@@ -8,6 +8,7 @@ var incidences = angular.module('incidences',
     'incidencesDirectives'
  	]
 )
+
 .config(function($stateProvider, $urlRouterProvider) {
 
 	$urlRouterProvider.when('/incidences', '/helpdesk/incidences/open/list');

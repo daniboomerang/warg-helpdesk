@@ -25,12 +25,13 @@
               ng-model="close.duplicated"
               autofocus
               placeholder="Duplicated of"
-              unique-incidence-id
+              valid-incidence-id
               ng-required="close.currentReason.type == 'Duplicated'" />
           </div>   
           <div ng-if="changed(form.duplicated)" ng-messages="form.duplicated.$error">
             <div class="frame-error-arrowup" ng-message="required">Please, provide the duplicated incidence Id.</div>
             <div class="frame-error-arrowup" ng-message="nonexistent">Incidence ID nonexistent</div>
+            <div class="frame-error-arrowup" ng-message="nonitself">The incidence can´t be duplicated of itself.</div>
           </div>
         </div>
         <div class="col-md-12" ng-show="close.currentReason.type == 'Invalid'" >

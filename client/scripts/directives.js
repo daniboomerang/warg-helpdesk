@@ -65,20 +65,29 @@ wargHelpdeskDirectives.directive('uniqueSchoolCode', function ($http) {
     };
   });
 
-wargHelpdeskDirectives.directive('uniqueIncidenceId', function ($http) {
+wargHelpdeskDirectives.directive('validIncidenceId', function ($http) {
     return {
       restrict: 'A',
       require: 'ngModel',
       link: function (scope, element, attrs, ngModel) {
+        var currentIncidenceId = scope.$parent.close.incidence.id;
         function validate(value) {
           if(!value) {
             ngModel.$setValidity('nonexistent', true);
+            ngModel.$setValidity('nonitself', true);
+            return;
+          }
+          if (currentIncidenceId == value){
+            ngModel.$setValidity('nonexistent', true);
+            ngModel.$setValidity('nonitself', false);
             return;
           }
           $http.get('/api/incidences/' + value).success(function (result) {
             ngModel.$setValidity('nonexistent', true);
+            ngModel.$setValidity('nonitself', true);
           }).error(function (err){
             ngModel.$setValidity('nonexistent', false);
+            ngModel.$setValidity('nonitself', true);
           });
         }
 
@@ -88,4 +97,3 @@ wargHelpdeskDirectives.directive('uniqueIncidenceId', function ($http) {
       }
     };
   });
-
