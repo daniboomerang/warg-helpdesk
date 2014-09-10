@@ -33,11 +33,14 @@ module.exports = function(app) {
   // Users API //
   ///////////////
   var users = require('../controllers/users');
+  app.get('/api/users/username/:username', auth.ensureAuthenticatedAsAdmin, users.exists);
+  // '/api/users/technicians' must be upper than '/api/users/:userId', because otherwise, 
+  // 'technicians' could be mistaken by ':userId'
+  app.get('/api/users/technicians', auth.ensureAuthenticated, users.technicians);
+  // -- //
   app.post('/api/users', auth.ensureAuthenticatedAsAdmin, users.create);
   app.get('/api/users', auth.ensureAuthenticatedAsAdmin, users.list);
   app.get('/api/users/:userId', auth.ensureAuthenticatedAsAdmin, users.show);
-  app.get('/api/users/username/:username', auth.ensureAuthenticatedAsAdmin, users.exists);
-  app.get('/api/users/technicians', auth.ensureAuthenticated, users.technicians);
   app.param('userId', users.user);
   
   ///////////////////////
