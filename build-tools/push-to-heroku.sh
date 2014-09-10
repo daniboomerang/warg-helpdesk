@@ -4,3 +4,4 @@ grunt build
 ls -la
 git status
 cat .gitignore
+git status
