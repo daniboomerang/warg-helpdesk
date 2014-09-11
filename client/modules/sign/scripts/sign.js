@@ -3,7 +3,8 @@
 // Define main module sign and injects all other modules as dependencies
 var sign = angular.module('sign',
   [
-    'signControllers'
+    'signControllers',
+    'auth'
   ]
 );
 

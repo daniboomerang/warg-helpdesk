@@ -17,6 +17,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav navbar-right" ng-show="currentUser" style="margin-right:10px;">
+      
         <li class="dropdown shadow-left hover-effect">
           <a ng-click="markNewNotsAsDisplayed()" class="dropdown-toggle" data-toggle="dropdown">
             <span ng-class="{'sounding-bell' : newNotifications.length > 0}"><img ng-if="newNotifications.length > 0" src="/modules/helpdesk/images/icons/bell-claret-24.png" alt="notification" popover-placement="bottom" popover="You have {{ newNotifications.length }} new notification(s)" popover-trigger="mouseenter"><img ng-if="newNotifications.length == 0" src="/modules/helpdesk/images/icons/bell-gray-24.png" alt="notification"></span>
@@ -36,6 +37,7 @@
             <li class="link-notification"> You don´t have notifications. </li>
           </ul>
         </li>
+
         <li class="dropdown shadow-right hover-effect">
           <a class="dropdown-toggle" data-toggle="dropdown" style="color: #ebebeb;">{{currentUser.username}}&nbsp;&nbsp;&nbsp;<img src="/modules/helpdesk/images/icons/guest-24-black.png"></a>
           <ul class="dropdown-menu">
@@ -45,6 +47,9 @@
           </ul>
         </li>
       </ul>
+        <ul class="nav navbar-nav navbar-right" ng-show="currentUser" style="margin-top:8px; margin-right:12px;">
+          <language-selector></language-selector>
+       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>

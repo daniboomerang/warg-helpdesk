@@ -7,7 +7,7 @@
       <!--<div class="panel-title panel solid-yellow-bar-fill frame-form-head text-muted centered-and-white">Warg Helpdesk</div>-->
     </div>     
     <div class="panel-body" style="padding-top:20px">
-      <form name="form" ng-submit="login(form)" ng-controller="SigninFormCtrl">                    
+      <form name="form" ng-submit="login(form)">                    
         <div class="input-group form-line-frame">
           <span class="input-group-addon"><img src="/modules/sign/images/at-16.png"></span>
           <input 
@@ -30,7 +30,7 @@
           <input 
              type="password"
              class="form-control"
-             placeholder="Password"
+             placeholder="{{'Password' | translate}}"
              name="password"
              ng-model="password"
              required
@@ -42,9 +42,11 @@
           <div class="frame-error-arrowup" ng-message="mongoose">{{errors.password}}</div>
         </div>
 
-        <div class="modal-footer">
-          <input ng-disabled="form.$invalid" class="btn btn-success" value="Sign In" type="submit" ngClick="Submit">
-        </div>
+        <div class="modal-footer" style="padding-right: 0px; padding-left: 0px;">  
+         
+           <input ng-disabled="form.$invalid" class="btn btn-success pull-right" value="{{ 'BUTTON.SIGNIN' | translate }}" type="submit" ngClick="Submit">
+           <span class="pull-left"><language-selector></language-selector></span>
+        </div> 
       </form>     
     </div>                     
   </div>  

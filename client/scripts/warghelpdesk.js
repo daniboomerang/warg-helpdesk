@@ -1,7 +1,6 @@
 'use strict';
 
 angular.module('wargHelpdeskApp', [
-  'pascalprecht.translate',
   // NG 
   'ui.router',
   'ngSanitize',
@@ -16,6 +15,8 @@ angular.module('wargHelpdeskApp', [
   'trNgGrid',
   'toaster',
   'angularCharts',
+  'translation',
+
   // WARG HELPDESK
   'wargHelpdeskDirectives',
   'wargHelpdeskFilters',
