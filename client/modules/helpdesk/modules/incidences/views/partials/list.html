@@ -2,18 +2,19 @@
 	<div class="row" ng-show="incidences.length > 0">
 		<div class="row-fluid">	
 		  	<div class="span12 list-incidences-container">
-			    <table tr-ng-grid="" items="incidences" selected-items="selectedIncidences" selection-mode="None" enable-sorting="false">
+			    <table tr-ng-grid="" items="incidences" selected-items="selectedIncidences" selection-mode="None" enable-sorting="false" enable-filtering="true">
 				    <thead>
-				        <tr>
-				        	<th field-name="id" cell-width="5em">ID</th>  
-				            <th field-name="severity" cell-width="5em">{{ 'SEVERITY' | translate }}</th>  
-				            <th field-name="priority" cell-width="5em">{{ 'PRIORITY' | translate }}</th>
-				            <th field-name="title">{{ 'TITLE' | translate }}</th>
-				            <th field-name="creator.username" cell-width="7em">{{ 'OWNER' | translate }}</th>
-				            <th field-name="created" cell-width="8em">{{ 'CREATED' | translate }}</th>
-				            <th field-name="updated" cell-width="8em">{{ 'UPDATED' | translate }}</th>
-				            <th field-name="status.currentStatus" cell-width="8em">{{ 'STATUS' | translate }}</th>
-				            <th field-name="assigned" cell-width="5em">{{ 'ASSIGNED' | translate }}</th>
+				        <tr display-align="center">
+				        	<th field-name="id"></th>  
+				            <th field-name="severity">{{ 'Severity' | translate }}</th>  
+				            <th field-name="priority" >{{ 'Priority' | translate }}</th>
+				            <th field-name="title">{{ 'Title' | translate }}</th>
+				            <th field-name="overview" enable-filtering="false"><div> &nbsp;</div></th>
+				            <th field-name="creator.username">{{ 'Owner' | translate }}</th>
+				            <th field-name="created">{{ 'Created' | translate }}</th>
+				            <th field-name="updated">{{ 'Updated' | translate }}</th>
+				            <th field-name="status.currentStatus">{{ 'Status' | translate }}</th>
+				            <th field-name="assigned">{{ 'Assigned' | translate }}</th>
 				        </tr>
 				    </thead>
 		            <tbody>
@@ -27,28 +28,33 @@
 							</td>
 							<td field-name="title">
 								<span class="frame-list-cell">  
-									<span class="pull-left" >{{gridItem.title.slice(0,50)}}</span>
-									<span ng-click="overview(gridItem)" class="pull-right" popover-placement="bottom" popover="Overview {{gridItem.id}}" popover-trigger="mouseenter">
-										<button class="btn btn-info btn-xs"><img src="/modules/helpdesk/modules/incidences/images/icons/eye-16-black.png" alt="View Details">
-		                            	</button>
-									</span> 
+									<span class="col-md-10" >{{gridItem.title.slice(0,50)}}</span>
 								</span>
 							</td>
 
+  							<td field-name="overview">
+		                        <span ng-click="overview(gridItem)" class="col-md-2" popover-placement="bottom" popover="Overview {{gridItem.id}}" popover-trigger="mouseenter">
+									<button class="btn btn-info btn-xs"  style="padding-bottom: 3px;"><img src="/modules/helpdesk/modules/incidences/images/icons/eye-16-black.png" alt="View Details">
+	                            	</button>
+								</span> 
+	                    	</td>
+
 		                    <!-- Dates: We show Today, Yesterday, 2 days ago or a short date format -->
 	                    	<td field-name="created">
-		                    	<div popover-placement="bottom" popover="{{ gridItem.created | date:'shortTime' }}" popover-trigger="mouseenter">
+		                    	<div popover-placement="bottom" popover="{{ gridItem.created | date:'shortTime'}}" popover-trigger="mouseenter">
 		                    		<span ng-if="(gridItem.created | date:'shortDate') == (today | date:'shortDate')">
-		                    		Today
+		                    		{{ 'Today' | translate }}
 		                    		</span>
 		                    		<span ng-if="(gridItem.created | date:'shortDate') == (yesterday | date:'shortDate')">
-									Yesterday
+									{{ 'Yesterday' | translate }}
 									</span>
 									<span ng-if="(gridItem.created | date:'shortDate') == (twoDaysAgo | date:'shortDate')">
-									2 Days ago
+									{{ '2 Days ago' | translate }}
 									</span>
-									<span ng-if="((gridItem.created | date:'shortDate') < (twoDaysAgo | date:'shortDate'))">
-									{{gridItem.created | date:'shortDate'}}
+									<span ng-if="((gridItem.created | date:'shortDate') != (today | date:'shortDate'))
+									&& ((gridItem.created | date:'shortDate') != (yesterday | date:'shortDate'))
+									&& ((gridItem.created | date:'shortDate') != (twoDaysAgo | date:'shortDate'))">
+									{{gridItem.created | date:'EEE'}} {{gridItem.created | date:'shortDate'}}
 									</span>
 								</div>
 							</td>
@@ -57,9 +63,21 @@
 	                    		<span ng-if="(gridItem.updated[gridItem.updated.length - 1] | date:'shortDate') == (today | date:'shortDate')">
 	                    			{{gridItem.updated[gridItem.updated.length - 1] | date:'shortTime'}}
 	                    		</span>
-	                    		<span ng-if="(gridItem.updated[gridItem.updated.length - 1] | date:'shortDate') != (today | date:'shortDate')">
+	                    		<span ng-if="(gridItem.created | date:'shortDate') == (yesterday | date:'shortDate')">
+									{{ 'Yesterday' | translate }}
+								</span>
+								<span ng-if="(gridItem.updated[gridItem.updated.length - 1] | date:'shortDate') == (twoDaysAgo | date:'shortDate')">
+									{{ '2 Days ago' | translate }}
+								</span>
+								<span ng-if="(gridItem.updated[gridItem.updated.length - 1] | date:'shortDate'!= (today | date:'shortDate'))
+								&& ((gridItem.updated[gridItem.updated.length - 1] | date:'shortDate') != (yesterday | date:'shortDate'))
+								&& ((gridItem.updated[gridItem.updated.length - 1] | date:'shortDate') != (twoDaysAgo | date:'shortDate'))">
+									{{(gridItem.updated[gridItem.updated.length - 1] | date:'EEE') | translate}}
 									{{gridItem.updated[gridItem.updated.length - 1] | date:'shortDate'}}
 								</span>
+	                    		<!--<span ng-if="(gridItem.updated[gridItem.updated.length - 1] | date:'shortDate') != (today | date:'shortDate')">
+									{{gridItem.updated[gridItem.updated.length - 1] | date:'shortDate'}}
+								</span>-->
 							</td>								
 
 		                    <td field-name="status.currentStatus"><span class="frame-list-cell" ng-class="{open: gridItem.status.currentStatus == 'Open', ongoing: gridItem.status.currentStatus == 'On Going', closed: gridItem.status.currentStatus == 'Closed'}">{{ gridItem.status.currentStatus | translate }}</span>

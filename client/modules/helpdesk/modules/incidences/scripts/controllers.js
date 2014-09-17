@@ -293,21 +293,12 @@ incidencesControllers.controller('CreateCtrl', function ($scope, $rootScope, $mo
 
 incidencesControllers.controller('ListCtrl', function ($scope, $state, $document, $modal, $log) {
 
+  init();
+
   $scope.goToState = function (state) {
     $state.go(state);
   }; 
 
-  // It helps us with the fact that if we click on overview, the watcher of selectedIncidences is
-  // triggered and therefore redirected to open. And we don´t want that.
-  $scope.overviewing = false; 
-
-  $scope.today = Date.now();
-  $scope.yesterday = new Date();
-  $scope.yesterday.setDate($scope.yesterday.getDate() - 1);
-  $scope.twoDaysAgo = new Date();
-  $scope.twoDaysAgo.setDate($scope.twoDaysAgo.getDate() - 2);
-
-  $scope.selectedIncidences = [];
   $scope.openIncidence = function (id) {
     $state.go('helpdesk.incidences.open.incidence', { incidenceId: id });
   };
@@ -352,6 +343,25 @@ incidencesControllers.controller('ListCtrl', function ($scope, $state, $document
       $modalInstance.dismiss('cancel');
     };
   };
+
+  $scope.getDay = function(date){
+    return date.getDay();
+  }
+
+  function init(){
+
+    // It helps us with the fact that if we click on overview, the watcher of selectedIncidences is
+    // triggered and therefore redirected to open. And we don´t want that.
+    $scope.overviewing = false; 
+
+    $scope.today = Date.now();
+    $scope.yesterday = new Date();
+    $scope.yesterday.setDate($scope.yesterday.getDate() - 1);
+    $scope.twoDaysAgo = new Date();
+    $scope.twoDaysAgo.setDate($scope.twoDaysAgo.getDate() - 2);
+
+    $scope.selectedIncidences = [];
+  }
 
 });
 
