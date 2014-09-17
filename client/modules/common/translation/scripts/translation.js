@@ -15,6 +15,7 @@ var translation = angular.module('translation',
   'BUTTON.SIGNIN': 'Sign in',
   'USER.SETTINGS': 'User Settings',
   'SIGN.OUT': 'Sign out',
+  'UNAVALIABLE': 'Unavailable',
 })
 .constant('translations_es', {
   // Global
@@ -55,6 +56,11 @@ var translation = angular.module('translation',
 
   // Inventory
   'Inventory': 'Inventario',
+  'INTERNAL_ID': 'ID Interno',
+  'SERIAL': 'Número de Serie',
+  'ACQ_DATE': 'Fecha de Adquisición',
+  'KIND': 'Tipo',
+  'UNAVAILABLE': 'Deshabilitar',
 
   // Schools
   'Schools': 'Escuelas',

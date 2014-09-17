@@ -1,0 +1,63 @@
+<section ng-init="find()">
+  <div id="no-items-msg" class="frame-empty-resource-message" ng-show="items.length == 0">
+    <h1>No items yet. <br> Why don't you <a ng-click="goToState('helpdesk.items.create')">Create One</a>?</h1>
+  </div>    
+  <div class="row" ng-show="items.length > 0">
+    <div class="row-fluid"> 
+        <div class="span12 list-items-container">
+          <table tr-ng-grid="" items="items" selected-items="selectedIncidences" selection-mode="None" enable-sorting="false" id="items-list">
+            <thead>
+                <tr>
+                    <th field-name="internalId" cell-width="5em">{{ 'INTERNAL_ID' | translate }}</th>  
+                    <th field-name="serial" cell-width="5em">{{ 'SERIAL' | translate }}</th>  
+                    <th field-name="kind" cell-width="5em">{{ 'KIND' | translate }}</th>  
+                    <th field-name="acquisitionDate" cell-width="5em">{{ 'ACQ_DATE' | translate }}</th>  
+                    <th field-name="actions" cell-width="5em">{{ 'ACTIONS' | translate }}</th>  
+                </tr>
+            </thead>
+              <tbody>
+                  <tr style="text-align: center;" ng-style="inventory-item">
+                    <td field-name="internalId">
+                      <span class="frame-list-cell">
+                        {{ gridItem.internalId | translate }}</span>
+                    </td>
+                    <td field-name="serial">
+                      <span class="frame-list-cell">
+                        {{ gridItem.serial | translate }}</span>
+                    </td>
+                    <td field-name="kind">
+                      <span class="frame-list-cell">
+                        {{ gridItem.kind | translate }}</span>
+                    </td>
+                    <td field-name="acquisitionDate">
+                      <span ng-if="(gridItem.acquisitionDate | date:'shortDate') == (today | date:'shortDate')">
+                      {{gridItem.acquisitionDate | date:'shortTime'}}
+                      </span>
+                      <span ng-if="(gridItem.acquisitionDate | date:'shortDate') != (today | date:'shortDate')">
+                      {{gridItem.acquisitionDate | date:'shortDate'}}
+                      </span>
+                    </td>
+                    <td field-name="actions">
+                      <div>
+                          <button class="btn btn-success btn-xs" ng-click="openIncidence(gridItem.id)">
+                              {{ 'UNAVAILABLE' | translate }}
+                          </button>
+                      </div>
+                    </td>
+                  </tr>
+              </tbody>
+              <tfoot>
+                  <tr>
+                      <td colspan="10"> 
+                          <form class="form-inline tr-ng-grid-footer" grid="">
+                              <div class="pull-left" tr-ng-grid-global-filter=""></div>
+                              <div class="pull-right" tr-ng-grid-pager=""></div>
+                          </form>
+                      </td>
+                  </tr>
+              </tfoot>
+            </table>
+        </div>
+    </div>
+  </div>
+</section>

@@ -17,6 +17,9 @@ module.exports = function (grunt) {
     shell: {
       deployToBuild: {
         command: './build-tools/push-to-virtualama-build.sh'
+      },
+      e2e: {
+        command: 'npm run-script protractor'
       }
     },
 
@@ -489,6 +492,8 @@ module.exports = function (grunt) {
     'clean:dist',
     'copy:client'
   ]);
+
+  grunt.registerTask('acceptance', ['shell:e2e']);
 
   grunt.registerTask('deploy-to-build', ['shell:deployToBuild']);
 

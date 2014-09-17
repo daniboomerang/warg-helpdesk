@@ -14,6 +14,7 @@ var express = require('express'),
     config = require('./server/config/config');
 
 var app = express();
+module.exports = app;
 
 // Connect to database
 var db = require('./server/db/mongo').db;
@@ -59,7 +60,8 @@ app.use(express.methodOverride());
 app.use(express.session({
   secret: 'MEAN',
   store: new mongoStore({
-    url: config.mongo.db,
+    // url: config.mongo.db,
+    db: db.connection.db,
     collection: 'sessions'
   })
 }));

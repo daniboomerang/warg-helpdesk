@@ -2,7 +2,7 @@
 	<div class="row" ng-show="incidences.length > 0">
 		<div class="row-fluid">	
 		  	<div class="span12 list-incidences-container">
-			    <table tr-ng-grid="" items="incidences" selected-items="selectedIncidences" selection-mode="None" enable-sorting="false">
+			    <table tr-ng-grid="" items="incidences" selected-items="selectedIncidences" selection-mode="None" enable-sorting="false" id="incidences-list">
 				    <thead>
 				        <tr>
 				        	<th field-name="id" cell-width="5em">ID</th>  
@@ -17,7 +17,7 @@
 				        </tr>
 				    </thead>
 		            <tbody>
-		                <tr style="text-align: center;">
+		                <tr style="text-align: center;" ng-style="incidence-item">
 		                	<td field-name="severity">
 		                		<span class="frame-list-cell" ng-class="{serious: gridItem.severity == 'Serious', high: gridItem.severity == 'High'}">
 		                			{{ gridItem.severity | translate }}</span>

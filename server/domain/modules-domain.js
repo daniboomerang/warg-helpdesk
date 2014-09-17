@@ -29,6 +29,9 @@ exports.getUserModules = function (role) {
     if (role === ROLE_ADMIN){
       return ['list', 'reporting'];
     }  
+    else if (role === ROLE_TECH){
+      return ['list'];
+    }  
   }
 
   function getActionsOnAccounts (role) {  
@@ -47,7 +50,7 @@ exports.getUserModules = function (role) {
     if(role === ROLE_USER)
       return ['Incidences'];
     else if(role === ROLE_TECH)
-      return ['Incidences'];
+      return ['Incidences', 'Inventory'];
     else if(role === ROLE_ADMIN)
       return ['Incidences', 'Inventory', 'Schools', 'Accounts'];    
   }

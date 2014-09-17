@@ -70,7 +70,11 @@
     "supertest": "0.12.1",
     "load-grunt-tasks": "^0.6.0",
     "time-grunt": "~0.2.9",
-    "grunt-express-server": "~0.4.19"
+    "grunt-express-server": "~0.4.19",
+    "chai-as-promised": "~4.1.1",
+    "chai": "~1.9.1",
+    "mocha": "~1.21.4",
+    "wd": "~0.3.7"
   },
   "scripts": {
     "postinstall": "bower install",
