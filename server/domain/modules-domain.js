@@ -27,7 +27,7 @@ exports.getUserModules = function (role) {
 
   function getActionsOnInventory (role) {  
     if (role === ROLE_ADMIN){
-      return ['list', 'reporting'];
+      return [];
     }  
     else if (role === ROLE_TECH){
       return ['list'];
