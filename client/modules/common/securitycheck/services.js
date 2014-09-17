@@ -14,7 +14,7 @@ securityCheckServices.factory('SecurityCheckService', function SecurityCheckServ
 			return false;
 		}			
 		else {
-			if ((role != 'admin') && ((module == 'inventory') || (module == 'schools') || (module == 'accounts'))){
+			if ((role != 'admin') && ((module == 'schools') || (module == 'accounts'))){
 				return false;
 			}
 			return true;

@@ -162,7 +162,7 @@ exports.show = function(req, res) {
  * List of incidences for a user
  */
 exports.list = function(req, res) {
-  incidencesDomain.listIncidences(req.user).then (function (resultList){
+  incidencesDomain.listIncidences(req.user).then(function (resultList){
     if (resultList.status == RESULT_ERROR){
       res.json(500, resultList.error);
     }  

@@ -78,7 +78,7 @@ helpdeskServices.service('helpdeskConfigService', function ($q, $http, menu, des
      	for (var i=0; i<actionsOnInventory.length; i++){
      		if (actionsOnInventory.indexOf(actionsOnInventory[i]) > -1){
 				if (actionsOnInventory[i] == 'list')
-					actions.push({title: 'Open', state: 'helpdesk.inventory.open', style: actionsStyle.open});
+					actions.push({title: 'Open', state: 'helpdesk.inventory.index', style: actionsStyle.open});
 				else if (actionsOnInventory[i] == 'reporting')
 					actions.push({title: 'Expenses', state: 'helpdesk.inventory.expenses', style: actionsStyle.expenses});
 			}		

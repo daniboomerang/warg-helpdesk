@@ -76,5 +76,20 @@ inventoryControllers.controller('StatisticsReportCtrl', function ($scope, Auth, 
   }   
 });
 
+inventoryControllers.controller('IndexCtrl', function ($scope, Auth, $location, Inventory) {
+
+  $scope.items = [];
+
+  $scope.find = function(){
+    Inventory.query(function (items) {
+      $scope.items = items;
+    },
+    function (error){
+      messengerService.popMessage('error', 'The list of incidences couldn´t be retrieved.', error.status + ' - ' + error.statusText);
+    });
+  };
+
+});
+
 
 

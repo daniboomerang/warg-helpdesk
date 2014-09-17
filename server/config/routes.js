@@ -68,6 +68,12 @@ module.exports = function(app) {
   app.put('/api/incidences/:incidenceId/close', auth.ensureAuthenticated, incidences.close); 
   app.param('incidenceId', incidences.incidence);
 
+  ////////////////////
+  // Incidences API //
+  ////////////////////
+  var inventory = require('../controllers/inventory');
+  app.get('/api/inventory', auth.ensureAuthenticated, inventory.index);
+
   app.get('/*', function(req, res) {
     if(req.user) {
       res.cookie('user', JSON.stringify(req.user.user_info));
