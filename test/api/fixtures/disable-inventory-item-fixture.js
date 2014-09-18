@@ -2,16 +2,33 @@
 
 process.env.NODE_ENV = 'test';
 
-var config = require('../../server/config/config');
+var config = require('../../../server/config/config');
 var mongoose = require('mongoose');
 var User = mongoose.model("User");
 var School = mongoose.model("School");
 var Inventory = mongoose.model("Inventory");
+var Monky     = require('monky');
+var monky     = new Monky(mongoose);
 
-before(function (done) {
 
+var FIXTURE = {};
+
+// monky.factory('User', { email: 'tecnico@example.com', password: 'secret', username: 'mierder' });
+
+beforeEach(function (done) {
+    // monky.build('User', function(err, user) {
+    //   user.save(function(){
+    //     done();
+    //   });
+    // });
   inventoryIndexAsTechnicianFixture(done);
+});
 
+afterEach(function(done){
+    for (var i in mongoose.connection.collections) {
+        mongoose.connection.collections[i].remove(function(){});
+    }
+    return done();
 });
 
 var Technician = {
@@ -49,12 +66,14 @@ var Monitor = {
 };
 
 var inventoryIndexAsTechnicianFixture = function(done){
+    console.log("going to create fixture");
     var school = new School(SchoolData);
     school.save(function(err){});
 
     Pc.schoolId = school._id;
     var pc = new Inventory(Pc);
     pc.save();
+    FIXTURE.inventoryItemId = pc._id;
 
     Printer.schoolId = school._id;
     var printer = new Inventory(Printer);
@@ -66,12 +85,8 @@ var inventoryIndexAsTechnicianFixture = function(done){
 
     Technician.school = school;
     var user = new User(Technician);
-    user.save(function(err) {
-        if (err) {
-          done(err);
-        } else {
-          done();
-        }
-    });
+    user.save(done);
+    console.log("fixture created");
 };
 
+module.exports = FIXTURE;

@@ -76,17 +76,33 @@ inventoryControllers.controller('StatisticsReportCtrl', function ($scope, Auth, 
   }   
 });
 
-inventoryControllers.controller('IndexCtrl', function ($scope, Auth, $location, Inventory) {
+inventoryControllers.controller('IndexCtrl', function ($scope, Auth, $location, inventoryService, messengerService) {
 
   $scope.items = [];
 
   $scope.find = function(){
-    Inventory.query(function (items) {
-      $scope.items = items;
-    },
-    function (error){
-      messengerService.popMessage('error', 'The list of incidences couldn´t be retrieved.', error.status + ' - ' + error.statusText);
-    });
+    inventoryService.find().then(
+      function(items){
+        $scope.items = items;
+      },
+      function(error){
+        messengerService.popMessage('error', 'The list of incidences couldn´t be retrieved.', error.status + ' - ' + error.statusText);
+      }
+    );
+  };
+
+  $scope.disableItem = function(item){
+    inventoryService.disableItem(item).then(
+      function(item){
+        messengerService.popMessage('success', 'Item disabled successfuly.');
+        $scope.items = $scope.items.filter(function(el){
+          return el._id != item._id;
+        });
+      },
+      function(){
+        messengerService.popMessage('error', 'The item couldn\'t be disabled.');
+      }
+    );
   };
 
 });

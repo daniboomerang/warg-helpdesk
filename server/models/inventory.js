@@ -39,6 +39,9 @@ var InventorySchema = new Schema({
   lastInventoryDate: {
     type: Date
   },
+  disabled: {
+    type: Object
+  },
   schoolId: {
     type: String,
     required: true

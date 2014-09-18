@@ -1,25 +1,19 @@
 'use strict';
 
-process.env.NODE_ENV = 'test';
+var HELPER = require('./fixtures/fixtures-helper')
 
-var app = require('../../server'),
-    request = require('supertest'),
-    server = request.agent(app),
-    should = require('should');
-
-require('./utils');
-require('./inventory-index-as-technician-fixture');
+require('./fixtures/inventory-index-as-technician-fixture');
 
 describe('Inventory Index', function () {
 
     this.timeout(6000);
 
-    before(function(done){
-        logIn(done);
+    beforeEach(function(done){
+        HELPER.logIn(done);
     });
 
     it('displays the available inventory items', function (done) {
-        server.get('/api/inventory')
+        HELPER.get('/api/inventory')
         .expect(200)
         .end(function(err, res){
             if (err) return done(err);
@@ -30,13 +24,3 @@ describe('Inventory Index', function () {
     });
 });
 
-var logIn = function(done){
-    server
-    .post('/auth/session')
-    .send({ email: "tecnico@example.com", password: "secret"})
-    .expect(200)
-    .end(function(err, res){
-        if (err) return done(err);
-        done();
-    });
-}
