@@ -13,13 +13,13 @@
           <div class="col-md-6">
             <div class="form-group">
               <label for="serial" class="control-label">{{ 'INVENTORY.SERIAL' | translate }}</label>
-              <input class="form-control" id="serial" placeholder="{{ 'INVENTORY.SERIAL' | translate }}" name="serial" ng-model="data.serial">
+              <input class="form-control" id="serial" placeholder="{{ 'INVENTORY.SERIAL' | translate }}" name="serial" ng-model="data.serial" required />
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
               <label for="internalId" class="control-label">{{ 'INVENTORY.INTERNAL_ID' | translate }}</label>
-              <input class="form-control" id="internalId" placeholder="{{ 'INVENTORY.INTERNAL_ID' | translate }}" name="internalId" ng-model="data.internalId">
+              <input class="form-control" id="internalId" placeholder="{{ 'INVENTORY.INTERNAL_ID' | translate }}" name="internalId" ng-model="data.internalId" />
             </div>
           </div>
         </div>
@@ -28,13 +28,13 @@
           <div class="col-md-6">
             <div class="form-group">
               <label for="acquisitionDate" class="control-label">{{ 'INVENTORY.ACQUISITION_DATE' | translate }}</label>
-              <input type="date" class="form-control" id="acquisitionDate" placeholder="{{ 'INVENTORY.ACQUISITION_DATE' | translate }}" name="acquisitionDate" ng-model="data.acquisitionDate">
+              <input type="date" class="form-control" id="acquisitionDate" placeholder="{{ 'INVENTORY.ACQUISITION_DATE' | translate }}" name="acquisitionDate" ng-model="data.acquisitionDate" />
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
               <label for="guaranteeExpirationDate" class="control-label">{{ 'INVENTORY.GUARANTEE_EXPIRATION_DATE' | translate }}</label>
-              <input type="date" class="form-control" id="guaranteeExpirationDate" placeholder="{{ 'INVENTORY.GUARANTEE_EXPIRATION_DATE' | translate }}" name="guaranteeExpirationDate" ng-model="data.guaranteeExpirationDate">
+              <input type="date" class="form-control" id="guaranteeExpirationDate" placeholder="{{ 'INVENTORY.GUARANTEE_EXPIRATION_DATE' | translate }}" name="guaranteeExpirationDate" ng-model="data.guaranteeExpirationDate" />
             </div>
           </div>
         </div>
@@ -43,13 +43,13 @@
           <div class="col-md-6">
             <div class="form-group">
               <label for="manufacturer" class="control-label">{{ 'INVENTORY.MANUFACTURER' | translate }}</label>
-              <input class="form-control" id="manufacturer" placeholder="{{ 'INVENTORY.MANUFACTURER' | translate }}" name="manufacturer" ng-model="data.manufacturer">
+              <input class="form-control" id="manufacturer" placeholder="{{ 'INVENTORY.MANUFACTURER' | translate }}" name="manufacturer" ng-model="data.manufacturer" />
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
               <label for="model" class="control-label">{{ 'INVENTORY.MODEL' | translate }}</label>
-              <input class="form-control" id="model" placeholder="{{ 'INVENTORY.MODEL' | translate }}" name="model" ng-model="data.model">
+              <input class="form-control" id="model" placeholder="{{ 'INVENTORY.MODEL' | translate }}" name="model" ng-model="data.model" />
             </div>
           </div>
         </div>
@@ -58,13 +58,13 @@
           <div class="col-md-6">
             <div class="form-group">
               <label for="location" class="control-label">{{ 'INVENTORY.LOCATION' | translate }}</label>
-              <input class="form-control" id="location" placeholder="{{ 'INVENTORY.LOCATION' | translate }}" name="location" ng-model="data.location">
+              <input class="form-control" id="location" placeholder="{{ 'INVENTORY.LOCATION' | translate }}" name="location" ng-model="data.location" />
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
               <label for="lastInventoryDate" class="control-label">{{ 'INVENTORY.LAST_INVENTORY_DATE' | translate }}</label>
-              <input type="date" class="form-control" id="lastInventoryDate" placeholder="{{ 'INVENTORY.LAST_INVENTORY_DATE' | translate }}" name="lastInventoryDate" ng-model="data.lastInventoryDate">
+              <input type="date" class="form-control" id="lastInventoryDate" placeholder="{{ 'INVENTORY.LAST_INVENTORY_DATE' | translate }}" name="lastInventoryDate" ng-model="data.lastInventoryDate" />
             </div>
           </div>
         </div>
@@ -82,13 +82,13 @@
           <div class="col-md-6">
             <div class="form-group">
               <label for="price" class="control-label">{{ 'INVENTORY.PRICE' | translate }}</label>
-              <input class="form-control" id="price" placeholder="{{ 'INVENTORY.PRICE' | translate }}" name="price" ng-model="data.price">
+              <input class="form-control" id="price" placeholder="{{ 'INVENTORY.PRICE' | translate }}" name="price" ng-model="data.price" />
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
               <label for="kind" class="control-label">{{ 'INVENTORY.KIND' | translate }}</label>
-              <ui-select ng-model="data.kind.selected" theme="selectize">
+              <ui-select ng-model="data.kind.selected" theme="selectize" required>
                 <ui-select-match placeholder="Select a kind...">{{$select.selected.name}}
                 </ui-select-match>
                 <ui-select-choices repeat="item in kinds">
