@@ -50,7 +50,6 @@ exports.disableItem = function(itemId){
 };
 
 exports.disable = function(itemToDisable){
-  console.log(itemToDisable);
   var deferred = Q.defer();
 
   Inventory.findOne({ _id: itemToDisable._id }).exec(function(err, item){
