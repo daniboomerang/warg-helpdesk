@@ -163,18 +163,23 @@ inventoryControllers.controller('CreateCtrl', function ($scope, $location, inven
     { name: 'OTHER' }
   ];
 
-  $scope.serial = "";
-  $scope.internalId = "";
-  $scope.kind = {};
-  $scope.acquisitionDate = "";
+  $scope.data = {};
+  $scope.data.serial = "";
+  $scope.data.internalId = "";
+  $scope.data.kind = {};
+  $scope.data.acquisitionDate = "";
+  $scope.data.guaranteeExpirationDate = "";
+  $scope.data.lastInventoryDate = "";
+  $scope.data.model = "";
+  $scope.data.manufacturer = "";
+  $scope.data.location = "";
+  $scope.data.description = "";
+  $scope.data.price = "";
 
   $scope.create = function(form) {
-    var data = {};
-    data.serial = $scope.serial;
-    data.internalId = $scope.internalId;
-    data.kind = $scope.kind.selected.name;
-    data.acquisitionDate = $scope.acquisitionDate;
-    var inventoryItem = new InventoryItem(data);
+    var inventoryData = JSON.parse(JSON.stringify($scope.data));
+    inventoryData.kind = $scope.data.kind.selected.name;
+    var inventoryItem = new InventoryItem(inventoryData);
     inventoryItem.$save(function(inventoryItem){
       $location.path("helpdesk/inventory/index");
       messengerService.popMessage('success', 'Inventory item successfully created.');
