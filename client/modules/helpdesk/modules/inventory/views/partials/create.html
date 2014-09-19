@@ -73,7 +73,7 @@
           <div class="col-md-12">
             <div class="form-group">
               <label for="description" class="control-label">{{ 'INVENTORY.DESCRIPTION' | translate }}</label>
-              <textarea class="form-control" id="description" placeholder="{{ 'INVENTORY.DESCRIPTION' | translate }}" name="description" ng-model="data.description"></textarea>
+              <textarea class="form-control" id="description" placeholder="{{ 'INVENTORY.DESCRIPTION' | translate }}" name="description" ng-model="data.description" ng-required="data.kind.selected.name == 'OTHER'"></textarea>
             </div>
           </div>
         </div>
