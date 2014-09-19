@@ -8,15 +8,18 @@ var User = mongoose.model("User");
 var School = mongoose.model("School");
 var Inventory = mongoose.model("Inventory");
 
+var FIXTURE = {};
+FIXTURE.loggedUserCredentials = {email: "tecnicoindex@example.com", password: "secret"};
+
 beforeEach(function (done) {
   inventoryIndexAsTechnicianFixture(done);
 });
 
 var Technician = {
-    email: "tecnico@example.com",
-    password: "secret",
+    email: FIXTURE.loggedUserCredentials.email,
+    password: FIXTURE.loggedUserCredentials.password,
     role: "tech",
-    username: "tecnico"
+    username: "tecnicoindex"
 };
 
 var SchoolData = {
@@ -69,3 +72,4 @@ var inventoryIndexAsTechnicianFixture = function(done){
     console.log("inventory fixture created");
 };
 
+module.exports = FIXTURE;

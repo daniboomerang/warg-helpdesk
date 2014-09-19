@@ -12,10 +12,11 @@ var STATUS_ONGOING = "On Going";
 var STATUS_CLOSED = "Closed";
 var STATUS_OPEN = "Open"
 
+var FIXTURE = {};
+FIXTURE.loggedUserCredentials = {email: "tecnicodisable@example.com", password: "secret"};
+
 beforeEach(function (done) {
-
   incidencesReportFixture(done);
-
 });
 
 var TechniciansDataList = function(schoolsIds){
@@ -176,3 +177,4 @@ var incidencesReportFixture = function(done){
     admin.save(done);
 };
 
+module.exports = FIXTURE;

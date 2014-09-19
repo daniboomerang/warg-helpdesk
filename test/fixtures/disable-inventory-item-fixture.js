@@ -7,23 +7,19 @@ var mongoose = require('mongoose');
 var User = mongoose.model("User");
 var School = mongoose.model("School");
 var Inventory = mongoose.model("Inventory");
-var Monky     = require('monky');
-var monky     = new Monky(mongoose);
-
 
 var FIXTURE = {};
-
-// monky.factory('User', { email: 'tecnico@example.com', password: 'secret', username: 'mierder' });
+FIXTURE.loggedUserCredentials = {email: "tecnicodisable@example.com", password: "secret"};
 
 beforeEach(function (done) {
   inventoryIndexAsTechnicianFixture(done);
 });
 
 var Technician = {
-    email: "tecnico@example.com",
-    password: "secret",
+    email: FIXTURE.loggedUserCredentials.email,
+    password: FIXTURE.loggedUserCredentials.password,
     role: "tech",
-    username: "tecnico"
+    username: "tecnicodisable"
 };
 
 var SchoolData = {

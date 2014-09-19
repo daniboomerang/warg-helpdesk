@@ -24,10 +24,10 @@ var app = require('../../server'),
     should = require('should');
 
 
-var logInAsTech = function(done){
+var logInAsTech = function(done, technicianCredentials){
     request(app)
     .post('/auth/session')
-    .send({ email: "tecnico@example.com", password: "secret"})
+    .send({ email: technicianCredentials.email, password: technicianCredentials.password})
     .expect(200)
     .end(function(err, res){
         if (err) return done(err);

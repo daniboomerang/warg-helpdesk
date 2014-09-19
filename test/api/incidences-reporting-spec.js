@@ -2,14 +2,15 @@
 
 var HELPER = require('../fixtures/fixtures-helper')
 
-require('../fixtures/incidences-report-fixture');
+var FIXTURE = require('../fixtures/incidences-report-fixture');
 
 describe('Incidences Reporting', function () {
 
     this.timeout(6000);
 
     beforeEach(function(done){
-        HELPER.logInAsAdmin(done);
+        var adminCredentials = FIXTURE.loggedUserCredentials;
+        HELPER.logInAsAdmin(done, adminCredentials);
     });
 
     it('displays the general dashboard for incidences', function (done) {
