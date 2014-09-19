@@ -10,7 +10,6 @@ var INTERNAL_SERVER_ERROR = '500 - Internal server error';
  * Incidences Report
  */
 exports.incidences = function(req, res) {
-	console.log("dsfkjlsflñadslkdj");
 	res.json(['asd', 'asd', 'asd']);
 	/*reportingDomain.incidencesReporting().then (function (result){
 		if (result.status == RESULT_ERROR){

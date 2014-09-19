@@ -24,7 +24,7 @@ var app = require('../../server'),
     should = require('should');
 
 
-var logIn = function(done){
+var logInAsTech = function(done){
     request(app)
     .post('/auth/session')
     .send({ email: "tecnico@example.com", password: "secret"})
@@ -35,6 +35,19 @@ var logIn = function(done){
         done();
     });
 };
+
+var logInAsAdmin = function(done){
+    request(app)
+    .post('/auth/session')
+    .send({ email: "admin@example.com", password: "secret"})
+    .expect(200)
+    .end(function(err, res){
+        if (err) return done(err);
+        server.saveCookies(res);
+        done();
+    });
+};
+
 
 var put = function(url){
     var req = request(app).put(url);
@@ -51,4 +64,5 @@ var get = function(url){
 exports.should = should;
 exports.get = get;
 exports.put = put;
-exports.logIn = logIn;
+exports.logInAsTech = logInAsTech;
+exports.logInAsAdmin = logInAsAdmin;

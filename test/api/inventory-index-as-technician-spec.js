@@ -9,7 +9,7 @@ describe('Inventory Index', function () {
     this.timeout(6000);
 
     beforeEach(function(done){
-        HELPER.logIn(done);
+        HELPER.logInAsTech(done);
     });
 
     it('displays the available inventory items', function (done) {

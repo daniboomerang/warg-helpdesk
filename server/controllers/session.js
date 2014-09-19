@@ -38,7 +38,6 @@ exports.logout = function (req, res) {
  *  requires: {email, password}
  */
 exports.login = function (req, res, next) {
-  console.log("loging in session controller");
   passport.authenticate('local', function(err, user, info) {
     var error = err || info;
     if (error) { return res.json(400, error); }

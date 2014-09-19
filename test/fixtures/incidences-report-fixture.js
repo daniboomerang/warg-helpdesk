@@ -12,9 +12,9 @@ var STATUS_ONGOING = "On Going";
 var STATUS_CLOSED = "Closed";
 var STATUS_OPEN = "Open"
 
-before(function (done) {
+beforeEach(function (done) {
 
-  incidencesReportingFixture(done);
+  incidencesReportFixture(done);
 
 });
 
@@ -127,7 +127,7 @@ var IncidencesDataList = function(schoolsCodes, schoolsIds, usersIds){
     return incidences;
 };
 
-var incidencesReportingFixture = function(done){
+var incidencesReportFixture = function(done){
 
     // It creates 2 Schools
     var schools = SchoolsDataList();
@@ -136,7 +136,7 @@ var incidencesReportingFixture = function(done){
     // Creating Schools
     for (var i = 0; i <= schools.length-1; i++ ){
         var school = new School(schools[i]);
-        school.save(function(err){});
+        school.save();
         schoolsIds.push(school._id);
         schoolsCodes.push(school.code);
     }
@@ -146,7 +146,7 @@ var incidencesReportingFixture = function(done){
     // Creating Users
     for (var i = 0; i <= users.length-1; i++ ){
         var user = new User(users[i]);
-        user.save(function(err){});
+        user.save();
         usersIds.push(user._id);
     }
     // It creates 24 incidences (8 Open, 8 On going, 8 Closed)
@@ -157,14 +157,10 @@ var incidencesReportingFixture = function(done){
         var incidence = new Incidence(incidences[i]);
 
         if (i == incidences.length - 1){
-            incidence.save(function(err){
-                if (err) {
-                    done(err);
-                }
-            });
+            incidence.save();
         }
         else{
-            incidence.save(function(err){});
+            incidence.save();
         }
     }
 
@@ -177,7 +173,6 @@ var incidencesReportingFixture = function(done){
     };
 
     var admin = new User(Admin);
-    admin.save(function(err) {if (err) {done(err);} else{done();}});
-
+    admin.save(done);
 };
 

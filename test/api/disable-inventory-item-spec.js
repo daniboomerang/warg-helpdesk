@@ -9,7 +9,7 @@ describe('Disable Inventory Item', function () {
     this.timeout(6000);
 
     beforeEach(function(done){
-        HELPER.logIn(done);
+        HELPER.logInAsTech(done);
     });
 
     it('retrieves success when no problem', function (done) {

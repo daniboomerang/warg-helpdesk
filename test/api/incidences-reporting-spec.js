@@ -1,25 +1,19 @@
 'use strict';
 
-process.env.NODE_ENV = 'test';
+var HELPER = require('../fixtures/fixtures-helper')
 
-var app = require('../../server'),
-    request = require('supertest'),
-    server = request.agent(app),
-    should = require('should');
-
-require('./utils');
-require('./incidences-reporting-fixture');
+require('../fixtures/incidences-report-fixture');
 
 describe('Incidences Reporting', function () {
 
     this.timeout(6000);
 
-    before(function(done){
-        logIn(done);
+    beforeEach(function(done){
+        HELPER.logInAsAdmin(done);
     });
 
     it('displays the general dashboard for incidences', function (done) {
-        server.get('/api/reports/incidences')
+        HELPER.get('/api/reports/incidences')
         .expect(200)
         .end(function(err, res){
             if (err) return done(err);
@@ -30,21 +24,3 @@ describe('Incidences Reporting', function () {
         });
     });
 });
-
-var logIn = function(done){
-    console.log("loging in");
-    server
-    .post('/auth/session')
-    .send({ email: "admin@example.com", password: "secret"})
-    .expect(200)
-    .end(function(err, res){
-        if (err) {
-                    console.log("Not logged");
-                    console.log(err);
-
-            return done(err);
-        }    
-        console.log("logged");
-        done();
-    });
-}
