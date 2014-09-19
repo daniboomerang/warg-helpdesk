@@ -76,7 +76,7 @@ inventoryControllers.controller('StatisticsReportCtrl', function ($scope, Auth, 
   }   
 });
 
-inventoryControllers.controller('IndexCtrl', function ($scope, inventoryService, messengerService) {
+inventoryControllers.controller('IndexCtrl', function ($scope, $modal, inventoryService, messengerService) {
 
   $scope.items = [];
 
@@ -105,7 +105,51 @@ inventoryControllers.controller('IndexCtrl', function ($scope, inventoryService,
     );
   };
 
+  $scope.open = function (item, size) {
+    var modalInstance = $modal.open({
+      templateUrl: 'myModalContent.html',
+      controller: ModalInstanceCtrl,
+      size: size,
+      resolve: {
+        item: function () {
+          return item;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (selectedItem) {
+      console.log(selectedItem);
+      // $scope.disableItem(selectedItem);
+      selectedItem.$update(
+        function(item){
+          messengerService.popMessage('success', 'Item disabled successfuly.');
+          $scope.items = $scope.items.filter(function(el){
+            return el._id != item._id;
+          });
+        },
+        function(){
+          messengerService.popMessage('error', 'The item couldn\'t be disabled.');
+        }
+      );
+    }, function () {
+      console.log('Modal dismissed at: ' + new Date());
+    });
+  };
+
 });
+
+var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
+
+  $scope.item = item;
+
+  $scope.ok = function () {
+    $modalInstance.close($scope.item);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+};
 
 inventoryControllers.controller('CreateCtrl', function ($scope, $location, inventoryService, messengerService, InventoryItem) {
   $scope.kinds = [

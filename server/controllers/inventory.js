@@ -15,8 +15,13 @@ exports.index = function(req, res) {
   .then((new ResponseBuilder(res)).build);
 };
 
-exports.disable = function(req, res){
+exports.disableItem = function(req, res){
   inventoryDomain.disableItem(req.params.inventoryId)
+  .then((new ResponseBuilder(res)).build);
+};
+
+exports.disable = function(req, res){
+  inventoryDomain.disable(req.body)
   .then((new ResponseBuilder(res)).build);
 };
 

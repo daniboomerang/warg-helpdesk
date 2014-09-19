@@ -49,6 +49,29 @@ exports.disableItem = function(itemId){
 
 };
 
+exports.disable = function(itemToDisable){
+  console.log(itemToDisable);
+  var deferred = Q.defer();
+
+  Inventory.findOne({ _id: itemToDisable._id }).exec(function(err, item){
+    if (err) {
+      deferred.resolve({status: RESULT_ERROR, error: err});
+    } else {
+      item.disabled = {
+        when: itemToDisable.disabled.when || new Date(),
+        why: itemToDisable.disabled.why || "reason not specified"
+      };
+      item.save(function(err){
+        if (err) console.log("caguen");
+        deferred.resolve({status: RESULT_SUCCESS, data: item});
+      })
+    }
+  })
+
+  return deferred.promise;
+
+};
+
 exports.listByUserSchool = function(user) {
   var deferred = Q.defer();
 
