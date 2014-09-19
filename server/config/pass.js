@@ -22,11 +22,14 @@ passport.use(new LocalStrategy({
     passwordField: 'password'
   },
   function(email, password, done) {
+    console.log(email, password);
     User.findOne({ email: email }).populate('school').exec(function (err, user) {
       if (err) {
+        console.log("sdf");
         return done(err);
       }
       if (!user) {
+        console.log("sdfsdfsdf");
         return done(null, false, {
           'errors': {
             'email': { message: 'The email or password that you entered are incorrect' }
@@ -34,12 +37,14 @@ passport.use(new LocalStrategy({
         });
       }
       if (!user.authenticate(password)) {
+        console.log("sdf098");
         return done(null, false, {
           'errors': {
             'password': { message: 'The email or password that you entered are incorrect' }
           }
         });
       }
+      console.log("sdf34958");
       return done(null, user);
     });
   }

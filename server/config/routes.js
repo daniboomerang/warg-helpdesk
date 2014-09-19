@@ -74,6 +74,12 @@ module.exports = function(app) {
   var inventory = require('../controllers/inventory');
   app.get('/api/inventory', auth.ensureAuthenticated, inventory.index);
 
+  ///////////////////
+  // Reporting API //
+  ///////////////////
+  var reports = require('../controllers/reports');
+  app.get('/api/reports/incidences', auth.ensureAuthenticatedAsAdmin, reports.incidences);
+
   app.get('/*', function(req, res) {
     if(req.user) {
       res.cookie('user', JSON.stringify(req.user.user_info));
