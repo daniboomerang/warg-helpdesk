@@ -76,16 +76,110 @@ inventoryControllers.controller('StatisticsReportCtrl', function ($scope, Auth, 
   }   
 });
 
-inventoryControllers.controller('IndexCtrl', function ($scope, Auth, $location, Inventory) {
+inventoryControllers.controller('IndexCtrl', function ($scope, $modal, inventoryService, messengerService) {
 
   $scope.items = [];
 
   $scope.find = function(){
-    Inventory.query(function (items) {
-      $scope.items = items;
-    },
-    function (error){
-      messengerService.popMessage('error', 'The list of incidences couldn´t be retrieved.', error.status + ' - ' + error.statusText);
+    inventoryService.find().then(
+      function(items){
+        $scope.items = items;
+      },
+      function(error){
+        messengerService.popMessage('error', 'The list of incidences couldn´t be retrieved.', error.status + ' - ' + error.statusText);
+      }
+    );
+  };
+
+  $scope.disableItem = function(item){
+    inventoryService.disableItem(item).then(
+      function(item){
+        messengerService.popMessage('success', 'Item disabled successfuly.');
+        $scope.items = $scope.items.filter(function(el){
+          return el._id != item._id;
+        });
+      },
+      function(){
+        messengerService.popMessage('error', 'The item couldn\'t be disabled.');
+      }
+    );
+  };
+
+  $scope.open = function (item, size) {
+    var modalInstance = $modal.open({
+      templateUrl: 'myModalContent.html',
+      controller: ModalInstanceCtrl,
+      size: size,
+      resolve: {
+        item: function () {
+          return item;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (selectedItem) {
+      selectedItem.$update(
+        function(item){
+          messengerService.popMessage('success', 'Item disabled successfuly.');
+          $scope.items = $scope.items.filter(function(el){
+            return el._id != item._id;
+          });
+        },
+        function(){
+          messengerService.popMessage('error', 'The item couldn\'t be disabled.');
+        }
+      );
+    }, function () {
+    });
+  };
+
+});
+
+var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
+
+  $scope.item = item;
+
+  $scope.ok = function () {
+    $modalInstance.close($scope.item);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+
+  $scope.uncompleteData = function(){
+    return !$scope.item.disabled || !$scope.item.disabled.why || !$scope.item.disabled.when;
+  };
+
+};
+
+inventoryControllers.controller('CreateCtrl', function ($scope, $location, inventoryService, messengerService, InventoryItem) {
+  $scope.kinds = [
+    { name: 'PC' }, 
+    { name: 'PRINTER' }, 
+    { name: 'MONITOR' }, 
+    { name: 'MOUSE' }, 
+    { name: 'KEYBOARD' }, 
+    { name: 'OTHER' }
+  ];
+
+  $scope.serial = "";
+  $scope.internalId = "";
+  $scope.kind = {};
+  $scope.acquisitionDate = "";
+
+  $scope.create = function(form) {
+    var data = {};
+    data.serial = $scope.serial;
+    data.internalId = $scope.internalId;
+    data.kind = $scope.kind.selected.name;
+    data.acquisitionDate = $scope.acquisitionDate;
+    var inventoryItem = new InventoryItem(data);
+    inventoryItem.$save(function(inventoryItem){
+      $location.path("helpdesk/inventory/index");
+      messengerService.popMessage('success', 'Inventory item successfully created.');
+    }, function(error){
+      messengerService.popMessage('error', 'Inventory Item not created.', error.status + ' - ' + error.statusText);
     });
   };
 

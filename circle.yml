@@ -1,3 +1,6 @@
+test:
+  override:
+    - echo "pending to prepare tests to be runned here"
 deployment:
   staging:
     branch: master

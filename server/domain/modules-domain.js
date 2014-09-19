@@ -30,7 +30,7 @@ exports.getUserModules = function (role) {
       return [];
     }  
     else if (role === ROLE_TECH){
-      return ['list'];
+      return ['create', 'list'];
     }  
   }
 

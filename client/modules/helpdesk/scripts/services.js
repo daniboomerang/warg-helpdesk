@@ -21,6 +21,7 @@ helpdeskServices.service('deskMenuStyleService', function(){
 		   		moduleStyle.color = {'color': '#F4BE6E'};
 		   	}	
 		   	if (module == 'Inventory'){
+        actionsStyle.create = '/modules/helpdesk/images/icons/create-16.png';
 				actionsStyle.open = '/modules/helpdesk/images/icons/inventory-16.png';
 				actionsStyle.expenses = '/modules/helpdesk/images/icons/coins-16.png';
 				moduleStyle.image = {'background-image': 'url(/modules/helpdesk/images/icons/book-24.png)'};
@@ -77,7 +78,9 @@ helpdeskServices.service('helpdeskConfigService', function ($q, $http, menu, des
      	var actionsStyle = style.actionsStyle;
      	for (var i=0; i<actionsOnInventory.length; i++){
      		if (actionsOnInventory.indexOf(actionsOnInventory[i]) > -1){
-				if (actionsOnInventory[i] == 'list')
+        if (actionsOnInventory[i] == 'create')
+          actions.push({title: 'Add', state: 'helpdesk.inventory.create', style: actionsStyle.create});
+				else if (actionsOnInventory[i] == 'list')
 					actions.push({title: 'Open', state: 'helpdesk.inventory.index', style: actionsStyle.open});
 				else if (actionsOnInventory[i] == 'reporting')
 					actions.push({title: 'Expenses', state: 'helpdesk.inventory.expenses', style: actionsStyle.expenses});

@@ -79,7 +79,7 @@
   },
   "scripts": {
     "postinstall": "bower install",
-    "prestart": "npm install && grunt clone-client",
+    "prestart": "npm install",
     "start": "node server.js",
     "dev": "node server.js",
     "staging": "NODE_ENV='test' node server.js",

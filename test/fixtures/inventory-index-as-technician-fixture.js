@@ -8,10 +8,8 @@ var User = mongoose.model("User");
 var School = mongoose.model("School");
 var Inventory = mongoose.model("Inventory");
 
-before(function (done) {
-
+beforeEach(function (done) {
   inventoryIndexAsTechnicianFixture(done);
-
 });
 
 var Technician = {
@@ -49,6 +47,7 @@ var Monitor = {
 };
 
 var inventoryIndexAsTechnicianFixture = function(done){
+    console.log("inventory fixture creation");
     var school = new School(SchoolData);
     school.save(function(err){});
 
@@ -66,12 +65,7 @@ var inventoryIndexAsTechnicianFixture = function(done){
 
     Technician.school = school;
     var user = new User(Technician);
-    user.save(function(err) {
-        if (err) {
-          done(err);
-        } else {
-          done();
-        }
-    });
+    user.save(done);
+    console.log("inventory fixture created");
 };
 

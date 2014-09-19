@@ -1,6 +1,6 @@
 <section ng-init="find()">
   <div id="no-items-msg" class="frame-empty-resource-message" ng-show="items.length == 0">
-    <h1>No items yet. <br> Why don't you <a ng-click="goToState('helpdesk.items.create')">Create One</a>?</h1>
+    <h1>No items yet. <br> Why don't you <a ng-click="goToState('helpdesk.inventory.create')">Create One</a>?</h1>
   </div>    
   <div class="row" ng-show="items.length > 0">
     <div class="row-fluid"> 
@@ -39,7 +39,7 @@
                     </td>
                     <td field-name="actions">
                       <div>
-                          <button class="btn btn-success btn-xs" ng-click="openIncidence(gridItem.id)">
+                          <button class="btn btn-success btn-xs" ng-click="open(gridItem)">
                               {{ 'UNAVAILABLE' | translate }}
                           </button>
                       </div>
@@ -60,4 +60,31 @@
         </div>
     </div>
   </div>
+
+    <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Disable</h3>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="item.disabled.why" class="control-label">{{ 'INVENTORY.DISABLE.WHY' | translate }}</label>
+                <input class="form-control" id="item.disabled.why" placeholder="{{ 'INVENTORY.DISABLE.WHEN' | translate }}" name="item.disabled.why" ng-model="item.disabled.why" required>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="item.disabled.when" class="control-label">{{ 'INVENTORY.DISABLE.WHEN' | translate }}</label>
+                <input type="date" class="form-control" id="item.disabled.when" placeholder="{{ 'INVENTORY.DISABLE.WHEN' | translate }}" name="item.disabled.when" ng-model="item.disabled.when" required>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()" ng-disabled="uncompleteData()" >OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
 </section>
