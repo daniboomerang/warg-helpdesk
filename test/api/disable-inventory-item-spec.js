@@ -1,8 +1,8 @@
 'use strict';
 
-var HELPER = require('./fixtures/fixtures-helper')
+var HELPER = require('../fixtures/fixtures-helper')
 
-var FIXTURE = require('./fixtures/disable-inventory-item-fixture')
+var FIXTURE = require('../fixtures/disable-inventory-item-fixture')
 
 describe('Disable Inventory Item', function () {
 

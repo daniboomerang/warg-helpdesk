@@ -1,6 +1,24 @@
+var mongoose = require('mongoose');
+
 process.env.NODE_ENV = 'test';
 
-var app = require('../../../server'),
+beforeEach(function(done){
+    console.log("cleaning db before");
+    for (var i in mongoose.connection.collections) {
+        mongoose.connection.collections[i].remove(function(){});
+    }
+    return done();
+});
+
+afterEach(function(done){
+    console.log("cleaning db after");
+    for (var i in mongoose.connection.collections) {
+        mongoose.connection.collections[i].remove(function(){});
+    }
+    return done();
+});
+
+var app = require('../../server'),
     request = require('supertest'),
     server = request.agent(app),
     should = require('should');

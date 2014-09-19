@@ -51,10 +51,9 @@ inventoryServices.factory('inventoryService', function ($resource, $q) {
   }
 });
 
-inventoryServices.factory('InventoryDisable', function ($resource) {
-  return $resource('api/inventory/:inventoryId/disable', {
+inventoryServices.factory('InventoryItem', function ($resource) {
+  return $resource('api/inventory/:inventoryId', {
     inventoryId: '@_id',
-
   }, {
     disable: {
       method: 'PUT'

@@ -1,0 +1,57 @@
+<div class="panel shadow-form-container">
+
+  <div class="panel-heading">
+    <div class="panel-title solid-yellow-bar-fill frame-form-head centered-and-white">
+      {{ 'INVENTORY.NEW' | translate }}
+    </div>
+  </div>  
+
+  <div class="panel-body" style="padding-top:40px">
+      <form class="form" name="form" ng-submit="create(form)">
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="serial" class="control-label">{{ 'INVENTORY.SERIAL' | translate }}</label>
+              <input class="form-control" id="serial" placeholder="{{ 'INVENTORY.SERIAL' | translate }}" name="serial" ng-model="serial">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="internalId" class="control-label">{{ 'INVENTORY.INTERNAL_ID' | translate }}</label>
+              <input class="form-control" id="internalId" placeholder="{{ 'INVENTORY.INTERNAL_ID' | translate }}" name="internalId" ng-model="internalId">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="kind" class="control-label">{{ 'INVENTORY.KIND' | translate }}</label>
+              <ui-select ng-model="kind.selected" theme="selectize">
+                <ui-select-match placeholder="Select a kind...">{{$select.selected.name}}
+                </ui-select-match>
+                <ui-select-choices repeat="item in kinds">
+                  <div ng-bind-html="item.name" class="role-select" popover="{{item.name}}" popover-trigger="mouseenter"></div>
+                </ui-select-choices>
+              </ui-select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="acquisitionDate" class="control-label">{{ 'INVENTORY.ACQUISITION_DATE' | translate }}</label>
+              <input type="date" class="form-control" id="acquisitionDate" placeholder="{{ 'INVENTORY.ACQUISITION_DATE' | translate }}" name="acquisitionDate" ng-model="acquisitionDate">
+            </div>
+          </div>
+        </div>
+
+        <div class="row"><div class="col-md-12">
+          <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancelOperation()">Cancel</button>
+             <input ng-disabled="form.$invalid" class="btn btn-success" value="Create" type="submit" ngClick="Submit">
+          </div>
+        </div></div>
+      </form>
+  </div> 
+
+</div> 

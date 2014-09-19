@@ -1,8 +1,8 @@
 'use strict';
 
-var HELPER = require('./fixtures/fixtures-helper')
+var HELPER = require('../fixtures/fixtures-helper')
 
-require('./fixtures/inventory-index-as-technician-fixture');
+require('../fixtures/inventory-index-as-technician-fixture');
 
 describe('Inventory Index', function () {
 

@@ -17,6 +17,11 @@ var translation = angular.module('translation',
   'SIGN.OUT': 'Sign out',
   'Close as': 'Close incidence as',
   'UNAVALIABLE': 'Unavailable',
+  'INVENTORY.NEW': 'New Inventory Item',
+  'INVENTORY.INTERNAL_ID': 'Internal Id',
+  'INVENTORY.SERIAL': 'Serial Number',
+  'INVENTORY.KIND': 'Kind',
+  'INVENTORY.ACQUISITION_DATE': 'Acquisition Date',
 })
 .constant('translations_es', {
   // Global

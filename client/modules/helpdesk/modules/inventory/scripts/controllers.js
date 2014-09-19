@@ -76,7 +76,7 @@ inventoryControllers.controller('StatisticsReportCtrl', function ($scope, Auth, 
   }   
 });
 
-inventoryControllers.controller('IndexCtrl', function ($scope, Auth, $location, inventoryService, messengerService) {
+inventoryControllers.controller('IndexCtrl', function ($scope, inventoryService, messengerService) {
 
   $scope.items = [];
 
@@ -103,6 +103,38 @@ inventoryControllers.controller('IndexCtrl', function ($scope, Auth, $location, 
         messengerService.popMessage('error', 'The item couldn\'t be disabled.');
       }
     );
+  };
+
+});
+
+inventoryControllers.controller('CreateCtrl', function ($scope, $location, inventoryService, messengerService, InventoryItem) {
+  $scope.kinds = [
+    { name: 'PC' }, 
+    { name: 'PRINTER' }, 
+    { name: 'MONITOR' }, 
+    { name: 'MOUSE' }, 
+    { name: 'KEYBOARD' }, 
+    { name: 'OTHER' }
+  ];
+
+  $scope.serial = "";
+  $scope.internalId = "";
+  $scope.kind = {};
+  $scope.acquisitionDate = "";
+
+  $scope.create = function(form) {
+    var data = {};
+    data.serial = $scope.serial;
+    data.internalId = $scope.internalId;
+    data.kind = $scope.kind.selected.name;
+    data.acquisitionDate = $scope.acquisitionDate;
+    var inventoryItem = new InventoryItem(data);
+    inventoryItem.$save(function(inventoryItem){
+      $location.path("helpdesk/inventory/index");
+      messengerService.popMessage('success', 'Inventory item successfully created.');
+    }, function(error){
+      messengerService.popMessage('error', 'Inventory Item not created.', error.status + ' - ' + error.statusText);
+    });
   };
 
 });

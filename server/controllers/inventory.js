@@ -5,6 +5,11 @@ var RESULT_ERROR = "ERROR";
 
 var inventoryDomain = require('../domain/inventory-domain');
 
+exports.createItem = function(req, res){
+  inventoryDomain.createItem(req.body, req.user)
+  .then((new ResponseBuilder(res)).build);
+};
+
 exports.index = function(req, res) {
   inventoryDomain.listByUserSchool(req.user)
   .then((new ResponseBuilder(res)).build);

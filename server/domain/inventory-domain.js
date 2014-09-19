@@ -8,6 +8,25 @@ var mongoose = require('mongoose'),
   ObjectId = mongoose.Types.ObjectId,
   Q = require('q');
 
+exports.createItem = function(data, user) {
+
+  var deferred = Q.defer();
+
+  data.schoolId = user.school._id;
+  
+  var item = new Inventory(data);
+
+  item.save(function(err) {
+    if (err) {
+      deferred.resolve({status: RESULT_ERROR, error: err});
+    } else {
+      deferred.resolve({status: RESULT_SUCCESS, data: item});
+    }
+  });
+
+  return deferred.promise;
+};
+
 exports.disableItem = function(itemId){
   var deferred = Q.defer();
 
