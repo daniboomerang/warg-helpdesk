@@ -22,6 +22,13 @@ var translation = angular.module('translation',
   'INVENTORY.SERIAL': 'Serial Number',
   'INVENTORY.KIND': 'Kind',
   'INVENTORY.ACQUISITION_DATE': 'Acquisition Date',
+  'INVENTORY.GUARANTEE_EXPIRATION_DATE': 'Guarantee Expiration Date',
+  'INVENTORY.LAST_INVENTORY_DATE': 'Last Inventory Date',
+  'INVENTORY.MODEL': 'Model',
+  'INVENTORY.MANUFACTURER': 'Manufacturer',
+  'INVENTORY.DESCRIPTION': 'Description',
+  'INVENTORY.LOCATION': 'Location',
+  'INVENTORY.PRICE': 'Price',
 })
 .constant('translations_es', {
   // Global
