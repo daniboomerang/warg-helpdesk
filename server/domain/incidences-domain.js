@@ -101,7 +101,7 @@ exports.findIncidence = function (id) {
  *  Return the list of incidences of a user
  *  Returns a PROMISE with the result 
  */
-exports.listIncidences = function(user) {
+exports.listUserIncidences = function(user) {
 
   var deferred = Q.defer();
 
@@ -136,6 +136,26 @@ exports.listIncidences = function(user) {
     }
     });
   }
+  return deferred.promise;
+};
+
+
+/**
+ *  Return list with ALL the incidences
+ *  Returns a PROMISE with the result 
+ */
+exports.listIncidences = function() {
+
+  var deferred = Q.defer();
+
+  Incidence.find().sort('-created').populate('creator', 'username').exec(function(err, incidences) {
+    if (err) {
+      deferred.resolve({status: RESULT_ERROR, error: err});
+    } else {   
+      deferred.resolve({status: RESULT_SUCCESS, list: incidences});
+    }
+  });
+  
   return deferred.promise;
 };
 

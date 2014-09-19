@@ -2,21 +2,19 @@
 
 var RESULT_SUCCESS = "SUCCESS";
 var RESULT_ERROR = "ERROR";
-var INTERNAL_SERVER_ERROR = '500 - Internal server error';
 
-//var reportingDomain = require('../domain/reporting-domain');
+var reportsDomain = require('../domain/reports-domain');
 
 /**
  * Incidences Report
  */
 exports.incidences = function(req, res) {
-	res.json(['asd', 'asd', 'asd']);
-	/*reportingDomain.incidencesReporting().then (function (result){
+	reportsDomain.incidences().then (function (result){
 		if (result.status == RESULT_ERROR){
-			
+			res.json(result.error);
 		}  
 		if (result.status == RESULT_SUCCESS){
-
+			res.json(result.report);
 		}
-	});*/
+	});
 };
