@@ -77,6 +77,12 @@ module.exports = function(app) {
   app.put('/api/inventory/:inventoryId', auth.ensureAuthenticated, inventory.disable);
   app.put('/api/inventory/:inventoryId/disable', auth.ensureAuthenticated, inventory.disableItem);
 
+  ///////////////////
+  // Reporting API //
+  ///////////////////
+  var reports = require('../controllers/reports');
+  app.get('/api/reports/incidences', auth.ensureAuthenticatedAsAdmin, reports.incidences);
+
   app.get('/*', function(req, res) {
     if(req.user) {
       res.cookie('user', JSON.stringify(req.user.user_info));

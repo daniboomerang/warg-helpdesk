@@ -2,14 +2,15 @@
 
 var HELPER = require('../fixtures/fixtures-helper')
 
-require('../fixtures/inventory-index-as-technician-fixture');
+var FIXTURE = require('../fixtures/inventory-index-as-technician-fixture');
 
 describe('Inventory Index', function () {
 
     this.timeout(6000);
 
     beforeEach(function(done){
-        HELPER.logIn(done);
+        var technicianCredentials = FIXTURE.loggedUserCredentials;
+        HELPER.logInAsTech(done, technicianCredentials);
     });
 
     it('displays the available inventory items', function (done) {
