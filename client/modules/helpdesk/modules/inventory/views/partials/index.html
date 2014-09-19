@@ -70,19 +70,19 @@
             <div class="col-md-12">
               <div class="form-group">
                 <label for="item.disabled.why" class="control-label">{{ 'INVENTORY.DISABLE.WHY' | translate }}</label>
-                <input class="form-control" id="item.disabled.why" placeholder="{{ 'INVENTORY.DISABLE.WHEN' | translate }}" name="item.disabled.why" ng-model="item.disabled.why">
+                <input class="form-control" id="item.disabled.why" placeholder="{{ 'INVENTORY.DISABLE.WHEN' | translate }}" name="item.disabled.why" ng-model="item.disabled.why" required>
               </div>
             </div>
             <div class="col-md-12">
               <div class="form-group">
                 <label for="item.disabled.when" class="control-label">{{ 'INVENTORY.DISABLE.WHEN' | translate }}</label>
-                <input type="date" class="form-control" id="item.disabled.when" placeholder="{{ 'INVENTORY.DISABLE.WHEN' | translate }}" name="item.disabled.when" ng-model="item.disabled.when">
+                <input type="date" class="form-control" id="item.disabled.when" placeholder="{{ 'INVENTORY.DISABLE.WHEN' | translate }}" name="item.disabled.when" ng-model="item.disabled.when" required>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-primary" ng-click="ok()" ng-disabled="uncompleteData()" >OK</button>
             <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>
     </script>

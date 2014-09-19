@@ -118,8 +118,6 @@ inventoryControllers.controller('IndexCtrl', function ($scope, $modal, inventory
     });
 
     modalInstance.result.then(function (selectedItem) {
-      console.log(selectedItem);
-      // $scope.disableItem(selectedItem);
       selectedItem.$update(
         function(item){
           messengerService.popMessage('success', 'Item disabled successfuly.');
@@ -132,7 +130,6 @@ inventoryControllers.controller('IndexCtrl', function ($scope, $modal, inventory
         }
       );
     }, function () {
-      console.log('Modal dismissed at: ' + new Date());
     });
   };
 
@@ -149,6 +146,11 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
   };
+
+  $scope.uncompleteData = function(){
+    return !$scope.item.disabled || !$scope.item.disabled.why || !$scope.item.disabled.when;
+  };
+
 };
 
 inventoryControllers.controller('CreateCtrl', function ($scope, $location, inventoryService, messengerService, InventoryItem) {
