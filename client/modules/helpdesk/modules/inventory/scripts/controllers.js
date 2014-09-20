@@ -175,6 +175,9 @@ inventoryControllers.controller('CreateInventoryCtrl', function ($scope, $locati
   $scope.data.location = "";
   $scope.data.description = "";
   $scope.data.price = "";
+  $scope.data.custom = {};
+  $scope.data.custom.type = "Pc";
+  $scope.data.custom.cd = "Yes";
 
   $scope.create = function(form) {
     var inventoryData = JSON.parse(JSON.stringify($scope.data));
@@ -186,6 +189,10 @@ inventoryControllers.controller('CreateInventoryCtrl', function ($scope, $locati
     }, function(error){
       messengerService.popMessage('error', 'Inventory Item not created.', error.status + ' - ' + error.statusText);
     });
+  };
+
+  $scope.pcSelected = function(){
+    return $scope.data.kind.selected && $scope.data.kind.selected.name == 'PC';
   };
 
 });

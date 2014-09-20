@@ -42,6 +42,9 @@ var InventorySchema = new Schema({
   disabled: {
     type: Object
   },
+  custom: {
+    type: Object
+  },
   schoolId: {
     type: String,
     required: true

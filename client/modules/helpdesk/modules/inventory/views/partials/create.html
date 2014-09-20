@@ -8,105 +8,160 @@
 
   <div class="panel-body" style="padding-top:40px">
       <form class="form" name="form" ng-submit="create(form)">
+        <section id="item-common-data">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="serial" class="control-label">{{ 'INVENTORY.SERIAL' | translate }}</label>
+                <input class="form-control" id="serial" placeholder="{{ 'INVENTORY.SERIAL' | translate }}" name="serial" ng-model="data.serial" required />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="internalId" class="control-label">{{ 'INVENTORY.INTERNAL_ID' | translate }}</label>
+                <input class="form-control" id="internalId" placeholder="{{ 'INVENTORY.INTERNAL_ID' | translate }}" name="internalId" ng-model="data.internalId" />
+              </div>
+            </div>
+          </div>
 
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="serial" class="control-label">{{ 'INVENTORY.SERIAL' | translate }}</label>
-              <input class="form-control" id="serial" placeholder="{{ 'INVENTORY.SERIAL' | translate }}" name="serial" ng-model="data.serial" required />
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="acquisitionDate" class="control-label">{{ 'INVENTORY.ACQUISITION_DATE' | translate }}</label>
+                <input type="date" class="form-control" id="acquisitionDate" placeholder="{{ 'INVENTORY.ACQUISITION_DATE' | translate }}" name="acquisitionDate" ng-model="data.acquisitionDate" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="guaranteeExpirationDate" class="control-label">{{ 'INVENTORY.GUARANTEE_EXPIRATION_DATE' | translate }}</label>
+                <input type="date" class="form-control" id="guaranteeExpirationDate" placeholder="{{ 'INVENTORY.GUARANTEE_EXPIRATION_DATE' | translate }}" name="guaranteeExpirationDate" ng-model="data.guaranteeExpirationDate" />
+              </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="internalId" class="control-label">{{ 'INVENTORY.INTERNAL_ID' | translate }}</label>
-              <input class="form-control" id="internalId" placeholder="{{ 'INVENTORY.INTERNAL_ID' | translate }}" name="internalId" ng-model="data.internalId" />
-            </div>
-          </div>
-        </div>
 
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="acquisitionDate" class="control-label">{{ 'INVENTORY.ACQUISITION_DATE' | translate }}</label>
-              <input type="date" class="form-control" id="acquisitionDate" placeholder="{{ 'INVENTORY.ACQUISITION_DATE' | translate }}" name="acquisitionDate" ng-model="data.acquisitionDate" />
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="manufacturer" class="control-label">{{ 'INVENTORY.MANUFACTURER' | translate }}</label>
+                <input class="form-control" id="manufacturer" placeholder="{{ 'INVENTORY.MANUFACTURER' | translate }}" name="manufacturer" ng-model="data.manufacturer" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="model" class="control-label">{{ 'INVENTORY.MODEL' | translate }}</label>
+                <input class="form-control" id="model" placeholder="{{ 'INVENTORY.MODEL' | translate }}" name="model" ng-model="data.model" />
+              </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="guaranteeExpirationDate" class="control-label">{{ 'INVENTORY.GUARANTEE_EXPIRATION_DATE' | translate }}</label>
-              <input type="date" class="form-control" id="guaranteeExpirationDate" placeholder="{{ 'INVENTORY.GUARANTEE_EXPIRATION_DATE' | translate }}" name="guaranteeExpirationDate" ng-model="data.guaranteeExpirationDate" />
-            </div>
-          </div>
-        </div>
 
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="manufacturer" class="control-label">{{ 'INVENTORY.MANUFACTURER' | translate }}</label>
-              <input class="form-control" id="manufacturer" placeholder="{{ 'INVENTORY.MANUFACTURER' | translate }}" name="manufacturer" ng-model="data.manufacturer" />
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="location" class="control-label">{{ 'INVENTORY.LOCATION' | translate }}</label>
+                <input class="form-control" id="location" placeholder="{{ 'INVENTORY.LOCATION' | translate }}" name="location" ng-model="data.location" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="lastInventoryDate" class="control-label">{{ 'INVENTORY.LAST_INVENTORY_DATE' | translate }}</label>
+                <input type="date" class="form-control" id="lastInventoryDate" placeholder="{{ 'INVENTORY.LAST_INVENTORY_DATE' | translate }}" name="lastInventoryDate" ng-model="data.lastInventoryDate" />
+              </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="model" class="control-label">{{ 'INVENTORY.MODEL' | translate }}</label>
-              <input class="form-control" id="model" placeholder="{{ 'INVENTORY.MODEL' | translate }}" name="model" ng-model="data.model" />
-            </div>
-          </div>
-        </div>
 
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="location" class="control-label">{{ 'INVENTORY.LOCATION' | translate }}</label>
-              <input class="form-control" id="location" placeholder="{{ 'INVENTORY.LOCATION' | translate }}" name="location" ng-model="data.location" />
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="description" class="control-label">{{ 'INVENTORY.DESCRIPTION' | translate }}</label>
+                <textarea class="form-control" id="description" placeholder="{{ 'INVENTORY.DESCRIPTION' | translate }}" name="description" ng-model="data.description" ng-required="data.kind.selected.name == 'OTHER'"></textarea>
+              </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="lastInventoryDate" class="control-label">{{ 'INVENTORY.LAST_INVENTORY_DATE' | translate }}</label>
-              <input type="date" class="form-control" id="lastInventoryDate" placeholder="{{ 'INVENTORY.LAST_INVENTORY_DATE' | translate }}" name="lastInventoryDate" ng-model="data.lastInventoryDate" />
-            </div>
-          </div>
-        </div>
 
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <label for="description" class="control-label">{{ 'INVENTORY.DESCRIPTION' | translate }}</label>
-              <textarea class="form-control" id="description" placeholder="{{ 'INVENTORY.DESCRIPTION' | translate }}" name="description" ng-model="data.description" ng-required="data.kind.selected.name == 'OTHER'"></textarea>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="price" class="control-label">{{ 'INVENTORY.PRICE' | translate }}</label>
+                <input class="form-control" id="price" placeholder="{{ 'INVENTORY.PRICE' | translate }}" name="price" ng-model="data.price" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="kind" class="control-label">{{ 'INVENTORY.KIND' | translate }}</label>
+                <ui-select ng-model="data.kind.selected" theme="selectize" required>
+                  <ui-select-match placeholder="Select a kind...">{{$select.selected.name}}
+                  </ui-select-match>
+                  <ui-select-choices repeat="item in kinds">
+                    <div ng-bind-html="item.name" class="role-select" popover="{{item.name}}" popover-trigger="mouseenter"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
             </div>
           </div>
-        </div>
+      </section>
+        <section id="pc-data" ng-if="pcSelected()">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="processor" class="control-label">{{ 'INVENTORY.PROCESSOR' | translate }}</label>
+                <input class="form-control" id="processor" placeholder="{{ 'INVENTORY.PROCESSOR' | translate }}" name="processor" ng-model="data.custom.processor" required />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="ram" class="control-label">{{ 'INVENTORY.RAM' | translate }}</label>
+                <input class="form-control" id="ram" placeholder="{{ 'INVENTORY.RAM' | translate }}" name="ram" ng-model="data.custom.ram" />
+              </div>
+            </div>
+          </div>
 
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="price" class="control-label">{{ 'INVENTORY.PRICE' | translate }}</label>
-              <input class="form-control" id="price" placeholder="{{ 'INVENTORY.PRICE' | translate }}" name="price" ng-model="data.price" />
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="hd" class="control-label">{{ 'INVENTORY.HD' | translate }}</label>
+                <input class="form-control" id="hd" placeholder="{{ 'INVENTORY.HD' | translate }}" name="hd" ng-model="data.custom.hd" required />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="video" class="control-label">{{ 'INVENTORY.VIDEO' | translate }}</label>
+                <input class="form-control" id="video" placeholder="{{ 'INVENTORY.VIDEO' | translate }}" name="video" ng-model="data.custom.video" />
+              </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="kind" class="control-label">{{ 'INVENTORY.KIND' | translate }}</label>
-              <ui-select ng-model="data.kind.selected" theme="selectize" required>
-                <ui-select-match placeholder="Select a kind...">{{$select.selected.name}}
-                </ui-select-match>
-                <ui-select-choices repeat="item in kinds">
-                  <div ng-bind-html="item.name" class="role-select" popover="{{item.name}}" popover-trigger="mouseenter"></div>
-                </ui-select-choices>
-              </ui-select>
-            </div>
-          </div>
-        </div>
 
-        <div class="row">
-          <div class="col-md-12">
-            <div class="modal-footer">
-              <button class="btn btn-warning" ng-click="cancelOperation()">Cancel</button>
-               <input ng-disabled="form.$invalid" class="btn btn-success" value="Create" type="submit" ngClick="Submit">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="cd" class="radio control-label" style="padding-left: 0px">{{ 'INVENTORY.CD' | translate }}</label>
+                <section class="btn-group" name="cd">
+                  <label class="btn btn-default" ng-model="data.custom.cd" btn-radio="'Yes'">Yes</label>
+                  <label class="btn btn-default" ng-model="data.custom.cd" btn-radio="'No'">No</label>
+                </section>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="type" class="radio control-label" style="padding-left: 0px">{{ 'INVENTORY.TYPE' | translate }}</label>
+                <div class="btn-group" name="type">
+                  <label class="btn btn-default" ng-model="data.custom.type" btn-radio="'Pc'">Pc</label>
+                  <label class="btn btn-default" ng-model="data.custom.type" btn-radio="'Laptop'">Laptop</label>
+                  <label class="btn btn-default" ng-model="data.custom.type" btn-radio="'Server'">Server</label>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+      </section>
+      <section>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="modal-footer">
+                <button class="btn btn-warning" ng-click="cancelOperation()">Cancel</button>
+                 <input ng-disabled="form.$invalid" class="btn btn-success" value="Create" type="submit" ngClick="Submit">
+              </div>
+            </div>
+          </div>
+      </section>
       </form>
   </div> 
 
