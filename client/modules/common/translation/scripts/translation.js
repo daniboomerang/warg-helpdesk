@@ -29,6 +29,12 @@ var translation = angular.module('translation',
   'INVENTORY.DESCRIPTION': 'Description',
   'INVENTORY.LOCATION': 'Location',
   'INVENTORY.PRICE': 'Price',
+  'INVENTORY.TYPE': 'Type',
+  'INVENTORY.PROCESSOR': 'Processor',
+  'INVENTORY.RAM': 'Ram',
+  'INVENTORY.HD': 'Hd',
+  'INVENTORY.CD': 'Cd',
+  'INVENTORY.VIDEO': 'Video',
 })
 .constant('translations_es', {
   // Global
