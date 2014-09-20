@@ -2,13 +2,13 @@
     <div id="incidence-nav-container" ng-controller="IncidenceNavCtrl">          
         <div class="row">
             <div class="col-md-2" style="padding: 10px; padding-left: 25px;">
-                <div class="text-muted">Incidence: <strong> {{incidence.id}} </strong></div>
+                <div >Incidence: <strong> {{incidence.id}} </strong></div>
                 <div class="text-muted frame-status-incidence" ng-class="{open: incidence.status.currentStatus == 'Open', ongoing: incidence.status.currentStatus == 'On Going', closed: incidence.status.currentStatus == 'Closed'}"> <strong> <span>{{incidence.status.currentStatus}}</span><span ng-show="incidence.status.currentStatus == 'Closed'"> as {{incidence.status.currentSubstatus}}</span> </strong></div>
-                <div ng-show="incidence.status.currentStatus == 'Closed' && incidence.status.currentSubstatus == 'Duplicated'" class="text-muted">Duplicated Of: <a ng-click="goToIncidence(incidence.status.duplicatedOf)"><strong> {{incidence.status.duplicatedOf}} </strong></a></div>
-                <div class="text-muted"> Owner: <strong> {{ incidence.creator.username}} </strong></div>
-                <div class="text-muted"> Opened on: {{incidence.created | date:'shortDate'}}</div>
-                <div class="text-muted"> Severity: <strong>  {{incidence.severity}} </strong></div>
-                <div class="text-muted"> Priority: <strong> {{incidence.priority}} </strong></div>
+                <div ng-show="incidence.status.currentStatus == 'Closed' && incidence.status.currentSubstatus == 'Duplicated'" >Duplicated Of: <a ng-click="goToIncidence(incidence.status.duplicatedOf)"><strong> {{incidence.status.duplicatedOf}} </strong></a></div>
+                <div > Owner: <strong> {{ incidence.creator.username}} </strong></div>
+                <div > Opened on: {{incidence.created | date:'shortDate'}}</div>
+                <div > Severity: <strong>  {{incidence.severity}} </strong></div>
+                <div > Priority: <strong> {{incidence.priority}} </strong></div>
             </div>
             <div class="col-md-7" style="padding-left: 80px; padding-right: 60px;">
                 <div class="row">
@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <div id="frame-incidence-title" class="text-muted" style="word-wrap: break-word;"><h4>{{incidence.title}}</h4></div>
+    <div id="frame-incidence-title" style="word-wrap: break-word;"><h4>{{incidence.title}}</h4></div>
 
 <!--<div class="jumbotron">-->
     <pre>
@@ -54,7 +54,7 @@
     </div>
 
     <accordion close-others="false">
-      <accordion-group ng-repeat="post in incidence.history" is-open="true && commentsStatus.expanded" ng-class="">
+      <accordion-group ng-repeat="post in incidence.history" is-open="$index == 0 || commentsStatus.expanded" ng-class="">
         <accordion-heading>
             <span class="badge alert-info" style="padding:8px;">Posted {{post.date | date:'medium'}}</span>
              <div class="pull-right">

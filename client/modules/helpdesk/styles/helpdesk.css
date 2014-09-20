@@ -21,7 +21,7 @@
     overflow-x: hidden;
     overflow-y: auto;
     border: solid 1px #E0E0E0;
-    background-color: #ebebeb ;
+    background-color: #373838 ;
   }
 }
 
@@ -31,7 +31,7 @@
 
 @media (min-width: 768px) {
   .main {
-    padding-top: 55px;
+     padding-top: 55px;
     padding-right: 15px;
     padding-left: 15px;
   }

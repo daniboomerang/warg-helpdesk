@@ -27,7 +27,7 @@ var incidences = angular.module('incidences',
 		    .state('helpdesk.incidences.create', {
 		        url: '/create',
 		        templateUrl: '/modules/helpdesk/modules/incidences/views/partials/create.html',
-		        controller:'CreateCtrl'
+		        controller:'CreateIncidenceCtrl'
 		    })
 
 		    .state('helpdesk.incidences.open', {

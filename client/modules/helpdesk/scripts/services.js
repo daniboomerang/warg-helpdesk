@@ -17,32 +17,32 @@ helpdeskServices.service('deskMenuStyleService', function(){
 		   		actionsStyle.openList = '/modules/helpdesk/images/icons/list-16.png';
 		   		actionsStyle.statistics = '/modules/helpdesk/images/icons/statistics-16.png';
 		   		moduleStyle.image = {'background-image': 'url(/modules/helpdesk/images/icons/incidence-24.png)'};
-		   		moduleStyle.active = 'enlarged-active-module arrow-box-yellow';
-		   		moduleStyle.color = {'color': '#F4BE6E'};
+		   		moduleStyle.active = 'enlarged-active-module arrow-box-neon';
+		   		moduleStyle.color = {'color': 'black'};//{'color': '#F4BE6E'};
 		   	}	
 		   	if (module == 'Inventory'){
-        actionsStyle.create = '/modules/helpdesk/images/icons/create-16.png';
+        		actionsStyle.create = '/modules/helpdesk/images/icons/create-16.png';
 				actionsStyle.open = '/modules/helpdesk/images/icons/inventory-16.png';
 				actionsStyle.expenses = '/modules/helpdesk/images/icons/coins-16.png';
 				moduleStyle.image = {'background-image': 'url(/modules/helpdesk/images/icons/book-24.png)'};
-		   		moduleStyle.active = 'enlarged-active-module arrow-box-claret';
-		   		moduleStyle.color = {'color': '#B54646'};
+		   		moduleStyle.active = 'enlarged-active-module arrow-box-neon';
+		   		moduleStyle.color = {'color': 'black'};
 		   	}
 		   	if (module == 'Schools'){
 		   		actionsStyle.create = '/modules/helpdesk/images/icons/create-16.png';
 		   		actionsStyle.openCode = '/modules/helpdesk/images/icons/zoom-16.png';
 		   		actionsStyle.openList = '/modules/helpdesk/images/icons/list-16.png';
 				moduleStyle.image = {'background-image': 'url(/modules/helpdesk/images/icons/school-24.png)'};
-		   		moduleStyle.active ='enlarged-active-module arrow-box-purple';
-		   		moduleStyle.color = {'color': '#9572A9'};
+		   		moduleStyle.active ='enlarged-active-module arrow-box-neon';
+		   		moduleStyle.color = {'color': 'black'};
 		   	}
 		   	if (module == 'Accounts'){
 		   		actionsStyle.create = '/modules/helpdesk/images/icons/create-16.png';
 		   		actionsStyle.import = '/modules/helpdesk/images/icons/excel-16.png';
 		   		actionsStyle.openList = '/modules/helpdesk/images/icons/list-16.png';
 				moduleStyle.image = {'background-image': 'url(/modules/helpdesk/images/icons/accounts-24.png)'};
-		   		moduleStyle.active ='enlarged-active-module arrow-box-green';
-		   		moduleStyle.color = {'color': '#2e8b57'};
+		   		moduleStyle.active ='enlarged-active-module arrow-box-neon';
+		   		moduleStyle.color = {'color': 'black'};
 		   	}
 		   	style = {moduleStyle: moduleStyle, actionsStyle: actionsStyle};
 		   	return style;

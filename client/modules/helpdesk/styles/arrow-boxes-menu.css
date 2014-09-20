@@ -1,3 +1,34 @@
+/*/////// YELLOW ////////*/
+
+.arrow-box-neon {
+    position: relative;
+    background: #3DA7FF;
+    border: 1px solid #3DA7FF;
+}
+.arrow-box-neon:after, .arrow-box-neon:before {
+    left: 100%;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.arrow-box-neon:after {
+    border-color: rgba(245, 254, 255, 0);
+    border-left-color: #3DA7FF;
+    border-width: 7px;
+    margin-top: -7px;
+}
+.arrow-box-neon:before {
+    border-color: rgba(194, 225, 245, 0);
+    border-left-color: #3DA7FF;
+    border-width: 13px;
+    margin-top: -13px;
+}
+
 
 /*/////// YELLOW ////////*/
 

@@ -3,14 +3,16 @@
 /**********/
 
 .footer {
-  left:0px;
+  margin-left: 15%;
+  margin-right: 5%;
+  margin-top: 10px;
+  margin-top: 10px;
   bottom:0px;
   width:100%;
   color: #517fa4;
   height: 35px;
   padding-top: 9px;
   text-align: center;
-  padding-left: 7%;
   position: relative;
 }
 .footer p {font-size: 11px;}

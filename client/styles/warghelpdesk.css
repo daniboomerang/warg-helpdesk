@@ -2,11 +2,12 @@
   margin: 0;
   padding: 0;
   height: 100%;
-  background: transparent;
+     background-color: #EDF1F5;
 }
 
 #app{
   min-height:96%;position:relative;
+
 }
 
 
@@ -208,6 +209,16 @@ input.ng-dirty.ng-invalid ~ span.ko, textarea.ng-dirty.ng-invalid ~ span.ko{ col
   background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),linear-gradient(top,#517fa4,#306088);
 }
 
+.solid-blue-dark-bar-fill{
+  background-color: #002632;
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-webkit-gradient(linear,left top,left bottom,from(#002632),to(#144C5E));
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-webkit-linear-gradient(top,#002632,#144C5E);
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-moz-linear-gradient(top,#002632,#144C5E);
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-o-linear-gradient(top,#002632,#144C5E);
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-ms-linear-gradient(top,#002632,#144C5E);
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),linear-gradient(top,#002632,#144C5E);
+}
+
 .solid-purple-bar-fill{
   background-color: #9572A9;
   background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-webkit-gradient(linear,left top,left bottom,from(#9572A9),to(#72458C));
@@ -257,3 +268,15 @@ input.ng-dirty.ng-invalid ~ span.ko, textarea.ng-dirty.ng-invalid ~ span.ko{ col
   background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-ms-linear-gradient(top,#D9D9D9,#B5B5B5);
   background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),linear-gradient(top,#D9D9D9,#B5B5B5);
 }
+
+.solid-bone-bar-fill{
+  background-color: #EDEDED;
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-webkit-gradient(linear,left top,left bottom,from(#EDEDED),to(#F7F7F7));
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-webkit-linear-gradient(top,#EDEDED,#F7F7F7);
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-moz-linear-gradient(top,#EDEDED,#F7F7F7);
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-o-linear-gradient(top,#EDEDED,#F7F7F7);
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-ms-linear-gradient(top,#EDEDED,#F7F7F7);
+  background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),linear-gradient(top,#EDEDED,#F7F7F7);
+}
+
+EDEDED

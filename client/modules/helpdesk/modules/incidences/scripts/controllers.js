@@ -157,7 +157,7 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
 
 });
 
-incidencesControllers.controller('CreateCtrl', function ($scope, $rootScope, $modal, $state, schoolResourceService, LocationService){
+incidencesControllers.controller('CreateIncidenceCtrl', function ($scope, $rootScope, $modal, $state, schoolResourceService, LocationService){
 
   init();
 

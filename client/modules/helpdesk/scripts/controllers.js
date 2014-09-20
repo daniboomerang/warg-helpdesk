@@ -133,7 +133,7 @@ helpdeskControllers.controller('MessengerCtrl', function ($scope, toaster, $wind
   init();
   function init() {
     $scope.$on(messengerService.subscribe(), function(event, message) {
-      toaster.pop(message.type, message.title, message.text, 5000);
+      toaster.pop(message.type, message.title, message.text, 1300);
     });    
   }
 });

@@ -31,7 +31,7 @@ inventory.config(function($stateProvider, $urlRouterProvider) {
 	    .state('helpdesk.inventory.create', {
 	        url: '/create',
 	        templateUrl: '/modules/helpdesk/modules/inventory/views/partials/create.html',
-	       	controller: 'CreateCtrl'
+	       	controller: 'CreateInventoryCtrl'
 	    })
 	    .state('helpdesk.inventory.expenses', {
 	        url: '/expenses',
