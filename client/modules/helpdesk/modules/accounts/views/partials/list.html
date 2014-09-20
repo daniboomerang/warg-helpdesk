@@ -1,7 +1,7 @@
 <section ng-init="find()">
 	<div class="row-fluid">	
-	  	<div class="list-accounts-container col-md-7">
-		    <table tr-ng-grid="" items="accounts" selected-items="selectedAccounts" enable-sorting="false">
+	  	<div class="list-accounts solid-blue-bar-fill col-md-7">
+		    <table tr-ng-grid="" items="accounts" selected-items="selectedAccounts" enable-sorting="false" style="background-color:white;">
 			    <thead>
 			        <tr>
 			            <th field-name="username" cell-width="4em">Username</th>
@@ -9,10 +9,16 @@
 			            <th field-name="email" cell-width="4em">Email</th>
 			            <th field-name="role" cell-width="3em">Role</th>
 			            <th field-name="membership" cell-width="10em">Memebership</th>
+			            <th field-name="open" enable-filtering="false" cell-width="2em"><div> &nbsp;</div></th>
 			        </tr>
 			    </thead>
 	            <tbody>
-	                <tr style="text-align: center;">
+	                <tr>
+	                	<td field-name="username">                		
+                			<span class="frame-list-cell">
+                				{{gridItem.username}}
+                			</span>
+						</td>
 	                	<td field-name="school">                		
                 			<span class="frame-list-cell">
                 				{{gridItem.school.code}}
@@ -23,7 +29,7 @@
                     		{{gridItem.membership | date:'longDate'}}
                     		</span>
 						</td>
-	                    <td>
+	                    <td field-name="open">
 	                        <div>  
 	                            <button class="btn btn-xs btn-success" ng-click="openAccount(gridItem._id)">{{ 'BUTTON.OPEN' | translate }}
 	                            </button>
