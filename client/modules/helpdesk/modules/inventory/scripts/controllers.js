@@ -153,7 +153,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
 };
 
-inventoryControllers.controller('CreateCtrl', function ($scope, $location, inventoryService, messengerService, InventoryItem) {
+inventoryControllers.controller('CreateInventoryCtrl', function ($scope, $location, inventoryService, messengerService, InventoryItem) {
   $scope.kinds = [
     { name: 'PC' }, 
     { name: 'PRINTER' }, 
