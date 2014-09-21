@@ -35,6 +35,9 @@ var translation = angular.module('translation',
   'INVENTORY.HD': 'Hd',
   'INVENTORY.CD': 'Cd',
   'INVENTORY.VIDEO': 'Video',
+  'INVENTORY.USB': 'Usb',
+  'INVENTORY.CONNECTOR': 'Connector',
+  'INVENTORY.SIZE': 'Size',
 })
 .constant('translations_es', {
   // Global

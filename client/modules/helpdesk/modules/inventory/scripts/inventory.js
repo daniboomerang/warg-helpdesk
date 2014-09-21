@@ -33,6 +33,30 @@ inventory.config(function($stateProvider, $urlRouterProvider) {
 	        templateUrl: '/modules/helpdesk/modules/inventory/views/partials/create.html',
 	       	controller: 'CreateInventoryCtrl'
 	    })
+	    .state('helpdesk.inventory.create.PC', {
+	        url: '/PC',
+	        templateUrl: '/modules/helpdesk/modules/inventory/views/partials/pcCustomFields.html',
+	    })
+	    .state('helpdesk.inventory.create.PRINTER', {
+	        url: '/PRINTER',
+	        templateUrl: '/modules/helpdesk/modules/inventory/views/partials/printerCustomFields.html',
+	    })
+	    .state('helpdesk.inventory.create.MONITOR', {
+	        url: '/MONITOR',
+	        templateUrl: '/modules/helpdesk/modules/inventory/views/partials/monitorCustomFields.html',
+	    })
+	    .state('helpdesk.inventory.create.MOUSE', {
+	        url: '/MOUSE',
+	        templateUrl: '/modules/helpdesk/modules/inventory/views/partials/mouseCustomFields.html',
+	    })
+	    .state('helpdesk.inventory.create.KEYBOARD', {
+	        url: '/KEYBOARD',
+	        templateUrl: '/modules/helpdesk/modules/inventory/views/partials/keyboardCustomFields.html',
+	    })
+	    .state('helpdesk.inventory.create.OTHER', {
+	        url: '/OTHER',
+	        templateUrl: '/modules/helpdesk/modules/inventory/views/partials/otherCustomFields.html',
+	    })
 	    .state('helpdesk.inventory.expenses', {
 	        url: '/expenses',
 	        templateUrl: '/modules/helpdesk/modules/inventory/views/partials/expenses.html',

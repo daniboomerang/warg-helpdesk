@@ -92,65 +92,14 @@
                   <ui-select-match placeholder="Select a kind...">{{$select.selected.name}}
                   </ui-select-match>
                   <ui-select-choices repeat="item in kinds">
-                    <div ng-bind-html="item.name" class="role-select" popover="{{item.name}}" popover-trigger="mouseenter"></div>
+                    <div ui-sref=".{{ item.name }}" ng-bind-html="item.name" class="role-select" popover="{{item.name}}" popover-trigger="mouseenter"></div>
                   </ui-select-choices>
                 </ui-select>
               </div>
             </div>
           </div>
       </section>
-        <section id="pc-data" ng-if="pcSelected()">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="processor" class="control-label">{{ 'INVENTORY.PROCESSOR' | translate }}</label>
-                <input class="form-control" id="processor" placeholder="{{ 'INVENTORY.PROCESSOR' | translate }}" name="processor" ng-model="data.custom.processor" required />
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="ram" class="control-label">{{ 'INVENTORY.RAM' | translate }}</label>
-                <input class="form-control" id="ram" placeholder="{{ 'INVENTORY.RAM' | translate }}" name="ram" ng-model="data.custom.ram" />
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="hd" class="control-label">{{ 'INVENTORY.HD' | translate }}</label>
-                <input class="form-control" id="hd" placeholder="{{ 'INVENTORY.HD' | translate }}" name="hd" ng-model="data.custom.hd" required />
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="video" class="control-label">{{ 'INVENTORY.VIDEO' | translate }}</label>
-                <input class="form-control" id="video" placeholder="{{ 'INVENTORY.VIDEO' | translate }}" name="video" ng-model="data.custom.video" />
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="cd" class="radio control-label" style="padding-left: 0px">{{ 'INVENTORY.CD' | translate }}</label>
-                <section class="btn-group" name="cd">
-                  <label class="btn btn-default" ng-model="data.custom.cd" btn-radio="'Yes'">Yes</label>
-                  <label class="btn btn-default" ng-model="data.custom.cd" btn-radio="'No'">No</label>
-                </section>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="type" class="radio control-label" style="padding-left: 0px">{{ 'INVENTORY.TYPE' | translate }}</label>
-                <div class="btn-group" name="type">
-                  <label class="btn btn-default" ng-model="data.custom.type" btn-radio="'Pc'">Pc</label>
-                  <label class="btn btn-default" ng-model="data.custom.type" btn-radio="'Laptop'">Laptop</label>
-                  <label class="btn btn-default" ng-model="data.custom.type" btn-radio="'Server'">Server</label>
-                </div>
-              </div>
-            </div>
-          </div>
+      <section id="item-custom-data" ui-view>
       </section>
       <section>
           <div class="row">

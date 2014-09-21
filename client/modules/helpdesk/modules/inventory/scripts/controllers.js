@@ -153,7 +153,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
 };
 
-inventoryControllers.controller('CreateInventoryCtrl', function ($scope, $location, inventoryService, messengerService, InventoryItem) {
+inventoryControllers.controller('CreateInventoryCtrl', function ($scope, $location, inventoryService, messengerService, InventoryItem, InventoryItemCustomData) {
   $scope.kinds = [
     { name: 'PC' }, 
     { name: 'PRINTER' }, 
@@ -175,13 +175,13 @@ inventoryControllers.controller('CreateInventoryCtrl', function ($scope, $locati
   $scope.data.location = "";
   $scope.data.description = "";
   $scope.data.price = "";
+
   $scope.data.custom = {};
-  $scope.data.custom.type = "Pc";
-  $scope.data.custom.cd = "Yes";
 
   $scope.create = function(form) {
     var inventoryData = JSON.parse(JSON.stringify($scope.data));
     inventoryData.kind = $scope.data.kind.selected.name;
+    inventoryData = InventoryItemCustomData.clean(inventoryData);
     var inventoryItem = new InventoryItem(inventoryData);
     inventoryItem.$save(function(inventoryItem){
       $location.path("helpdesk/inventory/index");
@@ -196,6 +196,3 @@ inventoryControllers.controller('CreateInventoryCtrl', function ($scope, $locati
   };
 
 });
-
-
-

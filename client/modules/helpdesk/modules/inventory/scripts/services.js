@@ -60,3 +60,25 @@ inventoryServices.factory('InventoryItem', function ($resource) {
     }
   });
 });
+
+inventoryServices.factory('InventoryItemCustomData', function () {
+  var customFields = {
+    'PRINTER': [],
+    'MONITOR': ['size', 'connector'],
+    'KEYBOARD': ['usb'],
+    'MOUSE': ['usb'],
+    'PC': ['processor', 'ram', 'hd', 'video', 'cd', 'type'],
+  };
+
+  return {
+    clean: function(fields){
+      Object.getOwnPropertyNames(fields.custom).forEach(function(customProp){
+        if (customFields[fields.kind].indexOf(customProp) < 0){
+          delete fields.custom[customProp];
+        }
+      });
+      return fields;
+    }
+  };
+
+});
