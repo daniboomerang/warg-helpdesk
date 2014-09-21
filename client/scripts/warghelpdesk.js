@@ -15,6 +15,7 @@ angular.module('wargHelpdeskApp', [
   'trNgGrid',
   'toaster',
   'angularCharts',
+  'googlechart',
   // WARG HELPDESK
   'wargHelpdeskDirectives',
   'wargHelpdeskFilters',

@@ -56,10 +56,4 @@ var incidences = angular.module('incidences',
 			        templateUrl: '/modules/helpdesk/modules/incidences/views/partials/incidence.html',
 			        controller: 'IncidenceCtrl'
 			    })
-			    
-	      	.state('helpdesk.incidences.statistics', {
-		        url: '/statistics',
-		        templateUrl: '/modules/helpdesk/modules/incidences/views/partials/report-statistics.html',
-				controller: 'IncidencesStatisticsCtrl'
-		    })
 })

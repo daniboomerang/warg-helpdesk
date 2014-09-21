@@ -16,5 +16,7 @@
 /****** LIST *******/
 
 .list-schools{
-	padding:1px;
+	padding:0px;
+	background-color: white;
+	border: solid #517fa4 1px;
 }

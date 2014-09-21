@@ -710,36 +710,3 @@ incidencesControllers.controller('CloseCtrl', function ($scope, $modal, $log) {
     };
   };  
 });
-
-incidencesControllers.controller('IncidencesStatisticsCtrl', function($scope){
- 
-  $scope.chartType = 'pie';
-
-    $scope.statisticsConfig = {
-      labels: false,
-      title : "HTML-enabled legend",
-      legend : {
-        display:true,
-        htmlEnabled: true,
-        position:'right'
-      },
-      lineLegend: 'traditional'
-    }
-
-   $scope.statisticsData = {
-      series: ['<em>500</em> Keyboards', '<em>105</em> Laptops', '<em>100</em> TVs'],
-      data : [{
-        x : "Sales",
-        y: [100, 500, 0],
-        tooltip:"this is tooltip"
-      },
-      {
-        x : "Income",
-        y: [300, 100, 100]
-      },
-      {
-        x : "Expense",
-        y: [351, 50, 25]
-      }]
-    }   
-});

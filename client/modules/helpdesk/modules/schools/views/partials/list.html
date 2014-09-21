@@ -1,12 +1,12 @@
 <section ng-init="find()">
 	<div class="row-fluid" ng-show="schools.length > 0">	
-	  	<div class="col-md-7 list-schools solid-blue-bar-fill">
+	  	<div class="col-md-7 list-schools shadow-form-container ">
 		    <table tr-ng-grid="" items="schools" selected-items="selectedSchools" 
-		    selection-mode="None" enable-sorting="false" style="background-color:white;">
+		    selection-mode="None" enable-sorting="false">
 			    <thead>
 			        <tr>
-			            <th field-name="code" cell-width="6em">Code</th>  
-			            <th field-name="name" cell-width="6em">Name</th>
+			            <th field-name="code" cell-width="4em">Code</th>  
+			            <th field-name="name" cell-width="2em">Name</th>
 			            <th field-name="address" cell-width="70em">Address</th>
 			            <th field-name="open" enable-filtering="false" cell-width="2em"><div> &nbsp;</div></th>		
 			        </tr>

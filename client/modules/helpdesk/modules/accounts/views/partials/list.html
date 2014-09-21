@@ -1,15 +1,15 @@
 <section ng-init="find()">
 	<div class="row-fluid">	
-	  	<div class="list-accounts solid-blue-bar-fill col-md-7">
-		    <table tr-ng-grid="" items="accounts" selected-items="selectedAccounts" enable-sorting="false" style="background-color:white;">
+	  	<div class="list-accounts shadow-form-container col-md-7">
+		    <table tr-ng-grid="" items="accounts" selected-items="selectedAccounts" enable-sorting="false" >
 			    <thead>
 			        <tr>
-			            <th field-name="username" cell-width="4em">Username</th>
-			            <th field-name="school" cell-width="1em">School</th>
-			            <th field-name="email" cell-width="4em">Email</th>
+			            <th field-name="username" >Username</th>
+			            <th field-name="school" cell-width="2em">School</th>
+			            <th field-name="email" >Email</th>
 			            <th field-name="role" cell-width="3em">Role</th>
-			            <th field-name="membership" cell-width="10em">Memebership</th>
-			            <th field-name="open" enable-filtering="false" cell-width="2em"><div> &nbsp;</div></th>
+			            <th field-name="membership" >Memebership</th>
+			            <th field-name="open" enable-filtering="false" ><div> &nbsp;</div></th>
 			        </tr>
 			    </thead>
 	            <tbody>

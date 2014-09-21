@@ -15,7 +15,7 @@ helpdeskServices.service('deskMenuStyleService', function(){
 		   		actionsStyle.create = '/modules/helpdesk/images/icons/create-16.png';
 		   		actionsStyle.openId = '/modules/helpdesk/images/icons/zoom-16.png';
 		   		actionsStyle.openList = '/modules/helpdesk/images/icons/list-16.png';
-		   		actionsStyle.statistics = '/modules/helpdesk/images/icons/statistics-16.png';
+		   		actionsStyle.report = '/modules/helpdesk/images/icons/statistics-16.png';
 		   		moduleStyle.image = {'background-image': 'url(/modules/helpdesk/images/icons/incidence-24.png)'};
 		   		moduleStyle.active = 'enlarged-active-module arrow-box-neon';
 		   		moduleStyle.color = {'color': 'black'};//{'color': '#F4BE6E'};
@@ -64,8 +64,8 @@ helpdeskServices.service('helpdeskConfigService', function ($q, $http, menu, des
 					actions.push({title: 'List', state: 'helpdesk.incidences.open.list', style: actionsStyle.openList});
 				else if (actionsOnIncidences[i] == 'find')
 					actions.push({title: 'Id Search', state: 'helpdesk.incidences.open', style: actionsStyle.openId});	
-				else if (actionsOnIncidences[i] == 'reporting')
-					actions.push({title: 'Statistics', state: 'helpdesk.incidences.statistics', style: actionsStyle.statistics});
+				else if (actionsOnIncidences[i] == 'report')
+					actions.push({title: 'Report', state: 'helpdesk.reports.incidences', style: actionsStyle.report});
 			}		
 		}
         var menu = {name: 'Incidences', actions: actions, style: style.moduleStyle};

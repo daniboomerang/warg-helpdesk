@@ -46,12 +46,11 @@
 	border: 1px solid #62b5f5;
 }
 
-.list-container{
-	position:relative;top:0;left:0;right:0;bottom:0;
-	padding-bottom:0px;
-	padding:1px;
-	
-
+.list-incidences{
+	padding:0px;
+	padding-right: 0px;
+	background-color: white;
+	border: solid #517fa4 1px;
 }
 
 /****** INCIDENCE *******/

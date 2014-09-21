@@ -21,7 +21,7 @@ exports.getUserModules = function (role) {
       return ['create', 'find', 'list'];
     }  
     else if (role === ROLE_ADMIN){
-      return ['create', 'find', 'list', 'reporting'];
+      return ['create', 'find', 'list', 'report'];
     }  
   }
 

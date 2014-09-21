@@ -1,0 +1,181 @@
+<div>
+	<h1>General Incidences Dashboard Report</h1>
+</div>
+
+<div id="total" class="row solid-blue-dark-bar-fill" style="margin-top:15px; padding-left: 8px; 	padding-right: 8px; padding-bottom: 15px;">
+	<div class="row" style="margin-top:15px;">
+		<div class="col-md-12">
+			<div class="reports-title">
+				<div class="row" style="text-align: center;">
+					<span class="col-md-2" style="border-right: solid gray 1px;"><h3>TOTALS</h3></span>
+					<span class="col-md-3" style="border-right: solid gray 1px; margin-left: 15px;"><h4>Total Schools: {{totalInstitutions}}</h4></span>
+					<span class="col-md-3" style="border-right: solid gray 1px; margin-left: 15px;">
+						<div class="row">
+							<span><h4>Total Users: {{totalAccounts}}</h4>
+							({{totalTecnicians}} techs - {{totalAccounts}} users)<span>
+						</div>
+					</span>
+					<span class="col-md-3" style="margin-left: 15px;">
+						<div class="row">
+							<span><h4>Total Incidences: {{totalIncidences}}</h4>
+								({{totalOpen}} Open - {{totalOnGoing}} On Going - {{totalClosed}} Closed)
+							<span>
+						</div>
+					</span>	
+				</div>
+			</div>
+			<div class="list-incidences-reports ">
+			    <table tr-ng-grid="" items="totalsReport" enable-sorting="false">
+				    <thead>
+				        <tr>
+							<th field-name="institution" display-align="center"></th>
+					        <th field-name="totalAccounts" display-align="center"></th>
+					        <th field-name="usersAccounts" display-align="center"></th>
+					        <th field-name="techniciansAccounts" display-align="center" display-name="Techs Accounts"></th>
+					        <th field-name="numberOpenIncidences" display-align="center" display-name="Open Inc"></th>
+					        <th field-name="numberOnGoingIncidences" display-align="center" display-name="On Going Inc"></th>
+					        <th field-name="numberClosedIncidences" display-align="center" display-name="Closed Inc"></th>
+					        <th field-name="incidencesPerUser" display-name="Inc / user" display-align="center"></th>
+					        <th field-name="numberIncidences" display-align="center" display-name="Total Inc"></th>			      
+				        </tr>
+				    </thead>
+			        <tbody>
+						<tr>
+			                <td field-name="incidencesPerUser">
+			                    <div>  
+			                       {{ gridItem.incidencesPerUser | number:2 }}
+			                    </div>
+			                </td>
+			            </tr>
+			        </tbody>
+			        <tfoot>
+			            <tr>
+			                <td colspan="10">	
+			                    <form class="form-inline tr-ng-grid-footer" grid="">
+			                        <div class="pull-left" tr-ng-grid-global-filter=""></div>
+			                        <div class="pull-right" tr-ng-grid-pager=""></div>
+			                    </form>
+			                </td>
+			            </tr>
+			        </tfoot>
+			    </table>
+			</div>
+		</div>
+	</div>	
+	<div class="row" style="margin-top:15px;">
+		<div class="col-md-12">
+			<div class="chart-title">
+				<div class="row" style="text-align: center;">
+					<span class="col-md-2" style="border-right: solid gray 1px;"><h3>TOTALS</h3></span>
+					<span class="col-md-3" style="border-right: solid gray 1px; margin-left: 15px;"><h4>Total Schools: {{totalInstitutions}}</h4></span>
+					<span class="col-md-3" style="border-right: solid gray 1px; margin-left: 15px;">
+						<div class="row">
+							<span><h4>Total Users: {{totalAccounts}}</h4>
+							({{totalTecnicians}} techs - {{totalAccounts}} users)<span>
+						</div>
+					</span>
+					<span class="col-md-3" style="margin-left: 15px;">
+						<div class="row">
+							<span><h4>Total Incidences: {{totalIncidences}}</h4>
+								({{totalOpen}} Open - {{totalOnGoing}} On Going - {{totalClosed}} Closed)
+							<span>
+						</div>
+					</span>	
+				</div>
+			</div>
+			
+			<div class="chart-frame shadow-form-container">
+				<div google-chart chart="chartObjectTotals" style="{{chartObjectTotals.cssStyle}}"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="sevpri" class="row solid-blue-dark-bar-fill" style="margin-top:15px; padding-left: 8px; padding-right: 8px; padding-bottom: 15px;">
+	<div class="row" style="margin-top:15px;">
+		<div class="col-md-12">
+			<div class="reports-title">
+				<div class="row" style="text-align: center;">
+					<span class="col-md-2" style="border-right: solid gray 1px;"><h3>SEV & PRI</h3></span>
+					<span class="col-md-4" style="border-right: solid gray 1px; margin-left: 15px;">
+						<div class="row">
+							<span><h4>Severity</h4>
+								({{totalSevSerious}} Serious - {{totalSevHigh}} Hight - {{totalSevMedium}} Medium - {{totalSevLow}} Low)
+							<span>
+						</div>
+					</span>
+					<span class="col-md-4" style="border-right: solid gray 1px; margin-left: 15px;">
+						<div class="row">
+							<span><h4>Priority</h4>
+								({{totalPriSerious}} Serious - {{totalPriHigh}} Hight - {{totalPriMedium}} Medium - {{totalPriLow}} Low)
+							<span>
+						</div>
+					</span>	
+				</div>
+			</div>
+			<div class="list-incidences-reports ">
+			    <table tr-ng-grid="" items="totalsReport" enable-sorting="false">
+				    <thead>
+				        <tr>
+							<th field-name="institution" display-align="center"></th>
+					        <th field-name="totalAccounts" display-align="center"></th>
+					        <th field-name="usersAccounts" display-align="center"></th>
+					        <th field-name="techniciansAccounts" display-align="center" display-name="Techs Accounts"></th>
+					        <th field-name="numberOpenIncidences" display-align="center" display-name="Open Inc"></th>
+					        <th field-name="numberOnGoingIncidences" display-align="center" display-name="On Going Inc"></th>
+					        <th field-name="numberClosedIncidences" display-align="center" display-name="Closed Inc"></th>
+					        <th field-name="incidencesPerUser" display-name="Inc / user" display-align="center"></th>
+					        <th field-name="numberIncidences" display-align="center" display-name="Total Inc"></th>			      
+				        </tr>
+				    </thead>
+			        <tbody>
+						<tr>
+			                <td field-name="incidencesPerUser">
+			                    <div>  
+			                       {{ gridItem.incidencesPerUser | number:2 }}
+			                    </div>
+			                </td>
+			            </tr>
+			        </tbody>
+			        <tfoot>
+			            <tr>
+			                <td colspan="10">	
+			                    <form class="form-inline tr-ng-grid-footer" grid="">
+			                        <div class="pull-left" tr-ng-grid-global-filter=""></div>
+			                        <div class="pull-right" tr-ng-grid-pager=""></div>
+			                    </form>
+			                </td>
+			            </tr>
+			        </tfoot>
+			    </table>
+			</div>
+		</div>
+	</div>	
+	<div class="row" style="margin-top:15px;">
+		<div class="col-md-12">
+			<div class="reports-title">
+				<div class="row" style="text-align: center;">
+					<span class="col-md-2" style="border-right: solid gray 1px;"><h3>SEV & PRI</h3></span>
+					<span class="col-md-4" style="border-right: solid gray 1px; margin-left: 15px;">
+						<div class="row">
+							<span><h4>Severity</h4>
+								({{totalSevSerious}} Serious - {{totalSevHigh}} Hight - {{totalSevMedium}} Medium - {{totalSevLow}} Low)
+							<span>
+						</div>
+					</span>
+					<span class="col-md-4" style="border-right: solid gray 1px; margin-left: 15px;">
+						<div class="row">
+							<span><h4>Priority</h4>
+								({{totalPriSerious}} Serious - {{totalPriHigh}} Hight - {{totalPriMedium}} Medium - {{totalPriLow}} Low)
+							<span>
+						</div>
+					</span>	
+				</div>
+			</div>
+			<div class="chart-frame shadow-form-container">
+				<div google-chart chart="chartObjectSevPrio" style="{{chartObjectSevPrio.cssStyle}}"></div>
+			</div>
+		</div>
+	</div>
+</div>
+	

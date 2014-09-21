@@ -14,7 +14,8 @@ var helpdesk = angular.module('helpdesk',
     'incidences',
     'inventory',
     'schools',
-    'accounts'
+    'accounts',
+    'reports'
  	]
 )
 .config(function($stateProvider, $urlRouterProvider) {

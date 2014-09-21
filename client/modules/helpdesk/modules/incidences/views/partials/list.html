@@ -1,8 +1,8 @@
 <section ng-init="find()">
-	<div class="row" ng-show="incidences.length > 0" >
+	<div class="row" ng-show="incidences.length > 0" style="padding-left:15px;">
 		<div class="row-fluid">	
-		  	<div class="span12 list-container solid-blue-bar-fill">
-			    <table tr-ng-grid="" items="incidences" selected-items="selectedIncidences" selection-mode="None" enable-sorting="false" enable-filtering="true" style="background-color:white;">
+		  	<div class="span12 list-incidences shadow-form-container">
+			    <table tr-ng-grid="" items="incidences" selected-items="selectedIncidences" selection-mode="None" enable-sorting="false" enable-filtering="true">
 				    <thead>
 				        <tr>
 				        	<th field-name="id" cell-width="5em" display-align="center"></th>  
