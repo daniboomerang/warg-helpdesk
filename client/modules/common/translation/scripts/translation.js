@@ -9,6 +9,7 @@ var translation = angular.module('translation',
 	]
 )
 .constant('translations_en', {
+  'EDIT': 'Edit',
   'SEVERITY': 'Severity',
   'BUTTON.OPEN': 'Open',
   'BUTTON.CLOSE': 'Close',

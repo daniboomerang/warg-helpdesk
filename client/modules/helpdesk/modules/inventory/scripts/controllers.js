@@ -76,7 +76,7 @@ inventoryControllers.controller('StatisticsReportCtrl', function ($scope, Auth, 
   }   
 });
 
-inventoryControllers.controller('IndexCtrl', function ($scope, $modal, inventoryService, messengerService) {
+inventoryControllers.controller('IndexCtrl', function ($scope, $modal, $state, inventoryService, messengerService) {
 
   $scope.items = [];
 
@@ -89,6 +89,12 @@ inventoryControllers.controller('IndexCtrl', function ($scope, $modal, inventory
         messengerService.popMessage('error', 'The list of incidences couldn´t be retrieved.', error.status + ' - ' + error.statusText);
       }
     );
+  };
+
+  $scope.edit = function(item){
+    $state.go ('helpdesk.inventory.create', {
+      itemId: item._id
+    });
   };
 
   $scope.disableItem = function(item){
@@ -153,20 +159,26 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
 };
 
-inventoryControllers.controller('CreateInventoryCtrl', function ($scope, $location, inventoryService, messengerService, InventoryItem, InventoryItemCustomData) {
-  $scope.kinds = [
-    { name: 'PC' }, 
-    { name: 'PRINTER' }, 
-    { name: 'MONITOR' }, 
-    { name: 'MOUSE' }, 
-    { name: 'KEYBOARD' }, 
-    { name: 'OTHER' }
-  ];
+inventoryControllers.controller('CreateInventoryCtrl', function ($scope, $location, $stateParams, inventoryService, messengerService, InventoryItem, InventoryItemCustomData) {
+  
+  $scope.open = function($event, opened) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    $scope[opened] = true;
+  };
+
+  $scope.dateOptions = {
+    formatYear: 'yy',
+    startingDay: 1
+  };
+
+  $scope.format = 'dd/MM/yyyy';
 
   $scope.data = {};
   $scope.data.serial = "";
   $scope.data.internalId = "";
-  $scope.data.kind = {};
+  $scope.data.kind = "OTHER";
   $scope.data.acquisitionDate = "";
   $scope.data.guaranteeExpirationDate = "";
   $scope.data.lastInventoryDate = "";
@@ -178,21 +190,28 @@ inventoryControllers.controller('CreateInventoryCtrl', function ($scope, $locati
 
   $scope.data.custom = {};
 
+  $scope.kinds = [
+    'PC', 
+    'PRINTER', 
+    'MONITOR', 
+    'MOUSE', 
+    'KEYBOARD', 
+    'OTHER'
+  ];
+  if ($stateParams.itemId){
+    $scope.data = new InventoryItem({ _id: $stateParams.itemId});
+    $scope.data.$get(function(data){
+    });
+  }
+
   $scope.create = function(form) {
-    var inventoryData = JSON.parse(JSON.stringify($scope.data));
-    inventoryData.kind = $scope.data.kind.selected.name;
-    inventoryData = InventoryItemCustomData.clean(inventoryData);
-    var inventoryItem = new InventoryItem(inventoryData);
+    var inventoryItem = new InventoryItem(InventoryItemCustomData.clean($scope.data));
     inventoryItem.$save(function(inventoryItem){
       $location.path("helpdesk/inventory/index");
       messengerService.popMessage('success', 'Inventory item successfully created.');
     }, function(error){
       messengerService.popMessage('error', 'Inventory Item not created.', error.status + ' - ' + error.statusText);
     });
-  };
-
-  $scope.pcSelected = function(){
-    return $scope.data.kind.selected && $scope.data.kind.selected.name == 'PC';
   };
 
 });

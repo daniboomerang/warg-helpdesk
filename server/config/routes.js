@@ -74,8 +74,8 @@ module.exports = function(app) {
   var inventory = require('../controllers/inventory');
   app.get('/api/inventory', auth.ensureAuthenticated, inventory.index);
   app.post('/api/inventory', auth.ensureAuthenticated, inventory.createItem);
+  app.get('/api/inventory/:inventoryId', auth.ensureAuthenticated, inventory.get);
   app.put('/api/inventory/:inventoryId', auth.ensureAuthenticated, inventory.disable);
-  app.put('/api/inventory/:inventoryId/disable', auth.ensureAuthenticated, inventory.disableItem);
 
   ///////////////////
   // Reporting API //

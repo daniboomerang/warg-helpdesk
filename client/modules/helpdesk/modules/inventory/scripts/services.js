@@ -7,10 +7,6 @@ inventoryServices.factory('inventoryService', function ($resource, $q) {
     {
       update: {
         method: 'PUT'
-      },
-      disable: {
-        method: 'PUT',
-        url: 'api/inventory/:inventoryId/disable'
       }
     }
   );
@@ -30,24 +26,8 @@ inventoryServices.factory('inventoryService', function ($resource, $q) {
     return deferred.promise;
   };
 
-  var _disableItem = function(item){
-    var deferred = $q.defer();
-
-    item.$disable(
-      function(msg){
-        deferred.resolve(msg);
-      }, 
-      function(error){
-        deferred.reject(error);
-      }
-    );
-
-    return deferred.promise;
-  };
-
   return {
     find: _find,
-    disableItem: _disableItem
   }
 });
 
