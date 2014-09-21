@@ -94,7 +94,7 @@ reportsControllers.controller('IncidencesReportCtrl', function ($scope, reportSe
 
       $scope.chartObjectSevPrio = {
         "type": "BarChart",
-        "cssStyle": "width: 100%; min-height: 1000px;",
+        "cssStyle": "width: 100%; min-height: 800px;",
         "displayed": true,
         "data": {
           "cols": [
@@ -218,7 +218,7 @@ reportsControllers.controller('IncidencesReportCtrl', function ($scope, reportSe
 
       $scope.chartObjectTotals = {
         "type": "PieChart",
-        "cssStyle": "width: 100%; min-height: 1000px;",
+        "cssStyle": "width: 100%; min-height: 800px;",
         "displayed": true,
         "data": {
           "cols": [

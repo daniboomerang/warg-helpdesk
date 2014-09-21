@@ -2,7 +2,8 @@
 	<h1>General Incidences Dashboard Report</h1>
 </div>
 
-<div id="total" class="row solid-blue-dark-bar-fill" style="margin-top:15px; padding-left: 8px; 	padding-right: 8px; padding-bottom: 15px;">
+<div id="total" class="row" style="margin-top:15px; padding-left: 8px; padding-right: 8px; padding-bottom: 15px;    background-color: #373838;
+">
 	<div class="row" style="margin-top:15px;">
 		<div class="col-md-12">
 			<div class="reports-title">
@@ -12,7 +13,7 @@
 					<span class="col-md-3" style="border-right: solid gray 1px; margin-left: 15px;">
 						<div class="row">
 							<span><h4>Total Users: {{totalAccounts}}</h4>
-							({{totalTecnicians}} techs - {{totalAccounts}} users)<span>
+							({{totalTecnicians}} techs - {{totalUsers}} users)<span>
 						</div>
 					</span>
 					<span class="col-md-3" style="margin-left: 15px;">
@@ -91,7 +92,8 @@
 	</div>
 </div>
 
-<div id="sevpri" class="row solid-blue-dark-bar-fill" style="margin-top:15px; padding-left: 8px; padding-right: 8px; padding-bottom: 15px;">
+<div id="sevpri" class="row" style="margin-top:15px; padding-left: 8px; padding-right: 8px; padding-bottom: 15px;     background-color: #373838 ;
+">
 	<div class="row" style="margin-top:15px;">
 		<div class="col-md-12">
 			<div class="reports-title">
@@ -100,14 +102,14 @@
 					<span class="col-md-4" style="border-right: solid gray 1px; margin-left: 15px;">
 						<div class="row">
 							<span><h4>Severity</h4>
-								({{totalSevSerious}} Serious - {{totalSevHigh}} Hight - {{totalSevMedium}} Medium - {{totalSevLow}} Low)
+								({{totalSevSerious}} Serious - {{totalSevHigh}} High - {{totalSevMedium}} Medium - {{totalSevLow}} Low)
 							<span>
 						</div>
 					</span>
 					<span class="col-md-4" style="border-right: solid gray 1px; margin-left: 15px;">
 						<div class="row">
 							<span><h4>Priority</h4>
-								({{totalPriSerious}} Serious - {{totalPriHigh}} Hight - {{totalPriMedium}} Medium - {{totalPriLow}} Low)
+								({{totalPriSerious}} Serious - {{totalPriHigh}} High - {{totalPriMedium}} Medium - {{totalPriLow}} Low)
 							<span>
 						</div>
 					</span>	
@@ -159,21 +161,24 @@
 					<span class="col-md-4" style="border-right: solid gray 1px; margin-left: 15px;">
 						<div class="row">
 							<span><h4>Severity</h4>
-								({{totalSevSerious}} Serious - {{totalSevHigh}} Hight - {{totalSevMedium}} Medium - {{totalSevLow}} Low)
+								(<b> <span style="color: red;">{{totalSevSerious}} Serious</span> -
+									 <span style="color: orange;">{{totalSevHigh}} High </span> -
+									 <span style="color: blue;">{{totalSevMedium}} Medium </span> -
+									 <span style="color: green;">{{totalSevLow}} Low</span>)
 							<span>
 						</div>
 					</span>
 					<span class="col-md-4" style="border-right: solid gray 1px; margin-left: 15px;">
 						<div class="row">
 							<span><h4>Priority</h4>
-								({{totalPriSerious}} Serious - {{totalPriHigh}} Hight - {{totalPriMedium}} Medium - {{totalPriLow}} Low)
+								({{totalPriSerious}} Serious - {{totalPriHigh}} High - {{totalPriMedium}} Medium - {{totalPriLow}} Low)
 							<span>
 						</div>
 					</span>	
 				</div>
 			</div>
 			<div class="chart-frame shadow-form-container">
-				<div google-chart chart="chartObjectSevPrio" style="{{chartObjectSevPrio.cssStyle}}"></div>
+				<div google-chart chart="chartObjectSevPrio	" style="{{chartObjectSevPrio.cssStyle}}"></div>
 			</div>
 		</div>
 	</div>
