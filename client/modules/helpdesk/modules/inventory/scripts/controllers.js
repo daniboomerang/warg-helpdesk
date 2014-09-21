@@ -105,7 +105,7 @@ inventoryControllers.controller('IndexCtrl', function ($scope, $modal, inventory
     );
   };
 
-  $scope.open = function (item, size) {
+  $scope.disable = function (item, size) {
     var modalInstance = $modal.open({
       templateUrl: 'myModalContent.html',
       controller: ModalInstanceCtrl,
