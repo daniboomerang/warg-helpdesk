@@ -27,23 +27,16 @@ exports.createItem = function(data, user) {
   return deferred.promise;
 };
 
-exports.disableItem = function(itemId){
+exports.get = function(itemId){
   var deferred = Q.defer();
 
   Inventory.findOne({ _id: itemId }).exec(function(err, item){
     if (err) {
       deferred.resolve({status: RESULT_ERROR, error: err});
     } else {
-      item.disabled = {
-        when: new Date(),
-        why: "porque me da la gana"
-      };
-      item.save(function(err){
-        if (err) console.log("caguen");
-        deferred.resolve({status: RESULT_SUCCESS, data: item});
-      })
+      deferred.resolve({status: RESULT_SUCCESS, data: item});
     }
-  })
+  });
 
   return deferred.promise;
 
@@ -65,7 +58,28 @@ exports.disable = function(itemToDisable){
         deferred.resolve({status: RESULT_SUCCESS, data: item});
       })
     }
-  })
+  });
+
+  return deferred.promise;
+
+};
+
+exports.update = function(itemToDisable){
+  var deferred = Q.defer();
+
+  Inventory.findOne({ _id: itemToDisable._id }).exec(function(err, item){
+    if (err) {
+      deferred.resolve({status: RESULT_ERROR, error: err});
+    } else {
+      Object.getOwnPropertyNames(itemToDisable).forEach(function(property){
+        item[property] = itemToDisable[property];
+      });
+      item.save(function(err){
+        if (err) console.log("caguen");
+        deferred.resolve({status: RESULT_SUCCESS, data: item});
+      })
+    }
+  });
 
   return deferred.promise;
 

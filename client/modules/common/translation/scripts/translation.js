@@ -9,6 +9,7 @@ var translation = angular.module('translation',
 	]
 )
 .constant('translations_en', {
+  'EDIT': 'Edit',
   'SEVERITY': 'Severity',
   'BUTTON.OPEN': 'Open',
   'BUTTON.CLOSE': 'Close',
@@ -35,6 +36,11 @@ var translation = angular.module('translation',
   'INVENTORY.HD': 'Hd',
   'INVENTORY.CD': 'Cd',
   'INVENTORY.VIDEO': 'Video',
+  'INVENTORY.USB': 'Usb',
+  'INVENTORY.CONNECTOR': 'Connector',
+  'INVENTORY.SIZE': 'Size',
+  'INVENTORY.DISABLE.WHEN': 'Date',
+  'INVENTORY.DISABLE.WHY': 'Reason',
 })
 .constant('translations_es', {
   // Global

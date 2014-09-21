@@ -76,7 +76,7 @@ inventoryControllers.controller('StatisticsReportCtrl', function ($scope, Auth, 
   }   
 });
 
-inventoryControllers.controller('IndexCtrl', function ($scope, $modal, inventoryService, messengerService) {
+inventoryControllers.controller('IndexCtrl', function ($scope, $modal, $state, inventoryService, messengerService) {
 
   $scope.items = [];
 
@@ -91,21 +91,13 @@ inventoryControllers.controller('IndexCtrl', function ($scope, $modal, inventory
     );
   };
 
-  $scope.disableItem = function(item){
-    inventoryService.disableItem(item).then(
-      function(item){
-        messengerService.popMessage('success', 'Item disabled successfuly.');
-        $scope.items = $scope.items.filter(function(el){
-          return el._id != item._id;
-        });
-      },
-      function(){
-        messengerService.popMessage('error', 'The item couldn\'t be disabled.');
-      }
-    );
+  $scope.edit = function(item){
+    $state.go ('helpdesk.inventory.create.' + item.kind, {
+      itemId: item._id
+    });
   };
 
-  $scope.open = function (item, size) {
+  $scope.disable = function (item, size) {
     var modalInstance = $modal.open({
       templateUrl: 'myModalContent.html',
       controller: ModalInstanceCtrl,
@@ -153,20 +145,26 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
 };
 
-inventoryControllers.controller('CreateInventoryCtrl', function ($scope, $location, inventoryService, messengerService, InventoryItem) {
-  $scope.kinds = [
-    { name: 'PC' }, 
-    { name: 'PRINTER' }, 
-    { name: 'MONITOR' }, 
-    { name: 'MOUSE' }, 
-    { name: 'KEYBOARD' }, 
-    { name: 'OTHER' }
-  ];
+inventoryControllers.controller('CreateInventoryCtrl', function ($scope, $location, $stateParams, inventoryService, messengerService, InventoryItem, InventoryItemCustomData) {
+  
+  $scope.open = function($event, opened) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    $scope[opened] = true;
+  };
+
+  $scope.dateOptions = {
+    formatYear: 'yy',
+    startingDay: 1
+  };
+
+  $scope.format = 'dd/MM/yyyy';
 
   $scope.data = {};
   $scope.data.serial = "";
   $scope.data.internalId = "";
-  $scope.data.kind = {};
+  $scope.data.kind = "OTHER";
   $scope.data.acquisitionDate = "";
   $scope.data.guaranteeExpirationDate = "";
   $scope.data.lastInventoryDate = "";
@@ -175,27 +173,43 @@ inventoryControllers.controller('CreateInventoryCtrl', function ($scope, $locati
   $scope.data.location = "";
   $scope.data.description = "";
   $scope.data.price = "";
+
   $scope.data.custom = {};
-  $scope.data.custom.type = "Pc";
-  $scope.data.custom.cd = "Yes";
+
+  $scope.kinds = [
+    'PC', 
+    'PRINTER', 
+    'MONITOR', 
+    'MOUSE', 
+    'KEYBOARD', 
+    'OTHER'
+  ];
+
+  var resource;
+  if ($stateParams.itemId){
+    resource = new InventoryItem({ _id: $stateParams.itemId});
+    resource.$get(function(data){
+      $scope.data = data;
+    });
+  }
 
   $scope.create = function(form) {
-    var inventoryData = JSON.parse(JSON.stringify($scope.data));
-    inventoryData.kind = $scope.data.kind.selected.name;
-    var inventoryItem = new InventoryItem(inventoryData);
-    inventoryItem.$save(function(inventoryItem){
-      $location.path("helpdesk/inventory/index");
-      messengerService.popMessage('success', 'Inventory item successfully created.');
-    }, function(error){
-      messengerService.popMessage('error', 'Inventory Item not created.', error.status + ' - ' + error.statusText);
-    });
-  };
-
-  $scope.pcSelected = function(){
-    return $scope.data.kind.selected && $scope.data.kind.selected.name == 'PC';
+    if ($scope.data._id){
+      resource.$update(function(inventoryItem){
+        $location.path("helpdesk/inventory/index");
+        messengerService.popMessage('success', 'Inventory item successfully created.');
+      }, function(error){
+        messengerService.popMessage('error', 'Inventory Item not created.', error.status + ' - ' + error.statusText);
+      });
+    }else{
+      var inventoryItem = new InventoryItem(InventoryItemCustomData.clean($scope.data));
+      inventoryItem.$save(function(inventoryItem){
+        $location.path("helpdesk/inventory/index");
+        messengerService.popMessage('success', 'Inventory item successfully created.');
+      }, function(error){
+        messengerService.popMessage('error', 'Inventory Item not created.', error.status + ' - ' + error.statusText);
+      });
+    }
   };
 
 });
-
-
-
