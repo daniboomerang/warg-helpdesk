@@ -25,6 +25,11 @@ exports.disable = function(req, res){
   .then((new ResponseBuilder(res)).build);
 };
 
+exports.update = function(req, res){
+  inventoryDomain.update(req.body)
+  .then((new ResponseBuilder(res)).build);
+};
+
 var ResponseBuilder = function(res){
   return {
     build: function(result){

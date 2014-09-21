@@ -36,7 +36,7 @@ exports.get = function(itemId){
     } else {
       deferred.resolve({status: RESULT_SUCCESS, data: item});
     }
-  })
+  });
 
   return deferred.promise;
 
@@ -58,7 +58,28 @@ exports.disable = function(itemToDisable){
         deferred.resolve({status: RESULT_SUCCESS, data: item});
       })
     }
-  })
+  });
+
+  return deferred.promise;
+
+};
+
+exports.update = function(itemToDisable){
+  var deferred = Q.defer();
+
+  Inventory.findOne({ _id: itemToDisable._id }).exec(function(err, item){
+    if (err) {
+      deferred.resolve({status: RESULT_ERROR, error: err});
+    } else {
+      Object.getOwnPropertyNames(itemToDisable).forEach(function(property){
+        item[property] = itemToDisable[property];
+      });
+      item.save(function(err){
+        if (err) console.log("caguen");
+        deferred.resolve({status: RESULT_SUCCESS, data: item});
+      })
+    }
+  });
 
   return deferred.promise;
 

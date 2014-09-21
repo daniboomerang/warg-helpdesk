@@ -97,20 +97,6 @@ inventoryControllers.controller('IndexCtrl', function ($scope, $modal, $state, i
     });
   };
 
-  $scope.disableItem = function(item){
-    inventoryService.disableItem(item).then(
-      function(item){
-        messengerService.popMessage('success', 'Item disabled successfuly.');
-        $scope.items = $scope.items.filter(function(el){
-          return el._id != item._id;
-        });
-      },
-      function(){
-        messengerService.popMessage('error', 'The item couldn\'t be disabled.');
-      }
-    );
-  };
-
   $scope.disable = function (item, size) {
     var modalInstance = $modal.open({
       templateUrl: 'myModalContent.html',
@@ -198,20 +184,32 @@ inventoryControllers.controller('CreateInventoryCtrl', function ($scope, $locati
     'KEYBOARD', 
     'OTHER'
   ];
+
+  var resource;
   if ($stateParams.itemId){
-    $scope.data = new InventoryItem({ _id: $stateParams.itemId});
-    $scope.data.$get(function(data){
+    resource = new InventoryItem({ _id: $stateParams.itemId});
+    resource.$get(function(data){
+      $scope.data = data;
     });
   }
 
   $scope.create = function(form) {
-    var inventoryItem = new InventoryItem(InventoryItemCustomData.clean($scope.data));
-    inventoryItem.$save(function(inventoryItem){
-      $location.path("helpdesk/inventory/index");
-      messengerService.popMessage('success', 'Inventory item successfully created.');
-    }, function(error){
-      messengerService.popMessage('error', 'Inventory Item not created.', error.status + ' - ' + error.statusText);
-    });
+    if ($scope.data._id){
+      resource.$update(function(inventoryItem){
+        $location.path("helpdesk/inventory/index");
+        messengerService.popMessage('success', 'Inventory item successfully created.');
+      }, function(error){
+        messengerService.popMessage('error', 'Inventory Item not created.', error.status + ' - ' + error.statusText);
+      });
+    }else{
+      var inventoryItem = new InventoryItem(InventoryItemCustomData.clean($scope.data));
+      inventoryItem.$save(function(inventoryItem){
+        $location.path("helpdesk/inventory/index");
+        messengerService.popMessage('success', 'Inventory item successfully created.');
+      }, function(error){
+        messengerService.popMessage('error', 'Inventory Item not created.', error.status + ' - ' + error.statusText);
+      });
+    }
   };
 
 });

@@ -35,9 +35,13 @@ inventoryServices.factory('InventoryItem', function ($resource) {
   return $resource('api/inventory/:inventoryId', {
     inventoryId: '@_id',
   }, {
-    disable: {
-      method: 'PUT'
-    }
+      update: {
+        url: 'api/inventory/:inventoryId/update',
+        method: 'PUT'
+      },
+      disable: {
+        method: 'PUT'
+      }
   });
 });
 

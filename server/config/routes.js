@@ -76,6 +76,7 @@ module.exports = function(app) {
   app.post('/api/inventory', auth.ensureAuthenticated, inventory.createItem);
   app.get('/api/inventory/:inventoryId', auth.ensureAuthenticated, inventory.get);
   app.put('/api/inventory/:inventoryId', auth.ensureAuthenticated, inventory.disable);
+  app.put('/api/inventory/:inventoryId/update', auth.ensureAuthenticated, inventory.update);
 
   ///////////////////
   // Reporting API //
