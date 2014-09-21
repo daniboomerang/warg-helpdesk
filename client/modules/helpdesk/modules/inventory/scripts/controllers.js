@@ -92,7 +92,7 @@ inventoryControllers.controller('IndexCtrl', function ($scope, $modal, $state, i
   };
 
   $scope.edit = function(item){
-    $state.go ('helpdesk.inventory.create', {
+    $state.go ('helpdesk.inventory.create.' + item.kind, {
       itemId: item._id
     });
   };
