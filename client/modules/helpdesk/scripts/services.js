@@ -25,7 +25,7 @@ helpdeskServices.service('deskMenuStyleService', function(){
 				actionsStyle.open = '/modules/helpdesk/images/icons/inventory-16.png';
 				actionsStyle.expenses = '/modules/helpdesk/images/icons/coins-16.png';
 				moduleStyle.image = {'background-image': 'url(/modules/helpdesk/images/icons/book-24.png)'};
-		   		moduleStyle.active = 'enlarged-active-module arrow-box-neon';
+		   		moduleStyle.active = 'enlarged-active-module arrow-box-neon animate-show';
 		   		moduleStyle.color = {'color': 'black'};
 		   	}
 		   	if (module == 'Schools'){

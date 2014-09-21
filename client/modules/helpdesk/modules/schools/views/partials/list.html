@@ -1,18 +1,19 @@
 <section ng-init="find()">
 	<div class="row-fluid" ng-show="schools.length > 0">	
-	  	<div class="col-md-12 list-schools-container">
+	  	<div class="col-md-7 list-schools solid-blue-bar-fill">
 		    <table tr-ng-grid="" items="schools" selected-items="selectedSchools" 
-		    selection-mode="None" enable-sorting="false">
+		    selection-mode="None" enable-sorting="false" style="background-color:white;">
 			    <thead>
 			        <tr>
-			            <th field-name="code" cell-width="8em">Code</th>  
-			            <th field-name="name" cell-width="12em">Name</th>
-			            <th field-name="address" cell-width="14em">Address</th>				
+			            <th field-name="code" cell-width="6em">Code</th>  
+			            <th field-name="name" cell-width="6em">Name</th>
+			            <th field-name="address" cell-width="70em">Address</th>
+			            <th field-name="open" enable-filtering="false" cell-width="2em"><div> &nbsp;</div></th>		
 			        </tr>
 			    </thead>
 	            <tbody>
 		            <tr>
-	                    <td>
+	                    <td field-name="open">
 	                        <div>  
 	                            <button class="btn btn-xs btn-success" ng-click="openSchool(gridItem._id)">{{ 'BUTTON.OPEN' | translate }}
 	                            </button>
