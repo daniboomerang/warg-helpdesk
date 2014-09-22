@@ -13,7 +13,6 @@ module.exports = function(configuration){
     start: mailListener.start(),
     onMailReceived: function(processIncoming){
       mailListener.on("mail", function(mail, seqno, attributes){
-        console.log(mail);
         processIncoming(mail.from[0].address, mail.to[0].address, mail.subject, mail.text).then(function (processResult){
           if (processResult.status != RESULT_ERROR){
             if (processResult.status == RESULT_WARNING){console.log('Email: ', mail.subject, 'processed with errors.');}  

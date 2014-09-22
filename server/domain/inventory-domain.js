@@ -50,8 +50,8 @@ exports.disable = function(itemToDisable){
       deferred.resolve({status: RESULT_ERROR, error: err});
     } else {
       item.disabled = {
-        when: itemToDisable.disabled.when || new Date(),
-        why: itemToDisable.disabled.why || "reason not specified"
+        when: (itemToDisable.disabled && itemToDisable.disabled.when) || new Date(),
+        why: (itemToDisable.disabled && itemToDisable.disabled.why) || "reason not specified"
       };
       item.save(function(err){
         if (err) console.log("caguen");

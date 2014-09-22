@@ -2,6 +2,7 @@
 
 var usersDomain = require('./users-domain'),
   incidencesDomain = require('./incidences-domain'),
+  schoolsDomain = require('./schools-domain'),
   Q = require('q');
 
 var RESULT_SUCCESS = "SUCCESS";
@@ -26,14 +27,20 @@ module.exports = function(mailSenderService){
         usersDomain.findByEmail(sender).then(function (findResult){
 
           if (findResult.status == 'user.found'){
-            deferred.resolve({status: 'sender.found', user: findResult.user});
-            }   
-            else if (findResult.status == 'user.not.found'){
-              deferred.resolve({status: 'sender.not.found', user: null});
-            }     
-          }); 
+            console.log("########### ESTAMOS EN PROCESS INCOMING FIND USER BY EMAIL");
+            console.log(findResult.user.school);
+            schoolsDomain.findSchoolBis(findResult.user.school)
+              .then(function(school){
+                console.log("school: " + school);
+                deferred.resolve({status: 'sender.found', user: findResult.user});
+              });
+          }   
+          else if (findResult.status == 'user.not.found'){
+            deferred.resolve({status: 'sender.not.found', user: null});
+          }     
+        }); 
 
-          return deferred.promise;
+        return deferred.promise;
       };
 
       var isAllowedToCreateIncidence = function(user){
@@ -75,7 +82,9 @@ module.exports = function(mailSenderService){
 
       findSenderAsUser(sender).then(function (findResult){
 
+        console.log("find sender result processing");
         if ((findResult.status == 'sender.found') && (isAllowedToCreateIncidence(findResult.user))){
+
           var user_info = findResult.user.user_info;
           createIncidence(subject, content, findResult.user).then(function (createResult){
             try {
@@ -98,10 +107,12 @@ module.exports = function(mailSenderService){
                 });
               }
               else if (createResult.status == 'incidence.not.created'){
+                console.log("incidence creation problem");
                 resolveDeferred({status: 'incidence.creation.error'});
               }
             }
             catch (e){
+              console.log("acknowledge sending problem");
               resolveDeferred({status: 'acknowledge.not.sent'});
             }
           });       

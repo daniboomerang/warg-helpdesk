@@ -93,4 +93,8 @@ exports.findSchool = function (id) {
     deferred.resolve(result);
   });
   return deferred.promise;
-}
+};
+
+exports.findSchoolBis = function (id) {
+  return School.findById(id);
+};
