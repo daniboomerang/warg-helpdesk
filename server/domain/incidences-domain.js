@@ -69,6 +69,7 @@ exports.createIncidence = function(title, description, user, severity, priority,
     deferred.resolve({status: 'incidence.not.created', error: "Server internal error: 'User organization not found.'"});
   }
   else {
+      console.log("########### GOING GENERATE ID ");
     generateNewId(school.code).then(function (newId){
       incidence.id = newId;
       console.log("########### GOING TO SAVE INCIDENCIA ");
