@@ -65,6 +65,7 @@ exports.createIncidence = function(title, description, user, severity, priority,
   else {
     generateNewId(school.code).then(function (newId){
       incidence.id = newId;
+      console.log("########### GOING TO SAVE INCIDENCIA ");
       incidence.save(function(err) {
         if (err) {
           deferred.resolve({status: 'incidence.not.created', error: err});
