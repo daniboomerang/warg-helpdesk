@@ -65,6 +65,7 @@ exports.createIncidence = function(title, description, user, severity, priority,
 
 
   if (school == null){
+      console.log("########### SCHOOL NULL");
     deferred.resolve({status: 'incidence.not.created', error: "Server internal error: 'User organization not found.'"});
   }
   else {
