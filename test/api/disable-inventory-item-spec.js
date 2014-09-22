@@ -14,7 +14,8 @@ describe('Disable Inventory Item', function () {
     });
 
     it('retrieves success when no problem', function (done) {
-        HELPER.put('/api/inventory/'+ FIXTURE.inventoryItemId + '/disable')
+        HELPER.put('/api/inventory/'+ FIXTURE.inventoryItemId)
+        .send({_id: FIXTURE.inventoryItemId, disabled: {when: new Date(), why: "test reason"}})
         .expect(200)
         .end(function(err, res){
             if (err) return done(err);
@@ -23,7 +24,8 @@ describe('Disable Inventory Item', function () {
     });
 
     it('makes it unavailable on inventory index', function (done) {
-        HELPER.put('/api/inventory/'+ FIXTURE.inventoryItemId + '/disable')
+        HELPER.put('/api/inventory/'+ FIXTURE.inventoryItemId)
+        .send({_id: FIXTURE.inventoryItemId, disabled: {when: new Date(), why: "test reason"}})
         .expect(200)
         .end(function(err, res){
             if (err) return done(err);
