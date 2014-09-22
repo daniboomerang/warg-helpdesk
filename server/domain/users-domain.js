@@ -38,7 +38,7 @@ exports.createUser = function(email, username, password, role, school) {
 exports.findByEmail = function (userMail) {
   var deferred = Q.defer();
   var result = {};
-  User.findOne({ email: userMail }, function (err, user) {
+  User.findOne({ email: userMail }).populate('school').exec(function(err, user) {
     if (err) {
       result = {status: 'db.exception', error: err};
     }

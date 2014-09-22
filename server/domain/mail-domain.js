@@ -27,13 +27,15 @@ module.exports = function(mailSenderService){
         usersDomain.findByEmail(sender).then(function (findResult){
 
           if (findResult.status == 'user.found'){
-            console.log("########### ESTAMOS EN PROCESS INCOMING FIND USER BY EMAIL");
+            deferred.resolve({status: 'sender.found', user: findResult.user});
+
+            /*console.log("########### ESTAMOS EN PROCESS INCOMING FIND USER BY EMAIL");
             console.log(findResult.user.school);
             schoolsDomain.findSchoolBis(findResult.user.school)
               .then(function(school){
                 console.log("school: " + school);
                 deferred.resolve({status: 'sender.found', user: findResult.user});
-              });
+              });*/
           }   
           else if (findResult.status == 'user.not.found'){
             deferred.resolve({status: 'sender.not.found', user: null});
@@ -86,7 +88,7 @@ module.exports = function(mailSenderService){
         if ((findResult.status == 'sender.found') && (isAllowedToCreateIncidence(findResult.user))){
 
           var user_info = findResult.user.user_info;
-          createIncidence(subject, content, findResult.user).then(function (createResult){
+          createIncidence(subject, content, findResult.user, null, null, user.school).then(function (createResult){
             try {
               if (createResult.status == 'incidence.created'){
 
