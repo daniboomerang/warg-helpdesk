@@ -84,6 +84,7 @@ try {
   global.mailSender = require('./server/config/mail-sender')(config.mailSending); // Mail Sender set up with (SENDGRID)
   // Setting up Mail Listener
   if (!config.mailListening.disabled){
+    console.log("########### MAILER ACTIVE #############");
     var mailListener = require('./server/config/mail-listener')(config.mailListening);
     mailListener.onMailReceived(require('./server/domain/mail-domain')(global.mailSender).processIncoming);
     mailListener.start;
