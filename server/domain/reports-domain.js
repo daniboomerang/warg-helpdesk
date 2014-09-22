@@ -25,7 +25,6 @@ var Q = require('q');
 exports.incidences = function() {
 
   function filterIncidencesByStatus (incidences, status){
-    console.log("filterIncidencesByStatus");
     var filteredIncidences = [];
     for (var i = 0; i<= incidences.length -1; i++){
       if (incidences[i].status.currentStatus == status){
@@ -36,7 +35,6 @@ exports.incidences = function() {
   }
 
   function filterIncidencesBySeverity (incidences, severity){
-    console.log("filterIncidencesBySeverity");
     var filteredIncidences = [];
     for (var i = 0; i<= incidences.length -1; i++){
       if (incidences[i].severity == severity){
@@ -47,7 +45,6 @@ exports.incidences = function() {
   }
 
   function filterIncidencesByPriority (incidences, priority){
-    console.log("filterIncidencesByPriority");
     var filteredIncidences = [];
     for (var i = 0; i<= incidences.length -1; i++){
       if (incidences[i].priority == priority){
@@ -58,7 +55,6 @@ exports.incidences = function() {
   }
 
   function filterIncidencesBySchool (incidences, school){
-    console.log("filterIncidencesBySchool");
     function idBelongsToSchoolCode(incidenceId, schoolCode){
       return (incidenceId.split('-')[0] == schoolCode);
     }
@@ -73,7 +69,6 @@ exports.incidences = function() {
   }
 
   function filterUsersBySchool (users, school){
-    console.log("filterUsersBySchool");
     var filteredUsers = [];
     for (var i = 0; i<= users.length -1; i++){
       if (users[i].role == ROLE_ADMIN) {continue;}
@@ -84,9 +79,7 @@ exports.incidences = function() {
     return filteredUsers;
   }
 
-  function filterUsersByRole (users, role){
-    console.log("filterUsersByRole");
-   
+  function filterUsersByRole (users, role){   
     var filteredUsers = [];
     for (var i = 0; i<= users.length -1; i++){
       if (users[i].role == role){
@@ -106,7 +99,6 @@ exports.incidences = function() {
 
   function generateTotalListReport (incidences, schools, users){
 
-    console.log("generateTotalListReport");
     function generateRow(school, schoolIncidences, schoolUsers){
       return {
         institution: school.name,
@@ -132,7 +124,6 @@ exports.incidences = function() {
   }
 
   function generateSeverityPriorityListReport (incidences, schools){
-    console.log("generateSeverityPriorityListReport");
     function generateRow(school, schoolIncidences){
       return {
         institution: school.name,
@@ -158,7 +149,6 @@ exports.incidences = function() {
   }
 
   function generateEffortsListReport (incidences, schools, users){
-    console.log("generateAsignationsListReport");
     function generateRow(school, schoolIncidences, schoolTechnicians){
       var totalEffortPerSchool = getTotalIncidencesEffort(schoolIncidences)
       return {
