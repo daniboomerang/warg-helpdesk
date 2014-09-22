@@ -27,6 +27,7 @@ exports.createIncidence = function(title, description, user, severity, priority,
     var nextIncidenceId;
     Incidence.findOne({id: regExp}).sort({ 'created' : -1 }).exec(function(err, lastIncidence) {
       if (err) {
+      console.log("########### ERROR GENERATE NEW INC ID ");
         deferred.resolve({status: 'incidence.not.created', error: 'Error at incidence creation, trying to retrieve the last record on incidences.'});
       } else {
         if (lastIncidence == null){
@@ -34,6 +35,7 @@ exports.createIncidence = function(title, description, user, severity, priority,
         } else {
           nextIncidenceId = parseInt(lastIncidence.id.split('-')[1]) + 1; 
         }
+      console.log("########### GENERATED INC ID ");
         deferred.resolve(schoolCode + '-' + nextIncidenceId.toString());
       }
     });
