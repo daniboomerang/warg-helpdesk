@@ -10,6 +10,7 @@ var STATUS_OPEN = "Open"
 
 var mongoose = require('mongoose'),
   Incidence = mongoose.model('Incidence'),
+  School = mongoose.model('School'),
   ObjectId = mongoose.Types.ObjectId,
   Q = require('q');
 
@@ -17,36 +18,36 @@ var mongoose = require('mongoose'),
  * Create a incidence
  *  Returns a PROMISE with the result 
  */
+var generateNewId = function (schoolCode){
+
+  console.log("########### GENERATE NEW INC ID ");
+  var deferred = Q.defer();
+  var regExp = new RegExp(schoolCode, 'i');
+  //var regExp = '/'+ schoolCode + '/';
+  var nextIncidenceId;
+  Incidence.findOne({id: regExp}).sort({ 'created' : -1 }).exec(function(err, lastIncidence) {
+    if (err) {
+    console.log("########### ERROR GENERATE NEW INC ID ");
+      deferred.resolve({status: 'incidence.not.created', error: 'Error at incidence creation, trying to retrieve the last record on incidences.'});
+    } else {
+      if (lastIncidence == null){
+        nextIncidenceId = 1; 
+      } else {
+        nextIncidenceId = parseInt(lastIncidence.id.split('-')[1]) + 1; 
+      }
+    console.log("########### GENERATED INC ID ");
+      deferred.resolve(schoolCode + '-' + nextIncidenceId.toString());
+    }
+  });
+
+  return deferred.promise;
+};
+
 exports.createIncidence = function(title, description, user, severity, priority, school) {
 
   school = user.school;
   console.log("############### USER SCHOOL: " + user.school);
   console.log("############### USER SCHOOL: " + user.user_info.school);
-
-  var generateNewId = function (schoolCode){
-
-      console.log("########### GENERATE NEW INC ID ");
-    var deferred = Q.defer();
-    var regExp = new RegExp(schoolCode, 'i');
-    //var regExp = '/'+ schoolCode + '/';
-    var nextIncidenceId;
-    Incidence.findOne({id: regExp}).sort({ 'created' : -1 }).exec(function(err, lastIncidence) {
-      if (err) {
-      console.log("########### ERROR GENERATE NEW INC ID ");
-        deferred.resolve({status: 'incidence.not.created', error: 'Error at incidence creation, trying to retrieve the last record on incidences.'});
-      } else {
-        if (lastIncidence == null){
-          nextIncidenceId = 1; 
-        } else {
-          nextIncidenceId = parseInt(lastIncidence.id.split('-')[1]) + 1; 
-        }
-      console.log("########### GENERATED INC ID ");
-        deferred.resolve(schoolCode + '-' + nextIncidenceId.toString());
-      }
-    });
-
-    return deferred.promise;
-  };
 
   var deferred = Q.defer();
 

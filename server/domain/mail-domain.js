@@ -2,6 +2,7 @@
 
 var usersDomain = require('./users-domain'),
   incidencesDomain = require('./incidences-domain'),
+  schoolsDomain = require('./schools-domain'),
   Q = require('q');
 
 var RESULT_SUCCESS = "SUCCESS";
@@ -26,14 +27,19 @@ module.exports = function(mailSenderService){
         usersDomain.findByEmail(sender).then(function (findResult){
 
           if (findResult.status == 'user.found'){
-            deferred.resolve({status: 'sender.found', user: findResult.user});
-            }   
-            else if (findResult.status == 'user.not.found'){
-              deferred.resolve({status: 'sender.not.found', user: null});
-            }     
-          }); 
+            console.log(findResult.user.school);
+            schoolsDomain.findSchoolBis(findResult.user.school)
+              .then(function(school){
+                console.log("school: " + school);
+                deferred.resolve({status: 'sender.found', user: findResult.user});
+              });
+          }   
+          else if (findResult.status == 'user.not.found'){
+            deferred.resolve({status: 'sender.not.found', user: null});
+          }     
+        }); 
 
-          return deferred.promise;
+        return deferred.promise;
       };
 
       var isAllowedToCreateIncidence = function(user){
