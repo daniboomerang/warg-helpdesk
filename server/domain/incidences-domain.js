@@ -20,6 +20,7 @@ var mongoose = require('mongoose'),
 exports.createIncidence = function(title, description, user, severity, priority, school) {
 
   school = user.school;
+  console.log("############### USER SCHOOL: " + user.school);
 
   var generateNewId = function (schoolCode){
 
