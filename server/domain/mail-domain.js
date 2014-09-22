@@ -48,6 +48,9 @@ module.exports = function(mailSenderService){
       };
 
       var createIncidence = function(subject, content, user){
+        console.log("subject: " + subject);
+        console.log("content: " + content);
+        console.log("user: " + user);
         return incidencesDomain.createIncidence(subject, content, user, null, null);
       };
 
