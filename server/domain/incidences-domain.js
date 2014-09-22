@@ -21,6 +21,7 @@ exports.createIncidence = function(title, description, user, severity, priority,
 
   var generateNewId = function (schoolCode){
 
+      console.log("########### GENERATE NEW INC ID ");
     var deferred = Q.defer();
     var regExp = new RegExp(schoolCode, 'i');
     //var regExp = '/'+ schoolCode + '/';
