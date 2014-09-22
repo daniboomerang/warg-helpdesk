@@ -27,6 +27,7 @@ module.exports = function(mailSenderService){
         usersDomain.findByEmail(sender).then(function (findResult){
 
           if (findResult.status == 'user.found'){
+            console.log("########### ESTAMOS EN PROCESS INCOMING FIND USER BY EMAIL");
             console.log(findResult.user.school);
             schoolsDomain.findSchoolBis(findResult.user.school)
               .then(function(school){
