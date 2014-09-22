@@ -96,6 +96,14 @@ exports.incidences = function() {
     return filteredUsers;
   }
 
+  function getTotalIncidencesEffort (incidences){
+    var totalEffort = 0;
+    for (var i = 0; i<= incidences.length -1; i++){
+      totalEffort = totalEffort + incidences[i].effort;
+    }
+    return totalEffort;
+  }
+
   function generateTotalListReport (incidences, schools, users){
 
     console.log("generateTotalListReport");
@@ -149,10 +157,30 @@ exports.incidences = function() {
     return severityPriorityListReport;
   }
 
-  function generateAsignationsListReport (incidences, schools, users){
+  function generateEffortsListReport (incidences, schools, users){
     console.log("generateAsignationsListReport");
-    var totalsListReport = ["sadasd"];
-    return totalsListReport;
+    function generateRow(school, schoolIncidences, schoolTechnicians){
+      var totalEffortPerSchool = getTotalIncidencesEffort(schoolIncidences)
+      return {
+        institution: school.name,
+        institutionCode: school.code,
+        numberOpenIncidences: filterIncidencesByStatus(schoolIncidences, STATUS_OPEN).length,
+        numberAssignedIncidences: filterIncidencesByStatus(schoolIncidences, STATUS_ONGOING).length,
+        numberClosedIncidences: filterIncidencesByStatus(schoolIncidences, STATUS_CLOSED).length,
+        numberIncidences: schoolIncidences.length,  
+        totalEffort: totalEffortPerSchool,
+        totalEffortPerTechnician: totalEffortPerSchool / schoolTechnicians.length,
+        schoolTechnicians: schoolTechnicians
+      }
+    }
+
+    var effortsListReport = []
+    for (var i=0; i<=schools.length -1; i++){
+      effortsListReport.push(generateRow(schools[i],
+                                  filterIncidencesBySchool(incidences, schools[i]),
+                                  filterUsersByRole(filterUsersBySchool(users, schools[i]), ROLE_TECH)));
+    }
+    return effortsListReport;
   }
 
   var deferred = Q.defer();
@@ -169,9 +197,9 @@ exports.incidences = function() {
 
         var totalsReport = {totalsListReport: generateTotalListReport(incidencesData.list, schoolsData.list, usersData.list)};
         var severityPriorityReport = {severityPriorityListReport: generateSeverityPriorityListReport(incidencesData.list, schoolsData.list)};
-        var assignationsReport = {assignationsListReport: generateAsignationsListReport(incidencesData.list, schoolsData.list, usersData.list)};
+        var effortsReport = {effortsListReport: generateEffortsListReport(incidencesData.list, schoolsData.list, usersData.list)};
 
-        deferred.resolve({status: RESULT_SUCCESS, report: [totalsReport, severityPriorityReport, assignationsReport]});
+        deferred.resolve({status: RESULT_SUCCESS, report: [totalsReport, severityPriorityReport, effortsReport]});
     }
     else {
       var errorMessage = "There has been an error trying to compile the data in order to generate the incidences report.";

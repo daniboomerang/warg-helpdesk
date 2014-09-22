@@ -1,26 +1,21 @@
 .chart-frame{
-	margin-top: 16px;
-
-    border: 10px solid #bed5cd;
-
+    border: 1px solid #bed5cd;
 }
 
 .reports-title{
 	padding: 10px;
 	padding-left: 30px;
 	padding-right: 30px;
-	margin-bottom: 10px;
     background-color: white;
 }
 
 .chart-title{
 	padding: 10px;
-	margin-bottom: 10px;
     background-color: white;
 }
 
 .list-incidences-reports{
 	padding:0px;
 	background-color: white;
-	border: solid #517fa4 1px;
+	border: solid #bed5cd 1px;
 }

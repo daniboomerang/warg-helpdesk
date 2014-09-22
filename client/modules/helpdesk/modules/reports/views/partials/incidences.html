@@ -1,4 +1,4 @@
-<div>
+<div style="text-align: center;">
 	<h1>General Incidences Dashboard Report</h1>
 </div>
 
@@ -9,17 +9,28 @@
 			<div class="reports-title">
 				<div class="row" style="text-align: center;">
 					<span class="col-md-2" style="border-right: solid gray 1px;"><h3>TOTALS</h3></span>
-					<span class="col-md-3" style="border-right: solid gray 1px; margin-left: 15px;"><h4>Total Schools: {{totalInstitutions}}</h4></span>
+					<span class="col-md-3" style="border-right: solid gray 1px; margin-left: 15px;">
+						<div class="row">
+							<span><h4>Total Institutions: {{totalInstitutions}}</h4>
+							&nbsp;&nbsp;&nbsp;
+							</span>
+						</div>
+					</span>
 					<span class="col-md-3" style="border-right: solid gray 1px; margin-left: 15px;">
 						<div class="row">
 							<span><h4>Total Users: {{totalAccounts}}</h4>
-							({{totalTecnicians}} techs - {{totalUsers}} users)<span>
+							( {{totalTecnicians}} technicians )
+							<span>
 						</div>
 					</span>
 					<span class="col-md-3" style="margin-left: 15px;">
 						<div class="row">
 							<span><h4>Total Incidences: {{totalIncidences}}</h4>
-								({{totalOpen}} Open - {{totalOnGoing}} On Going - {{totalClosed}} Closed)
+								(
+								<b> <span style="color: green;">{{totalOpen}} Open</span> -
+									<span style="color: orange;">{{totalOnGoing}} On Going</span> - 
+									<span style="color: red;">{{totalClosed}} Closed</span>
+								)	
 							<span>
 						</div>
 					</span>	
@@ -68,24 +79,34 @@
 			<div class="chart-title">
 				<div class="row" style="text-align: center;">
 					<span class="col-md-2" style="border-right: solid gray 1px;"><h3>TOTALS</h3></span>
-					<span class="col-md-3" style="border-right: solid gray 1px; margin-left: 15px;"><h4>Total Schools: {{totalInstitutions}}</h4></span>
+					<span class="col-md-3" style="border-right: solid gray 1px; margin-left: 15px;">
+						<div class="row">
+							<span><h4>Total Institutions: {{totalInstitutions}}</h4>
+							&nbsp;&nbsp;&nbsp;
+							</span>
+						</div>
+					</span>
 					<span class="col-md-3" style="border-right: solid gray 1px; margin-left: 15px;">
 						<div class="row">
 							<span><h4>Total Users: {{totalAccounts}}</h4>
-							({{totalTecnicians}} techs - {{totalAccounts}} users)<span>
+							( {{totalTecnicians}} technicians )<span>
 						</div>
 					</span>
 					<span class="col-md-3" style="margin-left: 15px;">
 						<div class="row">
 							<span><h4>Total Incidences: {{totalIncidences}}</h4>
-								({{totalOpen}} Open - {{totalOnGoing}} On Going - {{totalClosed}} Closed)
+								(
+								<b> <span style="color: green;">{{totalOpen}} Open</span> -
+									<span style="color: orange;">{{totalOnGoing}} On Going</span> - 
+									<span style="color: red;">{{totalClosed}} Closed</span>
+								)	
 							<span>
 						</div>
 					</span>	
 				</div>
 			</div>
 			
-			<div class="chart-frame shadow-form-container">
+			<div class="chart-frame	">
 				<div google-chart chart="chartObjectTotals" style="{{chartObjectTotals.cssStyle}}"></div>
 			</div>
 		</div>
@@ -98,43 +119,153 @@
 		<div class="col-md-12">
 			<div class="reports-title">
 				<div class="row" style="text-align: center;">
-					<span class="col-md-2" style="border-right: solid gray 1px;"><h3>SEV & PRI</h3></span>
+					<span class="col-md-3" style="border-right: solid gray 1px;"><h3>SEVERITY & PRIORITY</h3></span>
 					<span class="col-md-4" style="border-right: solid gray 1px; margin-left: 15px;">
 						<div class="row">
 							<span><h4>Severity</h4>
-								({{totalSevSerious}} Serious - {{totalSevHigh}} High - {{totalSevMedium}} Medium - {{totalSevLow}} Low)
+								(
+								<b> <span style="color: red;">{{totalSevSerious}} Serious</span> -
+									<span style="color: orange;">{{totalSevHigh}} High </span> -
+									<span style="color: #2ECCFA;">{{totalSevMedium}} Medium </span> -
+									<span style="color: green;">{{totalSevLow}} Low</span>
+								)
 							<span>
 						</div>
 					</span>
 					<span class="col-md-4" style="border-right: solid gray 1px; margin-left: 15px;">
 						<div class="row">
 							<span><h4>Priority</h4>
-								({{totalPriSerious}} Serious - {{totalPriHigh}} High - {{totalPriMedium}} Medium - {{totalPriLow}} Low)
+								(
+								<b> <span style="color: red;">{{totalPriSerious}} Serious</span> -
+									<span style="color: orange;">{{totalPriHigh}} High </span> -
+									<span style="color: #2ECCFA;">{{totalPriMedium}} Medium </span> -
+									<span style="color: green;">{{totalPriLow}} Low</span>
+								)
+							<span>
+						</div>
+					</span>		
+				</div>
+			</div>
+			<div class="list-incidences-reports">
+				<div class="row">
+					<div class="col-md-12">
+					    <table tr-ng-grid="" items="severityPriorityReport" enable-sorting="false">
+						    <thead>
+						        <tr>
+									<th field-name="institution" display-align="center"></th>
+									<th field-name="numberSevSerious" display-align="center" display-name="Sev. Serious"></th>
+									<th field-name="numberSevHigh" display-align="center" display-name="Sev. High"></th>
+									<th field-name="numberSevMedium" display-align="center" display-name="Sev. Medium"></th>
+									<th field-name="numberSevLow" display-align="center" display-name="Sev. Low"></th>
+									<th field-name="numberPriSerious" display-align="center" display-name="Sev. Serious"></th>
+									<th field-name="numberPriLow" display-align="center" display-name="Sev. High"></th>
+									<th field-name="numberPriHigh" display-align="center" display-name="Sev. Medium"></th>
+									<th field-name="numberPriMedium" display-align="center" display-name="Sev. Low"></th>
+									
+						        </tr>
+						    </thead>
+					        <tfoot>
+					            <tr>
+					                <td colspan="10">	
+					                    <form class="form-inline tr-ng-grid-footer" grid="">
+					                        <div class="pull-left" tr-ng-grid-global-filter=""></div>
+					                        <div class="pull-right" tr-ng-grid-pager=""></div>
+					                    </form>
+					                </td>
+					            </tr>
+					        </tfoot>
+					    </table>
+					</div>
+			    </div>
+			</div>
+		</div>
+	</div>	
+	<div class="row" style="margin-top:15px;">
+		<div class="col-md-12">
+			<div class="reports-title">
+				<div class="row" style="text-align: center;">
+					<span class="col-md-3" style="border-right: solid gray 1px;"><h3>SEVERITY & PRIORITY</h3></span>
+					<span class="col-md-4" style="border-right: solid gray 1px; margin-left: 15px;">
+						<div class="row">
+							<span><h4>Severity</h4>
+								(
+								<b> <span style="color: red;">{{totalSevSerious}} Serious</span> -
+									<span style="color: orange;">{{totalSevHigh}} High </span> -
+									<span style="color: #2ECCFA;">{{totalSevMedium}} Medium </span> -
+									<span style="color: green;">{{totalSevLow}} Low</span>
+								)
+							<span>
+						</div>
+					</span>
+					<span class="col-md-4" style="border-right: solid gray 1px; margin-left: 15px;">
+						<div class="row">
+							<span><h4>Priority</h4>
+								(
+								<b> <span style="color: red;">{{totalPriSerious}} Serious</span> -
+									<span style="color: orange;">{{totalPriHigh}} High </span> -
+									<span style="color: #2ECCFA;">{{totalPriMedium}} Medium </span> -
+									<span style="color: green;">{{totalPriLow}} Low</span>
+								)
 							<span>
 						</div>
 					</span>	
 				</div>
 			</div>
+			<div class="chart-frame">
+				<div google-chart chart="chartObjectSevPrio	" style="{{chartObjectSevPrio.cssStyle}}"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="assignations" class="row" style="margin-top:15px; padding-left: 8px; padding-right: 8px; padding-bottom: 15px;    background-color: #373838;
+">
+	<div class="row" style="margin-top:15px;">
+		<div class="col-md-12">
+			<div class="reports-title">
+				<div class="row" style="text-align: center;">
+					<span class="col-md-3" style="border-right: solid gray 1px;"><h3>EFFORT</h3></span>
+					<span class="col-md-4" style="border-right: solid gray 1px; margin-left: 15px;">
+						<div class="row">
+							<span><h4>Total Institutions: {{totalInstitutions}}</h4>
+							&nbsp;&nbsp;&nbsp;
+							</span>
+						</div>
+					</span>
+					<span class="col-md-4" style="border-right: solid gray 1px; margin-left: 15px;">
+						<div class="row">
+							<span><h4>Total Effort: {{totalEffort / 60 | number:2}} hours </h4>
+							&nbsp;&nbsp;&nbsp;							
+							<span>Per Technician: {{totalEffortPerTechnician / 60 | number:2}} hours</h4>
+							&nbsp;&nbsp;&nbsp;							
+							<span>
+						</div>
+					</span>
+				</div>
+			</div>
 			<div class="list-incidences-reports ">
-			    <table tr-ng-grid="" items="totalsReport" enable-sorting="false">
+			    <table tr-ng-grid="" items="effortsReport" enable-sorting="false">
 				    <thead>
 				        <tr>
 							<th field-name="institution" display-align="center"></th>
-					        <th field-name="totalAccounts" display-align="center"></th>
-					        <th field-name="usersAccounts" display-align="center"></th>
-					        <th field-name="techniciansAccounts" display-align="center" display-name="Techs Accounts"></th>
 					        <th field-name="numberOpenIncidences" display-align="center" display-name="Open Inc"></th>
-					        <th field-name="numberOnGoingIncidences" display-align="center" display-name="On Going Inc"></th>
+					        <th field-name="numberAssignedIncidences" display-align="center" display-name="Assigned Inc"></th>
 					        <th field-name="numberClosedIncidences" display-align="center" display-name="Closed Inc"></th>
-					        <th field-name="incidencesPerUser" display-name="Inc / user" display-align="center"></th>
-					        <th field-name="numberIncidences" display-align="center" display-name="Total Inc"></th>			      
+					        <th field-name="numberIncidences" display-align="center" display-name="Total Inc"></th>
+					        <th field-name="totalEffort" display-align="center" display-name="Total effort (hours)"></th>
+					        <th field-name="totalEffortPerTechnician" display-align="center" display-name="Effort / Tech (hours)	"></th>
 				        </tr>
 				    </thead>
 			        <tbody>
 						<tr>
-			                <td field-name="incidencesPerUser">
+						 	<td field-name="totalEffort">
 			                    <div>  
-			                       {{ gridItem.incidencesPerUser | number:2 }}
+			                       {{ gridItem.totalEffort | number:2 }}
+			                    </div>
+			                </td>
+			                <td field-name="totalEffortPerTechnician">
+			                    <div>  
+			                       {{ gridItem.totalEffortPerTechnician | number:2 }}
 			                    </div>
 			                </td>
 			            </tr>
@@ -155,30 +286,36 @@
 	</div>	
 	<div class="row" style="margin-top:15px;">
 		<div class="col-md-12">
-			<div class="reports-title">
+			<div class="chart-title">
 				<div class="row" style="text-align: center;">
-					<span class="col-md-2" style="border-right: solid gray 1px;"><h3>SEV & PRI</h3></span>
+					<span class="col-md-3" style="border-right: solid gray 1px;"><h3>EFFORT</h3></span>
 					<span class="col-md-4" style="border-right: solid gray 1px; margin-left: 15px;">
 						<div class="row">
-							<span><h4>Severity</h4>
-								(<b> <span style="color: red;">{{totalSevSerious}} Serious</span> -
-									 <span style="color: orange;">{{totalSevHigh}} High </span> -
-									 <span style="color: blue;">{{totalSevMedium}} Medium </span> -
-									 <span style="color: green;">{{totalSevLow}} Low</span>)
-							<span>
+							<span><h4>Total Institutions: {{totalInstitutions}}</h4>
+							&nbsp;&nbsp;&nbsp;
+							</span>
 						</div>
 					</span>
 					<span class="col-md-4" style="border-right: solid gray 1px; margin-left: 15px;">
 						<div class="row">
-							<span><h4>Priority</h4>
-								({{totalPriSerious}} Serious - {{totalPriHigh}} High - {{totalPriMedium}} Medium - {{totalPriLow}} Low)
+							<span><h4>Total Effort: {{totalEffort / 60 | number:2}} hours </h4>
+							&nbsp;&nbsp;&nbsp;							
+							<span>Per Technician: {{totalEffortPerTechnician / 60 | number:2}} hours</h4>
+							&nbsp;&nbsp;&nbsp;							
 							<span>
 						</div>
-					</span>	
+					</span>
 				</div>
 			</div>
-			<div class="chart-frame shadow-form-container">
-				<div google-chart chart="chartObjectSevPrio	" style="{{chartObjectSevPrio.cssStyle}}"></div>
+			<div class="chart-frame">
+				<div class="row">
+					<div class="col-md-6">
+						<div google-chart chart="chartObjectAssignations" style="{{chartObjectAssignations.cssStyle}}"></div>
+					</div>
+					<div class="col-md-6">
+						<div google-chart chart="chartObjectEffort" style="{{chartObjectEffort.cssStyle}}"></div>
+					</div>
+				</div>	
 			</div>
 		</div>
 	</div>
