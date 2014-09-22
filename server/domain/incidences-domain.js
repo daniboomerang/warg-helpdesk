@@ -21,6 +21,7 @@ exports.createIncidence = function(title, description, user, severity, priority,
 
   school = user.school;
   console.log("############### USER SCHOOL: " + user.school);
+  console.log("############### USER SCHOOL: " + user.user_info.school);
 
   var generateNewId = function (schoolCode){
 
