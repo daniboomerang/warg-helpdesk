@@ -75,7 +75,9 @@ module.exports = function(mailSenderService){
 
       findSenderAsUser(sender).then(function (findResult){
 
+        console.log("find sender result processing");
         if ((findResult.status == 'sender.found') && (isAllowedToCreateIncidence(findResult.user))){
+
           var user_info = findResult.user.user_info;
           createIncidence(subject, content, findResult.user).then(function (createResult){
             try {
@@ -98,10 +100,12 @@ module.exports = function(mailSenderService){
                 });
               }
               else if (createResult.status == 'incidence.not.created'){
+                console.log("incidence creation problem");
                 resolveDeferred({status: 'incidence.creation.error'});
               }
             }
             catch (e){
+              console.log("acknowledge sending problem");
               resolveDeferred({status: 'acknowledge.not.sent'});
             }
           });       
