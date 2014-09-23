@@ -21,26 +21,35 @@ var mongoose = require('mongoose'),
 var generateNewId = function (schoolCode){
 
   console.log("########### GENERATE NEW INC ID ");
+
   var deferred = Q.defer();
   var regExp = new RegExp(schoolCode, 'i');
   //var regExp = '/'+ schoolCode + '/';
   var nextIncidenceId;
   Incidence.findOne({id: regExp}).sort({ 'created' : -1 }).exec(function(err, lastIncidence) {
     if (err) {
-    console.log("########### ERROR GENERATE NEW INC ID ");
-      deferred.resolve({status: 'incidence.not.created', error: 'Error at incidence creation, trying to retrieve the last record on incidences.'});
+      deferred.reject({status: 'incidence.not.created', error: 'Error at incidence creation, trying to retrieve the last record on incidences.'});
     } else {
       if (lastIncidence == null){
         nextIncidenceId = 1; 
       } else {
         nextIncidenceId = parseInt(lastIncidence.id.split('-')[1]) + 1; 
       }
-    console.log("########### GENERATED INC ID ");
       deferred.resolve(schoolCode + '-' + nextIncidenceId.toString());
     }
   });
 
   return deferred.promise;
+};
+
+var defaultStatus = {  
+  // Possible statuses : Open, Closed, Reopened
+  currentStatus: STATUS_OPEN,
+  // Possible substatuses : Open-OnGoing, Open-Blocked,
+  // Closed-Solved, Closed-Duplicated, Closed-Invalid
+  currentSubstatus: '',
+  duplicatedOf: null,
+  blockedBy: null
 };
 
 exports.createIncidence = function(title, description, user, severity, priority) {
@@ -51,17 +60,7 @@ exports.createIncidence = function(title, description, user, severity, priority)
   if (severity==null){severity = "Medium";}
   if (priority==null){priority = "Medium";}
 
-  var status = {
-      // Possible statuses : Open, Closed, Reopened
-      currentStatus: STATUS_OPEN,
-      // Possible substatuses : Open-OnGoing, Open-Blocked,
-      // Closed-Solved, Closed-Duplicated, Closed-Invalid
-      currentSubstatus: '',
-      duplicatedOf: null,
-      blockedBy: null
-  };
-
- var incidence = new Incidence({title: title, description: description, severity: severity, priority: priority, status: status });
+ var incidence = new Incidence({title: title, description: description, severity: severity, priority: priority, status: defaultStatus });
   incidence.creator =  user;
     console.log("########### INCIDENCE MODEL CREATED");
   if (school == null){
