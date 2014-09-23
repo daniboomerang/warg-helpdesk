@@ -43,6 +43,54 @@ var generateNewId = function (schoolCode){
   return deferred.promise;
 };
 
+exports.createIncidenceFromMail = function(title, description, user) {
+  // var deferred = Q.defer();
+  // deferred.reject({ status: RESULT_ERROR });
+  // return deferred.promise;;
+  
+  console.log("########### INCIDENCE creation");
+  var school = user.school;
+
+  var deferred = Q.defer();
+
+  var severity = "Medium";
+  var priority = "Medium";
+
+  var status = {
+      // Possible statuses : Open, Closed, Reopened
+      currentStatus: STATUS_OPEN,
+      // Possible substatuses : Open-OnGoing, Open-Blocked,
+      // Closed-Solved, Closed-Duplicated, Closed-Invalid
+      currentSubstatus: '',
+      duplicatedOf: null,
+      blockedBy: null
+  };
+
+ var incidence = new Incidence({title: title, description: description, severity: severity, priority: priority, status: status });
+  incidence.creator =  user;
+      console.log("########### INCIDENCE MODEL CREATED");
+
+
+  if (school == null){
+      console.log("########### SCHOOL NULL");
+    deferred.reject({status: 'incidence.not.created', error: "Server internal error: 'User organization not found.'"});
+  } else {
+    console.log("########### GOING GENERATE ID ");
+    generateNewId(school.code).then(function (newId){
+      incidence.id = newId;
+      console.log("########### GOING TO SAVE INCIDENCIA ");
+      incidence.save(function(err) {
+        if (err) {
+          deferred.reject({status: 'incidence.not.created', error: err});
+        } else {
+          deferred.resolve({status: 'incidence.created', incidence: incidence});
+        }
+      });
+    })
+  }  
+  return deferred.promise;
+};
+
 exports.createIncidence = function(title, description, user, severity, priority, school) {
 
   school = user.school;
