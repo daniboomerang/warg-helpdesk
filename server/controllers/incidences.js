@@ -32,13 +32,11 @@ exports.incidence = function(req, res, next, id) {
  * Create a incidence
  */
 exports.create = function(req, res) {
- incidencesDomain.createIncidence(req.body.title, req.body.description, req.user, req.body.severity, req.body.priority, req.body.school).then (function (result){
-    if (result.status == 'incidence.created'){
-      res.json(result.incidence);
-    }  
-    else if (result.status == 'incidence.not.created'){
-      res.json(500, result.error);
-    }
+ incidencesDomain.createIncidence(req.body.title, req.body.description, req.user, req.body.severity, req.body.priority)
+  .then (function (result){
+    res.json(result.incidence);
+  }, function(result){
+    res.json(500, result.error);
   });   
 };
 

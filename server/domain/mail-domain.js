@@ -41,7 +41,7 @@ var _processIncoming = function (sender, receiver, subject, content) {
 
   var createUserIncidence = function(findResult){
     user = findResult.user;
-    return incidencesDomain.createIncidenceFromMail(subject, content, findResult.user);
+    return incidencesDomain.createIncidence(subject, content, findResult.user);
   };
 
   var sendAcknowledgement = function(result){
