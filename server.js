@@ -93,7 +93,7 @@ try {
     var mailDomain = new MailDomain(global.mailSender)
     
     mailListener.onMailReceived(mailDomain.processIncoming);
-    mailListener.start;
+    mailListener.start();
   }
 }
 catch (e){
