@@ -40,10 +40,8 @@ var _processIncoming = function (sender, receiver, subject, content) {
   var user;
 
   var createUserIncidence = function(findResult){
-    if (findResult.status == 'user.found'){
-      user = findResult.user;
-      return incidencesDomain.createIncidenceFromMail(subject, content, findResult.user);
-    }
+    user = findResult.user;
+    return incidencesDomain.createIncidenceFromMail(subject, content, findResult.user);
   };
 
   var sendAcknowledgement = function(result){
