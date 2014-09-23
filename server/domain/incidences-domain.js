@@ -55,31 +55,39 @@ var DEFAULT_PRIORITY = "Medium";
 
 exports.createIncidence = function(title, description, user, severity, priority) {
 
-  var deferred = Q.defer();
   var school = user.school;
 
   severity = severity || DEFAULT_SEVERITY;
   priority = priority || DEFAULT_PRIORITY;
 
- var incidence = new Incidence({title: title, description: description, severity: severity, priority: priority, status: defaultStatus });
+  if (school == null) return noSchoolRejection();
+  return generateNewId(school.code)
+    .then(createIncidenceWithId.bind(this, title, description, user, severity, priority));
+
+};
+
+var noSchoolRejection = function(){
+  var deferredSchool = Q.defer();
+  deferredSchool.reject({status: 'incidence.not.created', error: "Server internal error: 'User organization not found.'"});
+  return deferredSchool.promise;
+};
+
+var createIncidenceWithId = function(title, description, user, severity, priority, generatedId){
+  var deferredPureCreation = Q.defer();
+
+  var incidence = new Incidence({title: title, description: description, severity: severity, priority: priority, status: defaultStatus });
   incidence.creator =  user;
-  if (school == null){
-    deferred.reject({status: 'incidence.not.created', error: "Server internal error: 'User organization not found.'"});
-  } else {
-    console.log("########### GOING GENERATE ID ");
-    generateNewId(school.code).then(function (newId){
-      incidence.id = newId;
-      console.log("########### GOING TO SAVE INCIDENCIA ");
-      incidence.save(function(err) {
-        if (err) {
-          deferred.reject({status: 'incidence.not.created', error: err});
-        } else {
-          deferred.resolve({status: 'incidence.created', incidence: incidence});
-        }
-      });
-    })
-  }  
-  return deferred.promise;
+  incidence.id = generatedId;
+
+  incidence.save(function(err) {
+    if (err) {
+      deferredPureCreation.reject({status: 'incidence.not.created', error: err});
+    } else {
+      deferredPureCreation.resolve({status: 'incidence.created', incidence: incidence});
+    }
+  });
+
+  return deferredPureCreation.promise;
 };
 
 /**
