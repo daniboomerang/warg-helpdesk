@@ -20,8 +20,6 @@ var mongoose = require('mongoose'),
  */
 var generateNewId = function (schoolCode){
 
-  console.log("########### GENERATE NEW INC ID ");
-
   var deferred = Q.defer();
   var regExp = new RegExp(schoolCode, 'i');
   //var regExp = '/'+ schoolCode + '/';
@@ -52,19 +50,20 @@ var defaultStatus = {
   blockedBy: null
 };
 
+var DEFAULT_SEVERITY = "Medium";
+var DEFAULT_PRIORITY = "Medium";
+
 exports.createIncidence = function(title, description, user, severity, priority) {
 
   var deferred = Q.defer();
   var school = user.school;
 
-  if (severity==null){severity = "Medium";}
-  if (priority==null){priority = "Medium";}
+  severity = severity || DEFAULT_SEVERITY;
+  priority = priority || DEFAULT_PRIORITY;
 
  var incidence = new Incidence({title: title, description: description, severity: severity, priority: priority, status: defaultStatus });
   incidence.creator =  user;
-    console.log("########### INCIDENCE MODEL CREATED");
   if (school == null){
-    console.log("########### SCHOOL NULL");
     deferred.reject({status: 'incidence.not.created', error: "Server internal error: 'User organization not found.'"});
   } else {
     console.log("########### GOING GENERATE ID ");
