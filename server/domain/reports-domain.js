@@ -89,6 +89,20 @@ exports.incidences = function() {
     return filteredUsers;
   }
 
+
+  function filterIncidencesByTechnician (incidences, technician){
+    var filteredIncidences = [];
+    for (var i = 0; i<= incidences.length -1; i++){
+      if (incidences[i].assigned){
+        if (incidences[i].assigned == technician.username){
+          filteredIncidences.push(incidences[i]);
+        }
+      }
+     
+    }
+    return filteredIncidences;
+  }
+
   function getTotalIncidencesEffort (incidences){
     var totalEffort = 0;
     for (var i = 0; i<= incidences.length -1; i++){
@@ -98,6 +112,16 @@ exports.incidences = function() {
   }
 
   function generateTotalListReport (incidences, schools, users){
+
+    var totalsTotalsReport = {};
+
+    totalsTotalsReport.totalInstitutions = 0;
+    totalsTotalsReport.totalAccounts = 0;
+    totalsTotalsReport.totalTechnicians = 0;
+    totalsTotalsReport.totalIncidences = 0;
+    totalsTotalsReport.totalOpen = 0;
+    totalsTotalsReport.totalOnGoing = 0;
+    totalsTotalsReport.totalClosed = 0;
 
     function generateRow(school, schoolIncidences, schoolUsers){
       return {
@@ -114,16 +138,38 @@ exports.incidences = function() {
       }
     }
 
-    var totalsListReport = []
+    var totalsListReport = [];
     for (var i=0; i<=schools.length -1; i++){
-      totalsListReport.push(generateRow(schools[i],
+      var currentRow = generateRow(schools[i],
                                        filterIncidencesBySchool(incidences, schools[i]),
-                                       filterUsersBySchool(users, schools[i])));
+                                       filterUsersBySchool(users, schools[i]))
+      totalsListReport.push(currentRow);  
+      totalsTotalsReport.totalInstitutions += 1;
+      totalsTotalsReport.totalAccounts = currentRow.totalAccounts;
+      totalsTotalsReport.totalTechnicians = currentRow.totalTechnicians;
+      totalsTotalsReport.totalIncidences = currentRow.numberIncidences;
+      totalsTotalsReport.totalOpen = currentRow.numberOpenIncidences;
+      totalsTotalsReport.totalOnGoing = currentRow.numberOnGoingIncidences;
+      totalsTotalsReport.totalClosed = currentRow.numberClosedIncidences;
+
     }
-    return totalsListReport;
+    return {totals: totalsTotalsReport, list: totalsListReport};
   }
 
   function generateSeverityPriorityListReport (incidences, schools){
+
+    var totalsSevPriReport = {};
+
+    totalsSevPriReport.totalInstitutions = 0;
+    totalsSevPriReport.totalSevSerious = 0; 
+    totalsSevPriReport.totalSevHigh = 0;
+    totalsSevPriReport.totalSevMedium = 0;
+    totalsSevPriReport.totalSevLow = 0;
+    totalsSevPriReport.totalPriSerious = 0; 
+    totalsSevPriReport.totalPriHigh = 0;
+    totalsSevPriReport.totalPriMedium = 0;
+    totalsSevPriReport.totalPriLow = 0;
+
     function generateRow(school, schoolIncidences){
       return {
         institution: school.name,
@@ -142,35 +188,95 @@ exports.incidences = function() {
 
     var severityPriorityListReport = []
     for (var i=0; i<=schools.length -1; i++){
-      severityPriorityListReport.push(generateRow(schools[i],
-                                       filterIncidencesBySchool(incidences, schools[i])));
+      var currentRow = generateRow(schools[i], filterIncidencesBySchool(incidences, schools[i]));
+      severityPriorityListReport.push(currentRow);
+
+      totalsSevPriReport.totalInstitutions += 1;
+      totalsSevPriReport.totalSevSerious += currentRow.numberSevSerious;
+      totalsSevPriReport.totalSevHigh += currentRow.numberSevHigh;
+      totalsSevPriReport.totalSevMedium += currentRow.numberSevMedium;
+      totalsSevPriReport.totalSevLow += currentRow.totalSevLow;
+      totalsSevPriReport.totalPriSerious += currentRow.numberPriSerious;
+      totalsSevPriReport.totalPriHigh += currentRow.numberPriHigh;
+      totalsSevPriReport.totalPriMedium += currentRow.numberPriMedium;
+      totalsSevPriReport.totalPriLow += currentRow.numberPriLow;
+
     }
-    return severityPriorityListReport;
+    return {totals: totalsSevPriReport, list: severityPriorityListReport};
   }
 
-  function generateEffortsListReport (incidences, schools, users){
-    function generateRow(school, schoolIncidences, schoolTechnicians){
-      var totalEffortPerSchool = getTotalIncidencesEffort(schoolIncidences)
+  function generateEffortsReport (incidences, schools, users){
+
+    var effortTotalsReport = {};
+
+    effortTotalsReport.totalInstitutions = 0;
+    effortTotalsReport.totalEffort = 0;
+
+    function generateRow(school, schoolTechnician, schoolTechnicianEffort){
+
+      effortTotalsReport.totalEffort += schoolTechnicianEffort;
+
       return {
+        // This is a row SCHOOL/TECHNICIAN
         institution: school.name,
         institutionCode: school.code,
-        numberOpenIncidences: filterIncidencesByStatus(schoolIncidences, STATUS_OPEN).length,
-        numberAssignedIncidences: filterIncidencesByStatus(schoolIncidences, STATUS_ONGOING).length,
-        numberClosedIncidences: filterIncidencesByStatus(schoolIncidences, STATUS_CLOSED).length,
-        numberIncidences: schoolIncidences.length,  
-        totalEffort: totalEffortPerSchool,
-        totalEffortPerTechnician: totalEffortPerSchool / schoolTechnicians.length,
-        schoolTechnicians: schoolTechnicians
+        technician: schoolTechnician.username,
+        totalEffort: schoolTechnicianEffort
       }
     }
 
     var effortsListReport = []
     for (var i=0; i<=schools.length -1; i++){
-      effortsListReport.push(generateRow(schools[i],
-                                  filterIncidencesBySchool(incidences, schools[i]),
-                                  filterUsersByRole(filterUsersBySchool(users, schools[i]), ROLE_TECH)));
+      
+      effortTotalsReport.totalInstitutions =+ 1 ;
+      
+      var currentSchool = schools[i];
+      var currentSchoolTechnicians = filterUsersByRole(filterUsersBySchool(users, currentSchool), ROLE_TECH);
+      for (var j=0; j <= currentSchoolTechnicians.length -1; j++){
+        var currentSchoolTechnician = currentSchoolTechnicians[j];
+        var currentRow = generateRow(currentSchool, currentSchoolTechnician, 100);
+        effortsListReport.push(currentRow);
+        effortTotalsReport.totalEffort += currentRow.totalEffort;
+      } 
     }
-    return effortsListReport;
+    return {totals: effortTotalsReport, list: effortsListReport};
+  }
+
+  function generateAssignationsListReport (incidences, schools, users){
+
+    var assignationsTotalsReport = {};
+
+    assignationsTotalsReport.totalInstitutions = 0;
+    assignationsTotalsReport.totalAssignations= 0;
+
+    function generateRow(school, technicianIncidences, schoolTechnician){
+      return {
+        // This is a row SCHOOL/TECHNICIAN
+        institution: school.name,
+        institutionCode: school.code,
+        technician: schoolTechnician.username,
+        numberAssignedIncidences: technicianIncidences.length
+      };
+    }
+
+    var assignationsListReport = [];
+    for (var i=0; i<=schools.length -1; i++){
+
+      assignationsTotalsReport.totalInstitutions =+ 1 ;
+
+      var currentSchool = schools[i];
+      var currentSchoolTechnicians = filterUsersByRole(filterUsersBySchool(users, currentSchool), ROLE_TECH);
+      for (var j=0; j <= currentSchoolTechnicians.length -1; j++){
+        var currentSchoolTechnician = currentSchoolTechnicians[j];
+        var technicianIncidences = filterIncidencesByTechnician(incidences, currentSchoolTechnician);
+        var currentRow = generateRow(currentSchool, technicianIncidences, currentSchoolTechnician);
+        assignationsListReport.push(currentRow);
+
+        assignationsTotalsReport.totalAssignations += currentRow.numberAssignedIncidences;
+
+      } 
+    }
+    return {totals: assignationsTotalsReport, list: assignationsListReport};
   }
 
   var deferred = Q.defer();
@@ -185,11 +291,11 @@ exports.incidences = function() {
          schoolsData.status == RESULT_SUCCESS &&
          usersData.status == RESULT_SUCCESS){
 
-        var totalsReport = {totalsListReport: generateTotalListReport(incidencesData.list, schoolsData.list, usersData.list)};
-        var severityPriorityReport = {severityPriorityListReport: generateSeverityPriorityListReport(incidencesData.list, schoolsData.list)};
-        var effortsReport = {effortsListReport: generateEffortsListReport(incidencesData.list, schoolsData.list, usersData.list)};
-
-        deferred.resolve({status: RESULT_SUCCESS, report: [totalsReport, severityPriorityReport, effortsReport]});
+        var totalsReport = generateTotalListReport(incidencesData.list, schoolsData.list, usersData.list);
+        var severityPriorityReport = generateSeverityPriorityListReport(incidencesData.list, schoolsData.list);
+        var effortsReport = generateEffortsReport(incidencesData.list, schoolsData.list, usersData.list);
+        var assignationsReport = generateAssignationsListReport(incidencesData.list, schoolsData.list, usersData.list);
+        deferred.resolve({status: RESULT_SUCCESS, report: [totalsReport, severityPriorityReport, effortsReport, assignationsReport]});
     }
     else {
       var errorMessage = "There has been an error trying to compile the data in order to generate the incidences report.";

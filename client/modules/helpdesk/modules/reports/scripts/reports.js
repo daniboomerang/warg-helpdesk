@@ -4,7 +4,8 @@
 var reports = angular.module('reports',
   	[
     'reportsControllers',
-    'reportsServices'
+    'reportsServices',
+    'chartsGeneratorServices'
     ]
 )
 .config(function($stateProvider, $urlRouterProvider) {

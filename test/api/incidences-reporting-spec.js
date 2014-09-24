@@ -20,7 +20,7 @@ describe('Incidences Reporting', function () {
             if (err) return done(err);
             res.body.should.be.instanceof(Array);
             // It checks that the server returns an array with 3 elements
-            res.body.length.should.eql(3);
+            res.body.length.should.eql(4);
             done();
         });
     });

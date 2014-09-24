@@ -1,6 +1,6 @@
 var reportsServices = angular.module('reportsServices', [])
 
-reportsServices.factory('reportService', function ($http, $q, $resource){
+reportsServices.factory('reportsService', function ($http, $q, $resource){
 
   var resourceService = $resource('api/reports/incidences', {
     }, {
