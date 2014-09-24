@@ -49,9 +49,9 @@ exports.disable = function(itemToDisable){
     if (err) {
       deferred.resolve({status: RESULT_ERROR, error: err});
     } else {
-      item.disabled = {
-        when: (itemToDisable.disabled && itemToDisable.disabled.when) || new Date(),
-        why: (itemToDisable.disabled && itemToDisable.disabled.why) || "reason not specified"
+      item.availability = {
+        when: (itemToDisable.availability && itemToDisable.availability.when) || new Date(),
+        why: (itemToDisable.availability && itemToDisable.availability.why) || "reason not specified"
       };
       item.save(function(err){
         if (err) console.log("caguen");
@@ -88,7 +88,9 @@ exports.update = function(itemToDisable){
 exports.listByUserSchool = function(user) {
   var deferred = Q.defer();
 
-  Inventory.find({ "schoolId": user.school._id, disabled: null }).exec(function(err, items) {
+  Inventory.find({ "schoolId": user.school._id })
+    .or([{ availability: null }, { "availability.status": "enabled" }])
+    .exec(function(err, items) {
     if (err) {
       deferred.resolve({status: RESULT_ERROR, error: err});
     } else {   

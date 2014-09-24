@@ -39,7 +39,7 @@ var InventorySchema = new Schema({
   lastInventoryDate: {
     type: Date
   },
-  disabled: {
+  availability: {
     type: Object
   },
   custom: {

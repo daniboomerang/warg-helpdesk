@@ -13,13 +13,13 @@ describe('Inventory Index', function () {
         HELPER.logInAsTech(done, technicianCredentials);
     });
 
-    it('displays the available inventory items', function (done) {
+    it('displays the available inventory items from his school', function (done) {
         HELPER.get('/api/inventory')
         .expect(200)
         .end(function(err, res){
             if (err) return done(err);
             res.body.should.be.instanceof(Array);
-            res.body.length.should.eql(2);
+            res.body.length.should.eql(3);
             done();
         });
     });

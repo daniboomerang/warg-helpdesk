@@ -99,7 +99,7 @@ inventoryControllers.controller('IndexCtrl', function ($scope, $modal, $state, i
 
   $scope.disable = function (item, size) {
     var modalInstance = $modal.open({
-      templateUrl: 'myModalContent.html',
+      templateUrl: '/modules/helpdesk/modules/inventory/views/partials/disablePopup.html',
       controller: ModalInstanceCtrl,
       size: size,
       resolve: {
@@ -140,13 +140,13 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
   };
 
   $scope.uncompleteData = function(){
-    return !$scope.item.disabled || !$scope.item.disabled.why || !$scope.item.disabled.when;
+    return !$scope.item.availability || !$scope.item.availability.why || !$scope.item.availability.when;
   };
 
 };
 
-inventoryControllers.controller('CreateInventoryCtrl', function ($scope, $location, $stateParams, inventoryService, messengerService, InventoryItem, InventoryItemCustomData) {
-  
+inventoryControllers.controller('CreateInventoryCtrl', function ($scope, $location, $stateParams, $modal, inventoryService, messengerService, InventoryItem, InventoryItemCustomData) {
+
   $scope.open = function($event, opened) {
     $event.preventDefault();
     $event.stopPropagation();
@@ -189,7 +189,7 @@ inventoryControllers.controller('CreateInventoryCtrl', function ($scope, $locati
   if ($stateParams.itemId){
     resource = new InventoryItem({ _id: $stateParams.itemId});
     resource.$get(function(data){
-      $scope.data = data;
+      _setView(data);
     });
   }
 
@@ -210,6 +210,38 @@ inventoryControllers.controller('CreateInventoryCtrl', function ($scope, $locati
         messengerService.popMessage('error', 'Inventory Item not created.', error.status + ' - ' + error.statusText);
       });
     }
+  };
+
+  $scope.switchStatus = function(){
+    var modalInstance = $modal.open({
+      templateUrl: '/modules/helpdesk/modules/inventory/views/partials/disablePopup.html',
+      controller: ModalInstanceCtrl,
+      resolve: {
+        item: function () {
+          return $scope.data;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (selectedItem) {
+      selectedItem.$update(
+        function(item){
+          messengerService.popMessage('success', 'Item '+ item.availability.status +' successfuly.');
+          _setView(item);
+        },
+        function(){
+          messengerService.popMessage('error', 'The item couldn\'t be '+ item.availability.status +'.');
+        }
+      );
+    }, function () {
+    });
+  };
+
+  var _setView = function(item){
+    $scope.data = item;
+    $scope.data.isEnabled = !$scope.data.availability || $scope.data.availability.status == "enabled";
+    $scope.data.isDisabled = !$scope.data.isEnabled;
+    $scope.data.statusText = $scope.data.availability ? $scope.data.availability.status.capitalize() : "Enabled";
   };
 
 });
