@@ -96,6 +96,8 @@ var createIncidenceWithId = function(title, description, user, severity, priorit
  */
 exports.findIncidence = function (id) {
 
+  console.log("finding incidence");
+
   var deferred = Q.defer();
 
    Incidence.load(id, function (err, incidence) {
@@ -252,4 +254,32 @@ exports.updateComment = function(incidence, comment, author, date) {
   });
 
   return deferred.promise;
+};
+
+/**
+ *  Updates the arry of comments of an incidence
+ *  Returns a PROMISE with the result 
+ */
+exports.postComment = function(incidenceId, comment, author, date) {
+
+  var deferred = Q.defer();
+
+  Incidence.findOne({ id: incidenceId }).exec(function(err, incidence){
+    if (err) {
+      deferred.resolve({status: RESULT_ERROR, error: err});
+    } else {
+      var post = {post: comment, author: author, date: date};
+      incidence.history.unshift(post);
+      incidence.save(function(err) {
+        if (err) {
+          deferred.resolve({status: 'incidence.not.updated', error: err});
+        } else {
+          deferred.resolve({status: 'incidence.updated', incidence: incidence});
+        }
+      });
+    }
+  });
+
+  return deferred.promise;
+
 };

@@ -35,8 +35,37 @@ var _sendMail = function (receiver, sender, subject, content) {
   return deferred.promise;
 };
 
-var _processIncoming = function (sender, receiver, subject, content) {   
-    
+var _processIncoming = function (sender, receiver, subject, content) {
+  if (subject.contains("comment")){
+    return _commentIncidence(sender, receiver, subject, content);
+  } else {
+    return _createIncidence(sender, receiver, subject, content);
+  }
+};
+
+var _commentIncidence = function(sender, receiver, subject, content){
+  var incidenceId = subject.split("#")[1];
+
+  var user;
+
+  var findUser = function(sender){
+    return usersDomain.findByEmail(sender).then(function(data){
+      user = data.user;
+      var deferred = Q.defer();
+      deferred.resolve({user: data});
+      return deferred.promise;
+    })
+  };
+
+  var _commentIncidence = function(){
+    return incidencesDomain.postComment(incidenceId, content, user.email, new Date());
+  };;
+
+  return findUser(sender)
+          .then(_commentIncidence);
+};
+
+var _createIncidence = function(sender, receiver, subject, content){
   var user;
 
   var createUserIncidence = function(findResult){
