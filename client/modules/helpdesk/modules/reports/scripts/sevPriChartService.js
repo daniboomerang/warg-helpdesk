@@ -32,7 +32,7 @@ chartsGeneratorServices.factory('severityPriorityChartService', function (){
       return rows;
     }
 
-    return chartObjectSev = {
+    return {
       "type": "ColumnChart",
       "cssStyle": "width: 100%; min-height: 800px;",
       "displayed": true,
@@ -120,7 +120,7 @@ chartsGeneratorServices.factory('severityPriorityChartService', function (){
       return rows;
     }
 
-    return chartObjectPrio = {
+    return  {
       "type": "ColumnChart",
       "cssStyle": "width: 100%; min-height: 800px;",
       "displayed": true,
