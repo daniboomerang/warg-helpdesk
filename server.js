@@ -85,9 +85,15 @@ try {
   // Setting up Mail Listener
   if (!config.mailListening.disabled){
     console.log("########### MAILER ACTIVE #############");
-    var mailListener = require('./server/config/mail-listener')(config.mailListening);
-    mailListener.onMailReceived(require('./server/domain/mail-domain')(global.mailSender).processIncoming);
-    mailListener.start;
+
+    var MailListener = require('./server/config/mail-listener');
+    var mailListener = new MailListener(config.mailListening);
+
+    var MailDomain = require('./server/domain/mail-domain');
+    var mailDomain = new MailDomain(global.mailSender)
+    
+    mailListener.onMailReceived(mailDomain.processIncoming);
+    mailListener.start();
   }
 }
 catch (e){

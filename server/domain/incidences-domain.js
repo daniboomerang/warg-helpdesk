@@ -20,22 +20,19 @@ var mongoose = require('mongoose'),
  */
 var generateNewId = function (schoolCode){
 
-  console.log("########### GENERATE NEW INC ID ");
   var deferred = Q.defer();
   var regExp = new RegExp(schoolCode, 'i');
   //var regExp = '/'+ schoolCode + '/';
   var nextIncidenceId;
   Incidence.findOne({id: regExp}).sort({ 'created' : -1 }).exec(function(err, lastIncidence) {
     if (err) {
-    console.log("########### ERROR GENERATE NEW INC ID ");
-      deferred.resolve({status: 'incidence.not.created', error: 'Error at incidence creation, trying to retrieve the last record on incidences.'});
+      deferred.reject({status: 'incidence.not.created', error: 'Error at incidence creation, trying to retrieve the last record on incidences.'});
     } else {
       if (lastIncidence == null){
         nextIncidenceId = 1; 
       } else {
         nextIncidenceId = parseInt(lastIncidence.id.split('-')[1]) + 1; 
       }
-    console.log("########### GENERATED INC ID ");
       deferred.resolve(schoolCode + '-' + nextIncidenceId.toString());
     }
   });
@@ -43,49 +40,54 @@ var generateNewId = function (schoolCode){
   return deferred.promise;
 };
 
-exports.createIncidence = function(title, description, user, severity, priority, school) {
+var defaultStatus = {  
+  // Possible statuses : Open, Closed, Reopened
+  currentStatus: STATUS_OPEN,
+  // Possible substatuses : Open-OnGoing, Open-Blocked,
+  // Closed-Solved, Closed-Duplicated, Closed-Invalid
+  currentSubstatus: '',
+  duplicatedOf: null,
+  blockedBy: null
+};
 
-  school = user.school;
-  console.log("############### USER SCHOOL: " + user.school);
-  console.log("############### USER SCHOOL: " + user.user_info.school);
+var DEFAULT_SEVERITY = "Medium";
+var DEFAULT_PRIORITY = "Medium";
 
-  var deferred = Q.defer();
+exports.createIncidence = function(title, description, user, severity, priority) {
 
-  if (severity==null){severity = "Medium";}
-  if (priority==null){priority = "Medium";}
+  var school = user.school;
 
-  var status = {
-      // Possible statuses : Open, Closed, Reopened
-      currentStatus: STATUS_OPEN,
-      // Possible substatuses : Open-OnGoing, Open-Blocked,
-      // Closed-Solved, Closed-Duplicated, Closed-Invalid
-      currentSubstatus: '',
-      duplicatedOf: null,
-      blockedBy: null
-  };
+  severity = severity || DEFAULT_SEVERITY;
+  priority = priority || DEFAULT_PRIORITY;
 
- var incidence = new Incidence({title: title, description: description, severity: severity, priority: priority, status: status });
+  if (school == null) return noSchoolRejection();
+  return generateNewId(school.code)
+    .then(createIncidenceWithId.bind(this, title, description, user, severity, priority));
+
+};
+
+var noSchoolRejection = function(){
+  var deferredSchool = Q.defer();
+  deferredSchool.reject({status: 'incidence.not.created', error: "Server internal error: 'User organization not found.'"});
+  return deferredSchool.promise;
+};
+
+var createIncidenceWithId = function(title, description, user, severity, priority, generatedId){
+  var deferredPureCreation = Q.defer();
+
+  var incidence = new Incidence({title: title, description: description, severity: severity, priority: priority, status: defaultStatus });
   incidence.creator =  user;
-    console.log("########### INCIDENCE MODEL CREATED");
-  if (school == null){
-    console.log("########### SCHOOL NULL");
-    deferred.resolve({status: 'incidence.not.created', error: "Server internal error: 'User organization not found.'"});
-  }
-  else {
-    console.log("########### GOING GENERATE ID ");
-    generateNewId(school.code).then(function (newId){
-      incidence.id = newId;
-      console.log("########### GOING TO SAVE INCIDENCIA ");
-      incidence.save(function(err) {
-        if (err) {
-          deferred.resolve({status: 'incidence.not.created', error: err});
-        } else {
-          deferred.resolve({status: 'incidence.created', incidence: incidence});
-        }
-      });
-    })
-  }  
-  return deferred.promise;
+  incidence.id = generatedId;
+
+  incidence.save(function(err) {
+    if (err) {
+      deferredPureCreation.reject({status: 'incidence.not.created', error: err});
+    } else {
+      deferredPureCreation.resolve({status: 'incidence.created', incidence: incidence});
+    }
+  });
+
+  return deferredPureCreation.promise;
 };
 
 /**
