@@ -24,7 +24,7 @@ chartsGeneratorServices.factory('assignationsChartService', function (){
       return rows;
     }
 
-    return chartObjectAssignations = {
+    return {
       "type": "ColumnChart",
       "cssStyle": "width: 100%; min-height: 800px;",
       "displayed": true,
