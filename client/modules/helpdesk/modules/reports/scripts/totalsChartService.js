@@ -33,7 +33,7 @@ chartsGeneratorServices.factory('totalsChartService', function (){
       return rows;
     }
 
-    return chartObjectTotals = {
+    return {
       "type": "PieChart",
       "cssStyle": "width: 100%; min-height: 600px;",
       "displayed": true,
@@ -85,6 +85,6 @@ chartsGeneratorServices.factory('totalsChartService', function (){
         }
       },
       "formatters": {}
-    }
+    };
   };
 });
