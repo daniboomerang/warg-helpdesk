@@ -8,34 +8,48 @@
           <table tr-ng-grid="" items="items" selected-items="selectedIncidences" selection-mode="None" enable-sorting="true" id="items-list">
             <thead>
                 <tr>
-                    <th field-name="internalId" cell-width="5em">{{ 'INTERNAL_ID' | translate }}</th>  
-                    <th field-name="serial" cell-width="5em">{{ 'SERIAL' | translate }}</th>  
                     <th field-name="kind" cell-width="5em">{{ 'KIND' | translate }}</th>  
-                    <th field-name="acquisitionDate" cell-width="5em">{{ 'ACQ_DATE' | translate }}</th>  
+                    <th field-name="internalId" cell-width="5em">{{ 'INTERNAL_ID' | translate }}</th>  
+                    <th field-name="location" cell-width="5em">{{ 'LOCATION' | translate }}</th>  
+                    <th field-name="guaranteeExpirationDate" cell-width="5em">{{ 'GUARANTEE_EXPIRATION_DATE' | translate }}</th>  
+                    <th field-name="lastInventoryDate" cell-width="5em">{{ 'LAST_INVENTORY_DATE' | translate }}</th>  
+                    <th field-name="description" cell-width="5em">{{ 'DESCRIPTION' | translate }}</th>  
                     <th field-name="actions" cell-width="5em" enable-sorting="false">{{ 'ACTIONS' | translate }}</th>  
                 </tr>
             </thead>
               <tbody>
                   <tr style="text-align: center;" ng-style="inventory-item">
-                    <td field-name="internalId">
-                      <span class="frame-list-cell">
-                        {{ gridItem.internalId | translate }}</span>
-                    </td>
-                    <td field-name="serial">
-                      <span class="frame-list-cell">
-                        {{ gridItem.serial | translate }}</span>
-                    </td>
                     <td field-name="kind">
                       <span class="frame-list-cell">
                         {{ gridItem.kind | translate }}</span>
                     </td>
-                    <td field-name="acquisitionDate">
-                      <span ng-if="(gridItem.acquisitionDate | date:'shortDate') == (today | date:'shortDate')">
-                      {{gridItem.acquisitionDate | date:'shortTime'}}
+                    <td field-name="internalId">
+                      <span class="frame-list-cell">
+                        {{ gridItem.internalId | translate }}</span>
+                    </td>
+                    <td field-name="location">
+                      <span class="frame-list-cell">
+                        {{ gridItem.location | translate }}</span>
+                    </td>
+                    <td field-name="guaranteeExpirationDate">
+                      <span ng-if="(gridItem.guaranteeExpirationDate | date:'shortDate') == (today | date:'shortDate')">
+                      {{gridItem.guaranteeExpirationDate | date:'shortTime'}}
                       </span>
-                      <span ng-if="(gridItem.acquisitionDate | date:'shortDate') != (today | date:'shortDate')">
-                      {{gridItem.acquisitionDate | date:'shortDate'}}
+                      <span ng-if="(gridItem.guaranteeExpirationDate | date:'shortDate') != (today | date:'shortDate')">
+                      {{gridItem.guaranteeExpirationDate | date:'shortDate'}}
                       </span>
+                    </td>
+                    <td field-name="lastInventoryDate">
+                      <span ng-if="(gridItem.lastInventoryDate | date:'shortDate') == (today | date:'shortDate')">
+                      {{gridItem.lastInventoryDate | date:'shortTime'}}
+                      </span>
+                      <span ng-if="(gridItem.lastInventoryDate | date:'shortDate') != (today | date:'shortDate')">
+                      {{gridItem.lastInventoryDate | date:'shortDate'}}
+                      </span>
+                    </td>
+                    <td field-name="description">
+                      <span class="frame-list-cell">
+                        {{ gridItem.description | translate }}</span>
                     </td>
                     <td field-name="actions">
                       <div>
