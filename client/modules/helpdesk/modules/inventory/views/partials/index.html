@@ -5,14 +5,14 @@
   <div class="row" ng-show="items.length > 0">
     <div class="row-fluid"> 
         <div class="span12 list-items-container">
-          <table tr-ng-grid="" items="items" selected-items="selectedIncidences" selection-mode="None" enable-sorting="false" id="items-list">
+          <table tr-ng-grid="" items="items" selected-items="selectedIncidences" selection-mode="None" enable-sorting="true" id="items-list">
             <thead>
                 <tr>
                     <th field-name="internalId" cell-width="5em">{{ 'INTERNAL_ID' | translate }}</th>  
                     <th field-name="serial" cell-width="5em">{{ 'SERIAL' | translate }}</th>  
                     <th field-name="kind" cell-width="5em">{{ 'KIND' | translate }}</th>  
                     <th field-name="acquisitionDate" cell-width="5em">{{ 'ACQ_DATE' | translate }}</th>  
-                    <th field-name="actions" cell-width="5em">{{ 'ACTIONS' | translate }}</th>  
+                    <th field-name="actions" cell-width="5em" enable-sorting="false">{{ 'ACTIONS' | translate }}</th>  
                 </tr>
             </thead>
               <tbody>
