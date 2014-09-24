@@ -8,13 +8,13 @@
           <table tr-ng-grid="" items="items" selected-items="selectedIncidences" selection-mode="None" enable-sorting="true" id="items-list">
             <thead>
                 <tr>
-                    <th field-name="kind" cell-width="5em">{{ 'KIND' | translate }}</th>  
-                    <th field-name="internalId" cell-width="5em">{{ 'INTERNAL_ID' | translate }}</th>  
-                    <th field-name="location" cell-width="5em">{{ 'LOCATION' | translate }}</th>  
-                    <th field-name="guaranteeExpirationDate" cell-width="5em">{{ 'GUARANTEE_EXPIRATION_DATE' | translate }}</th>  
-                    <th field-name="lastInventoryDate" cell-width="5em">{{ 'LAST_INVENTORY_DATE' | translate }}</th>  
-                    <th field-name="description" cell-width="5em">{{ 'DESCRIPTION' | translate }}</th>  
-                    <th field-name="actions" cell-width="5em" enable-sorting="false">{{ 'ACTIONS' | translate }}</th>  
+                    <th field-name="kind" cell-width="3em"></th>
+                    <th field-name="internalId" cell-width="3em"></th>
+                    <th field-name="location" cell-width="5em"></th>
+                    <th field-name="guaranteeExpirationDate" display-name="Guarantee Expiration" cell-width="7em"></th>
+                    <th field-name="lastInventoryDate" displayName="Last Inventory" cell-width="7em"></th>
+                    <th field-name="description" cell-width="5em"></th>
+                    <th field-name="actions" cell-width="5em" enable-sorting="false"></th>
                 </tr>
             </thead>
               <tbody>
