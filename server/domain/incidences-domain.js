@@ -262,11 +262,15 @@ exports.postComment = function(incidenceId, comment, author, date) {
 
   var deferred = Q.defer();
 
+  var safe_tags = function(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') ;
+  };
+
   Incidence.findOne({ id: incidenceId }).exec(function(err, incidence){
     if (err) {
       deferred.resolve({status: RESULT_ERROR, error: err});
     } else {
-      var post = {post: comment, author: author, date: date};
+      var post = {post: safe_tags(comment), author: author, date: date};
       incidence.history.unshift(post);
       incidence.save(function(err) {
         if (err) {

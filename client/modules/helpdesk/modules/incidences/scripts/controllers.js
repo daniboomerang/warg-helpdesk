@@ -412,6 +412,7 @@ incidencesControllers.controller('IncidenceNavCtrl', function ($scope, $document
 });
 
 incidencesControllers.controller('IncidenceCtrl', function ($scope, $routeParams, $state, $document, $rootScope) {
+  console.log($scope.incidence);
 
   $scope.commentsStatus = {};
   $scope.commentsStatus.expanded = false;
