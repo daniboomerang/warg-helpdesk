@@ -124,6 +124,7 @@ exports.close = function(req, res, next) {
                          req.body.duplicated, req.body.invalidComment, Date.now()).then (function (result){
     if (result.status == 'incidence.closed'){
       res.json(result.incidence);
+      next();
     }  
     else if (result.status == 'incidence.not.closed'){
       res.send(404, INCIDENCE_NOT_FOUND);

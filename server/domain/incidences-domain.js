@@ -96,8 +96,6 @@ var createIncidenceWithId = function(title, description, user, severity, priorit
  */
 exports.findIncidence = function (id) {
 
-  console.log("finding incidence");
-
   var deferred = Q.defer();
 
    Incidence.load(id, function (err, incidence) {

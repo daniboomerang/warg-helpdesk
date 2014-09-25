@@ -143,6 +143,30 @@ exports.assignee = function(incidence, assignee) {
 };
 
 /**
+ *  Notify new assignation
+ */
+exports.close = function(incidence) {
+  var incidenceId = incidence.id;
+  var incidenceOwnerId = incidence.creator._id;  
+  usersDomain.findUser(incidenceOwnerId).then( function( result){
+    if (result.status == 'user.found'){
+
+      var incidenceOwnerRole = result.user.role;
+      var incidenceOwnerMail = result.user.email;
+
+      var notificationMessage = function(incidence){
+        return "Your incidence " + incidenceId + " has been closed."
+      };
+
+      var mailSubject = "New Status: " + incidenceId + ' - ' + incidence.title + " closed"
+      // Notify Incidence Owner User
+      notify(incidenceOwnerRole, {addressee: incidenceOwnerId, notification: notificationMessage(incidence), incidenceId: incidenceId}, {addressee: incidenceOwnerMail, subject: mailSubject, content: notificationMessage(incidence)});
+    }  
+    else{ console.error("There has been an error trying to retrive users profiles at assignee notification."); }  
+  });
+};
+
+/**
  *  Finds Notification
  *  returns {notification}
  */
