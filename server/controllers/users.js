@@ -36,7 +36,7 @@ exports.user = function(req, res, next, id) {
  */
 
 exports.create = function (req, res, next) {
-  usersDomain.createUser(req.body.email, req.body.username, req.body.password, req.body.role, req.body.school).then (function (result){
+  usersDomain.createUser(req.body).then (function (result){
     if (result.status == 'user.created'){
       res.json(result.user);
     }  

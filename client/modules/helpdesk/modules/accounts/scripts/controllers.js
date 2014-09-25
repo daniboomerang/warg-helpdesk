@@ -8,8 +8,8 @@ accountsControllers.controller('AccountsCtrl', function ($scope, $state, $q, acc
   /* CRUD */
   //////////
 
-  $scope.create = function(email, username, password, role, school) {
-    accountResourceService.createAccount(email, username, password, role, school).then(function(account) {
+  $scope.create = function(accountParams) {
+    accountResourceService.createAccount(accountParams).then(function(account) {
       $scope.account = account;
       messengerService.popMessage('success', 'Account successfully created.', null);
       $state.go('helpdesk.accounts.open');
@@ -49,9 +49,17 @@ accountsControllers.controller('CreateAccountCtrl', function ($rootScope, $scope
   init();
 
   $scope.createAccount = function(form){
-    $scope.create(form.email.$viewValue, form.username.$viewValue,
-                  form.password.$viewValue, $scope.user.role.selected.type, $scope.user.school.selected);
-    };
+    var accountParams = {
+      email: form.email.$viewValue,
+      username: form.username.$viewValue,
+      password: form.password.$viewValue,
+      role: $scope.user.role.selected.type,
+      school: $scope.user.school.selected,
+      name: form.name.$viewValue,
+      surname: form.surname.$viewValue
+    }
+    $scope.create(accountParams);
+  };
   
   $scope.refreshSchools = function(){
     schoolResourceService.findSchools().then(function (schoolsList){      

@@ -13,11 +13,13 @@ var mongoose = require('mongoose'),
  * Create a User
  *  Returns a PROMISE with the result 
  */
-exports.createUser = function(email, username, password, role, school) {
+exports.createUser = function(userData) {
 
   var deferred = Q.defer();
 
-  var newUser = new User({email: email, username: username, password: password, role: role, school: school._id});
+  userData.school = userData.school._id;
+
+  var newUser = new User(userData);
   newUser.provider = 'local';
   newUser.save(function(err) {
     if (err) {
