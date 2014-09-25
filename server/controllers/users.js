@@ -59,7 +59,7 @@ exports.show = function(req, res) {
  *  returns [technicianObjectIds]
  */
 exports.technicians = function (req, res, next) {
-  User.find({role: 'tech'}, function (err, technicians) {
+  User.find({role: 'tech', "school": req.user.school._id}, function (err, technicians) {
     if (err) {
       return next(new Error('Failed to the list of Technicians'));
     }
