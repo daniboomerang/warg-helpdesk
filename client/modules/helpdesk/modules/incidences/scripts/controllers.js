@@ -95,7 +95,7 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
       effort: effort
     });
     incidence.$updateEffort(function (incidence) {
-      $scope.incidence = incidence;
+      $scope.incidence.effort = incidence.effort;
       $scope.incidence.effortHours = Math.floor(incidence.effort / 60);
       $scope.incidence.effortMinutes = incidence.effort % 60;
       messengerService.popMessage('success', 'Effort successfully reported', 'The total expended time for ' + incidence.id
@@ -504,110 +504,6 @@ incidencesControllers.controller('EffortCtrl', function ($scope) {
   };
 });
 
-
-incidencesControllers.controller('AssignCtrl', function ($rootScope, $scope, $state, $modal, accountResourceService, LocationService) {
-
-  init();
-  
-  $scope.assignTo = function(technician){
-    $scope.assign.allowUpdate = true;
-    $scope.assign.currentAssignation = technician;
-  }
-
-  $scope.poolAssignation = function(){     
-      $scope.assign.allowUpdate = false;
-      $scope.updateAssignee($scope.assign.currentAssignation);
-      $scope.edit.assign = false;
-  }
-
-  $scope.refreshTechnicians = function(){
-    accountResourceService.findTechnicians().then(function (techniciansList){
-      $scope.assign.techniciansList = techniciansList;
-      if ($scope.assign.techniciansList.length == 0){
-        if ($rootScope.currentUser.role = "admin"){
-          openModalWarning();
-        }
-        else{
-          $scope.assign.techniciansListReady = true;
-          $scope.assign.techniciansListEmpty = true;   
-        }
-      }
-      else{
-        $scope.technician.selected = $scope.assign.techniciansList[0];
-        $scope.assign.techniciansListReady = true;
-        $scope.assign.techniciansListEmpty = false;   
-      }
-    });
-  };
-
-  function openModalWarning() {
-
-      // Please note that $modalInstance represents a modal window (instance) dependency.
-    // It is not the same as the $modal service used above.
-    var ModalWarningInstanceCtrl = function ($scope, $modalInstance) {
-
-      $scope.ok = function () {
-        $modalInstance.close('ok');
-      };
-
-      $scope.cancel = function () {
-        $modalInstance.close('cancel');
-      };
-    };
-
-    var warningModalInstance = $modal.open({
-      templateUrl: '/modules/helpdesk/modules/incidences/views/partials/warning-technicians.html',
-      controller: ModalWarningInstanceCtrl,
-      size: 'sm'
-    });
-
-    warningModalInstance.result.then(function (choice) {
-      if (choice == 'ok') {$state.go('helpdesk.accounts.create.account');}
-      else {$state.go(LocationService.getPreviousState());}
-    }, function () { });
-    
-  };
-
-  function init(){
-
-    // Technicians
-    $scope.assign = {};
-    $scope.technician = {};
-    $scope.assign.allowUpdate = false;
-    $scope.assign.techniciansListReady = false;
-
-    var techniciansList = accountResourceService.getTechnicians();
-    if (techniciansList == null){
-      $scope.assign.techniciansListReady = false;
-      $scope.assign.techniciansListEmpty = false
-    }
-    else if (techniciansList.length == 0){
-      accountResourceService.findTechnicians().then(function (techniciansList){      
-        if (techniciansList.length > 0){
-          $scope.assign.techniciansList = techniciansList;
-          $scope.technician.selected = $scope.assign.techniciansList[0];
-          $scope.assign.techniciansListReady = true;
-        }
-        else{
-          if ($rootScope.currentUser.role = "admin"){
-            openModalWarning();
-          }
-          else{
-            $scope.assign.techniciansListReady = true;
-            $scope.assign.techniciansListEmpty = true
-          }
-        }
-      });
-    }  
-    else{
-      $scope.assign.techniciansList = techniciansList;
-      $scope.technician.selected = $scope.assign.techniciansList[0];
-      $scope.assign.techniciansListReady = true;
-      $scope.assign.techniciansListEmpty = false;
-    }  
-  }
-});
-
 incidencesControllers.controller('CloseCtrl', function ($scope, $modal, $log) {
 
   $scope.closeIncidence = function () {
@@ -710,3 +606,249 @@ incidencesControllers.controller('CloseCtrl', function ($scope, $modal, $log) {
     };
   };  
 });
+
+incidencesControllers.controller('AssignModalCtrl', function ($scope, $modal, $log, accountResourceService) {
+
+  $scope.assignIncidence = function () {
+
+    modalAssign();
+
+    function modalAssign (){
+      var assignModalInstance = $modal.open({
+        templateUrl: '/modules/helpdesk/modules/incidences/views/partials/assign-modal.html',
+        controller: ModalInstanceCtrl,
+        size: 'sm',
+        resolve: {
+          incidence: function () {
+            return $scope.incidence;
+          }
+        }
+      });
+
+      assignModalInstance.result.then(function (assignationResult) {
+        $scope.updateAssignee(assignationResult.newAssignee);
+        $scope.updateEffort(assignationResult.reportedEffort);
+      }, function () {
+        $log.info('Assign incidence dismissed at: ' + new Date());
+      });
+    }  
+  };
+
+  // Please note that $modalInstance represents a modal window (instance) dependency.
+  // It is not the same as the $modal service used above.
+  var ModalInstanceCtrl = function ($scope, $modalInstance, incidence) {
+    
+    init();
+
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+
+    $scope.changed = function(filed){
+      return filed.$dirty;
+    };
+
+    $scope.validCurrentEffort = function(){
+      return ((typeof $scope.assign.currentEffortHours != 'undefined') &&
+              (typeof $scope.assign.currentEffortMinutes != 'undefined'))
+    };
+
+    $scope.effortChanged = function () {
+      if ((typeof $scope.assign.currentEffortHours == 'undefined') || (typeof $scope.assign.currentEffortMinutes == 'undefined')){
+        // Do Nothing: this keeps the form as invalid
+      }
+      else{
+        $scope.assign.totalEffortMinutes = incidence.effortMinutes + $scope.assign.currentEffortMinutes;
+        $scope.assign.totalEffortHours = incidence.effortHours + $scope.assign.currentEffortHours;
+        $scope.assign.totalEffort = $scope.assign.totalEffortHours * 60 + $scope.assign.totalEffortMinutes;
+      }  
+    };
+
+    function init(){
+      $scope.assign = {};
+      $scope.assign.incidence = incidence;
+      $scope.assign.incidenceTotalEffort = incidence.effort;   
+      $scope.assign.currentEffortMinutes = 0;
+      $scope.assign.currentEffortHours = 0;
+      $scope.assign.totalEffort = incidence.effort;
+      $scope.assign.totalEffortMinutes = incidence.effortMinutes;
+      $scope.assign.totalEffortHours = incidence.effortHours;
+
+
+      // Technicians
+      $scope.technician = {};
+      $scope.assign.allowUpdate = false;
+      $scope.assign.techniciansListReady = false;
+
+      var techniciansList = accountResourceService.getTechnicians();
+      if (techniciansList == null){
+        $scope.assign.techniciansListReady = false;
+        $scope.assign.techniciansListEmpty = false
+      }
+      else if (techniciansList.length == 0){
+        accountResourceService.findTechnicians().then(function (techniciansList){      
+          if (techniciansList.length > 0){
+            $scope.assign.techniciansList = techniciansList;
+            $scope.technician.selected = $scope.assign.techniciansList[0];
+            $scope.assign.techniciansListReady = true;
+          }
+          else{
+            if ($rootScope.currentUser.role = "admin"){
+              openModalWarning();
+            }
+            else{
+              $scope.assign.techniciansListReady = true;
+              $scope.assign.techniciansListEmpty = true
+            }
+          }
+        });
+      }  
+      else{
+        $scope.assign.techniciansList = techniciansList;
+        $scope.technician.selected = $scope.assign.techniciansList[0];
+        $scope.assign.techniciansListReady = true;
+        $scope.assign.techniciansListEmpty = false;
+      }  
+    };
+  
+    $scope.assignTo = function(technician){
+      $scope.assign.allowUpdate = true;
+      $scope.assign.currentAssignation = technician;
+    }
+
+    $scope.assignIncidence = function(){   
+      $scope.assign.allowUpdate = false;  
+      $scope.assign.allowToPool = false;
+      var assignationResult = {
+        newAssignee: $scope.assign.currentAssignation,
+        reportedEffort:  $scope.assign.currentEffortHours * 60 +  $scope.assign.currentEffortMinutes
+      }
+      $modalInstance.close(assignationResult);
+    }
+
+    $scope.refreshTechnicians = function(){
+      accountResourceService.findTechnicians().then(function (techniciansList){
+        $scope.assign.techniciansList = techniciansList;
+        if ($scope.assign.techniciansList.length == 0){
+          if ($rootScope.currentUser.role = "admin"){
+            openModalWarning();
+          }
+          else{
+            $scope.assign.techniciansListReady = true;
+            $scope.assign.techniciansListEmpty = true;   
+          }
+        }
+        else{
+          $scope.technician.selected = $scope.assign.techniciansList[0];
+          $scope.assign.techniciansListReady = true;
+          $scope.assign.techniciansListEmpty = false;   
+        }
+      });
+    }
+  };  
+});
+
+
+incidencesControllers.controller('AssignCtrl', function ($rootScope, $scope, $state, $modal, accountResourceService, LocationService) {
+
+  init();
+  
+  $scope.assignTo = function(technician){
+    $scope.assign.allowUpdate = true;
+    $scope.assign.currentAssignation = technician;
+  }
+
+  $scope.poolAssignation = function(){     
+      $scope.assign.allowUpdate = false;
+      $scope.updateAssignee($scope.assign.currentAssignation);
+      $scope.edit.assign = false;
+  }
+
+  $scope.refreshTechnicians = function(){
+    accountResourceService.findTechnicians().then(function (techniciansList){
+      $scope.assign.techniciansList = techniciansList;
+      if ($scope.assign.techniciansList.length == 0){
+        if ($rootScope.currentUser.role = "admin"){
+          openModalWarning();
+        }
+        else{
+          $scope.assign.techniciansListReady = true;
+          $scope.assign.techniciansListEmpty = true;   
+        }
+      }
+      else{
+        $scope.technician.selected = $scope.assign.techniciansList[0];
+        $scope.assign.techniciansListReady = true;
+        $scope.assign.techniciansListEmpty = false;   
+      }
+    });
+  }
+
+  function openModalWarning() {
+
+      // Please note that $modalInstance represents a modal window (instance) dependency.
+    // It is not the same as the $modal service used above.
+    var ModalWarningInstanceCtrl = function ($scope, $modalInstance) {
+
+      $scope.ok = function () {
+        $modalInstance.close('ok');
+      };
+
+      $scope.cancel = function () {
+        $modalInstance.close('cancel');
+      };
+    };
+
+    var warningModalInstance = $modal.open({
+      templateUrl: '/modules/helpdesk/modules/incidences/views/partials/warning-technicians.html',
+      controller: ModalWarningInstanceCtrl,
+      size: 'sm'
+    });
+
+    warningModalInstance.result.then(function (choice) {
+      if (choice == 'ok') {$state.go('helpdesk.accounts.create.account');}
+      else {$state.go(LocationService.getPreviousState());}
+    }, function () { });
+    
+  };
+
+  function init(){
+
+    // Technicians
+    $scope.assign = {};
+    $scope.technician = {};
+    $scope.assign.allowUpdate = false;
+    $scope.assign.techniciansListReady = false;
+
+    var techniciansList = accountResourceService.getTechnicians();
+    if (techniciansList == null){
+      $scope.assign.techniciansListReady = false;
+      $scope.assign.techniciansListEmpty = false
+    }
+    else if (techniciansList.length == 0){
+      accountResourceService.findTechnicians().then(function (techniciansList){      
+        if (techniciansList.length > 0){
+          $scope.assign.techniciansList = techniciansList;
+          $scope.technician.selected = $scope.assign.techniciansList[0];
+          $scope.assign.techniciansListReady = true;
+        }
+        else{
+          if ($rootScope.currentUser.role = "admin"){
+            openModalWarning();
+          }
+          else{
+            $scope.assign.techniciansListReady = true;
+            $scope.assign.techniciansListEmpty = true
+          }
+        }
+      });
+    }  
+    else{
+      $scope.assign.techniciansList = techniciansList;
+      $scope.technician.selected = $scope.assign.techniciansList[0];
+      $scope.assign.techniciansListReady = true;
+      $scope.assign.techniciansListEmpty = false;
+    }  
+  }
+});
+

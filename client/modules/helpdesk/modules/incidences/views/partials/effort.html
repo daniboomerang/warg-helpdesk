@@ -1,4 +1,4 @@
-<div ng-controller="EffortCtrl" class="box-incidence-datails">
+<div ng-controller="EffortCtrl" class="box-incidence-datails ">
 	<div ng-show="edit.effort">
 		<div>
 			<div class="row" style="margin-bottom:2px;"> 
@@ -21,11 +21,11 @@
 	</div>    
 	<div ng-show="!edit.effort">
 		<div ng-show="incidence.effort == 0">
-			<div> <img src="/modules/helpdesk/modules/incidences/images/icons/stopwatch-gray-48.png" alt="Time"></div>
+			<div> <img src="/modules/helpdesk/modules/incidences/images/icons/stopwatch-gray-88.png" alt="Time"></div>
 			<font size="1" class="text-muted">No time reported</font>
 		</div>
 		<div ng-show="incidence.effort > 0">
-            <div> <img src="/modules/helpdesk/modules/incidences/images/icons/stopwatch-blue-48.png" alt="Rating"></div>
+            <div> <img src="/modules/helpdesk/modules/incidences/images/icons/stopwatch-blue-88.png" alt="Rating"></div>
                 <font size="1" class="text-muted">{{incidence.effortHours}} hours {{incidence.effortMinutes}} minutes</font>
         </div> 
 	</div> 

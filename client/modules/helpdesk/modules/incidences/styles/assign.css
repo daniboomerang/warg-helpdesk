@@ -1,0 +1,42 @@
+#assign{
+	padding-left: 10px;
+	padding-top: 10px;
+	margin-top:30px;
+	border-top: solid #D1D1D1 1px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+#effortAssign{
+	padding-left: 10px;
+	border-top: solid #D1D1D1 1px;
+	padding-top: 10px;
+	margin-top:30px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+
+.section-title{
+	margin-bottom:15px;
+}
+
+.total-effort-text-line{
+	margin-top:15px;
+}
+
+.incorrect-time-text{
+	color: #C45858; margin-top:7px;
+}
+.time-input-frame{
+	width:100px;
+}
+
+.frame-effort-error{
+	width:100px;
+	margin-top:20px;
+}
+
+.assign-select-dropdown{
+	width: 140px;
+}
