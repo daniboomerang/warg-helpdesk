@@ -15,7 +15,7 @@ exports.getUserModules = function (role) {
 
   function getActionsOnIncidences (role) {  
     if (role === ROLE_USER){
-      return ['find', 'list'];
+      return ['find', 'list', 'create'];
     }
       else if (role === ROLE_TECH){
       return ['create', 'find', 'list'];
