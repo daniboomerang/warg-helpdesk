@@ -104,14 +104,16 @@ exports.rate = function(req, res) {
 /**
  * Update incidence effort
  */
-exports.effort = function(req, res) {
-  var incidence = req.incidence;
-  incidence.effort = req.body.effort;
-  incidence.save(function(err) {
-    if (err) {
-      res.json(500, err);
-    } else {
-      res.json(incidence);
+ exports.effort = function(req, res) {
+  incidencesDomain.updateEffort(req.user, req.incidence, req.body.effort, Date.now()).then (function (result){
+    if (result.status == 'incidence.updated'){
+      res.json(result.incidence);
+    }  
+    else if (result.status == 'incidence.not.updated'){
+      res.send(404, INCIDENCE_NOT_FOUND);
+    }
+    else if (result.status == 'db.exception'){
+      res.send(500, INTERNAL_SERVER_ERROR);
     }
   });
 };
