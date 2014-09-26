@@ -63,21 +63,21 @@ UserSchema.path('email').validate(function (email) {
   return emailRegex.test(email);
 }, 'The email format is invalid.');
 
-UserSchema.path('email').validate(function(value, respond) {
-  mongoose.models["User"].findOne({email: value}, function(err, user) {
-    if(err) throw err;
-    if(user) return respond(false);
-    respond(true);
-  });
-}, 'The email address is already in use.');
+// UserSchema.path('email').validate(function(value, respond) {
+//   mongoose.models["User"].findOne({email: value}, function(err, user) {
+//     if(err) throw err;
+//     if(user) return respond(false);
+//     respond(true);
+//   });
+// }, 'The email address is already in use.');
 
-UserSchema.path('username').validate(function(value, respond) {
-  mongoose.models["User"].findOne({username: value}, function(err, user) {
-    if(err) throw err;
-    if(user) return respond(false);
-    respond(true);
-  });
-}, 'The username is already in use.');
+// UserSchema.path('username').validate(function(value, respond) {
+//   mongoose.models["User"].findOne({username: value}, function(err, user) {
+//     if(err) throw err;
+//     if(user) return respond(false);
+//     respond(true);
+//   });
+// }, 'The username is already in use.');
 
 /**
  * Pre-save hook

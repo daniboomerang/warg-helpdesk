@@ -33,6 +33,32 @@ exports.createUser = function(userData) {
 };
 
 /**
+ * Create a User
+ *  Returns a PROMISE with the result 
+ */
+exports.updateUser = function(email, userData) {
+
+  var deferred = Q.defer();
+
+  User.findOne({email: email}, function (err, user){
+    if (err) {
+      (err);
+      deferred.resolve({status: 'user.not.updated', error: err});
+    } else {
+      Object.getOwnPropertyNames(userData).forEach(function(property){
+        user[property] = userData[property];
+      });
+      user.save(function(err){
+        if (err) deferred.resolve({status: 'user.not.updated', error: err});
+        deferred.resolve({status: 'user.updated', data: user});
+      })
+    }
+  });
+
+  return deferred.promise;
+};
+
+/**
  *  Find user by email
  *  Returns a PROMISE with the result 
  */

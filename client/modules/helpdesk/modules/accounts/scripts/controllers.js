@@ -165,7 +165,17 @@ accountsControllers.controller('ListAccountsCtrl', function ($scope, $state) {
 
 });
 
-accountsControllers.controller('AccountCtrl', function ($scope){
+accountsControllers.controller('AccountCtrl', function ($scope, LocationService, messengerService){
+
+  $scope.saveChanges = function(form){
+    $scope.account.$update(function(inventoryItem){
+        messengerService.popMessage('success', 'Account successfully updated.');
+        $scope.cancelOperation();
+      }, function(error){
+        messengerService.popMessage('error', 'Account not updated.', error.status + ' - ' + error.statusText);
+      });
+  };
+
   $scope.changed = function(filed){
     return filed.$dirty;
   };

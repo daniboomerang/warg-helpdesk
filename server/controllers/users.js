@@ -46,6 +46,22 @@ exports.create = function (req, res, next) {
   });   
 };
 
+exports.update = function (req, res, next) {
+  var updateParams = {
+    name: req.body.name,
+    surname: req.body.surname,
+    password: req.body.password
+  };
+  usersDomain.updateUser(req.body.email, updateParams).then (function (result){
+    if (result.status == 'user.updated'){
+      res.json(result.user);
+    }  
+    else if (result.status == 'user.not.updated'){
+      res.json(400, result.error);
+    }
+  });   
+};
+
 /**
  * Show a user
  */

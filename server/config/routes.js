@@ -41,6 +41,7 @@ module.exports = function(app) {
   app.post('/api/users', auth.ensureAuthenticatedAsAdmin, users.create);
   app.get('/api/users', auth.ensureAuthenticatedAsAdmin, users.list);
   app.get('/api/users/:userId', auth.ensureAuthenticatedAsAdmin, users.show);
+  app.put('/api/users/:userId', auth.ensureAuthenticatedAsAdmin, users.update);
   app.param('userId', users.user);
   
   ///////////////////////
