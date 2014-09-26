@@ -36,11 +36,27 @@ exports.user = function(req, res, next, id) {
  */
 
 exports.create = function (req, res, next) {
-  usersDomain.createUser(req.body.email, req.body.username, req.body.password, req.body.role, req.body.school).then (function (result){
+  usersDomain.createUser(req.body).then (function (result){
     if (result.status == 'user.created'){
       res.json(result.user);
     }  
     else if (result.status == 'user.not.created'){
+      res.json(400, result.error);
+    }
+  });   
+};
+
+exports.update = function (req, res, next) {
+  var updateParams = {
+    name: req.body.name,
+    surname: req.body.surname,
+    password: req.body.password
+  };
+  usersDomain.updateUser(req.body.email, updateParams).then (function (result){
+    if (result.status == 'user.updated'){
+      res.json(result.user);
+    }  
+    else if (result.status == 'user.not.updated'){
       res.json(400, result.error);
     }
   });   
@@ -59,7 +75,7 @@ exports.show = function(req, res) {
  *  returns [technicianObjectIds]
  */
 exports.technicians = function (req, res, next) {
-  User.find({role: 'tech'}, function (err, technicians) {
+  User.find({role: 'tech', "school": req.user.school._id}, function (err, technicians) {
     if (err) {
       return next(new Error('Failed to the list of Technicians'));
     }

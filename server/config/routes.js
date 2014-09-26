@@ -41,6 +41,7 @@ module.exports = function(app) {
   app.post('/api/users', auth.ensureAuthenticatedAsAdmin, users.create);
   app.get('/api/users', auth.ensureAuthenticatedAsAdmin, users.list);
   app.get('/api/users/:userId', auth.ensureAuthenticatedAsAdmin, users.show);
+  app.put('/api/users/:userId', auth.ensureAuthenticatedAsAdmin, users.update);
   app.param('userId', users.user);
   
   ///////////////////////
@@ -65,7 +66,7 @@ module.exports = function(app) {
   app.put('/api/incidences/:incidenceId/rate', auth.ensureAuthenticated, incidences.rate);
   app.put('/api/incidences/:incidenceId/assignee', auth.ensureAuthenticated, incidences.assignee, notifications.notifyAssignee);
   app.put('/api/incidences/:incidenceId/effort', auth.ensureAuthenticated, incidences.effort);
-  app.put('/api/incidences/:incidenceId/close', auth.ensureAuthenticated, incidences.close); 
+  app.put('/api/incidences/:incidenceId/close', auth.ensureAuthenticated, incidences.close, notifications.notifyClose); 
   app.param('incidenceId', incidences.incidence);
 
   ////////////////////

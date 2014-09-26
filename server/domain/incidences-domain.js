@@ -283,3 +283,35 @@ exports.updateComment = function(incidence, comment, author, date) {
 
   return deferred.promise;
 };
+
+/**
+ *  Updates the arry of comments of an incidence
+ *  Returns a PROMISE with the result 
+ */
+exports.postComment = function(incidenceId, comment, author, date) {
+
+  var deferred = Q.defer();
+
+  var safe_tags = function(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') ;
+  };
+
+  Incidence.findOne({ id: incidenceId }).exec(function(err, incidence){
+    if (err) {
+      deferred.resolve({status: RESULT_ERROR, error: err});
+    } else {
+      var post = {post: safe_tags(comment), author: author, date: date};
+      incidence.history.unshift(post);
+      incidence.save(function(err) {
+        if (err) {
+          deferred.resolve({status: 'incidence.not.updated', error: err});
+        } else {
+          deferred.resolve({status: 'incidence.updated', incidence: incidence});
+        }
+      });
+    }
+  });
+
+  return deferred.promise;
+
+};

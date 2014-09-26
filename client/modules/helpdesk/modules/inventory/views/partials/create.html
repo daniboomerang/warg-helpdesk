@@ -6,6 +6,16 @@
     </div>
   </div>  
 
+  <div class="row">
+    <div class="col-md-12 inventory-item-status" ng-class="{ 'inventory-item-enabled': data.isEnabled, 'inventory-item-disabled': data.isDisabled }">
+      {{ data.statusText }}
+      <section class="btn-group" ng-click="switchStatus()">
+        <label class="btn btn-default" ng-model="data.availability.status" btn-radio="'enabled'" ng-show="data.isDisabled">Enable</label>
+        <label class="btn btn-default" ng-model="data.availability.status" btn-radio="'disabled'" ng-show="data.isEnabled">Disable</label>
+      </section>
+    </div>
+  </div>
+
   <div class="panel-body" style="padding-top:40px">
       <form class="form" name="form" ng-submit="create(form)">
         <section id="item-common-data">

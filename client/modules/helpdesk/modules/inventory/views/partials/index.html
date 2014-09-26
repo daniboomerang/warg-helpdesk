@@ -5,37 +5,51 @@
   <div class="row" ng-show="items.length > 0">
     <div class="row-fluid"> 
         <div class="span12 list-items-container">
-          <table tr-ng-grid="" items="items" selected-items="selectedIncidences" selection-mode="None" enable-sorting="false" id="items-list">
+          <table tr-ng-grid="" items="items" selected-items="selectedIncidences" selection-mode="None" enable-sorting="true" id="items-list">
             <thead>
                 <tr>
-                    <th field-name="internalId" cell-width="5em">{{ 'INTERNAL_ID' | translate }}</th>  
-                    <th field-name="serial" cell-width="5em">{{ 'SERIAL' | translate }}</th>  
-                    <th field-name="kind" cell-width="5em">{{ 'KIND' | translate }}</th>  
-                    <th field-name="acquisitionDate" cell-width="5em">{{ 'ACQ_DATE' | translate }}</th>  
-                    <th field-name="actions" cell-width="5em">{{ 'ACTIONS' | translate }}</th>  
+                    <th field-name="kind" cell-width="3em"></th>
+                    <th field-name="internalId" cell-width="3em"></th>
+                    <th field-name="location" cell-width="5em"></th>
+                    <th field-name="guaranteeExpirationDate" display-name="Guarantee Expiration" cell-width="7em"></th>
+                    <th field-name="lastInventoryDate" display-name="Last Inventory" cell-width="7em"></th>
+                    <th field-name="description" cell-width="5em"></th>
+                    <th field-name="actions" cell-width="5em" enable-sorting="false" enable-filtering="false"></th>
                 </tr>
             </thead>
               <tbody>
                   <tr style="text-align: center;" ng-style="inventory-item">
-                    <td field-name="internalId">
-                      <span class="frame-list-cell">
-                        {{ gridItem.internalId | translate }}</span>
-                    </td>
-                    <td field-name="serial">
-                      <span class="frame-list-cell">
-                        {{ gridItem.serial | translate }}</span>
-                    </td>
                     <td field-name="kind">
                       <span class="frame-list-cell">
                         {{ gridItem.kind | translate }}</span>
                     </td>
-                    <td field-name="acquisitionDate">
-                      <span ng-if="(gridItem.acquisitionDate | date:'shortDate') == (today | date:'shortDate')">
-                      {{gridItem.acquisitionDate | date:'shortTime'}}
+                    <td field-name="internalId">
+                      <span class="frame-list-cell">
+                        {{ gridItem.internalId | translate }}</span>
+                    </td>
+                    <td field-name="location">
+                      <span class="frame-list-cell">
+                        {{ gridItem.location | translate }}</span>
+                    </td>
+                    <td field-name="guaranteeExpirationDate">
+                      <span ng-if="(gridItem.guaranteeExpirationDate | date:'shortDate') == (today | date:'shortDate')">
+                      {{gridItem.guaranteeExpirationDate | date:'shortTime'}}
                       </span>
-                      <span ng-if="(gridItem.acquisitionDate | date:'shortDate') != (today | date:'shortDate')">
-                      {{gridItem.acquisitionDate | date:'shortDate'}}
+                      <span ng-if="(gridItem.guaranteeExpirationDate | date:'shortDate') != (today | date:'shortDate')">
+                      {{gridItem.guaranteeExpirationDate | date:'shortDate'}}
                       </span>
+                    </td>
+                    <td field-name="lastInventoryDate">
+                      <span ng-if="(gridItem.lastInventoryDate | date:'shortDate') == (today | date:'shortDate')">
+                      {{gridItem.lastInventoryDate | date:'shortTime'}}
+                      </span>
+                      <span ng-if="(gridItem.lastInventoryDate | date:'shortDate') != (today | date:'shortDate')">
+                      {{gridItem.lastInventoryDate | date:'shortDate'}}
+                      </span>
+                    </td>
+                    <td field-name="description">
+                      <span class="frame-list-cell">
+                        {{ gridItem.description | translate }}</span>
                     </td>
                     <td field-name="actions">
                       <div>
@@ -63,38 +77,5 @@
         </div>
     </div>
   </div>
-
-    <script type="text/ng-template" id="myModalContent.html">
-        <div class="modal-header">
-            <h3 class="modal-title">Disable</h3>
-        </div>
-        <div class="modal-body">
-        <form class="form">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label for="item.disabled.why" class="control-label">{{ 'INVENTORY.DISABLE.WHY' | translate }}</label>
-                <input class="form-control" id="item.disabled.why" placeholder="{{ 'INVENTORY.DISABLE.WHY' | translate }}" name="item.disabled.why" ng-model="item.disabled.why" required>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-                <label for="item.disabled.when" class="control-label">{{ 'INVENTORY.DISABLE.WHEN' | translate }}</label>
-                <p class="input-group">
-                  <input type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="item.disabled.when" is-open="opened" close-text="Close" />
-                  <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="openDatepicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                  </span>
-                </p>
-            </div>
-          </div>
-        </form>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()" ng-disabled="uncompleteData()" >OK</button>
-            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-        </div>
-    </script>
 
 </section>

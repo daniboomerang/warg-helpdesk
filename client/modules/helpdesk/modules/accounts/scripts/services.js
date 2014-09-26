@@ -32,15 +32,9 @@ accountsServices.factory('accountResourceService', function ($http, $q, $resourc
     });
 
   return {
-  	createAccount : function(email, username, password, role, school){
+  	createAccount : function(accountParams){
       	var deferred = $q.defer(); 
-		var account = new resourceService({
-		    email: email,
-	      	username: username,
-	      	password: password,
-	      	role: role,
-	      	school: school  
-		});
+		var account = new resourceService(accountParams);
 		account.$save(function(account) {	      
 		      deferred.resolve(account);
 		}, function (error){

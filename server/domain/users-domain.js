@@ -13,17 +13,45 @@ var mongoose = require('mongoose'),
  * Create a User
  *  Returns a PROMISE with the result 
  */
-exports.createUser = function(email, username, password, role, school) {
+exports.createUser = function(userData) {
 
   var deferred = Q.defer();
 
-  var newUser = new User({email: email, username: username, password: password, role: role, school: school._id});
+  userData.school = userData.school._id;
+
+  var newUser = new User(userData);
   newUser.provider = 'local';
   newUser.save(function(err) {
     if (err) {
       deferred.resolve({status: 'user.not.created', error: err});
     } else {
       deferred.resolve({status: 'user.created', user: newUser.user_info});
+    }
+  });
+
+  return deferred.promise;
+};
+
+/**
+ * Create a User
+ *  Returns a PROMISE with the result 
+ */
+exports.updateUser = function(email, userData) {
+
+  var deferred = Q.defer();
+
+  User.findOne({email: email}, function (err, user){
+    if (err) {
+      (err);
+      deferred.resolve({status: 'user.not.updated', error: err});
+    } else {
+      Object.getOwnPropertyNames(userData).forEach(function(property){
+        user[property] = userData[property];
+      });
+      user.save(function(err){
+        if (err) deferred.resolve({status: 'user.not.updated', error: err});
+        deferred.resolve({status: 'user.updated', data: user});
+      })
     }
   });
 

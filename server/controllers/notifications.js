@@ -64,19 +64,19 @@ exports.show = function(req, res) {
  * Process possible notifications for a new comment
  */
 exports.notifyComment = function(req, res) {
-    notificationsDomain.comment(req.incidence, req.user._id, req.body.comment);
+  notificationsDomain.comment(req.incidence, req.user._id, req.body.comment);
 };
 
 /**
  * Notify new assignation
  */
 exports.notifyAssignee = function(req, res) {
-    notificationsDomain.assignee(req.incidence, req.body.assigned);
+  notificationsDomain.assignee(req.incidence, req.body.assigned);
 };
 
 /**
  * Notify closing
  */
 exports.notifyClose = function(req, res) {
-    //notificationsDomain.assignee(req.incidence, req.body.assigned);
+  notificationsDomain.close(req.incidence);
 };

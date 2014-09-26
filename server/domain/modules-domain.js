@@ -15,7 +15,7 @@ exports.getUserModules = function (role) {
 
   function getActionsOnIncidences (role) {  
     if (role === ROLE_USER){
-      return ['create', 'find', 'list'];
+      return ['find', 'list', 'create'];
     }
       else if (role === ROLE_TECH){
       return ['create', 'find', 'list'];
@@ -52,7 +52,7 @@ exports.getUserModules = function (role) {
     else if(role === ROLE_TECH)
       return ['Incidences', 'Inventory'];
     else if(role === ROLE_ADMIN)
-      return ['Incidences', 'Inventory', 'Schools', 'Accounts'];    
+      return ['Incidences', 'Schools', 'Accounts'];    
   }
 
   if(role != null){

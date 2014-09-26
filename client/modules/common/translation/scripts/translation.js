@@ -39,8 +39,8 @@ var translation = angular.module('translation',
   'INVENTORY.USB': 'Usb',
   'INVENTORY.CONNECTOR': 'Connector',
   'INVENTORY.SIZE': 'Size',
-  'INVENTORY.DISABLE.WHEN': 'Date',
-  'INVENTORY.DISABLE.WHY': 'Reason',
+  'INVENTORY.AVAILABILITY.WHEN': 'Date',
+  'INVENTORY.AVAILABILITY.WHY': 'Reason',
 })
 .constant('translations_es', {
   // Global

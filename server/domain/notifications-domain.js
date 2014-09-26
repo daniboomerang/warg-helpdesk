@@ -12,6 +12,8 @@ var mongoose = require('mongoose'),
   mailDomain = require('../domain/mail-domain')(global.mailSender),
   usersDomain = require('../domain/users-domain'),
   Q = require('q');
+
+var subjectInterpreter = require('./mail-subject-interpreter')
   
 //var mailDomain = require('../config/mail-domain')((require('../config/mail-sender')(require('../config/config').mailSending));
 
@@ -96,7 +98,7 @@ exports.comment = function(incidence, commentOwnerId, comment) {
         else return  username + " has commented an incidence assigned to you.";
       }
 
-      var mailSubject = 'New Comment on ' + incidenceId + ' - ' + incidenceTitle;
+      var mailSubject = 'New Comment on ' + subjectInterpreter.mailIncidenceDefinition(incidenceId, incidenceTitle);
 
       // Notify Incidence Owner User?
       if (!commentOwnerId.equals(incidenceOwnerId)){
@@ -134,7 +136,31 @@ exports.assignee = function(incidence, assignee) {
         else  {return  "Your incidence " + incidenceId + " has been assigned to a new agent";}
       };
 
-      var mailSubject = "New Status: On Going for " + incidenceId + ' - ' + incidence.title 
+      var mailSubject = "New Status: On Going for " + subjectInterpreter.mailIncidenceDefinition(incidenceId, incidence.title);
+      // Notify Incidence Owner User
+      notify(incidenceOwnerRole, {addressee: incidenceOwnerId, notification: notificationMessage(incidence), incidenceId: incidenceId}, {addressee: incidenceOwnerMail, subject: mailSubject, content: notificationMessage(incidence)});
+    }  
+    else{ console.error("There has been an error trying to retrive users profiles at assignee notification."); }  
+  });
+};
+
+/**
+ *  Notify new assignation
+ */
+exports.close = function(incidence) {
+  var incidenceId = incidence.id;
+  var incidenceOwnerId = incidence.creator._id;  
+  usersDomain.findUser(incidenceOwnerId).then( function( result){
+    if (result.status == 'user.found'){
+
+      var incidenceOwnerRole = result.user.role;
+      var incidenceOwnerMail = result.user.email;
+
+      var notificationMessage = function(incidence){
+        return "Your incidence " + incidenceId + " has been closed."
+      };
+
+      var mailSubject = "New Status: " + incidenceId + ' - ' + incidence.title + " closed"
       // Notify Incidence Owner User
       notify(incidenceOwnerRole, {addressee: incidenceOwnerId, notification: notificationMessage(incidence), incidenceId: incidenceId}, {addressee: incidenceOwnerMail, subject: mailSubject, content: notificationMessage(incidence)});
     }  

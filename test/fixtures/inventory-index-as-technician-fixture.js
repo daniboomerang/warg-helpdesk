@@ -49,6 +49,17 @@ var Monitor = {
     acquisitionDate: new Date()
 };
 
+var Keyboard = {
+    serial: "aksdfañlsfjañsf",
+    internalId: "KEYBOARD-1",
+    kind: "KEYBOARD",
+    acquisitionDate: new Date(),
+    availability: {
+        status: "enabled",
+        why: "why n c n"
+    }
+};
+
 var inventoryIndexAsTechnicianFixture = function(done){
     console.log("inventory fixture creation");
     var school = new School(SchoolData);
@@ -57,6 +68,10 @@ var inventoryIndexAsTechnicianFixture = function(done){
     Pc.schoolId = school._id;
     var pc = new Inventory(Pc);
     pc.save();
+
+    Keyboard.schoolId = school._id;
+    var keyboard = new Inventory(Keyboard);
+    keyboard.save();
 
     Printer.schoolId = school._id;
     var printer = new Inventory(Printer);

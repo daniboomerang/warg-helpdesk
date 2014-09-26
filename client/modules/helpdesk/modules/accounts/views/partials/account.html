@@ -5,10 +5,11 @@
 		  	<div class="row">
 				<span class="col-md-1 col-md-offset-11" ng-click="cancelOperation()" popover-placement="left" popover="Close" popover-trigger="mouseenter"><img src="/modules/helpdesk/modules/accounts/images/icons/close-window-16.png"></span>
 			</div>
-		    <form class="form frame-form" name="form" ng-submit="">
+		    <form class="form frame-form" name="form" ng-submit="saveChanges(form)">
 				<div class="input-group form-line-frame">
 				<span class="input-group-addon"><img src="/modules/helpdesk/modules/accounts/images/icons/at-16.png"></span>
 				<input
+					ng-disabled="true" 
 				  type="email"
 				  name="email"
 				  class="form-control"
@@ -29,7 +30,8 @@
 				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 				<div>
 				  <input 
-				    type="text"
+				    ng-disabled="true" 
+				  	type="text"
 				    name="username"
 				    class="form-control"
 				    placeholder="{{account.username}}"
@@ -49,6 +51,34 @@
 				<div class="frame-error-arrowup" ng-message="maxlength">Sorry, the username can´t have more than 25 characters.</div>
 				<div class="frame-error-arrowup" ng-message="unique">Sorry, this user name is already taken.</div>
 				</div>
+
+				<div class="input-group form-line-frame">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				<div>
+				  <input 
+				    type="text"
+				    name="name"
+				    class="form-control"
+				    placeholder="{{account.name}}"
+				    ng-model="account.name"
+				    mongoose-error
+				    required />
+				</div>
+				</div> 
+
+				<div class="input-group form-line-frame">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				<div>
+				  <input 
+				    type="text"
+				    name="surname"
+				    class="form-control"
+				    placeholder="{{account.surname}}"
+				    ng-model="account.surname"
+				    mongoose-error
+				    required />
+				</div>
+				</div> 
 
 				<div class="input-group form-line-frame">
 				<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
@@ -71,7 +101,7 @@
 
 
 				<div class="modal-footer">
-				<input ng-disabled="true" class="btn btn-success" value="Save Changes" type="submit" ngClick="Submit">
+					<input class="btn btn-success" value="Save Changes" type="submit" ngClick="Submit">
 				</div>
 			</form>
 	  	</div>

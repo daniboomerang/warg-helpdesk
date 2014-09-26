@@ -47,7 +47,7 @@ var _onMailReceived = function(processIncoming){
 
 var incomingProcessSuccessBinder = function (processResult){
   if (processResult.status == RESULT_WARNING){
-    console.log('Email: ', this._mail.subject, 'processed with errors.');
+    console.log('Email: ', this._mail.subject, 'processed with errors. ' + processResult.msg);
   } else {
     console.log('Email: ', this._mail.subject, 'processed without errors.');
   }

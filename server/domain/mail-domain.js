@@ -10,6 +10,7 @@ var RESULT_WARNING = "WARNING";
 var RESULT_ERROR = "ERROR";
 
 var _mailSender;
+var subjectInterpreter = require('./mail-subject-interpreter');
 
 module.exports = function(mailSenderService){
 
@@ -35,8 +36,41 @@ var _sendMail = function (receiver, sender, subject, content) {
   return deferred.promise;
 };
 
-var _processIncoming = function (sender, receiver, subject, content) {   
-    
+var _processIncoming = function (sender, receiver, subject, content) {
+  var incidenceId = subjectInterpreter.extractId(subject);
+  return incidencesDomain.findIncidence(incidenceId)
+    .then(function(response){
+      if (response.status == 'incidence.not.found'){
+        return _createIncidence(sender, receiver, subject, content);
+      }else{
+        return _commentIncidence(sender, receiver, subject, content);
+      }
+    });
+};
+
+var _commentIncidence = function(sender, receiver, subject, content){
+  var incidenceId = subjectInterpreter.extractId(subject);
+
+  var user;
+
+  var findUser = function(sender){
+    return usersDomain.findByEmail(sender).then(function(data){
+      user = data.user;
+      var deferred = Q.defer();
+      deferred.resolve({user: data});
+      return deferred.promise;
+    })
+  };
+
+  var _commentIncidence = function(){
+    return incidencesDomain.postComment(incidenceId, content, user.email, new Date());
+  };;
+
+  return findUser(sender)
+          .then(_commentIncidence);
+};
+
+var _createIncidence = function(sender, receiver, subject, content){
   var user;
 
   var createUserIncidence = function(findResult){
@@ -47,20 +81,17 @@ var _processIncoming = function (sender, receiver, subject, content) {
   var sendAcknowledgement = function(result){
     var incidence = result.incidence;
 
-    var acknowledgeSubject = incidence.id + ' - ' + subject;
+    var acknowledgeSubject = subjectInterpreter.mailIncidenceDefinition(incidence.id, subject);
     var user_info = user.user_info;
     var acknowledgeText = mailAcknowledgeTemplate(user_info.username, incidence.id);
 
     return _mailSender.sendMail(sender, null, acknowledgeSubject, acknowledgeText, null, null, null, null).then(function (replyMailResult){
       var deferred = Q.defer();
       if (replyMailResult.status == RESULT_ERROR){
-        console.log("################### SEND ACK NOT SENT");
         deferred.resolve({status: RESULT_WARNING});
       } else if (replyMailResult.status == RESULT_SUCCESS){
-        console.log("################### SEND ACK SENT");
         deferred.resolve({status: RESULT_SUCCESS});
       }
-      console.log("################### ANTES DE RETURN DE created")
       return deferred.promise;
     });
 

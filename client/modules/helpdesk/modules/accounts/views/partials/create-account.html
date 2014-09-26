@@ -40,6 +40,34 @@
         </div>
       </div> 
 
+      <div class="input-group form-line-frame">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+        <div style="margin-bottom: 5px">
+          <input 
+            type="text"
+            name="name"
+            class="form-control"
+            placeholder="Name"
+            ng-model="user.name"
+            mongoose-error
+            required/>
+        </div>
+      </div> 
+
+      <div class="input-group form-line-frame">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+        <div style="margin-bottom: 5px">
+          <input 
+            type="text"
+            name="surname"
+            class="form-control"
+            placeholder="Surname"
+            ng-model="user.surname"
+            mongoose-error
+            required/>
+        </div>
+      </div> 
+
       <div ng-if="changed(form.username)" ng-messages="form.username.$error">
         <div class="frame-error-arrowup" ng-message="required">Sorry, the username can´t be empty.</div>
         <div class="frame-error-arrowup" ng-message="mongoose">{{errors.username}}</div>
