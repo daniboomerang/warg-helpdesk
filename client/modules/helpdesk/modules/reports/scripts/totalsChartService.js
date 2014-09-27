@@ -34,7 +34,7 @@ chartsGeneratorServices.factory('totalsChartService', function (){
     }
 
     return {
-      "type": "PieChart",
+      "type": "BarChart",
       "cssStyle": "width: 100%; min-height: 600px;",
       "displayed": true,
       "data": {

@@ -386,7 +386,6 @@ incidencesControllers.controller('IncidenceNavCtrl', function ($scope, $document
 
     $scope.edit = {};
     $scope.edit.rate = false;
-    $scope.edit.effort = false;
     $scope.edit.assign = false;
     $document.scrollTo(top, 0, 1000);
 
@@ -396,10 +395,6 @@ incidencesControllers.controller('IncidenceNavCtrl', function ($scope, $document
     $scope.edit.rate = !$scope.edit.rate;
   }
 
-  $scope.toogleEffortMode = function(){
-    $scope.edit.effort = !$scope.edit.effort;
-  }
-
   $scope.toogleAssignMode = function(){
     $scope.edit.assign = !$scope.edit.assign;
   }
@@ -407,7 +402,11 @@ incidencesControllers.controller('IncidenceNavCtrl', function ($scope, $document
   $scope.toTheBottom = function() {
     var bottom = angular.element(document.getElementById('bottom'));
     $document.scrollTo(bottom, 0, 1000);
-  };
+  }
+
+  $scope.openModalEffort = function (){
+    $rootScope.$broadcast('event:modal-effort');
+  }
 
 });
 
@@ -476,10 +475,9 @@ incidencesControllers.controller('RateCtrl', function ($scope) {
 });
 
 
-incidencesControllers.controller('EffortCtrl', function ($scope, $modal) {
+incidencesControllers.controller('EffortCtrl', function ($rootScope, $scope, $modal) {
 
-  $scope.reportEffort = function () {
-
+  $rootScope.$on('event:modal-effort', function() {
     modalEffort();
 
     function modalEffort (){
@@ -500,7 +498,7 @@ incidencesControllers.controller('EffortCtrl', function ($scope, $modal) {
         $log.info('Report effort incidence dismissed at: ' + new Date());
       });
     }  
-  };
+  });
 
   // Please note that $modalInstance represents a modal window (instance) dependency.
   // It is not the same as the $modal service used above.
@@ -549,29 +547,12 @@ incidencesControllers.controller('EffortCtrl', function ($scope, $modal) {
       $modalInstance.close(effortResult);
     };
   };
-
-
-  /*$scope.effortChanged = function () {
-    if ((typeof $scope.effort.hours == 'undefined') || (typeof $scope.effort.minutes == 'undefined')){
-      $scope.effort.allowToPool = false;
-    }
-    else if ($scope.effort.minutes > 60)
-      $scope.effort.minutes = 0;
-    else if ($scope.effort.hours < 0)
-      $scope.effort.hours = 99;
-    else if ($scope.effort.minutes < 0)
-      $scope.effort.minutes = 60;
-    else if (($scope.effort.hours > 0) || (($scope.effort.hours == 0) && ($scope.effort.minutes > 0)))
-      $scope.effort.allowToPool = true;
-    else
-      $scope.effort.allowToPool = false;
-  };*/
  
 });
 
-incidencesControllers.controller('CloseCtrl', function ($scope, $modal, $log) {
+incidencesControllers.controller('CloseCtrl', function ($rootScope, $scope, $modal, $log) {
 
-  $scope.closeIncidence = function () {
+  $rootScope.$on('event:modal-close', function() {
 
     modalClose();
 
@@ -593,7 +574,7 @@ incidencesControllers.controller('CloseCtrl', function ($scope, $modal, $log) {
         $log.info('Close incidence dismissed at: ' + new Date());
       });
     }  
-  };
+  });
 
   // Please note that $modalInstance represents a modal window (instance) dependency.
   // It is not the same as the $modal service used above.
@@ -672,9 +653,9 @@ incidencesControllers.controller('CloseCtrl', function ($scope, $modal, $log) {
   };  
 });
 
-incidencesControllers.controller('AssignModalCtrl', function ($scope, $modal, $log, accountResourceService) {
+incidencesControllers.controller('AssignModalCtrl', function ($rootScope, $scope, $modal, $log, accountResourceService) {
 
-  $scope.assignIncidence = function () {
+  $rootScope.$on('event:modal-assign', function() {
 
     modalAssign();
 
@@ -697,7 +678,7 @@ incidencesControllers.controller('AssignModalCtrl', function ($scope, $modal, $l
         $log.info('Assign incidence dismissed at: ' + new Date());
       });
     }  
-  };
+  });
 
   // Please note that $modalInstance represents a modal window (instance) dependency.
   // It is not the same as the $modal service used above.
