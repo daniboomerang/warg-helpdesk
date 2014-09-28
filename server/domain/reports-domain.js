@@ -16,6 +16,7 @@ var LOW = "Low";
 var incidencesDomain = require('./incidences-domain');
 var schoolsDomain = require('./schools-domain');
 var usersDomain = require('./users-domain');
+var effortsDomain = require('./efforts-domain');
 var Q = require('q');
 
 /**
@@ -145,12 +146,12 @@ exports.incidences = function() {
                                        filterUsersBySchool(users, schools[i]))
       totalsListReport.push(currentRow);  
       totalsTotalsReport.totalInstitutions += 1;
-      totalsTotalsReport.totalAccounts = currentRow.totalAccounts;
-      totalsTotalsReport.totalTechnicians = currentRow.totalTechnicians;
-      totalsTotalsReport.totalIncidences = currentRow.numberIncidences;
-      totalsTotalsReport.totalOpen = currentRow.numberOpenIncidences;
-      totalsTotalsReport.totalOnGoing = currentRow.numberOnGoingIncidences;
-      totalsTotalsReport.totalClosed = currentRow.numberClosedIncidences;
+      totalsTotalsReport.totalAccounts += currentRow.totalAccounts;
+      totalsTotalsReport.totalTechnicians += currentRow.techniciansAccounts;
+      totalsTotalsReport.totalIncidences += currentRow.numberIncidences;
+      totalsTotalsReport.totalOpen += currentRow.numberOpenIncidences;
+      totalsTotalsReport.totalOnGoing += currentRow.numberOnGoingIncidences;
+      totalsTotalsReport.totalClosed += currentRow.numberClosedIncidences;
 
     }
     return {totals: totalsTotalsReport, list: totalsListReport};
@@ -205,27 +206,92 @@ exports.incidences = function() {
     return {totals: totalsSevPriReport, list: severityPriorityListReport};
   }
 
-  function generateEffortsReport (incidences, schools, users){
+  function generateEffortsReport (incidences, schools, users, reportedEfforts){
 
     var effortTotalsReport = {};
 
     effortTotalsReport.totalInstitutions = 0;
     effortTotalsReport.totalEffort = 0;
 
-    function generateRow(school, schoolTechnician, schoolTechnicianEffort){
+    function isItClosed (incidenceId, closedIncidences){
+      for (var i = 0; i <= closedIncidences.length -1; i++){
+              console.log("closed: " + closedIncidences[i].id);
 
-      effortTotalsReport.totalEffort += schoolTechnicianEffort;
+        if (closedIncidences[i].id == incidenceId){
+          return true;
+        }
+      }
+      return false;
+    } 
+
+    function techHasSolved (techEmail, incidenceEffortReport){
+      var otherTechHasReportedEffort = false;
+
+      for (var i = 0; (incidenceEffortReport.data.length> 0) && (i <= incidenceEffortReport.data.length -1) &&(!otherTechHasReportedEffort); i++){
+          console.log("incidenceEffortReport.data[i].reporter != techEmail", incidenceEffortReport.data[i].reporter, techEmail);
+        if (incidenceEffortReport.data[i].reporter != techEmail){
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function getEffort(owner){
+      for (var i = 0; i <= reportedEfforts.length -1; i++){
+        if (reportedEfforts[i].owner == owner){
+          return reportedEfforts[i];
+        }
+      }
+      return null;
+    }
+
+    function generateTechEffortData(techEmail, technicianReportedEffort){
+
+      var workedOn = 0;
+      var totalTimeReportedOn = 0;
+      var solved = 0;
+      var resolutionTime = 0;
+      var averageResolutionTime = 0;
+
+      if (technicianReportedEffort != null){
+         var closedIncidences = filterIncidencesByStatus(incidences, STATUS_CLOSED);
+        for (var i = 0; i <= technicianReportedEffort.data.length -1; i++){
+          workedOn += 1;
+          totalTimeReportedOn += technicianReportedEffort.data[i].effort;
+          if ((isItClosed(technicianReportedEffort.data[i].reporter, closedIncidences)) && (techHasSolved(techEmail, getEffort(technicianReportedEffort.data[i].reporter)))){
+            solved += 1;
+            resolutionTime +=  technicianReportedEffort.data[i].effort;
+          }
+        }
+      }  
+
+      if (solved > 0){
+        averageResolutionTime = resolutionTime / solved;
+      }
+
+      return {
+        workedOn: workedOn,
+        totalTimeReportedOn: totalTimeReportedOn,
+        solved: solved,
+        averageResolutionTime: averageResolutionTime
+      }
+    }
+
+    function generateRow(school, schoolTechnician, workedOn, totalTimeReportedOn, solved, averageResolutionTime){
 
       return {
         // This is a row SCHOOL/TECHNICIAN
         institution: school.name,
         institutionCode: school.code,
         technician: schoolTechnician.username,
-        totalEffort: schoolTechnicianEffort
+        workedOn: workedOn,
+        totalTimeReportedOn: totalTimeReportedOn,
+        solved: solved,
+        averageResolutionTime: averageResolutionTime
       }
     }
 
-    var effortsListReport = []
+    var effortsListReport = [];
     for (var i=0; i<=schools.length -1; i++){
       
       effortTotalsReport.totalInstitutions =+ 1 ;
@@ -234,9 +300,15 @@ exports.incidences = function() {
       var currentSchoolTechnicians = filterUsersByRole(filterUsersBySchool(users, currentSchool), ROLE_TECH);
       for (var j=0; j <= currentSchoolTechnicians.length -1; j++){
         var currentSchoolTechnician = currentSchoolTechnicians[j];
-        var currentRow = generateRow(currentSchool, currentSchoolTechnician, 100);
+        var technicianReportedDataEffort = generateTechEffortData(currentSchoolTechnician.email, getEffort(currentSchoolTechnician.email));
+        var currentRow = generateRow(currentSchool,
+                                     currentSchoolTechnician,
+                                     technicianReportedDataEffort.workedOn,
+                                     technicianReportedDataEffort.totalTimeReportedOn,
+                                     technicianReportedDataEffort.solved,
+                                     technicianReportedDataEffort.averageResolutionTime);
         effortsListReport.push(currentRow);
-        effortTotalsReport.totalEffort += currentRow.totalEffort;
+        effortTotalsReport.totalEffort += currentRow.totalTimeReportedOn;
       } 
     }
     return {totals: effortTotalsReport, list: effortsListReport};
@@ -293,9 +365,16 @@ exports.incidences = function() {
 
         var totalsReport = generateTotalListReport(incidencesData.list, schoolsData.list, usersData.list);
         var severityPriorityReport = generateSeverityPriorityListReport(incidencesData.list, schoolsData.list);
-        var effortsReport = generateEffortsReport(incidencesData.list, schoolsData.list, usersData.list);
-        var assignationsReport = generateAssignationsListReport(incidencesData.list, schoolsData.list, usersData.list);
-        deferred.resolve({status: RESULT_SUCCESS, report: [totalsReport, severityPriorityReport, effortsReport, assignationsReport]});
+        effortsDomain.listReportedEfforts().then(function (result) {
+          if (result.status == RESULT_SUCCESS){
+            var effortsReport = generateEffortsReport(incidencesData.list, schoolsData.list, usersData.list, result.list);
+            var assignationsReport = generateAssignationsListReport(incidencesData.list, schoolsData.list, usersData.list);
+            deferred.resolve({status: RESULT_SUCCESS, report: [totalsReport, severityPriorityReport, effortsReport, assignationsReport]});
+          }
+          else {
+            deferred.resolve({status: RESULT_ERROR, error: result.error});
+          }
+        });
     }
     else {
       var errorMessage = "There has been an error trying to compile the data in order to generate the incidences report.";

@@ -106,6 +106,7 @@ incidencesControllers.controller('IncidenceNavCtrl', function ($modal, $scope, $
 
     function init(){
       $scope.effort = {};
+      $scope.effort.incidence = incidence;
       $scope.effort.incidenceTotalEffort = incidence.effort;   
       $scope.effort.currentEffortMinutes = 0;
       $scope.effort.currentEffortHours = 0;
@@ -247,8 +248,7 @@ incidencesControllers.controller('IncidenceNavCtrl', function ($modal, $scope, $
       });
 
       assignModalInstance.result.then(function (assignationResult) {
-        $scope.updateAssignee(assignationResult.newAssignee);
-        $scope.updateEffort(assignationResult.reportedEffort);
+        $scope.updateAssignee(assignationResult.newAssignee, assignationResult.reportedEffort);
       }, function () {
         $log.info('Assign incidence dismissed at: ' + new Date());
       });
@@ -381,7 +381,7 @@ incidencesControllers.controller('IncidenceNavCtrl', function ($modal, $scope, $
 
   $scope.poolAssignation = function(){     
       $scope.assign.allowUpdate = false;
-      $scope.updateAssignee($scope.assign.currentAssignation);
+      $scope.updateAssignee($scope.assign.currentAssignation, 0); // The first time an incidence is assigned, there is no reported effort
       $scope.edit.assign = false;
   }
 

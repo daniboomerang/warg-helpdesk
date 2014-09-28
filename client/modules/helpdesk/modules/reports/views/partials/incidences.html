@@ -1,7 +1,6 @@
 <div style="text-align: center;">
 	<h1>General Incidences Dashboard Report</h1>
 </div>
-
 <div id="total" class="row" style="margin-top:15px; padding-left: 8px; padding-right: 8px; padding-bottom: 15px;    background-color: #373838;">
 	<div class="row" style="margin-top:15px;">
 		<div class="col-md-12">
@@ -88,7 +87,7 @@
 					<span class="col-md-3" style="border-right: solid gray 1px; margin-left: 15px;">
 						<div class="row">
 							<span><h4>Total Users: {{totalsReport.totals.totalAccounts}}</h4>
-							( {{totalsReport.totals.totalTecnicians}} technicians )<span>
+							( {{totalsReport.totals.totalTechnicians}} technicians )<span>
 						</div>
 					</span>
 					<span class="col-md-3" style="margin-left: 15px;">
@@ -243,13 +242,7 @@
 		<div class="col-md-12">
 			<div class="reports-title">
 				<div class="row" style="text-align: center;">
-					<span class="col-md-3" style="border-right: solid gray 1px;"><h3>EFFORT</h3></span>
-					<span class="col-md-3" style="margin-left: 15px;">
-						<div class="row">
-							<span><h4>Total Assigned: {{assignationsReport.totals.totalAssignations}} </h4>
-							</span>
-						</div>
-					</span>
+					<span class="col-md-3" style="border-right: solid gray 1px;"><h3>EFFORT & ASSIGNATIONS</h3></span>
 				</div>
 			</div>
 			<div class="list-incidences-reports">
@@ -261,34 +254,24 @@
 									<th field-name="technician" display-align="center"></th>
 									<th field-name="institution" display-align="center"></th>
 									<th field-name="numberAssignedIncidences" display-align="center" display-name="Currently assigned"></th>
-									<th field-name="workedIncidences" display-align="center" display-name="Worked on"></th>
-									<th field-name="totalEffort" display-align="center" display-name="Total expended time"></th>
-									<th field-name="solvedIncidences" display-align="center" display-name="Solved"></th>
+									<th field-name="workedOn" display-align="center" display-name="Worked on"></th>
+									<th field-name="totalTimeReportedOn" display-align="center" display-name="Total reported time"></th>
+									<th field-name="solved" display-align="center" display-name="Solved"></th>
 									<th field-name="averageResolutionTime" display-align="center" display-name="Average resolution time"></th>
 									
 						        </tr>
 						    </thead>
-					        <tbody>>
-					        	<td field-name="workedIncidences">
-				                    <div>  
-				                       - UNDER CONSTRUCTION -
-				                    </div>
-				                </td>
-				                <td field-name="solvedIncidences">
-				                    <div>  
-				                       - UNDER CONSTRUCTION -
-				                    </div>
-				                </td>
-								<td field-name="averageResolutionTime">
-				                    <div>  
-				                       - UNDER CONSTRUCTION -
-				                    </div>
-				                </td>
-				                <td field-name="totalEffort">
-				                    <div>  
-				                       - UNDER CONSTRUCTION -
-				                    </div>
-				                </td>
+					        <tbody>
+					        	 <td field-name="totalTimeReportedOn">
+			                    	<div>  
+			                       		{{ (gridItem.totalTimeReportedOn / 60) | number:2 }} h 
+			                    	</div>
+			                	</td>
+			                	 <td field-name="averageResolutionTime">
+			                    	<div>  
+			                       		{{ (gridItem.averageResolutionTime / 60) | number:2 }} h 
+			                    	</div>
+			                	</td>
 					        </tbody>
 					        <tfoot>
 					            <tr>
@@ -310,13 +293,7 @@
 		<div class="col-md-12">
 			<div class="chart-title">
 				<div class="row" style="text-align: center;">
-					<span class="col-md-3" style="border-right: solid gray 1px;"><h3>EFFORT</h3></span>
-					<span class="col-md-3" style="margin-left: 15px;">
-						<div class="row">
-							<span><h4>Total Assigned: {{assignationsReport.totals.totalAssignations}} </h4>
-							</span>
-						</div>
-					</span>
+					<span class="col-md-3" style="border-right: solid gray 1px;"><h3>EFFORT & ASSIGNATIONS</h3></span>
 				</div>
 			</div>
 			<div class="chart-frame">

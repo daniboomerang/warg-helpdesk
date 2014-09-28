@@ -75,7 +75,7 @@ exports.comment = function(req, res, next) {
  * Update incidence assignation
  */
 exports.assignee = function(req, res, next) {
-  incidencesDomain.updateAssignee(req.incidence, req.body.assigned).then (function (result){
+  incidencesDomain.updateAssignee(req.user, req.incidence, req.body.assigned, req.body.effort).then (function (result){
     if (result.status == 'incidence.updated'){
       res.json(result.incidence);
       next();
@@ -105,7 +105,7 @@ exports.rate = function(req, res) {
  * Update incidence effort
  */
  exports.effort = function(req, res) {
-  incidencesDomain.updateEffort(req.user, req.incidence, req.body.effort, Date.now()).then (function (result){
+  incidencesDomain.updateEffort(req.user, req.incidence, req.body.effort).then (function (result){
     if (result.status == 'incidence.updated'){
       res.json(result.incidence);
     }  
@@ -122,7 +122,7 @@ exports.rate = function(req, res) {
  * Close incidence
  */
 exports.close = function(req, res, next) {
-  incidencesDomain.closeIncidence(req.incidence, req.body.substatus, req.body.effort,
+  incidencesDomain.closeIncidence(req.user, req.incidence, req.body.substatus, req.body.effort,
                          req.body.duplicated, req.body.invalidComment, Date.now()).then (function (result){
     if (result.status == 'incidence.closed'){
       res.json(result.incidence);

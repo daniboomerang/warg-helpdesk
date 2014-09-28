@@ -18,11 +18,19 @@ var generateEffortReport = function(type, owner, reporterId, effort ){
 
     var deferred = Q.defer();
 
-    for (var i=0; i <= effortReport.data.length -1; i++){
+    var existsAndUpdated = false;
+    for (var i=0; ((i <= effortReport.data.length -1) && (!existsAndUpdated)) ; i++){
       if (effortReport.data[i].reporter == reporterId){
         effortReport.data[i].effort += effort;
+        existsAndUpdated = true;
       }
     }
+
+    if (!existsAndUpdated){
+      effortReport.data.push({reporter: reporterId, effort: effort})
+    }
+
+    effortReport.totalEffort += effort;
 
     effortReport.save(function(err) {
       if (err) {
@@ -44,7 +52,7 @@ var generateEffortReport = function(type, owner, reporterId, effort ){
         reporter: reporterId,
         effort: effort
       };
-      var userEffort = new Effort({type: 'user', owner: owner, data: [userEffort]});
+      var userEffort = new Effort({type: 'user', owner: owner, totalEffort: effort, data: [userEffort]});
        userEffort.save(function(err) {
         if (err) {
           deferred.resolve({status: RESULT_ERROR});
@@ -58,7 +66,7 @@ var generateEffortReport = function(type, owner, reporterId, effort ){
         reporter: reporterId,
         effort: effort
       };
-      var incidenceEffort = new Effort({type: 'incidence', owner: owner, data: [incidenceEffort]});
+      var incidenceEffort = new Effort({type: 'incidence', owner: owner, totalEffort: effort, data: [incidenceEffort]});
        incidenceEffort.save(function(err) {
         if (err) {
           deferred.resolve({status: RESULT_ERROR});
@@ -130,21 +138,28 @@ exports.reportEffort = function(user, incidence, effort) {
 
   var deferred = Q.defer();
 
-  var effortReportPromises = Q.all([ generateEffortReport(EFFORT_BY_USER, user.email, incidence.id, effort), generateEffortReport(EFFORT_BY_INCIDENCE, incidence.id, user.email, effort)])
-  
-  effortReportPromises.then(function(results){
-    var userEffortReport = results[0];
-    var incidenceEffortReport = results[1];
+  if (effort > 0){
 
-    if  (userEffortReport.status == RESULT_SUCCESS &&
-         incidenceEffortReport.status == RESULT_SUCCESS){
+    var effortReportPromises = Q.all([ generateEffortReport(EFFORT_BY_USER, user.email, incidence.id, effort), generateEffortReport(EFFORT_BY_INCIDENCE, incidence.id, user.email, effort)])
+    
+    effortReportPromises.then(function(results){
+      var userEffortReport = results[0];
+      var incidenceEffortReport = results[1];
+
+      if  (userEffortReport.status == RESULT_SUCCESS &&
+           incidenceEffortReport.status == RESULT_SUCCESS){
+        deferred.resolve({status: RESULT_SUCCESS});
+      }
+      else{
+        deferred.resolve({status: RESULT_ERROR});
+      }
+    });
+  }
+
+  setTimeout( function (){
       deferred.resolve({status: RESULT_SUCCESS});
-    }
-    else{
-      deferred.resolve({status: RESULT_ERROR});
-    }
-  });
-
+    },50);
+  
   return deferred.promise;
 };
 
@@ -152,11 +167,11 @@ exports.reportEffort = function(user, incidence, effort) {
  *  Return the list of effort reports
  *  Returns a PROMISE with the result 
  */
-exports.listEffortReports = function() {
+exports.listReportedEfforts = function() {
 
   var deferred = Q.defer();
 
-  School.find().sort('-created').exec(function(err, effortReports) {
+  Effort.find().exec(function(err, effortReports) {
     if (err) {
       deferred.resolve({status: RESULT_ERROR, error: err});
     } else {   

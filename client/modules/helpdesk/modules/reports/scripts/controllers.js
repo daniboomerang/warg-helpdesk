@@ -15,7 +15,10 @@ reportsControllers.controller('IncidencesReportCtrl', function ($scope,
 
     function fusion (listOfAssignations, listOfEffort) {
         for (var i = 0; i <= listOfAssignations.length - 1; i++){
-            listOfAssignations[i].totalEffort = listOfEffort[i].totalEffort;
+            listOfAssignations[i].workedOn = listOfEffort[i].workedOn;
+            listOfAssignations[i].totalTimeReportedOn = listOfEffort[i].totalTimeReportedOn;
+            listOfAssignations[i].solved = listOfEffort[i].solved;
+            listOfAssignations[i].averageResolutionTime = listOfEffort[i].averageResolutionTime;
         } 
         return listOfAssignations;
     }; 
@@ -51,12 +54,5 @@ reportsControllers.controller('IncidencesReportCtrl', function ($scope,
             $scope.fusionAssignationsAndEffortsList = fusion($scope.assignationsReport.list, $scope.effortsReport.list);
 
         });
-      }
-
-  $scope.fusion = function(listOfAssignations, listOfEffort) {
-    for (var i = 0; i <= listOfAssignations.length - 1; i++){
-        listOfAssignations[i].totalEffort = listOfEffort[i].totalEffort;
     } 
-    return listOfAssignations;
-  }; 
 });

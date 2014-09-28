@@ -16,7 +16,7 @@ chartsGeneratorServices.factory('effortsChartService', function (){
               "v": effortsReport[i].technician + ' (' + effortsReport[i].institution + ')'
             },
             {
-              "v": (effortsReport[i].totalEffort / 60).toFixed(2) 
+              "v": (effortsReport[i].averageResolutionTime / 60).toFixed(2) 
             }
           ]
         })

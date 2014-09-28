@@ -9,7 +9,8 @@ var INCIDENCE_EFFORTS = 'Incidence';
 
 var EffortSchema = new Schema({
   type: String, // Who´s the report (USER_EFFORT or INCIDENCE_EFFORT)
-  owner: String,
+  owner: String, // Who`s the report (email or incidence ID)
+  totalEffort: Number,
   data:  {
     type: [{
       reporter: String, // Who reports (userId or incidenceId)

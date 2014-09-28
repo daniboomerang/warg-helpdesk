@@ -108,6 +108,6 @@
 		</div>
 	</div>
 	<div class="frame-empty-resource-message" ng-show="incidences.length == 0">
-		<h1>No incidences yet. <br> Why don't you <a ng-click="goToState('helpdesk.incidences.create')">Create One</a>?</h1>
+		<h1>No incidences yet. <span ng-show="currentUser.role != 'admin'"><br> Why don't you <a ng-click="goToState('helpdesk.incidences.create')">Create One</a>? </span></h1> 
 	</div>		
 </section>

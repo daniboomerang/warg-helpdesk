@@ -177,7 +177,7 @@ exports.listIncidences = function() {
  *  Closes an incidence 
  *  Returns a PROMISE with the result 
  */
-exports.closeIncidence = function(incidence, reason, effort, duplicated, invalidComment, date) {
+exports.closeIncidence = function(user, incidence, reason, effort, duplicated, invalidComment, date) {
 
   var deferred = Q.defer();
 
@@ -205,7 +205,13 @@ exports.closeIncidence = function(incidence, reason, effort, duplicated, invalid
     if (err) {
       deferred.resolve({status: 'incidence.not.closed', error: err});
     } else {
-      deferred.resolve({status: 'incidence.closed', incidence: incidence});
+      effortDomain.reportEffort(user, incidence, effort).then( function (result){
+        if (result.status == RESULT_ERROR) {
+          deferred.resolve({status: 'incidence.not.closed'});
+        } else {
+          deferred.resolve({status: 'incidence.closed', incidence: incidence});
+        }
+      });
     }
   });
 
@@ -216,7 +222,7 @@ exports.closeIncidence = function(incidence, reason, effort, duplicated, invalid
  *  Updates an incidence assignation
  *  Returns a PROMISE with the result 
  */
-exports.updateAssignee = function(incidence, assigned) {
+exports.updateAssignee = function(user, incidence, assigned, effort) {
 
   var deferred = Q.defer();
 
@@ -224,11 +230,19 @@ exports.updateAssignee = function(incidence, assigned) {
   incidence.status.currentStatus = STATUS_ONGOING;
   incidence.markModified('status.currentStatus');
 
+  incidence.effort += effort;
+
   incidence.save(function(err) {
     if (err) {
       deferred.resolve({status: 'incidence.not.updated', error: err});
     } else {
-      deferred.resolve({status: 'incidence.updated', incidence: incidence});
+      effortDomain.reportEffort(user, incidence, effort).then( function (result){
+        if (result.status == RESULT_ERROR) {
+          deferred.resolve({status: 'incidence.not.updated'});
+        } else {
+          deferred.resolve({status: 'incidence.updated', incidence: incidence});
+        }
+      });
     }
   });
 
