@@ -22,12 +22,13 @@
 	<div ng-show="!edit.rate">
 		<div class="row">
 			<div ng-show="incidence.rate == -1">
-					<div> <img src="/modules/helpdesk/modules/incidences/images/icons/rating-gray-48.png" alt="Rating"></div>
+					<div> <img src="/modules/helpdesk/modules/incidences/images/icons/rating-gray-88.png" alt="Rating"></div>
 					<font size="1" class="text-muted">No ratings reported</font>
 			</div>
 			<div ng-show="incidence.rate > -1">
-	            <div class="row">
-	             	<div class="pull-left" style="margin-right: 15px;"> <img src="/modules/helpdesk/modules/incidences/images/icons/rating-yellow-48.png" alt="Rating">
+			<div class="container" style="padding: 10px;">
+	            <div class="row" style="padding-left: 15px;">
+	             	<div class="pull-left" style="margin-right: 15px;"> <img src="/modules/helpdesk/modules/incidences/images/icons/rating-yellow-88.png" alt="Rating">
 	             	</div>
 	  				<div class="pull-left">  					
 	  					<div class="row">
@@ -37,7 +38,8 @@
 		                	<font size="5">{{(100 * incidence.rate) / rating.max}}%</font>
 		                </div>
 		            </div>    
-	            </div>    
+	            </div>
+	         </div>       
 	        </div>
 	    </div>    
 	</div> 

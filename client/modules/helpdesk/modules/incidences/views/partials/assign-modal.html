@@ -1,0 +1,120 @@
+<form class="form" name="form" ng-submit="assignIncidence(form)">
+  <div class="modal-header solid-yellow-bar-fill centered-and-white">
+    <h4 class="modal-title">Assign Incidence - {{assign.incidence.id}}</h4>
+  </div>
+  <div class="modal-body">
+    <div class="row" id="effortAssign">
+        <div class="col-md-7"> 
+          <h5 class="text-muted section-title" >Your last effort:</h5>
+          <div class="row col-md-8" ng-show="validCurrentEffort()">
+            <div class="col-md-offset-1">
+              <div class="row">
+                <img class="col-md-offset-4"src="/modules/helpdesk/modules/incidences/images/icons/stopwatch-green-64.png">
+              </div>  
+              <div class="row" style="margin-top:7px;">
+                <font size="1" class="text-muted col-md-offset-3">{{assign.currentEffortHours}} hours {{assign.currentEffortMinutes}} minutes</font>
+              </div>  
+            </div>  
+          </div>
+          <div class="row col-md-8" ng-show="!validCurrentEffort()">
+            <div class="col-md-offset-1">
+              <div class="row">
+                <img class="col-md-offset-4"src="/modules/helpdesk/modules/incidences/images/icons/stopwatch-red-64.png">
+              </div>  
+              <div class="row">
+                <font size="1" class="text-muted col-md-offset-3 incorrect-time-text">Incorrect time format</font>
+              </div>  
+            </div>  
+          </div>
+          <div class="row">
+            <div class="col-md-7">
+              <div class="input-group form-line-frame" style="margin-top: 10px;">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="controls input-group time-input time-input-frame">
+                      <input ng-change="effortChanged()" type="number" name="effortHours" ng-model="assign.currentEffortHours" class="form-control" min="0" required><span class="input-group-addon">h</span>
+                    </div>
+                    <div ng-if="changed(form.effortHours)"ng-messages="form.effortHours.$error" class="frame-effort-error">
+                      <div class="frame-error-arrowup" ng-message="required">Incorrect format</div>
+                      <div class="frame-error-arrowup" ng-message="max">Max number of hours is 1000</div>
+                    </div>
+                  </div> 
+                  <div class="col-md-6">
+                    <div class="controls input-group time-input time-input-frame">
+                      <input ng-change="effortChanged()" type="number" name="effortMinutes" ng-model="assign.currentEffortMinutes" class="form-control" min="0" max="59" required><div class="input-group-addon">m</div>
+                    </div>
+                    <div ng-if="changed(form.effortMinutes)"ng-messages="form.effortMinutes.$error" class="frame-effort-error">
+                      <div class="frame-error-arrowup" ng-message="required">Incorrect format</div>
+                      <div class="frame-error-arrowup" ng-message="max">Max number of minutes is 59</div>
+                    </div>
+                  </div>  
+                </div>
+              </div> 
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <h5 class="text-muted section-title" >Total effort reported:</h5>
+          <div class="row">
+            <div class="col-md-offset-3">
+              <div ng-show="assign.totalEffort == 0">
+                <div class="row"> <img src="/modules/helpdesk/modules/incidences/images/icons/time-red-128.png"></div>
+                <div class="row total-effort-text-line"><font size="3" class="text-muted">No time reported</font></div>
+              </div>
+              <div ng-show="assign.totalEffort > 0">
+                <div class="row"> <img src="/modules/helpdesk/modules/incidences/images/icons/time-blue-128.png"></div>
+                <div class="row total-effort-text-line"> <font size="3" class="text-muted">{{assign.totalEffortHours}} hours {{assign.totalEffortMinutes}} minutes</font>
+                </div>
+              </div>
+            </div>  
+          </div>  
+        </div>  
+    </div>
+    <div class="row" id="assign" style="padding-top:25px;">
+
+      <div class="col-md-12" >
+        <!-- show dropdown -->
+        <div ng-show="assign.techniciansListReady && !assign.techniciansListEmpty">
+          <div class="row" style="margin-bottom:10px;"> 
+            <div class="text-muted">Select Assignee:</div>    
+          </div>
+          <div class="row">
+            <div class="col-md-4" style="margin-bottom:10px;">
+              <ui-select ng-model="technician.selected" theme="selectize" class="assign-select-dropdown">
+                <ui-select-match placeholder="Assign tech"> <span class="frame-select-row">{{$select.selected.username}}</ui-select-match></span>
+                <ui-select-choices repeat="technician in assign.techniciansList">
+                  <div ng-bind-html="technician.username" class="frame-select-row" ng-click="assignTo(technician)"></div>
+                </ui-select-choices>
+              </ui-select>
+            </div>
+            <div class="col-md-2" ng-show="assign.allowUpdate" style="margin-bottom:10px;">
+              <img src="/modules/helpdesk/modules/incidences/images/icons/ok-32.png">
+            </div>
+          </div>
+        </div>
+
+        <!-- show refresh -->
+        <div ng-show="!assign.techniciansListReady">
+          <div class="row" style="margin-bottom:10px;"> 
+            <div class="pull-left text-muted">Select Assignee:</div>    
+          </div>
+          <div class="row">
+            <div ng-click="refreshTechnicians()">
+              <div class="btn btn-default">&nbsp;<img src="/modules/helpdesk/modules/incidences/images/icons/synchronize-24.png">&nbsp;Retrieve list&nbsp;</div>
+            </div>  
+          </div>  
+        </div>
+      </div>
+      <!-- show unavailability message -->
+      <div ng-show="assign.techniciansListEmpty && assign.techniciansListReady">
+        <div class="frame-div-warning">No technicians available. <br> Plase contact your administrator</div>
+      </div>
+    </div>  
+  </div>
+  <div class="modal-footer">
+    <!--<button class="btn btn-primary" ng-click="ok()">Close Incidence</button>
+    <button class="btn btn-warning" ng-click="closeModalAssign()">Cancel</button>-->
+    <input ng-disabled="form.$invalid || assign.totalEffort == 0 || !assign.allowUpdate" class="btn btn-success" value="Assign Incidence" type="submit" ngClick="Submit">  
+  </div>
+</form>    
+

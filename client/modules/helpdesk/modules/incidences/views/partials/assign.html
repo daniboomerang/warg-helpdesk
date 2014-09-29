@@ -3,24 +3,26 @@
     <div>
       <!-- show dropdown -->
       <div ng-show="assign.techniciansListReady && !assign.techniciansListEmpty">
-        <div class="row" style="margin-bottom:2px;"> 
-          <div class="pull-left text-muted">Select Assignee:</div>    
+        <div class="container-fluid">
+          <div class="row"> 
+            <div>Select Assignee:</div>    
+          </div>
+          <div class="row" style="padding:10px;padding-top: 5px; padding-bottom: 5px;">
+            <ui-select ng-model="technician.selected" theme="selectize" class="assign-select-dropdown">
+              <ui-select-match placeholder="Assign tech"> <span class="frame-select-row">{{$select.selected.username}}</ui-select-match></span>
+              <ui-select-choices repeat="technician in assign.techniciansList">
+                <div ng-bind-html="technician.username" class="frame-select-row" ng-click="assignTo(technician)"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+          <div class="row">
+            <div ng-show="assign.allowUpdate">
+              <div ng-click="poolAssignation()">
+                <div class="btn btn-primary">Submit Assignee</div>
+              </div>  
+            </div>
+          </div>
         </div>
-        <div class="row">
-          <ui-select ng-model="technician.selected" theme="selectize" class="assign-select-dropdown pull-left">
-            <ui-select-match placeholder="Assign tech"> <span class="frame-select-row">{{$select.selected.username}}</ui-select-match></span>
-            <ui-select-choices repeat="technician in assign.techniciansList">
-              <div ng-bind-html="technician.username" class="frame-select-row" ng-click="assignTo(technician)"></div>
-            </ui-select-choices>
-          </ui-select>
-        </div>
-        <div class="row pull-left">
-        <div ng-show="assign.allowUpdate">
-          <div ng-click="poolAssignation()">
-            <div class="btn btn-primary">Submit Assignee</div>
-          </div>  
-        </div>
-      </div>
       </div>
 
       <!-- show refresh -->
@@ -38,11 +40,11 @@
 	</div>    
 	<div ng-show="!edit.assign">
 		<div ng-show="incidence.assigned == null || incidence.assigned == ''">
-				<div> <img src="/modules/helpdesk/modules/incidences/images/icons/worker-gray-48.png" alt="Rating"></div>
+				<div> <img src="/modules/helpdesk/modules/incidences/images/icons/worker-gray-88.png"></div>
 				<font size="1" class="text-muted">No technician assigned</font>
 		</div>
 		<div ng-show="incidence.assigned != null && incidence.assigned != ''">
-      <div> <img src="/modules/helpdesk/modules/incidences/images/icons/worker-blue-48.png" alt="Rating"></div>
+      <div> <img src="/modules/helpdesk/modules/incidences/images/icons/worker-blue-88.png"></div>
 			<font size="1" class="text-muted">{{incidence.assigned}}</font>
     </div> 
 	</div> 

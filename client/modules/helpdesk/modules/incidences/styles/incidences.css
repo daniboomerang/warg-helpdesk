@@ -103,11 +103,3 @@
 	margin-top: 20px;
 	padding: 10px;
 }
-
-/**** ASSIGN ****/
-
-.assign-select-dropdown{
-	width: auto;
-	min-width: 110px;
-	max-width: 150px;
-}

@@ -14,6 +14,7 @@ var mongoose = require('mongoose'),
   ObjectId = mongoose.Types.ObjectId,
   Q = require('q');
 
+var effortDomain = require('./efforts-domain');
 /**
  * Create a incidence
  *  Returns a PROMISE with the result 
@@ -191,7 +192,7 @@ exports.closeIncidence = function(incidence, reason, effort, duplicated, invalid
   };
   
   incidence.status = status;
-  incidence.effort = effort;
+  incidence.effort += effort;
   incidence.markModified('status');
 
   if (reason == "Invalid"){
@@ -233,6 +234,35 @@ exports.updateAssignee = function(incidence, assigned) {
 
   return deferred.promise;
 };
+
+
+/**
+ *  Updates incidence effort
+ *  Returns a PROMISE with the result 
+ */
+exports.updateEffort= function(user, incidence, effort) {
+
+  var deferred = Q.defer();
+
+  incidence.effort += effort;
+  
+  incidence.save(function(err) {
+    if (err) {
+      deferred.resolve({status: 'incidence.not.updated', error: err});
+    } else {
+      effortDomain.reportEffort(user, incidence, effort).then( function (result){
+        if (result.status == RESULT_ERROR) {
+          deferred.resolve({status: 'incidence.not.updated'});
+        } else {
+          deferred.resolve({status: 'incidence.updated', incidence: incidence});
+        }
+      });
+    }
+  });
+
+  return deferred.promise;
+};
+
 
 /**
  *  Updates the arry of comments of an incidence

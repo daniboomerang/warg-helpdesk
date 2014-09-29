@@ -5,13 +5,19 @@
 }
 
 .box-incidence-datails{
-	height: auto;
+	min-height: 120px;
 	width: auto;
 	margin: 10px;
-	margin-top: 5px;
 	text-align: center;
-	padding: 15px;
-	padding-top: 10px;
+	padding: 10px;
+
+	-webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.66);
+  -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.66);
+  box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.66);
+  -webkit-border-radius: 14px;
+-moz-border-radius: 14px;
+border-radius: 14px;
+background-color: #F1F1F1;
 }
 
 .glyphicon-rate { margin-right:5px; font-size: 15px;}

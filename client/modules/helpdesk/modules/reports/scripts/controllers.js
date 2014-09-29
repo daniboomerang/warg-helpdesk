@@ -27,6 +27,8 @@ reportsControllers.controller('IncidencesReportCtrl', function ($scope,
             // TOTALS
             $scope.totalsReport = report[0];
             $scope.totalsChart = totalsChartService.generate(report[0].list);
+            console.log($scope.totalsChart);
+
 
             // SEVERITY- PRIORITY
             $scope.sevPriReport = report[1];
