@@ -98,59 +98,9 @@ incidencesControllers.controller('IncidenceNavCtrl', function ($modal, $scope, $
   //////////////////////////////////////
 
   $scope.openModalEffort = function() {
-
-    // Please note that $modalInstance represents a modal window (instance) dependency.
-    // It is not the same as the $modal service used above.
-    var EffortModalInstanceCtrl = function ($scope, $modalInstance, incidence) {
-      
-      init();
-      console.log("inside modal effort");
-
-      /*$scope.closeModalEffort = function () {
-        $modalInstance.dismiss('cancel');
-      };*/
-
-      $scope.changed = function(filed){
-        return filed.$dirty;
-      };
-
-      $scope.validCurrentEffort = function(){
-        return ((typeof $scope.effort.currentEffortHours != 'undefined') &&
-                (typeof $scope.effort.currentEffortMinutes != 'undefined'))
-      };
-
-      $scope.effortChanged = function () {
-        if ((typeof $scope.effort.currentEffortHours == 'undefined') || (typeof $scope.effort.currentEffortMinutes == 'undefined')){
-          // Do Nothing: this keeps the form as invalid
-        }
-        else{
-          $scope.effort.totalEffortMinutes = incidence.effortMinutes + $scope.effort.currentEffortMinutes;
-          $scope.effort.totalEffortHours = incidence.effortHours + $scope.effort.currentEffortHours;
-          $scope.effort.totalEffort = $scope.effort.totalEffortHours * 60 + $scope.effort.totalEffortMinutes;
-        }  
-      };
-
-      function init(){
-        $scope.effort = {};
-        $scope.effort.incidence = incidence;
-        $scope.effort.incidenceTotalEffort = incidence.effort;   
-        $scope.effort.currentEffortMinutes = 0;
-        $scope.effort.currentEffortHours = 0;
-        $scope.effort.totalEffort = incidence.effort;
-        $scope.effort.totalEffortMinutes = incidence.effortMinutes;
-        $scope.effort.totalEffortHours = incidence.effortHours;
-      }
-      
-      $scope.poolEffort = function () {
-        var effortResult = {
-          reportedEffort:  $scope.effort.currentEffortHours * 60 +  $scope.effort.currentEffortMinutes
-        }
-        $modalInstance.close(effortResult);
-      };
-    };
-
     console.log("open modal effort");
-    modalEffort();
+    openModalWarning();
+    /*modalEffort();
 
     function modalEffort (){
       var effortModalInstance = $modal.open({
@@ -169,10 +119,58 @@ incidencesControllers.controller('IncidenceNavCtrl', function ($modal, $scope, $
       }, function () {
         $log.info('Report effort incidence dismissed at: ' + new Date());
       });
-    }  
+    }  */
   };
 
- 
+  // Please note that $modalInstance represents a modal window (instance) dependency.
+  // It is not the same as the $modal service used above.
+  var EffortModalInstanceCtrl = function ($scope, $modalInstance, incidence) {
+    
+    init();
+    console.log("inside modal effort");
+
+    /*$scope.closeModalEffort = function () {
+      $modalInstance.dismiss('cancel');
+    };*/
+
+    $scope.changed = function(filed){
+      return filed.$dirty;
+    };
+
+    $scope.validCurrentEffort = function(){
+      return ((typeof $scope.effort.currentEffortHours != 'undefined') &&
+              (typeof $scope.effort.currentEffortMinutes != 'undefined'))
+    };
+
+    $scope.effortChanged = function () {
+      if ((typeof $scope.effort.currentEffortHours == 'undefined') || (typeof $scope.effort.currentEffortMinutes == 'undefined')){
+        // Do Nothing: this keeps the form as invalid
+      }
+      else{
+        $scope.effort.totalEffortMinutes = incidence.effortMinutes + $scope.effort.currentEffortMinutes;
+        $scope.effort.totalEffortHours = incidence.effortHours + $scope.effort.currentEffortHours;
+        $scope.effort.totalEffort = $scope.effort.totalEffortHours * 60 + $scope.effort.totalEffortMinutes;
+      }  
+    };
+
+    function init(){
+      $scope.effort = {};
+      $scope.effort.incidence = incidence;
+      $scope.effort.incidenceTotalEffort = incidence.effort;   
+      $scope.effort.currentEffortMinutes = 0;
+      $scope.effort.currentEffortHours = 0;
+      $scope.effort.totalEffort = incidence.effort;
+      $scope.effort.totalEffortMinutes = incidence.effortMinutes;
+      $scope.effort.totalEffortHours = incidence.effortHours;
+    }
+    
+    $scope.poolEffort = function () {
+      var effortResult = {
+        reportedEffort:  $scope.effort.currentEffortHours * 60 +  $scope.effort.currentEffortMinutes
+      }
+      $modalInstance.close(effortResult);
+    };
+  };
 
   //////////////////////////////////////
   /////////////// CLOSE ////////////////
