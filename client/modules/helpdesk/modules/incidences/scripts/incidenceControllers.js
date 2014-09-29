@@ -99,6 +99,7 @@ incidencesControllers.controller('IncidenceNavCtrl', function ($modal, $scope, $
 
   $scope.openModalEffort = function() {
     console.log("open modal effort");
+    console.log("sdsdfsdf");
     openModalWarning();
     /*modalEffort();
 
@@ -455,6 +456,8 @@ incidencesControllers.controller('IncidenceNavCtrl', function ($modal, $scope, $
   }
 
   function openModalWarning() {
+
+    console.log("open modal warning");
 
       // Please note that $modalInstance represents a modal window (instance) dependency.
     // It is not the same as the $modal service used above.
