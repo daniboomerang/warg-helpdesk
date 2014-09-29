@@ -1,10 +1,56 @@
   'use strict';
 
+incidencesControllers.controller('IncidenceCtrl', function ($scope, $routeParams, $state, $document, $rootScope) {
+
+  $scope.commentsStatus = {};
+  $scope.commentsStatus.expanded = false;
+
+  $scope.toogleComments = function(){
+    $scope.commentsStatus.expanded = !$scope.commentsStatus.expanded;
+  };
+
+//Is this function = CACA!!!!! ???
+//Is this function = CACA!!!!! ???
+//Is this function = CACA!!!!! ???
+  $scope.goToState = function (state) {
+    $state.goToState('helpdesk.incidences.open.incidence' + state, $state.params);
+  }; 
+//Is this function = CACA!!!!! ???
+//Is this function = CACA!!!!! ???
+//Is this function = CACA!!!!! ???
+
+  $scope.goToIncidence = function (id) {
+    $state.go('helpdesk.incidences.open.incidence', { incidenceId: id });
+  };
+
+  $scope.toTheTop = function() {
+    $document.scrollTo(top, 0, 1000);
+  };
+
+  $scope.sendComment = function(comment) {
+    $scope.updateComment(comment);
+    $scope.form.$setPristine();
+    $scope.comment = '';
+  };
+
+  $scope.changed = function(filed){
+    return filed.$dirty;
+  };
+
+  $scope.commentLength = function (form) {
+      if (form.comment.$viewValue == undefined){return 0};
+      return form.comment.$viewValue.length;     
+  };
+
+});
+
 incidencesControllers.controller('IncidenceNavCtrl', function ($modal, $scope, $document, $rootScope, accountResourceService, $log) {
   
   init();
 
   function init(){
+
+    console.log("init incidenceNavBar");
 
     $scope.edit = {};
     $scope.edit.rate = false;
@@ -52,6 +98,7 @@ incidencesControllers.controller('IncidenceNavCtrl', function ($modal, $scope, $
   //////////////////////////////////////
 
   $scope.openModalEffort = function() {
+    console.log("open modal effort");
     modalEffort();
 
     function modalEffort (){
@@ -79,6 +126,7 @@ incidencesControllers.controller('IncidenceNavCtrl', function ($modal, $scope, $
   var EffortModalInstanceCtrl = function ($scope, $modalInstance, incidence) {
     
     init();
+    console.log("inside modal effort");
 
     /*$scope.closeModalEffort = function () {
       $modalInstance.dismiss('cancel');

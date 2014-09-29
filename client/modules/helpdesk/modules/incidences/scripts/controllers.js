@@ -158,50 +158,6 @@ incidencesControllers.controller('IncidencesCtrl', function ($scope, $location, 
 
 });
 
-incidencesControllers.controller('IncidenceCtrl', function ($scope, $routeParams, $state, $document, $rootScope) {
-
-  $scope.commentsStatus = {};
-  $scope.commentsStatus.expanded = false;
-
-  $scope.toogleComments = function(){
-    $scope.commentsStatus.expanded = !$scope.commentsStatus.expanded;
-  };
-
-//Is this function = CACA!!!!! ???
-//Is this function = CACA!!!!! ???
-//Is this function = CACA!!!!! ???
-  $scope.goToState = function (state) {
-    $state.goToState('helpdesk.incidences.open.incidence' + state, $state.params);
-  }; 
-//Is this function = CACA!!!!! ???
-//Is this function = CACA!!!!! ???
-//Is this function = CACA!!!!! ???
-
-  $scope.goToIncidence = function (id) {
-    $state.go('helpdesk.incidences.open.incidence', { incidenceId: id });
-  };
-
-  $scope.toTheTop = function() {
-    $document.scrollTo(top, 0, 1000);
-  };
-
-  $scope.sendComment = function(comment) {
-    $scope.updateComment(comment);
-    $scope.form.$setPristine();
-    $scope.comment = '';
-  };
-
-  $scope.changed = function(filed){
-    return filed.$dirty;
-  };
-
-  $scope.commentLength = function (form) {
-      if (form.comment.$viewValue == undefined){return 0};
-      return form.comment.$viewValue.length;     
-  };
-
-});
-
 incidencesControllers.controller('CreateIncidenceCtrl', function ($scope, $rootScope, $modal, $state, schoolResourceService, LocationService){
 
   init();
