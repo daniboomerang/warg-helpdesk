@@ -49,8 +49,7 @@ exports.create = function (req, res, next) {
 exports.update = function (req, res, next) {
   var updateParams = {
     name: req.body.name,
-    surname: req.body.surname,
-    password: req.body.password
+    surname: req.body.surname
   };
   usersDomain.updateUser(req.body.email, updateParams).then (function (result){
     if (result.status == 'user.updated'){
