@@ -24,12 +24,21 @@ var reports = angular.module('reports',
 	    templateUrl: '/modules/helpdesk/modules/reports/views/reports.html'
 	})
 
-      	.state('helpdesk.reports.incidences', {
-	        url: '/incidences',
-	        templateUrl: '/modules/helpdesk/modules/reports/views/partials/incidences.html',
-			controller: 'IncidencesReportCtrl'
-	    })
+		.state('helpdesk.reports.incidences', {
+				abstract: true,
+        		url: '/incidences',
+		        template: '<ui-view/>'
+		})
 
-	
+	      	.state('helpdesk.reports.incidences.general', {
+		        url: '/general',
+		        templateUrl: '/modules/helpdesk/modules/reports/views/partials/incidences.html',
+				controller: 'IncidencesReportCtrl'
+		    })
 
+		    .state('helpdesk.reports.incidences.school', {
+		         url: '/:schoolCode',
+		         templateUrl: '/modules/helpdesk/modules/reports/views/partials/incidences-school.html'	,
+		         controller: 'ISRCtrl'
+			})
 })

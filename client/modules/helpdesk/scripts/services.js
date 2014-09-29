@@ -65,7 +65,7 @@ helpdeskServices.service('helpdeskConfigService', function ($q, $http, menu, des
 				else if (actionsOnIncidences[i] == 'find')
 					actions.push({title: 'Id Search', state: 'helpdesk.incidences.open', style: actionsStyle.openId});	
 				else if (actionsOnIncidences[i] == 'report')
-					actions.push({title: 'Report', state: 'helpdesk.reports.incidences', style: actionsStyle.report});
+					actions.push({title: 'Report', state: 'helpdesk.reports.incidences.general', style: actionsStyle.report});
 			}		
 		}
         var menu = {name: 'Incidences', actions: actions, style: style.moduleStyle};

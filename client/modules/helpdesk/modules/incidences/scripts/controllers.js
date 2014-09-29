@@ -345,7 +345,7 @@ incidencesControllers.controller('ListCtrl', function ($scope, $state, $document
   }; 
 
   $scope.openIncidence = function (id) {
-    $state.go('helpdesk.incidences.open.incidence', { incidenceId: id });
+    $state.go('helpdesk.incidences.open.incidence.school', { incidenceId: id });
   };
   
   $scope.overview = function(incidence) {

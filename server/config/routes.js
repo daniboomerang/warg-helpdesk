@@ -69,9 +69,9 @@ module.exports = function(app) {
   app.put('/api/incidences/:incidenceId/close', auth.ensureAuthenticated, incidences.close, notifications.notifyClose); 
   app.param('incidenceId', incidences.incidence);
 
-  ////////////////////
-  // Incidences API //
-  ////////////////////
+  ///////////////////
+  // Inventory API //
+  ///////////////////
   var inventory = require('../controllers/inventory');
   app.get('/api/inventory', auth.ensureAuthenticated, inventory.index);
   app.post('/api/inventory', auth.ensureAuthenticated, inventory.createItem);

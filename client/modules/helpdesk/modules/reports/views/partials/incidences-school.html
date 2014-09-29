@@ -1,34 +1,9 @@
 <div class="row">
-	<div class="col-md-9">
-		<h1>General Incidences Dashboard Report</h1>
+	<div class="col-md-11">
+		<h1>{{schoolCode}}: Incidences Dashboard Report</h1>
 	</div>
-	<div class="col-md-3" style="margin-top: 20px;">
-		<div class="col-md-12">
-			<div ng-show="schoolsListReady && !schoolsListEmpty">
-				<div class="row">
-				  <div class="col-md-6"><h5>Select school:</h5></div>
-				  <div class="col-md-6"> 
-				    <ui-select ng-model="school.selected" theme="selectize">
-				      <ui-select-match placeholder="{{school.name}}">{{$select.selected.name}}
-				      </ui-select-match>
-				      <ui-select-choices repeat="school in schoolsList">
-				        <div ng-bind-html="school.code" ng-click="schoolReport(school)" class="role-select" popover="{{school.name}}" popover-trigger="mouseenter"></div>
-				      </ui-select-choices>
-				    </ui-select>
-				  </div> 
-				</div>
-			</div>
-          <div class="col-md-12">
-            <div ng-show="!schoolsListReady">
-              <div class="row">
-                <div class="col-md-6"><h5>Load schools:</h5></div>
-                <div class="col-md-6">
-                  <div style="width: 150px;" class="btn btn-default" ng-click="refreshSchools()"><img src="/modules/helpdesk/images/icons/sinchronize-24.png"></div>
-                </div>
-              </div>
-            </div>
-          </div>  
-        </div>
+	<div class="col-md-1" style="margin-top: 20px;">
+		<div popover-placement="bottom" popover="Back to general dashboard" popover-trigger="mouseenter" class="btn btn-default" ng-click="goToGeneralDashboard()"><img src="/modules/helpdesk/modules/reports/images/icons/back-32.png"></div>
 	</div>
 </div>
 <div id="total" class="row" style="margin-top:15px; padding-left: 8px; padding-right: 8px; padding-bottom: 15px;    background-color: #373838;">
