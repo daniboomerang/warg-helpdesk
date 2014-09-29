@@ -80,26 +80,6 @@
 				</div>
 				</div> 
 
-				<div class="input-group form-line-frame">
-				<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-				<div>
-				  <input
-				    type="password"
-				    name="password"
-				    class="form-control"
-				    ng-model="account.password"
-				    mongoose-error
-				    autofocus
-				    placeholder="Password"
-				    required />
-				</div>
-				</div> 
-				<div ng-if="changed(form.password)" ng-messages="form.password.$error">
-				<div class="frame-error-arrowup" ng-message="required">Sorry, the password can´t be empty</div>
-				<div class="frame-error-arrowup" ng-message="mongoose">{{errors.password}}</div>
-				</div>
-
-
 				<div class="modal-footer">
 					<input class="btn btn-success" value="Save Changes" type="submit" ngClick="Submit">
 				</div>
