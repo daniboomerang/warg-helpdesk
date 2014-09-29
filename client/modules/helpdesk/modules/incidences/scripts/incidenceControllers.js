@@ -99,9 +99,7 @@ incidencesControllers.controller('IncidenceNavCtrl', function ($modal, $scope, $
 
   $scope.openModalEffort = function() {
     console.log("open modal effort");
-    modalEffort();
 
-    function modalEffort (){
       var effortModalInstance = $modal.open({
         templateUrl: '/modules/helpdesk/modules/incidences/views/partials/effort-modal.html',
         controller: EffortModalInstanceCtrl,
@@ -118,7 +116,7 @@ incidencesControllers.controller('IncidenceNavCtrl', function ($modal, $scope, $
       }, function () {
         $log.info('Report effort incidence dismissed at: ' + new Date());
       });
-    }  
+
   };
 
   // Please note that $modalInstance represents a modal window (instance) dependency.
