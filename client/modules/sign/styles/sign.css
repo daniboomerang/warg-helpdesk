@@ -1,13 +1,14 @@
 #sign{
-	padding-top: 140px;	
 	position:absolute; height:100%;
 	width: 100%;
 }
 
 .sign-form-container{
 	width: 50%;
-	margin: 0px auto;
+	margin-left: 30%;
+	margin-top: 20%;
 	max-width: 500px;
+	border: solid black 1px;
 	padding-left: 50px;
 	padding-right: 50px;
 }
