@@ -44,6 +44,47 @@ incidencesControllers.controller('IncidenceCtrl', function ($scope, $routeParams
 
 });
 
+incidencesControllers.controller('ModalDemoCtrl', function ($scope, $modal, $log) {
+
+  $scope.items = ['item1', 'item2', 'item3'];
+
+  $scope.open = function (size) {
+
+    var modalInstance = $modal.open({
+        templateUrl: '/modules/helpdesk/modules/incidences/views/partials/testModal.html',
+      controller: 'ModalInstanceCtrl',
+      size: size,
+      resolve: {
+        items: function () {
+          return $scope.items;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (selectedItem) {
+      $scope.selected = selectedItem;
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
+});
+
+incidencesControllers.controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
+
+  $scope.items = items;
+  $scope.selected = {
+    item: $scope.items[0]
+  };
+
+  $scope.ok = function () {
+    $modalInstance.close($scope.selected.item);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});
+
 incidencesControllers.controller('IncidenceNavCtrl', function ($modal, $scope, $document, $rootScope, accountResourceService, $log) {
   
   init();
@@ -99,9 +140,7 @@ incidencesControllers.controller('IncidenceNavCtrl', function ($modal, $scope, $
 
   $scope.openModalEffort = function() {
     console.log("open modal effort");
-    console.log("sdsdfsdf");
-    openModalWarning();
-    /*modalEffort();
+    modalEffort();
 
     function modalEffort (){
       var effortModalInstance = $modal.open({
@@ -120,7 +159,7 @@ incidencesControllers.controller('IncidenceNavCtrl', function ($modal, $scope, $
       }, function () {
         $log.info('Report effort incidence dismissed at: ' + new Date());
       });
-    }  */
+    }  
   };
 
   // Please note that $modalInstance represents a modal window (instance) dependency.
@@ -456,8 +495,6 @@ incidencesControllers.controller('IncidenceNavCtrl', function ($modal, $scope, $
   }
 
   function openModalWarning() {
-
-    console.log("open modal warning");
 
       // Please note that $modalInstance represents a modal window (instance) dependency.
     // It is not the same as the $modal service used above.
