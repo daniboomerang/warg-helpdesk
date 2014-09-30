@@ -63,3 +63,13 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 	background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),-ms-linear-gradient(top,#4f7999,#306088);
 	background-image: url(//d36xtkk24g8jdx.cloudfront.net/bluebar/0ecccda/images/shared/noise-1.png),linear-gradient(top,#4f7999,#306088);
 }
+
+.fa-bell-red{
+  color: #FA5858;
+  font-size: 28px;
+}
+
+.fa-bell-white{
+  color: #ebebeb;
+  font-size: 28px;
+}
