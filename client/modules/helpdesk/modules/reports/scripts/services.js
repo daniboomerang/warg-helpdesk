@@ -41,20 +41,64 @@ reportsServices.factory('reportsService', function ($http, $q, $resource){
       var filterGeneralReportBySchool = function (cachedGeneralReport){
         var specificSchoolReport = [];
         var institutionFound = false;
-        for (var i=0; i <= 3; i++){
-          for (var j=0; ((j <= cachedGeneralReport[i].list.length -1) && (!institutionFound)); j++){
+
+        // TOTALS
+        for (var j=0; ((j <= cachedGeneralReport[0].list.length -1) && (!institutionFound)); j++){
+          if (cachedGeneralReport[0].list[j].institutionCode == schoolCode){
+            var schoolDataObject = cachedGeneralReport[0].list[j];
+            var totals = {totalAccounts: schoolDataObject.totalAccounts,
+                          totalTechnicians: schoolDataObject.techniciansAccounts,
+                          totalIncidences: schoolDataObject.numberIncidences,
+                          totalOpen: schoolDataObject.numberOpenIncidences,
+                          totalOnGoing: schoolDataObject.numberOnGoingIncidences,
+                          totalClosed: schoolDataObject.numberClosedIncidences};
+            specificSchoolReport[0] = {totals: totals, list: [schoolDataObject]};
+            institutionFound = true;
+          }
+        }
+        if (institutionFound == false){
+          specificSchoolReport[i] = {totals: {}, list: []};
+        }
+        else {institutionFound = false;}
+
+        // SEV & PRI
+        for (var j=0; ((j <= cachedGeneralReport[1].list.length -1) && (!institutionFound)); j++){
+          if (cachedGeneralReport[1].list[j].institutionCode == schoolCode){
+            var schoolDataObject = cachedGeneralReport[1].list[j];
+            var totals = {totalSevSerious: schoolDataObject.numberSevSerious,
+              totalSevHigh: schoolDataObject.numberSevHigh,
+              totalSevMedium: schoolDataObject.numberSevMedium,
+              totalSevLow: schoolDataObject.numberSevLow,
+              totalPriSerious: schoolDataObject.numberPriSerious,
+              totalPriHigh: schoolDataObject.numberPriHigh,
+              totalPriMedium: schoolDataObject.numberPriMedium,
+              totalPriLow: schoolDataObject.numberPriLow};
+            specificSchoolReport[1] = {totals: totals, list: [schoolDataObject]};
+            institutionFound = true;
+          }
+        }
+        if (institutionFound == false){
+          specificSchoolReport[i] = {totals: {}, list: []};
+        }
+        else {institutionFound = false;}
+
+        for (var i=2; i <= 3; i++){
+          var list = [];
+          var totalEffort = 0;
+          var averageResolutionTime = 0;
+          for (var j=0; j <= cachedGeneralReport[i].list.length -1; j++){
             if (cachedGeneralReport[i].list[j].institutionCode == schoolCode){
               var schoolDataObject = cachedGeneralReport[i].list[j];
-              var totals = {};
-              specificSchoolReport[i] = {totals: totals, list: [schoolDataObject]};
+              list.push(schoolDataObject);
               institutionFound = true;
+              //totalEffort += schoolDataObject.totalTimeReportedOn;
+              //averageResolutionTime += schoolDataObject.averageResolutionTime;
             }
           }
-          if (institutionFound == false){
-            specificSchoolReport[i] = {totals: {}, list: []};
-          }
-          else {institutionFound = false;}
+          institutionFound = false;
+          specificSchoolReport[i] = {totals: {totalEffort: totalEffort, averageResolutionTime: averageResolutionTime}, list: list};
         }
+
         return specificSchoolReport;
       };
 
