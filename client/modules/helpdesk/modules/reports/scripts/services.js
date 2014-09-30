@@ -42,7 +42,10 @@ reportsServices.factory('reportsService', function ($http, $q, $resource){
         var specificSchoolReport = [];
         var institutionFound = false;
 
-        // TOTALS
+        ////////////
+        // TOTALS //
+        ////////////
+
         for (var j=0; ((j <= cachedGeneralReport[0].list.length -1) && (!institutionFound)); j++){
           if (cachedGeneralReport[0].list[j].institutionCode == schoolCode){
             var schoolDataObject = cachedGeneralReport[0].list[j];
@@ -61,7 +64,10 @@ reportsServices.factory('reportsService', function ($http, $q, $resource){
         }
         else {institutionFound = false;}
 
-        // SEV & PRI
+        ///////////////
+        // SEV & PRI //
+        ///////////////
+
         for (var j=0; ((j <= cachedGeneralReport[1].list.length -1) && (!institutionFound)); j++){
           if (cachedGeneralReport[1].list[j].institutionCode == schoolCode){
             var schoolDataObject = cachedGeneralReport[1].list[j];
@@ -82,23 +88,42 @@ reportsServices.factory('reportsService', function ($http, $q, $resource){
         }
         else {institutionFound = false;}
 
-        for (var i=2; i <= 3; i++){
-          var list = [];
-          var totalEffort = 0;
-          var averageResolutionTime = 0;
-          for (var j=0; j <= cachedGeneralReport[i].list.length -1; j++){
-            if (cachedGeneralReport[i].list[j].institutionCode == schoolCode){
-              var schoolDataObject = cachedGeneralReport[i].list[j];
-              list.push(schoolDataObject);
-              institutionFound = true;
-              //totalEffort += schoolDataObject.totalTimeReportedOn;
-              //averageResolutionTime += schoolDataObject.averageResolutionTime;
-            }
-          }
-          institutionFound = false;
-          specificSchoolReport[i] = {totals: {totalEffort: totalEffort, averageResolutionTime: averageResolutionTime}, list: list};
-        }
+        ////////////
+        // EFFORT //
+        ////////////
 
+        var list = [];
+        var totalEffort = 0;
+        var averageResolutionTime = 0;
+        for (var j=0; j <= cachedGeneralReport[2].list.length -1; j++){
+          if (cachedGeneralReport[2].list[j].institutionCode == schoolCode){
+            var schoolDataObject = cachedGeneralReport[2].list[j];
+            list.push(schoolDataObject);
+            institutionFound = true;
+            totalEffort += schoolDataObject.totalTimeReportedOn;
+            averageResolutionTime += schoolDataObject.averageResolutionTime;
+          }
+        }
+        institutionFound = false;
+        specificSchoolReport[2] = {totals: {totalEffort: totalEffort, averageResolutionTime: averageResolutionTime}, list: list};
+
+        //////////////////
+        // ASSIGNATIONS //
+        //////////////////
+
+        list = [];
+        var totalAssignations = 0;
+        for (var j=0; j <= cachedGeneralReport[3].list.length -1; j++){
+          if (cachedGeneralReport[3].list[j].institutionCode == schoolCode){
+            var schoolDataObject = cachedGeneralReport[3].list[j];
+            list.push(schoolDataObject);
+            institutionFound = true;
+            totalAssignations += schoolDataObject.numberAssignedIncidences;
+          }
+        }
+        institutionFound = false;
+        specificSchoolReport[3] = {totals: {totalAssignations: totalAssignations}, list: list};
+        
         return specificSchoolReport;
       };
 

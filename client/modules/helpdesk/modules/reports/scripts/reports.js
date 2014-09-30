@@ -39,6 +39,6 @@ var reports = angular.module('reports',
 		    .state('helpdesk.reports.incidences.school', {
 		         url: '/:schoolCode',
 		         templateUrl: '/modules/helpdesk/modules/reports/views/partials/incidences-school.html'	,
-		         controller: 'ISRCtrl'
+		         controller: 'IncidencesSchoolReportCtrl'
 			})
 })
