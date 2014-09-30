@@ -100,7 +100,6 @@
 		</div>
 	</div>
 </div>
-{{sevPriReport.totals}}
 <div id="sevpri" class="row" style="margin-top:15px; padding-left: 8px; padding-right: 8px; padding-bottom: 15px;     background-color: #373838 ;">
 	<div class="row" style="margin-top:15px;">
 		<div class="col-md-12">
@@ -235,15 +234,21 @@
 			<div class="reports-title">
 				<div class="row" style="text-align: center;">
 					<span class="col-md-3" style="border-right: solid gray 1px;"><h3>EFFORT & ASSIGNATIONS</h3></span>
-					<span class="col-md-4" style="border-right: solid gray 1px; margin-left: 15px;">
+					<span class="col-md-3" style="border-right: solid gray 1px; margin-left: 15px;">
 						<div class="row">
-							<span><h4>Total Effort: {{totalsReport.totals.totalEffort}}</h4>
+							<span><h4>Total Effort: {{(effortsReport.totals.totalEffort / 60) | number:2 }}</h4>
 							&nbsp;&nbsp;&nbsp;<span>
 						</div>
 					</span>
-					<span class="col-md-4" style="border-right: solid gray 1px; margin-left: 15px;">
+					<span class="col-md-3" style="border-right: solid gray 1px; margin-left: 15px;">
 						<div class="row">
-							<span><h4>Average Resolution Time: {{totalsReport.totals.averageResolutionTime}}</h4>
+							<span><h4>Average Resolution Time: {{(effortsReport.totals.averageResolutionTime / 60) | number:2}}</h4>
+							&nbsp;&nbsp;&nbsp;<span>
+						</div>
+					</span>
+					<span class="col-md-2" style="border-right: solid gray 1px; margin-left: 15px;">
+						<div class="row">
+							<span><h4>Total Assignations: {{assignationsReport.totals.totalAssignations}}</h4>
 							&nbsp;&nbsp;&nbsp;<span>
 						</div>
 					</span>
@@ -298,15 +303,21 @@
 			<div class="chart-title">
 				<div class="row" style="text-align: center;">
 					<span class="col-md-3" style="border-right: solid gray 1px;"><h3>EFFORT & ASSIGNATIONS</h3></span>
-					<span class="col-md-4" style="border-right: solid gray 1px; margin-left: 15px;">
+					<span class="col-md-3" style="border-right: solid gray 1px; margin-left: 15px;">
 						<div class="row">
-							<span><h4>Total Effort: {{totalsReport.totals.totalEffort}}</h4>
+							<span><h4>Total Effort: {{(effortsReport.totals.totalEffort / 60) | number:2 }}</h4>
 							&nbsp;&nbsp;&nbsp;<span>
 						</div>
 					</span>
-					<span class="col-md-4" style="border-right: solid gray 1px; margin-left: 15px;">
+					<span class="col-md-3" style="border-right: solid gray 1px; margin-left: 15px;">
 						<div class="row">
-							<span><h4>Average Resolution Time: {{totalsReport.totals.averageResolutionTime}}</h4>
+							<span><h4>Average Resolution Time: {{(effortsReport.totals.averageResolutionTime / 60) | number:2}}</h4>
+							&nbsp;&nbsp;&nbsp;<span>
+						</div>
+					</span>
+					<span class="col-md-2" style="border-right: solid gray 1px; margin-left: 15px;">
+						<div class="row">
+							<span><h4>Total Assignations: {{assignationsReport.totals.totalAssignations}}</h4>
 							&nbsp;&nbsp;&nbsp;<span>
 						</div>
 					</span>

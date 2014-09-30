@@ -99,7 +99,7 @@ reportsControllers.controller('IncidencesReportCtrl', function ($scope, $state, 
     } 
 });
 
-reportsControllers.controller('ISRCtrl', function ($scope, $state, reportsService, totalsChartService, severityPriorityChartService, effortsChartService, assignationsChartService) {
+reportsControllers.controller('IncidencesSchoolReportCtrl', function ($scope, $state, reportsService, totalsChartService, severityPriorityChartService, effortsChartService, assignationsChartService) {
 
   $scope.goToGeneralDashboard = function (){
     $state.go('helpdesk.reports.incidences.general');

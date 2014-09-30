@@ -41,17 +41,12 @@ angular.module('wargHelpdeskApp', [
   // INIT COMMON SERVICES
   LocationService.init();
   SecurityCheckService.init();
-  // COMMON SERVICES // 
-  // SETTING UP TRANSLATION FOR TRNGGRID
-  /* TrNgGrid.translations['en'] = translationService.getTranslation('en');
-   TrNgGrid.translations['es'] = translationService.getTranslation('es');*/
-  // TRNGGRID //
 
   // Watching the value of the currentUser variable.
   $rootScope.$watch('currentUser', function(currentUser) {
     // if no currentUser and on a page that requires authorization then try to update it
     // will trigger 401s if user does not have a valid session
-    if (!currentUser && (['/', '/sign/in'].indexOf($location.path()) == -1 )) {
+    if (!currentUser && (['/sign', '/sign/in'].indexOf($location.path()) == -1 )) {
       Auth.currentUser();
     }
     $rootScope.$broadcast('event:currentUser-changed');
