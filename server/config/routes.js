@@ -42,6 +42,7 @@ module.exports = function(app) {
   app.get('/api/users', auth.ensureAuthenticatedAsAdmin, users.list);
   app.get('/api/users/:userId', auth.ensureAuthenticatedAsAdmin, users.show);
   app.put('/api/users/:userId', auth.ensureAuthenticatedAsAdmin, users.update);
+  app.put('/api/users/:userId/changePassword', auth.ensureAuthenticatedAsAdmin, users.changePassword);
   app.param('userId', users.user);
   
   ///////////////////////

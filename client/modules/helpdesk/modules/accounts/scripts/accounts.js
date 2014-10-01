@@ -65,6 +65,15 @@ var accounts = angular.module('accounts',
 		            }    
 	            }    
 		    })
+			.state('helpdesk.accounts.open.change', {
+		        url: '/account/:accountId/change',
+		        views: {
+	            	'account': {
+						templateUrl: '/modules/helpdesk/modules/accounts/views/partials/changePassword.html',
+		            	controller: 'ChangePasswordCtrl'
+		            }    
+	            }    
+		    })
 		.state('helpdesk.accounts.settings', {
 	        url: '/settings',
 	        templateUrl: '/modules/helpdesk/modules/accounts/views/partials/user-settings.html',

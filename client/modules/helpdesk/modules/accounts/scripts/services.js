@@ -83,3 +83,14 @@ accountsServices.factory('accountResourceService', function ($http, $q, $resourc
     }
   };
 });
+
+accountsServices.factory('UserChangePassword', function ($resource) {
+    return $resource('api/users/:userId/changePassword', {
+      userId: '@_id',
+    }, {
+      update: {
+        method: 'PUT'
+      }
+    });
+  });
+

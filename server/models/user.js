@@ -128,6 +128,11 @@ UserSchema.methods = {
     if (!password || !this.salt) return '';
     var salt = new Buffer(this.salt, 'base64');
     return crypto.pbkdf2Sync(password, salt, 10000, 64).toString('base64');
+  },
+
+  checkPassword: function(password){
+    var encrypted = this.encryptPassword(password);
+    return this.hashedPassword === encrypted;
   }
 };
 

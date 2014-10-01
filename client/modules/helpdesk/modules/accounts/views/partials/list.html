@@ -1,54 +1,58 @@
 <section ng-init="find()">
-	<div class="row-fluid">	
-	  	<div class="list-accounts shadow-form-container col-md-7">
-		    <table tr-ng-grid="" items="accounts" selected-items="selectedAccounts" enable-sorting="false" >
-			    <thead>
-			        <tr>
-			            <th field-name="username" >Username</th>
-			            <th field-name="school" cell-width="2em">School</th>
-			            <th field-name="email" >Email</th>
-			            <th field-name="role" cell-width="3em">Role</th>
-			            <th field-name="membership" >Memebership</th>
-			            <th field-name="open" enable-filtering="false" ><div> &nbsp;</div></th>
-			        </tr>
-			    </thead>
-	            <tbody>
-	                <tr>
-	                	<td field-name="username">                		
-                			<span class="frame-list-cell">
-                				{{gridItem.username}}
-                			</span>
+	<div class="row">
+		<div class="list-accounts shadow-form-container col-md-7">
+			<table tr-ng-grid="" items="accounts" selected-items="selectedAccounts" enable-sorting="false" >
+				<thead>
+					<tr>
+						<th field-name="username" >Username</th>
+						<th field-name="school" cell-width="2em">School</th>
+						<th field-name="email" >Email</th>
+						<th field-name="role" cell-width="3em">Role</th>
+						<th field-name="membership" >Memebership</th>
+						<th field-name="open" enable-filtering="false" cell-width="5em"><div> &nbsp;</div></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td field-name="username">                		
+							<span class="frame-list-cell">
+								{{gridItem.username}}
+							</span>
 						</td>
-	                	<td field-name="school">                		
-                			<span class="frame-list-cell">
-                				{{gridItem.school.code}}
-                			</span>
+						<td field-name="school">                		
+							<span class="frame-list-cell">
+								{{gridItem.school.code}}
+							</span>
 						</td>
 						<td field-name="membership">
-                    		<span class="frame-list-cell">
-                    		{{gridItem.membership | date:'longDate'}}
-                    		</span>
+							<span class="frame-list-cell">
+								{{gridItem.membership | date:'dd/MM/yyyy'}}
+							</span>
 						</td>
-	                    <td field-name="open">
-	                        <div>  
-	                            <button class="btn btn-xs btn-success" ng-click="openAccount(gridItem._id)">{{ 'BUTTON.OPEN' | translate }}
-	                            </button>
-	                        </div>
-	                    </td>
-	                </tr>
-	            </tbody>
-	            <tfoot>
-	                <tr>
-	                    <td colspan="10">	
-	                        <form class="form-inline tr-ng-grid-footer" grid="">
-	                            <div class="pull-left" tr-ng-grid-global-filter=""></div>
-	                            <div class="pull-right" tr-ng-grid-pager=""></div>
-	                        </form>
-	                    </td>
-	                </tr>
-	            </tfoot>
-	        </table>
-	  	</div>
+						<td field-name="open">
+							<div>
+								<a ng-click="openAccount(gridItem._id)">
+									<i class="fa fa-folder-open fa-lg"></i>
+								</a>
+								<a  ng-click="openChangePassword(gridItem._id)">
+									<i class="fa fa-unlock fa-lg"></i>
+								</a>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="10">	
+							<form class="form-inline tr-ng-grid-footer" grid="">
+								<div class="pull-left" tr-ng-grid-global-filter=""></div>
+								<div class="pull-right" tr-ng-grid-pager=""></div>
+							</form>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
 		<div id="account" ui-view="account" class="col-md-5"></div>		  	  	
 	</div>
 </section>

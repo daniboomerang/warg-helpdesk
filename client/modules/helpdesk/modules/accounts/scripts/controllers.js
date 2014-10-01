@@ -163,6 +163,10 @@ accountsControllers.controller('ListAccountsCtrl', function ($scope, $state) {
     $state.go('helpdesk.accounts.open.account', { accountId: id });
   };
 
+  $scope.openChangePassword = function(id) {
+    $state.go('helpdesk.accounts.open.change', { accountId: id });
+  };
+
 });
 
 accountsControllers.controller('AccountCtrl', function ($scope, LocationService, messengerService){
@@ -174,6 +178,43 @@ accountsControllers.controller('AccountCtrl', function ($scope, LocationService,
       }, function(error){
         messengerService.popMessage('error', 'Account not updated.', error.status + ' - ' + error.statusText);
       });
+  };
+
+  $scope.changed = function(filed){
+    return filed.$dirty;
+  };
+});
+
+accountsControllers.controller('ChangePasswordCtrl', function ($scope, LocationService, messengerService, UserChangePassword){
+
+  $scope.oldPass = "";
+  $scope.newPass = "";
+  $scope.newPassConfirm = "";
+
+  $scope.saveChanges = function(form){
+    if ($scope.newPass != $scope.newPassConfirm){
+      $scope.errors = {};
+      form.newPassConfirm.$setValidity('mongoose', false);
+      $scope.errors.newPassConfirm = 'confirm.password.not.matching';
+    } else {
+      var userChangePassword = new UserChangePassword({
+        _id: $scope.account._id,
+        oldPassword: $scope.oldPass,
+        newPassword: $scope.newPass
+      });
+      userChangePassword.$update(function(inventoryItem){
+          messengerService.popMessage('success', 'Account successfully updated.');
+          $scope.cancelOperation();
+        }, function(error){
+          $scope.errors = {};
+          if (error.data.status == 'password.not.matching'){
+            form.oldPass.$setValidity('mongoose', false);
+            $scope.errors.oldPass = error.data.status;
+          }else{
+            messengerService.popMessage('error', 'Password not changed.', error.status + ' - ' + error.statusText);
+          }
+        });
+    }
   };
 
   $scope.changed = function(filed){

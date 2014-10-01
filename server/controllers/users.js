@@ -12,6 +12,8 @@ var mongoose = require('mongoose'),
 
 var usersDomain = require('../domain/users-domain');
 
+var UserChangePassword = require('../domain/user-change-password')
+
 /**
  * Find user by id
  */
@@ -119,3 +121,15 @@ exports.list = function(req, res) {
     }
   });
 };
+
+exports.changePassword = function(req, res) {
+  var userChangePassword = 
+    new UserChangePassword(req.body._id, req.body.oldPassword, req.body.newPassword);
+  userChangePassword.change()
+  .then(function(result){
+    res.json(result);
+  })
+  .fail(function(reason){
+    res.json(403, { status: reason });
+  })
+}
