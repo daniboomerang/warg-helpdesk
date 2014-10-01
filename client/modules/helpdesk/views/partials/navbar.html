@@ -29,7 +29,7 @@
               <a ng-class="{'shading-notification': notification.status != 'Seen'}" ng-click="updateNotificationStatus(notification, 'Seen')">
                 <span>{{notification.text}}</span>&nbsp;&nbsp;
                 <span><img src="/modules/helpdesk/images/icons/planner-16.png"></span>&nbsp;&nbsp;
-                <span>{{notification.created | date:'shortDate'}}</span>&nbsp;&nbsp;
+                <span>{{notification.created | date:'dd/MM/yyyy'}}</span>&nbsp;&nbsp;
                 <span ng-if="notification.status != 'Seen'"><img src="/modules/helpdesk/images/icons/circle-dashed-8.png" popover-placement="left" popover="Mark as seen" popover-trigger="mouseenter" ng-click="updateNotificationStatus(notification, 'Seen')"></span>
                 <span ng-if="notification.status == 'Seen'"><img src="/modules/helpdesk/images/icons/circle-8.png" popover-placement="left" popover="Seen" popover-trigger="mouseenter"></span>
               </a>

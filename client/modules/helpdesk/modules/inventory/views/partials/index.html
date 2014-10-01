@@ -32,19 +32,19 @@
                         {{ gridItem.location | translate }}</span>
                     </td>
                     <td field-name="guaranteeExpirationDate">
-                      <span ng-if="(gridItem.guaranteeExpirationDate | date:'shortDate') == (today | date:'shortDate')">
+                      <span ng-if="(gridItem.guaranteeExpirationDate | date:'dd/MM/yyyy') == (today | date:'dd/MM/yyyy')">
                       {{gridItem.guaranteeExpirationDate | date:'shortTime'}}
                       </span>
-                      <span ng-if="(gridItem.guaranteeExpirationDate | date:'shortDate') != (today | date:'shortDate')">
-                      {{gridItem.guaranteeExpirationDate | date:'shortDate'}}
+                      <span ng-if="(gridItem.guaranteeExpirationDate | date:'dd/MM/yyyy') != (today | date:'dd/MM/yyyy')">
+                      {{gridItem.guaranteeExpirationDate | date:'dd/MM/yyyy'}}
                       </span>
                     </td>
                     <td field-name="lastInventoryDate">
-                      <span ng-if="(gridItem.lastInventoryDate | date:'shortDate') == (today | date:'shortDate')">
+                      <span ng-if="(gridItem.lastInventoryDate | date:'dd/MM/yyyy') == (today | date:'dd/MM/yyyy')">
                       {{gridItem.lastInventoryDate | date:'shortTime'}}
                       </span>
-                      <span ng-if="(gridItem.lastInventoryDate | date:'shortDate') != (today | date:'shortDate')">
-                      {{gridItem.lastInventoryDate | date:'shortDate'}}
+                      <span ng-if="(gridItem.lastInventoryDate | date:'dd/MM/yyyy') != (today | date:'dd/MM/yyyy')">
+                      {{gridItem.lastInventoryDate | date:'dd/MM/yyyy'}}
                       </span>
                     </td>
                     <td field-name="description">

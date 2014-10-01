@@ -6,7 +6,7 @@
                 <div class="text-muted frame-status-incidence" ng-class="{open: incidence.status.currentStatus == 'Open', ongoing: incidence.status.currentStatus == 'On Going', closed: incidence.status.currentStatus == 'Closed'}"> <strong> <span>{{incidence.status.currentStatus}}</span><span ng-show="incidence.status.currentStatus == 'Closed'"> as {{incidence.status.currentSubstatus}}</span> </strong></div>
                 <div ng-show="incidence.status.currentStatus == 'Closed' && incidence.status.currentSubstatus == 'Duplicated'" >Duplicated Of: <a ng-click="goToIncidence(incidence.status.duplicatedOf)"><strong> {{incidence.status.duplicatedOf}} </strong></a></div>
                 <div > Owner: <strong> {{ incidence.creator.username}} </strong></div>
-                <div > Opened on: {{incidence.created | date:'shortDate'}}</div>
+                <div > Opened on: {{incidence.created | date:'dd/MM/yyyy'}}</div>
                 <div > Severity: <strong>  {{incidence.severity}} </strong></div>
                 <div > Priority: <strong> {{incidence.priority}} </strong></div>
             </div>
@@ -57,7 +57,7 @@
     <accordion close-others="false">
       <accordion-group ng-repeat="post in incidence.history" is-open="$index == 0 || commentsStatus.expanded" ng-class="">
         <accordion-heading>
-            <span class="badge alert-info" style="padding:8px;">Posted {{post.date | date:'medium'}}</span>
+            <span class="badge alert-info" style="padding:8px;">Posted {{post.date | date:'dd/MM/yyyy'}}</span>
              <div class="pull-right">
                 <span class="badge alert-info" style="padding:8px;">Posted by: {{post.author}}</span>
              </div>          

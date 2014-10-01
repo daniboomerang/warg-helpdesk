@@ -42,42 +42,42 @@
 		                    <!-- Dates: We show Today, Yesterday, 2 days ago or a short date format -->
 	                    	<td field-name="created">
 		                    	<div popover-placement="bottom" popover="{{ gridItem.created | date:'shortTime'}}" popover-trigger="mouseenter">
-		                    		<span ng-if="(gridItem.created | date:'shortDate') == (today | date:'shortDate')">
+		                    		<span ng-if="(gridItem.created | date:'dd/MM/yyyy') == (today | date:'dd/MM/yyyy')">
 		                    		{{ 'Today' | translate }}
 		                    		</span>
-		                    		<span ng-if="(gridItem.created | date:'shortDate') == (yesterday | date:'shortDate')">
+		                    		<span ng-if="(gridItem.created | date:'dd/MM/yyyy') == (yesterday | date:'dd/MM/yyyy')">
 									{{ 'Yesterday' | translate }}
 									</span>
-									<span ng-if="(gridItem.created | date:'shortDate') == (twoDaysAgo | date:'shortDate')">
+									<span ng-if="(gridItem.created | date:'dd/MM/yyyy') == (twoDaysAgo | date:'dd/MM/yyyy')">
 									{{ '2 Days ago' | translate }}
 									</span>
-									<span ng-if="((gridItem.created | date:'shortDate') != (today | date:'shortDate'))
-									&& ((gridItem.created | date:'shortDate') != (yesterday | date:'shortDate'))
-									&& ((gridItem.created | date:'shortDate') != (twoDaysAgo | date:'shortDate'))">
-									{{gridItem.created | date:'EEE'}} {{gridItem.created | date:'shortDate'}}
+									<span ng-if="((gridItem.created | date:'dd/MM/yyyy') != (today | date:'dd/MM/yyyy'))
+									&& ((gridItem.created | date:'dd/MM/yyyy') != (yesterday | date:'dd/MM/yyyy'))
+									&& ((gridItem.created | date:'dd/MM/yyyy') != (twoDaysAgo | date:'dd/MM/yyyy'))">
+									{{gridItem.created | date:'dd/MM/yyyy'}}
 									</span>
 								</div>
 							</td>
 
 							<td field-name="updated">
 								<div popover-placement="bottom" popover="{{ gridItem.updated[gridItem.updated.length - 1] | date:'shortTime'}}" popover-trigger="mouseenter">
-		                    		<span ng-if="(gridItem.updated[gridItem.updated.length - 1]  | date:'shortDate') == (today | date:'shortDate')">
+		                    		<span ng-if="(gridItem.updated[gridItem.updated.length - 1]  | date:'dd/MM/yyyy') == (today | date:'dd/MM/yyyy')">
 		                    		{{ 'Today' | translate }}
 		                    		</span>
-		                    		<span ng-if="(gridItem.updated[gridItem.updated.length - 1]  | date:'shortDate') == (yesterday | date:'shortDate')">
+		                    		<span ng-if="(gridItem.updated[gridItem.updated.length - 1]  | date:'dd/MM/yyyy') == (yesterday | date:'dd/MM/yyyy')">
 									{{ 'Yesterday' | translate }}
 									</span>
-									<span ng-if="(gridItem.updated[gridItem.updated.length - 1]  | date:'shortDate') == (twoDaysAgo | date:'shortDate')">
+									<span ng-if="(gridItem.updated[gridItem.updated.length - 1]  | date:'dd/MM/yyyy') == (twoDaysAgo | date:'dd/MM/yyyy')">
 									{{ '2 Days ago' | translate }}
 									</span>
-									<span ng-if="((gridItem.updated[gridItem.updated.length - 1]  | date:'shortDate') != (today | date:'shortDate'))
-									&& ((gridItem.updated[gridItem.updated.length - 1]  | date:'shortDate') != (yesterday | date:'shortDate'))
-									&& ((gridItem.updated[gridItem.updated.length - 1]  | date:'shortDate') != (twoDaysAgo | date:'shortDate'))">
-									{{gridItem.updated[gridItem.updated.length - 1]  | date:'EEE'}} {{gridItem.updated[gridItem.updated.length - 1]  | date:'shortDate'}}
+									<span ng-if="((gridItem.updated[gridItem.updated.length - 1]  | date:'dd/MM/yyyy') != (today | date:'dd/MM/yyyy'))
+									&& ((gridItem.updated[gridItem.updated.length - 1]  | date:'dd/MM/yyyy') != (yesterday | date:'dd/MM/yyyy'))
+									&& ((gridItem.updated[gridItem.updated.length - 1]  | date:'dd/MM/yyyy') != (twoDaysAgo | date:'dd/MM/yyyy'))">
+									{{gridItem.updated[gridItem.updated.length - 1]  | date:'dd/MM/yyyy'}}
 									</span>
 								</div>
-	                    		<!--<span ng-if="(gridItem.updated[gridItem.updated.length - 1] | date:'shortDate') != (today | date:'shortDate')">
-									{{gridItem.updated[gridItem.updated.length - 1] | date:'shortDate'}}
+	                    		<!--<span ng-if="(gridItem.updated[gridItem.updated.length - 1] | date:'dd/MM/yyyy') != (today | date:'dd/MM/yyyy')">
+									{{gridItem.updated[gridItem.updated.length - 1] | date:'dd/MM/yyyy'}}
 								</span>-->
 							</td>								
 
