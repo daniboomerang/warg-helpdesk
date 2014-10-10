@@ -36,7 +36,7 @@ exports.getUserModules = function (role) {
 
   function getActionsOnAccounts (role) {  
     if (role === ROLE_ADMIN){
-      return ['create', 'import', 'list'];
+      return ['create', 'list'];
     }  
   }
 
