@@ -42,6 +42,8 @@ var translation = angular.module('translation',
   'INVENTORY.SIZE': 'Size',
   'INVENTORY.AVAILABILITY.WHEN': 'Date',
   'INVENTORY.AVAILABILITY.WHY': 'Reason',
+  'ACCOUNT.EDIT': 'Edit profile',
+  'ACCOUNT.CHANGE.PASSWORD': 'Change password'
 })
 .constant('translations_es', {
   // Global

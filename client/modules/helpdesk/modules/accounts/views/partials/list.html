@@ -31,10 +31,10 @@
 						</td>
 						<td field-name="open">
 							<div>
-								<a ng-click="openAccount(gridItem._id)">
+								<a ng-click="openAccount(gridItem._id)" popover-placement="top" popover="{{ 'ACCOUNT.EDIT' | translate }}" popover-trigger="mouseenter">
 									<i class="fa fa-folder-open fa-lg"></i>
 								</a>
-								<a  ng-click="openChangePassword(gridItem._id)">
+								<a  ng-click="openChangePassword(gridItem._id)"  popover-placement="top" popover="{{ 'ACCOUNT.CHANGE.PASSWORD' | translate }}" popover-trigger="mouseenter">
 									<i class="fa fa-unlock fa-lg"></i>
 								</a>
 							</div>
