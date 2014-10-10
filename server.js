@@ -40,9 +40,9 @@ app.configure(function() {
 });
 
 app.configure('production', function(){
-  app.use(express.static(path.join(__dirname, 'www')));
+  app.use(express.static(path.join(__dirname, 'client')));
   app.use(express.errorHandler());
-  app.set('views', __dirname + '/www');
+  app.set('views', __dirname + '/client');
   app.use(express.logger('production'));             // log every request to the console
 });
 
