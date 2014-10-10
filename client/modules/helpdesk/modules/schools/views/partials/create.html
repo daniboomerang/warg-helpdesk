@@ -15,15 +15,13 @@
             placeholder="School Name"
             mongoose-error
             required
-            ng-minlength="6"
-            ng-maxlength="20" />
+            ng-maxlength="150" />
         </div> 
 
         <div ng-if="changed(form.name)" ng-messages="form.name.$error">
           <div class="frame-error-arrowup" ng-message="required">Sorry, the school name can´t be empty.</div>
           <div class="frame-error-arrowup" ng-message="mongoose">{{errors.name}}</div>
-          <div class="frame-error-arrowup" ng-message="minlength">Sorry, the name of the school must have at least 6 characters.</div>
-          <div class="frame-error-arrowup" ng-message="maxlength">Sorry, the name of the school can´t have more than 20 characters.</div>
+          <div class="frame-error-arrowup" ng-message="maxlength">Sorry, the name of the school can´t have more than 150 characters.</div>
         </div>
 
         <div class="input-group form-line-frame" style="width: 150px;">

@@ -17,14 +17,12 @@
                 placeholder="Title"
                 mongoose-error
                 required
-                ng-minlength="10"
-                ng-maxlength="150"/>
+                ng-maxlength="250"/>
                 <div class="input-group-addon bg-success">{{ titleLength(form) }}</div>
             </div>
             <div ng-if="changed(form.title)" ng-messages="form.title.$error">
               <div class="frame-error-arrowup" ng-message="required">Sorry, the title can´t be empty.</div>
-              <div class="frame-error-arrowup" ng-message="minlength">Sorry, the title must have at least 10 characters.</div>
-              <div class="frame-error-arrowup" ng-message="maxlength">Sorry, the title can´t have more than 150 characters. </div>
+              <div class="frame-error-arrowup" ng-message="maxlength">Sorry, the title can´t have more than 250 characters. </div>
             </div>
           </div>  
           <div ng-show="currentUser.role == 'admin'" class="col-md-4">
@@ -73,14 +71,12 @@
                   ng-model="description"
                   mongoose-error
                   required
-                  ng-minlength="30"
                   ng-maxlength="1500"/></textarea>          
                   <div class="input-group-addon bg-success">{{ descriptionLength(form) }}</div>
             </div> 
 
             <div ng-if="changed(form.description)" ng-messages="form.description.$error" style="margin-bottom: 10px">
               <div class="frame-error-arrowup" ng-message="required">Sorry, description can´t be empty.</div>
-              <div class="frame-error-arrowup" ng-message="minlength">Sorry, minimum description lenght required is 30 characters.</div>
               <div class="frame-error-arrowup" ng-message="maxlength">Sorry, maximum description lenght required is 1500 characters.</div>
             </div>
           </div>    
