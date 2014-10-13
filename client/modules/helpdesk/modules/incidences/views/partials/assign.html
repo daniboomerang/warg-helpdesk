@@ -9,7 +9,7 @@
         <div class="row" style="padding:10px;padding-top: 5px; padding-bottom: 5px;">
           <div class="col-md-12">
             <ui-select ng-model="technician.selected" theme="selectize" class="assign-select-dropdown">
-              <ui-select-match placeholder="Assign tech">
+              <ui-select-match placeholder="{{ 'SELECT' | translate }}">
                 <span class="frame-select-row">{{$select.selected.username}}</span>
               </ui-select-match>
               <ui-select-choices repeat="technician in assign.techniciansList">

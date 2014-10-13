@@ -48,6 +48,7 @@ var translation = angular.module('translation',
   'ACCOUNT.SURNAME': 'Surname',
   'CREATE': 'Create',
   'UPDATE': 'Update',
+  'SELECT': 'Select',
 
 
   'INCIDENCE.ASSIGN': 'Assign',
