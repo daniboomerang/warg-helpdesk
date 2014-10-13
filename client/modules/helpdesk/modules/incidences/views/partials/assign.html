@@ -1,41 +1,43 @@
 <div class="box-incidence-datails">
 	<div ng-show="edit.assign">		
-    <div>
-      <!-- show dropdown -->
-      <div ng-show="assign.techniciansListReady && !assign.techniciansListEmpty">
-        <div class="container-fluid">
-          <div class="row"> 
-            <div>Select Assignee:</div>    
-          </div>
-          <div class="row" style="padding:10px;padding-top: 5px; padding-bottom: 5px;">
+    <!-- show dropdown -->
+    <div ng-show="assign.techniciansListReady && !assign.techniciansListEmpty">
+      <div class="container-fluid">
+        <div class="row"> 
+          <div class="col-md-12">Select Assignee:</div>    
+        </div>
+        <div class="row" style="padding:10px;padding-top: 5px; padding-bottom: 5px;">
+          <div class="col-md-12">
             <ui-select ng-model="technician.selected" theme="selectize" class="assign-select-dropdown">
-              <ui-select-match placeholder="Assign tech"> <span class="frame-select-row">{{$select.selected.username}}</ui-select-match></span>
+              <ui-select-match placeholder="Assign tech">
+                <span class="frame-select-row">{{$select.selected.username}}</span>
+              </ui-select-match>
               <ui-select-choices repeat="technician in assign.techniciansList">
                 <div ng-bind-html="technician.username" class="frame-select-row" ng-click="assignTo(technician)"></div>
               </ui-select-choices>
             </ui-select>
           </div>
-          <div class="row">
-            <div ng-show="assign.allowUpdate">
-              <div ng-click="poolAssignation()">
-                <div class="btn btn-primary">Submit Assignee</div>
-              </div>  
-            </div>
+        </div>
+        <div class="row">
+          <div ng-show="assign.allowUpdate" class="col-md-12">
+            <div ng-click="poolAssignation()">
+              <div class="btn btn-primary">{{ 'INCIDENCE.ASSIGN' | translate }}</div>
+            </div>  
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- show refresh -->
-      <div ng-show="!assign.techniciansListReady">
-        <div ng-click="refreshTechnicians()">
-          <div class="btn btn-default">&nbsp;<img src="/modules/helpdesk/images/icons/sinchronize-24.png">&nbsp;Retrieve list&nbsp;</div>
-        </div>  
-      </div>
+    <!-- show refresh -->
+    <div ng-show="!assign.techniciansListReady">
+      <div ng-click="refreshTechnicians()">
+        <div class="btn btn-default">&nbsp;<img src="/modules/helpdesk/images/icons/sinchronize-24.png">&nbsp;Retrieve list&nbsp;</div>
+      </div>  
+    </div>
 
-      <!-- show unavailability message -->
-      <div ng-show="assign.techniciansListEmpty && assign.techniciansListReady">
-        <div class="frame-div-warning">No technicians available. <br> Plase contact your administrator</div>
-      </div>
+    <!-- show unavailability message -->
+    <div ng-show="assign.techniciansListEmpty && assign.techniciansListReady">
+      <div class="frame-div-warning">No technicians available. <br> Plase contact your administrator</div>
     </div>
 	</div>    
 	<div ng-show="!edit.assign">

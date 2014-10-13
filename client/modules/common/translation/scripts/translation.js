@@ -48,6 +48,9 @@ var translation = angular.module('translation',
   'ACCOUNT.SURNAME': 'Surname',
   'CREATE': 'Create',
   'UPDATE': 'Update',
+
+
+  'INCIDENCE.ASSIGN': 'Assign',
 })
 .constant('translations_es', {
   // Global

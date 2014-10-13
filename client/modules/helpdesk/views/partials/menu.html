@@ -1,31 +1,33 @@
-<div class="col-sm-3 col-md-2 sidebar">
+<div class="row">
+  <div class="col-md-12">
     <accordion close-others="oneAtATime">
       <div ng-repeat="module in menu" ng-class="{true: module.style.active}[status.activeModule == module.name]" class="frame-module">
-      <accordion-group is-open="isActiveModule(module.name)">
-        <accordion-heading>
-  
-        <div style="height: 35px; padding:5px;" ng-click="status[module.name] = !status[module.name];">
-          <span class="pull-left module-icon-24" ng-style="{{module.style.image}}"></span><div style="padding-top:4px;"><span ng-style="{{module.style.color}}">{{ module.name | translate }}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': !status[module.name], 'glyphicon-chevron-right': status[module.name]}"></i></div>
-        </div>  
-        </accordion-heading>
-        <ul class="nav nav-pills nav-stacked">
-          <li ng-class="{active: status.activeState == action.state, active2: status.activeState == action.state}" ng-repeat="action in module.actions">
+        <accordion-group is-open="isActiveModule(module.name)">
+          <accordion-heading>
 
-            <!-- Very Ugly: Setting OpenId for module Incidences, on second position and with an specific html -->
-            <div class="search-id" ng-show='(action.title == "Id Search")'>
-              <input type="text" ng-model="id" class="form-control search-id-input pull-left" placeholder="{{ 'Search id' | translate }}" required="" class="form-control">
-              </input>
-              <a class="pull-right module-icon-16 search-id-icon search-id-arrow" ng-click="searchIncidenceById(action.state, id, module.name)">
-              <span><img src="/modules/helpdesk/images/icons/arrow-circle-20.png" alt="Open Incidence"></span></a>
-            </div>
-            <!-- --> 
+          <div style="height: 35px; padding:5px;" ng-click="status[module.name] = !status[module.name];">
+            <span class="pull-left module-icon-24" ng-style="{{module.style.image}}"></span><div style="padding-top:4px;"><span ng-style="{{module.style.color}}">{{ module.name | translate }}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': !status[module.name], 'glyphicon-chevron-right': status[module.name]}"></i></div>
+          </div>  
+          </accordion-heading>
+          <ul class="nav nav-pills nav-stacked">
+            <li ng-class="{active: status.activeState == action.state, active2: status.activeState == action.state}" ng-repeat="action in module.actions">
 
-            <a ng-show='(action.title != "Id Search")' ui-sref="{{action.state}}" ng-click="status.activeState = action.state; status.activeModule = module.name;">
-            <span class="pull-left module-icon-16"><img ng-src="{{action.style}}"/></span>
-            &nbsp;{{ action.title | translate }}</a>
-          </li>
-        </ul>
-      </accordion-group>
-    </div>
-  </accordion>
+              <!-- Very Ugly: Setting OpenId for module Incidences, on second position and with an specific html -->
+              <div class="search-id" ng-show='(action.title == "Id Search")'>
+                <input type="text" ng-model="id" class="form-control search-id-input pull-left" placeholder="{{ 'Search id' | translate }}" required="" class="form-control" />
+                <a class="pull-right module-icon-16 search-id-icon search-id-arrow" ng-click="searchIncidenceById(action.state, id, module.name)">
+                  <span><img src="/modules/helpdesk/images/icons/arrow-circle-20.png" alt="Open Incidence" /></span>
+                </a>
+              </div>
+              <!-- --> 
+
+              <a ng-show='(action.title != "Id Search")' ui-sref="{{action.state}}" ng-click="status.activeState = action.state; status.activeModule = module.name;">
+              <span class="pull-left module-icon-16"><img ng-src="{{action.style}}"/></span>
+              &nbsp;{{ action.title | translate }}</a>
+            </li>
+          </ul>
+        </accordion-group>
+      </div>
+    </accordion>
+  </div>
 </div>

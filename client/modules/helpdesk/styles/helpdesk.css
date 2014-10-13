@@ -8,32 +8,19 @@
 }
 
 @media (min-width: 768px) {
+  .main-content {
+    padding-top: 53px;
+  }
   .sidebar {
-    position: fixed;
-    top: 53px;
-    bottom: 0;
-    left: 0;
     display: block;
-    padding-bottom: 0px;
-    padding-top: 13px;
-    padding-right: 10px;
-    padding-left: 10px;
     overflow-x: hidden;
     overflow-y: auto;
     border: solid 1px #E0E0E0;
     background-color: #373838 ;
   }
-}
-
-/*
- * Main content
- */
-
-@media (min-width: 768px) {
-  .main {
-     padding-top: 55px;
-    padding-right: 15px;
-    padding-left: 15px;
+  .sidebar menu{
+    padding-left: 0px;
+    padding-right: 0px;
   }
 }
 
