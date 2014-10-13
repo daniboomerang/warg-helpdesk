@@ -64,7 +64,7 @@
         </accordion-heading>
         <div ng-bind-html="post.post | breakFilter"></div>
         <div class="row frame-reply" ng-show="$index == 0 && incidence.status.currentStatus != 'Closed'">
-            <reply></reply>
+            <reply ng-show="currentUser.role != 'admin'"></reply>
         </div>
       </accordion-group>
     </accordion>
