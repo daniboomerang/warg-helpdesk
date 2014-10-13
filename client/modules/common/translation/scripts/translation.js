@@ -45,7 +45,9 @@ var translation = angular.module('translation',
   'ACCOUNT.EDIT': 'Edit profile',
   'ACCOUNT.CHANGE.PASSWORD': 'Change password',
   'ACCOUNT.NAME': 'Name',
-  'ACCOUNT.SURNAME': 'Surname'
+  'ACCOUNT.SURNAME': 'Surname',
+  'CREATE': 'Create',
+  'UPDATE': 'Update',
 })
 .constant('translations_es', {
   // Global

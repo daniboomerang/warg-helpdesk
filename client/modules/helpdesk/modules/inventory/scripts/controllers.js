@@ -175,6 +175,7 @@ inventoryControllers.controller('CreateInventoryCtrl', function ($scope, $locati
   $scope.data.price = "";
 
   $scope.data.custom = {};
+  $scope.buttonText = "CREATE";
 
   $scope.kinds = [
     'PC', 
@@ -187,6 +188,7 @@ inventoryControllers.controller('CreateInventoryCtrl', function ($scope, $locati
 
   var resource;
   if ($stateParams.itemId){
+    $scope.buttonText = "UPDATE";
     resource = new InventoryItem({ _id: $stateParams.itemId});
     resource.$get(function(data){
       _setView(data);

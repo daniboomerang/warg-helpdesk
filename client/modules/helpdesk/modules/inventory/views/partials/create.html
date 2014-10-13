@@ -124,7 +124,7 @@
             <div class="col-md-12">
               <div class="modal-footer">
                 <button class="btn btn-warning" ng-click="cancelOperation()">Cancel</button>
-                 <input ng-disabled="form.$invalid" class="btn btn-success" value="Create" type="submit" ngClick="Submit">
+                 <input ng-disabled="form.$invalid" class="btn btn-success" value="{{ buttonText | translate }}" type="submit">
               </div>
             </div>
           </div>
