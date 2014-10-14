@@ -14,7 +14,6 @@
 
 .open{
 	color: #3D9970;
-
 }
 
 .ongoing{
@@ -23,6 +22,18 @@
 
 .closed{
 	color: red;
+}
+
+.incidence-view-open{
+	background-color: #3D9970;
+}
+
+.incidence-view-ongoing{
+	background-color: #FF851B;
+}
+
+.incidence-view-closed{
+	background-color: red;
 }
 
 .frame-incidences{
