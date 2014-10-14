@@ -97,3 +97,25 @@ wargHelpdeskDirectives.directive('validIncidenceId', function ($http) {
       }
     };
   });
+
+
+wargHelpdeskDirectives.directive('incidenceExists', function ($http) {
+    return {
+      restrict: 'A',
+      require: 'ngModel',
+      link: function (scope, element, attrs, ngModel) {
+        var currentIncidenceId = scope.$parent.close.incidence.id;
+        function validate(value) {
+          $http.get('/api/incidences/' + value).success(function (result) {
+            ngModel.$setValidity('nonexistent', true);
+          }).error(function (err){
+            ngModel.$setValidity('nonexistent', false);
+          });
+        }
+
+        scope.$watch( function() {
+          return ngModel.$viewValue;
+        }, validate);
+      }
+    };
+  });

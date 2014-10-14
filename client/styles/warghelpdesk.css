@@ -10,6 +10,19 @@
 
 }
 
+/*********************/
+/* SELECTABLE TABLES */
+/*********************/
+
+.selectableTable > tbody > tr > td,
+.selectableTable > tbody > tr > td > .tr-ng-cell {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+/*********************/
+
 
 /**********/
 /* frames */

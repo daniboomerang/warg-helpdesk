@@ -1,7 +1,7 @@
 <section ng-init="find()">
 	<div class="row-fluid" ng-show="schools.length > 0">	
 	  	<div class="col-md-7 list-schools shadow-form-container ">
-		    <table tr-ng-grid="" items="schools" selected-items="selectedSchools" 
+		    <table tr-ng-grid="" class="selectableTable" items="schools" selected-items="selectedSchools" 
 		    selection-mode="None" enable-sorting="true">
 			    <thead>
 			        <tr>
@@ -42,10 +42,10 @@
 <!--<div ng-init="find()">
 		  	<div class="row">
 		        <div class="col-md-6" style="border: solid;">
-		          <table tr-ng-grid="" ng-init="alertOnSelectionChange();" items="schools" selected-items="selectedSchools" selection-mode="SingleRow"></table>
+		          <table tr-ng-grid="" class="selectableTable" ng-init="alertOnSelectionChange();" items="schools" selected-items="selectedSchools" selection-mode="SingleRow"></table>
 		        </div>  
 		        <div class="col-md-6" style="border: solid;">
-		          <table tr-ng-grid="" items="selectedSchools" selection-mode="None"></table>
+		          <table tr-ng-grid="" class="selectableTable" items="selectedSchools" selection-mode="None"></table>
 		        </div>
 	      	</div>
 </div>-->

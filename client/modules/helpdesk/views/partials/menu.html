@@ -12,7 +12,7 @@
           <ul class="nav nav-pills nav-stacked">
             <li ng-class="{active: status.activeState == action.state, active2: status.activeState == action.state}" ng-repeat="action in module.actions">
 
-              <!-- Very Ugly: Setting OpenId for module Incidences, on second position and with an specific html -->
+              <!-- Very Ugly: Setting OpenId for module Incidences, on second position and with an specific html 
               <div class="search-id" ng-show='(action.title == "Id Search")'>
                 <input type="text" ng-model="id" class="form-control search-id-input pull-left" placeholder="{{ 'Search id' | translate }}" required="" class="form-control" />
                 <a class="pull-right module-icon-16 search-id-icon search-id-arrow" ng-click="searchIncidenceById(action.state, id, module.name)">

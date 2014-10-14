@@ -52,6 +52,10 @@ helpdeskControllers.controller('HelpdeskCtrl', function ($scope, $state, $rootSc
 		$state.go('helpdesk.incidences.open.incidence', { incidenceId: id });
   };
 
+  $scope.changedId = function(filed){
+    return filed.$dirty;
+  };
+
   $scope.goToState = function (state) {
     $state.go(state);
   }; 
