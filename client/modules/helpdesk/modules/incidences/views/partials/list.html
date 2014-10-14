@@ -9,7 +9,6 @@
 				            <th field-name="severity" cell-width="4em">{{ 'Severity' | translate }}</th>  
 				            <th field-name="priority" cell-width="4em">{{ 'Priority' | translate }}</th>
 				            <th field-name="title">{{ 'Title' | translate }}</th>
-				            <th field-name="overview" enable-filtering="false"><div> &nbsp;</div></th>
 				            <th field-name="creator.username">{{ 'Owner' | translate }}</th>
 				            <th field-name="created" >{{ 'Created' | translate }}</th>
 				            <th field-name="updated" >{{ 'Updated' | translate }}</th>
@@ -27,17 +26,14 @@
 								<span class="frame-list-cell" ng-class="{serious: gridItem.priority == 'Serious', high: gridItem.priority == 'High'}">{{ gridItem.priority | translate }}</span>
 							</td>
 							<td field-name="title">
-								<span class="frame-list-cell">  
-									<span class="col-md-10" >{{gridItem.title.slice(0,50)}}</span>
-								</span>
+								<div class="container-fluid">
+									<div class="row">
+										<span class="col-md-10" >{{gridItem.title.slice(0,50)}}</span>
+										<span class="col-md-2" ><a ng-click="overview(gridItem)" class="overview" popover-placement="bottom" popover="Overview {{gridItem.id}}" popover-trigger="mouseenter"><i class="fa fa-plus-circle fa-lg"></i>
+										</a></span>
+									</div>  
+								</div>
 							</td>
-
-  							<td field-name="overview">
-		                        <span ng-click="overview(gridItem)" class="col-md-2" popover-placement="bottom" popover="Overview {{gridItem.id}}" popover-trigger="mouseenter">
-									<button class="btn btn-info btn-xs"  style="padding-bottom: 3px;"><img src="/modules/helpdesk/modules/incidences/images/icons/eye-16-black.png" alt="View Details">
-	                            	</button>
-								</span> 
-	                    	</td>
 
 		                    <!-- Dates: We show Today, Yesterday, 2 days ago or a short date format -->
 	                    	<td field-name="created">
