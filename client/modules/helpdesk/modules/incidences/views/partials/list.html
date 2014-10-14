@@ -1,7 +1,7 @@
 <section ng-init="find()">
 	<div class="row" ng-show="incidences.length > 0" style="padding-left:15px;">
-		<div class="row-fluid">	
-		  	<div class="span12 list-incidences shadow-form-container">
+		<div class="col-md-12">	
+		  	<div class="list-incidences shadow-form-container">
 			    <table tr-ng-grid="" items="incidences" selected-items="selectedIncidences" selection-mode="None" enable-sorting="true" enable-filtering="true">
 				    <thead>
 				        <tr>
@@ -81,14 +81,14 @@
 								</span>-->
 							</td>								
 
-		                    <td field-name="status.currentStatus"><span class="frame-list-cell" ng-class="{open: gridItem.status.currentStatus == 'Open', ongoing: gridItem.status.currentStatus == 'On Going', closed: gridItem.status.currentStatus == 'Closed'}">{{ gridItem.status.currentStatus | translate }}</span>
+		                    <td field-name="status.currentStatus"><span class="status frame-list-cell" ng-class="{open: gridItem.status.currentStatus == 'Open', ongoing: gridItem.status.currentStatus == 'On Going', closed: gridItem.status.currentStatus == 'Closed'}">{{ gridItem.status.currentStatus | translate }}</span>
 		                    </td>
 
 		                    <td>
 		                        <div>
-		                            <button class="btn btn-success btn-xs" ng-click="openIncidence(gridItem.id)">
-		                                {{ 'BUTTON.OPEN' | translate }}
-		                            </button>
+															<a ng-click="openIncidence(gridItem.id)" popover-placement="top" popover="{{ 'BUTTON.OPEN' | translate }}" popover-trigger="mouseenter">
+																<i class="fa fa-folder-open fa-lg"></i>
+															</a>
 		                        </div>
 	                    	</td>
 		                </tr>

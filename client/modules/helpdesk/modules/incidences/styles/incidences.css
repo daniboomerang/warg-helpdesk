@@ -8,20 +8,21 @@
 	background-color: white;
 }
 
+.status {
+	font-weight: bold;
+}
+
 .open{
-	color: #DDDDDD;
-	background-color: #3D9970;
+	color: #3D9970;
 
 }
 
 .ongoing{
-	color: #DDDDDD;
-	background-color: #FF851B;
+	color: #FF851B;
 }
 
 .closed{
-	color: #DDDDDD;
-	background-color: #FA6854;
+	color: red;
 }
 
 .frame-incidences{
