@@ -60,7 +60,21 @@ reportsControllers.controller('IncidencesReportCtrl', function ($scope, $state, 
           $scope.fusionAssignationsAndEffortsList = reportsService.fusionAssignAndEffort($scope.assignationsReport.list, $scope.effortsReport.list);
 
       });
-     // Schools
+
+      /* DATES FILTERING */
+
+      $scope.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1
+      };
+
+      $scope.format = 'dd/MM/yyyy';
+      $scope.filterLowerDate = "";
+      $scope.filterUpperDate = "";
+
+      /* -------- */
+
+      // Schools
       $scope.school = {};
       $scope.allowUpdate = false;
       $scope.schoolsListReady = false;
@@ -138,6 +152,24 @@ reportsControllers.controller('IncidencesSchoolReportCtrl', function ($scope, $s
         $scope.fusionAssignationsAndEffortsList = reportsService.fusionAssignAndEffort($scope.assignationsReport.list, $scope.effortsReport.list);
       });
     }
+
+    /* DATES FILTERING */
+
+      $scope.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1
+      };
+
+      $scope.format = 'dd/MM/yyyy';
+      $scope.filterLowerDate = "";
+      $scope.filterUpperDate = "";
+
+      /* -------- */
+
+      // Schools
+      $scope.school = {};
+      $scope.allowUpdate = false;
+      $scope.schoolsListReady = false;
   }  
 
 });

@@ -13,7 +13,7 @@ chartsGeneratorServices.factory('effortsChartService', function (){
         rows.push({
           "c": [
             {
-              "v": effortsReport[i].technician + ' (' + effortsReport[i].institution + ')'
+              "v": effortsReport[i].technician + ' (' + effortsReport[i].institutionCode + ')'
             },
             {
               "v": (effortsReport[i].averageResolutionTime / 60).toFixed(2) 

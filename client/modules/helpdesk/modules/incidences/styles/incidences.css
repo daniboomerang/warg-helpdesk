@@ -107,6 +107,7 @@
 	-webkit-border-radius: 5px 5px 5px 5px;
 	padding: 3px;
 	text-align: center;
+	color: white;
 }
 
 /***** OVERVIEW ******/
@@ -115,5 +116,3 @@
 	margin-top: 20px;
 	padding: 10px;
 }
-
-.overview

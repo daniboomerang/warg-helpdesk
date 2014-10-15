@@ -13,7 +13,7 @@ chartsGeneratorServices.factory('assignationsChartService', function (){
         rows.push({
           "c": [
             {
-              "v": assignationsReport[i].technician + ' (' + assignationsReport[i].institution + ')'
+              "v": assignationsReport[i].technician + ' (' + assignationsReport[i].institutionCode + ')'
             },
             {
               "v": assignationsReport[i].numberAssignedIncidences

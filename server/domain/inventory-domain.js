@@ -2,6 +2,7 @@
 
 var RESULT_SUCCESS = "SUCCESS";
 var RESULT_ERROR = "ERROR"; 
+var ROLE_ADMIN = "admin";
 
 var mongoose = require('mongoose'),
   Inventory = mongoose.model('Inventory'),
@@ -88,7 +89,8 @@ exports.update = function(itemToDisable){
 exports.listByUserSchool = function(user) {
   var deferred = Q.defer();
 
-  Inventory.find({ "schoolId": user.school._id })
+  if (user.role == ROLE_ADMIN){
+    Inventory.find()
     .or([{ availability: null }, { "availability.status": "enabled" }])
     .exec(function(err, items) {
     if (err) {
@@ -96,7 +98,20 @@ exports.listByUserSchool = function(user) {
     } else {   
       deferred.resolve({status: RESULT_SUCCESS, data: items});
     }
-  });
+    });
+  }
+
+  else {
+    Inventory.find({ "schoolId": user.school._id })
+    .or([{ availability: null }, { "availability.status": "enabled" }])
+    .exec(function(err, items) {
+    if (err) {
+      deferred.resolve({status: RESULT_ERROR, error: err});
+    } else {   
+      deferred.resolve({status: RESULT_SUCCESS, data: items});
+    }
+    });
+  }  
 
   return deferred.promise;
 
