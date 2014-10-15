@@ -143,7 +143,7 @@ exports.assignee = function(incidence, assignee) {
 
       var notificationMessage = function(incidence){
         if (incidence.assigned == null){return  "Tu incidencia " + incidenceId + " ha cambiado su estado a 'En Proceso'";}
-        else  {return  "Tu incidencia" + incidenceId + " ha sido asignada a un nuevo agente";}
+        else  {return  "Tu incidencia " + incidenceId + " ha sido asignada a un nuevo agente";}
       };
 
       //var mailSubject = "New Status: On Going for " + subjectInterpreter.mailIncidenceDefinition(incidenceId, incidence.title);
@@ -171,7 +171,7 @@ exports.close = function(incidence) {
         return "Your incidence " + incidenceId + " has been closed."
       };*/
       var notificationMessage = function(incidence){
-        return "Tu incidencia " + incidenceId + " ha sido cerrada."
+        return "Tu incidencia " + incidenceId + " ha sido cerrada"
       };
 
       // var mailSubject = "New Status: " + incidenceId + ' - ' + incidence.title + " closed"
