@@ -21,6 +21,7 @@
   .sidebar menu{
     padding-left: 0px;
     padding-right: 0px;
+    padding-top: 7px;
   }
 }
 
@@ -37,14 +38,6 @@
   vertical-align: middle;
   font-size: 50px;
   margin-bottom: 20px;
-}
-
-.inventory-item-enabled {
-  color: green;
-}
-
-.inventory-item-disabled {
-  color: red;
 }
 
 /* Fix for Bootstrap 3 with Angular UI Bootstrap */

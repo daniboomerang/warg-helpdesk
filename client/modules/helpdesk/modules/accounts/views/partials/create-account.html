@@ -109,13 +109,15 @@
         <div class="pull-left col-md-3">
           <div ng-show="schoolsListReady">
             <h5>School</h5>
-            <ui-select ng-model="user.school.selected" theme="selectize" ng-required="true">
-              <ui-select-match placeholder="{{user.school.name}}">{{$select.selected.name}}
-              </ui-select-match>
-              <ui-select-choices repeat="school in schoolsList">
-                <div ng-bind-html="school.code" class="role-select" popover="{{school.name}}" popover-trigger="mouseenter"></div>
-              </ui-select-choices>
-            </ui-select>
+            <div style="width: 300px;">
+              <ui-select ng-model="user.school.selected" theme="selectize" ng-required="true">
+                <ui-select-match placeholder="{{user.school.name}}">{{$select.selected.name}} - ({{$select.selected.code}})
+                </ui-select-match>
+                <ui-select-choices repeat="school in schoolsList">
+                  <div ng-bind-html="school.name" class="school-select" popover="{{school.code}}" popover-trigger="mouseenter"></div>
+                </ui-select-choices>
+              </ui-select>
+            </div>  
           </div>
           <div ng-show="!schoolsListReady">
             <h5>School</h5>
