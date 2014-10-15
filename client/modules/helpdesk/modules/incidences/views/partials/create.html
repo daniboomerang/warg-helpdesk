@@ -1,6 +1,6 @@
   <div class="panel shadow-form-container">
     <div class="panel-heading">
-      <div class="panel-title solid-blue-bar-fill frame-form-head centered-and-white">New incidence</div>
+      <div class="panel-title solid-blue-bar-fill frame-form-head centered-and-white">{{ 'INCIDENCES.NEW_INCIDENCE' | translate }}</div>
     </div>  
     <div class="panel-body" style="padding-top:40px">
       <form class="form" name="form" ng-submit="createIncidence(form)">
@@ -14,7 +14,7 @@
                 class="form-control"
                 ng-model="title"
                 autofocus
-                placeholder="Title"
+                placeholder="{{ 'INCIDENCES.TITLE' | translate }}"
                 mongoose-error
                 required
                 ng-maxlength="250"/>
@@ -67,7 +67,7 @@
                   type="text"
                   name="description"
                   class="form-control"
-                  placeholder="Description"
+                  placeholder="{{ 'INCIDENCES.DESCRIPTION' | translate }}"
                   ng-model="description"
                   mongoose-error
                   required
@@ -84,28 +84,28 @@
 
         <div class="row">
           <div class="col-xs-6 col-sm-2">
-            <h5>Severity</h5>
+            <h5>{{ 'INCIDENCES.SEVERITY' | translate }}</h5>
              <ui-select ng-model="severity.selected" theme="selectize" style="width: 120px;" ng-required="true">
-              <ui-select-match placeholder="{{severity.type}}"> <span class="frame-select-rows" ng-class="{'frame-select-rows': true, serious: $select.selected.type == 'Serious', high: $select.selected.type == 'High'};">{{$select.selected.type}}</ui-select-match></span>
+              <ui-select-match placeholder="{{severity.type}}"> <span class="frame-select-rows" ng-class="{'frame-select-rows': true, serious: $select.selected.type == 'Serious', high: $select.selected.type == 'High'};">{{$select.selected.type | translate}}</ui-select-match></span>
               <ui-select-choices repeat="severity in urgencyTypes">
-                <div ng-bind-html="severity.type" class="frame-select-rows" ng-class="{serious: severity.type == 'Serious', high: severity.type == 'High'};"></div>
+                <div ng-bind-html="{{'severity.type' | translate }}" class="frame-select-rows" ng-class="{serious: severity.type == 'Serious', high: severity.type == 'High'};"></div>
               </ui-select-choices>
             </ui-select>
           </div>
           <div class="col-xs-6 col-sm-2">
-            <h5>Priority</h5>
+            <h5>{{ 'INCIDENCES.PRIORITY' | translate }}</h5>
             <ui-select ng-model="priority.selected" theme="selectize" style="width: 120px;" ng-required="true">
-              <ui-select-match placeholder="{{priority.type}}"> <span class="frame-select-rows" ng-class="{serious: $select.selected.type == 'Serious', high: $select.selected.type == 'High'};">{{$select.selected.type}}</ui-select-match></span>
+              <ui-select-match placeholder="{{priority.type}}"> <span class="frame-select-rows" ng-class="{serious: $select.selected.type == 'Serious', high: $select.selected.type == 'High'};">{{$select.selected.type | translate}}</ui-select-match></span>
               <ui-select-choices repeat="priority in urgencyTypes">
-                <div ng-bind-html="priority.type" class="frame-select-rows" ng-class="{serious: priority.type == 'Serious', high: priority.type == 'High'};"></div>
+                <div ng-bind-html="{{ 'priority.type' | translate }}" class="frame-select-rows" ng-class="{serious: priority.type == 'Serious', high: priority.type == 'High'};"></div>
               </ui-select-choices>
             </ui-select>
           </div>
         </div>
 
         <div class="modal-footer">
-          <button class="btn btn-warning" ng-click="cancelOperation()">Cancel</button>
-           <input ng-disabled="form.$invalid" class="btn btn-success" value="Create" type="submit" ngClick="Submit">
+          <button class="btn btn-warning" ng-click="cancelOperation()">{{ 'BUTTON.CANCEL' | translate }}</button>
+           <input ng-disabled="form.$invalid" class="btn btn-success" value="{{ 'BUTTON.CREATE' | translate }}" type="submit" ngClick="Submit">
         </div>
       </form>
     </div>

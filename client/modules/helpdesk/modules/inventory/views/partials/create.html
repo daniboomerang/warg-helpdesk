@@ -10,8 +10,8 @@
     <div class="col-md-12 inventory-item-status" ng-class="{ 'inventory-item-enabled': data.isEnabled, 'inventory-item-disabled': data.isDisabled }">
       {{ data.statusText }}
       <section class="btn-group" ng-click="switchStatus()">
-        <label class="btn btn-default" ng-model="data.availability.status" btn-radio="'enabled'" ng-show="data.isDisabled">Enable</label>
-        <label class="btn btn-default" ng-model="data.availability.status" btn-radio="'disabled'" ng-show="data.isEnabled">Disable</label>
+        <label class="btn btn-default" ng-model="data.availability.status" btn-radio="'enabled'" ng-show="data.isDisabled">{{ 'INVENTORY.BUTTON.ENABLE' | translate }}</label>
+        <label class="btn btn-default" ng-model="data.availability.status" btn-radio="'disabled'" ng-show="data.isEnabled">{{ 'INVENTORY.BUTTON.DISABLE' | translate }}</label>
       </section>
     </div>
   </div>
@@ -123,7 +123,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="modal-footer">
-                <button class="btn btn-warning" ng-click="cancelOperation()">Cancel</button>
+                <button class="btn btn-warning" ng-click="cancelOperation()">{{ 'BUTTON.CANCEL' | translate }}</button>
                  <input ng-disabled="form.$invalid" class="btn btn-success" value="{{ buttonText | translate }}" type="submit">
               </div>
             </div>

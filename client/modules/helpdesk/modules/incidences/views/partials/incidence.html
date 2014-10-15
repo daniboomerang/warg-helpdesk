@@ -3,13 +3,13 @@
     <div class="container-fluid" ng-controller="IncidenceNavCtrl" id="incidence-nav-container">
         <div class="row">
             <div class="col-md-2" style="padding: 10px; padding-left: 25px;">
-                <div >Incidence: <strong> {{incidence.id}} </strong></div>
-                <div class="frame-status-incidence" ng-class="{'incidence-view-open': incidence.status.currentStatus == 'Open', 'incidence-view-ongoing': incidence.status.currentStatus == 'On Going', 'incidence-view-closed': incidence.status.currentStatus == 'Closed'}"> <strong> <span>{{incidence.status.currentStatus}}</span><span ng-show="incidence.status.currentStatus == 'Closed'"> as {{incidence.status.currentSubstatus}}</span> </strong></div>
+                <div> {{ 'INCIDENCES.INCIDENCE' | translate }}: <strong> {{incidence.id}} </strong></div>
+                <div class="frame-status-incidence" ng-class="{'incidence-view-open': incidence.status.currentStatus == 'Open', 'incidence-view-ongoing': incidence.status.currentStatus == 'On Going', 'incidence-view-closed': incidence.status.currentStatus == 'Closed'}"> <strong> <span>{{incidence.status.currentStatus | translate }}</span><span ng-show="incidence.status.currentStatus == 'Closed'"> as {{incidence.status.currentSubstatus}}</span> </strong></div>
                 <div ng-show="incidence.status.currentStatus == 'Closed' && incidence.status.currentSubstatus == 'Duplicated'" >Duplicated Of: <a ng-click="goToIncidence(incidence.status.duplicatedOf)"><strong> {{incidence.status.duplicatedOf}} </strong></a></div>
-                <div > Owner: <strong> {{ incidence.creator.username}} </strong></div>
-                <div > Opened on: {{incidence.created | date:'dd/MM/yyyy'}}</div>
-                <div > Severity: <strong>  {{incidence.severity}} </strong></div>
-                <div > Priority: <strong> {{incidence.priority}} </strong></div>
+                <div> {{ 'INCIDENCES.OWNER' | translate }}: <strong> {{ incidence.creator.username}} </strong></div>
+                <div> {{ 'INCIDENCES.OPENED_ON' | translate }}: {{incidence.created | date:'dd/MM/yyyy'}}</div>
+                <div> {{ 'INCIDENCES.SEVERITY' | translate }}: <strong>  {{incidence.severity}} </strong></div>
+                <div> {{ 'INCIDENCES.PRIORITY' | translate }}: <strong> {{incidence.priority}} </strong></div>
             </div>
             <div class="col-md-7">
                 <div class="container-fluid">

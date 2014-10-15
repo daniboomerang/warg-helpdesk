@@ -4,7 +4,7 @@
     <div ng-show="assign.techniciansListReady && !assign.techniciansListEmpty">
       <div class="container-fluid">
         <div class="row"> 
-          <div class="col-md-12">Select Assignee:</div>    
+          <div class="col-md-12">{{ INCIDENCES.SELECT_ASSINEE | translate }}</div>    
         </div>
         <div class="row" style="padding:10px;padding-top: 5px; padding-bottom: 5px;">
           <div class="col-md-12">
@@ -21,7 +21,7 @@
         <div class="row">
           <div ng-show="assign.allowUpdate" class="col-md-12">
             <div ng-click="poolAssignation()">
-              <div class="btn btn-primary">{{ 'INCIDENCE.ASSIGN' | translate }}</div>
+              <div class="btn btn-primary">{{ 'INCIDENCES.ASSIGN' | translate }}</div>
             </div>  
           </div>
         </div>
@@ -43,7 +43,7 @@
 	<div ng-show="!edit.assign">
 		<div ng-show="incidence.assigned == null || incidence.assigned == ''">
 				<div> <img src="/modules/helpdesk/modules/incidences/images/icons/worker-gray-88.png"></div>
-				<font size="1" class="text-muted">No technician assigned</font>
+				<font size="1" class="text-muted">{{ 'INCIDENCES.NO_TECHNICIAN_ASSIGNED' | translate }}</font>
 		</div>
 		<div ng-show="incidence.assigned != null && incidence.assigned != ''">
       <div> <img src="/modules/helpdesk/modules/incidences/images/icons/worker-blue-88.png"></div>
