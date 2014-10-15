@@ -104,12 +104,32 @@ var _createIncidence = function(sender, receiver, subject, content){
 };
 
 var mailAcknowledgeTemplate = function (username, incidenceId){
+  var mailContent =  'Hola ' + username + ':'
+  +'\r\n'+'\r\n'+
+  'Solo queríamos agradecerle por utilizar nuestro servicio de atención al cliente y hacerle saber que su incidencia ha sido recibida y empezaremos a trabajar en ella lo antes posible.'
+  +'\r\n'+'\r\n'+
+  'Le informamos que cualquier cosa que quiera comentar puede hacerlo de dos maneras:'
+  +'\r\n'+
+  '1.- Bien respondiendo a este mismo email.'
+  +'\r\n'+
+  '2.- A través de su cuenta en nuestra pagina web: http://warg-helpdesk.herokuapp.com/' 
+  +'\r\n'+'\r\n'+
+  'Saludos,'
+  +'\r\n'+'\r\n' + 
+  'El equipo de Warg Helpdesk.';
+  
+  console.log(mailContent);
+  return mailContent;
+};
+
+/*var mailAcknowledgeTemplate = function (username, incidenceId){
   return 'Hello ' + username + ':' + '\r\n' +
-  'We just wanted to thank you for using our service support and let you know that your incidence has been received and we will start working on it as soon as possible.' + '\r\n' +
+  'We just wanted to thank you for using our service support and let you know that your incidence has been received
+   and we will start working on it as soon as possible.' + '\r\n' +
   '\r\n' +
   'Anything you´d like to comment you can both reply to this email or use our on-line helpdesk service app at:' + '\r\n' +
   '\r\n' +
   'Regards'+ '\r\n' +
   'The Warg-helpdesk Team';
-};
+};*/
 
