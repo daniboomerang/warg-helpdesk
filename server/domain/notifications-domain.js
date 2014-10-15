@@ -94,11 +94,16 @@ exports.comment = function(incidence, commentOwnerId, comment) {
       var commentOwnerUsername = commentOwnerResult.user.username;
 
       var notificationMessage = function(userType, username){
+        if (userType == OWNER) return  username + " ha comentado una incidencia abierta por ti.";
+        else return  username + " ha comentado una incidencia abierta por ti.";
+      }
+      /*var notificationMessage = function(userType, username){
         if (userType == OWNER) return  username + " has commented an incidence opended by you.";
         else return  username + " has commented an incidence assigned to you.";
-      }
+      }*/
 
-      var mailSubject = 'New Comment on ' + subjectInterpreter.mailIncidenceDefinition(incidenceId, incidenceTitle);
+      //var mailSubject = 'New Comment on ' + subjectInterpreter.mailIncidenceDefinition(incidenceId, incidenceTitle);
+      var mailSubject = 'Nuevo comentario en ' + subjectInterpreter.mailIncidenceDefinition(incidenceId, incidenceTitle);
 
       // Notify Incidence Owner User?
       if (!commentOwnerId.equals(incidenceOwnerId)){
@@ -131,12 +136,18 @@ exports.assignee = function(incidence, assignee) {
       var incidenceOwnerRole = result.user.role;
       var incidenceOwnerMail = result.user.email;
 
-      var notificationMessage = function(incidence){
+      /*var notificationMessage = function(incidence){
         if (incidence.assigned == null){return  "Your incidence " + incidenceId + " has changed status to 'On Going'";}
         else  {return  "Your incidence " + incidenceId + " has been assigned to a new agent";}
+      };*/
+
+      var notificationMessage = function(incidence){
+        if (incidence.assigned == null){return  "Tu incidencia " + incidenceId + " ha cambiado su estado a 'En Proceso'";}
+        else  {return  "Tu incidencia" + incidenceId + " ha sido asignada a un nuevo agente";}
       };
 
-      var mailSubject = "New Status: On Going for " + subjectInterpreter.mailIncidenceDefinition(incidenceId, incidence.title);
+      //var mailSubject = "New Status: On Going for " + subjectInterpreter.mailIncidenceDefinition(incidenceId, incidence.title);
+      var mailSubject = "Nuevo estado: 'En Proceso' para " + subjectInterpreter.mailIncidenceDefinition(incidenceId, incidence.title);
       // Notify Incidence Owner User
       notify(incidenceOwnerRole, {addressee: incidenceOwnerId, notification: notificationMessage(incidence), incidenceId: incidenceId}, {addressee: incidenceOwnerMail, subject: mailSubject, content: notificationMessage(incidence)});
     }  
@@ -156,11 +167,15 @@ exports.close = function(incidence) {
       var incidenceOwnerRole = result.user.role;
       var incidenceOwnerMail = result.user.email;
 
-      var notificationMessage = function(incidence){
+      /*var notificationMessage = function(incidence){
         return "Your incidence " + incidenceId + " has been closed."
+      };*/
+      var notificationMessage = function(incidence){
+        return "Tu incidencia " + incidenceId + " ha sido cerrada."
       };
 
-      var mailSubject = "New Status: " + incidenceId + ' - ' + incidence.title + " closed"
+      // var mailSubject = "New Status: " + incidenceId + ' - ' + incidence.title + " closed"
+      var mailSubject = "Nuevo estado: " + incidenceId + ' - ' + incidence.title + " 'Cerrada'"
       // Notify Incidence Owner User
       notify(incidenceOwnerRole, {addressee: incidenceOwnerId, notification: notificationMessage(incidence), incidenceId: incidenceId}, {addressee: incidenceOwnerMail, subject: mailSubject, content: notificationMessage(incidence)});
     }  
